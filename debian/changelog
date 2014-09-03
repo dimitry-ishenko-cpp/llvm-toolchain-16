@@ -1,3 +1,9 @@
+llvm-toolchain-3.5 (1:3.5-1~exp1) experimental; urgency=medium
+
+  * New stable release
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 02 Sep 2014 23:54:47 +0200
+
 llvm-toolchain-3.5 (1:3.5~+rc4-2~exp1) experimental; urgency=medium
 
   * sync from 1:3.4.2-9~exp1
