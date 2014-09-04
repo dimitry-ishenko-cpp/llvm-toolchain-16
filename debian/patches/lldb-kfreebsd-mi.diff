@@ -1,0 +1,13 @@
+Index: llvm-toolchain-3.5-3.5/lldb/tools/Makefile
+===================================================================
+--- llvm-toolchain-3.5-3.5.orig/lldb/tools/Makefile
++++ llvm-toolchain-3.5-3.5/lldb/tools/Makefile
+@@ -25,7 +25,7 @@ ifeq ($(HOST_OS),Darwin)
+ DIRS += debugserver
+ endif
+ 
+-ifeq ($(HOST_OS),Linux)
++ifneq (,$(strip $(filter $(HOST_OS), Linux GNU/kFreeBSD)))
+ DIRS += lldb-mi
+ endif
+ 
