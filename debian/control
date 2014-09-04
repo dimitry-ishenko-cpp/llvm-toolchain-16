@@ -392,8 +392,7 @@ Description: Modular compiler and toolchain technologies, examples
 Package: lldb-3.4
 Architecture: amd64 armel armhf i386  kfreebsd-amd64 kfreebsd-i386 s390 s390x sparc alpha hppa m68k powerpcspe ppc64 sh4 sparc64 x32 powerpc mips mipsel
 # ia64 hurd have been removed
-Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.4 (= ${binary:Version}), python, llvm-3.4-dev, liblldb-3.4,
- python-lldb-3.4
+Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.4 (= ${binary:Version}), python, llvm-3.4-dev, python-lldb-3.4
 Pre-Depends: ${misc:Pre-Depends}
 Description: Next generation, high-performance debugger
  LLDB is a next generation, high-performance debugger. It is built as a set of
