@@ -3,6 +3,10 @@ llvm-toolchain-3.5 (1:3.5-2) unstable; urgency=medium
   * Upload in unstable
   * Disable the co-instability of lldb & python-lldb
     (Python stuff conflicts)
+  * Fix the FTBFs under kfreebsd (kfreebsd-readline.diff)
+  * Really apply patch kfreebsd-path.diff (oups)
+  * Further improvement on lldb-mi
+    Once more, thanks to Steven Chamberlain for the kfreebsd patches.
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 24 Sep 2014 10:47:37 +0200
 
