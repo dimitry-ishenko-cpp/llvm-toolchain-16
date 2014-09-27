@@ -1,3 +1,13 @@
+llvm-toolchain-3.4 (1:3.4.2-10) unstable; urgency=medium
+
+  * Fix my screw up. Add .1 to the libclang soname to make
+    dpkg-shlibdeps happy
+  * python-lldb-3.4 and lldb-3.3: error when trying to install together
+    (Closes: #762902)
+  * Remove useless dependency on doxygen
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Fri, 26 Sep 2014 17:03:47 +0200
+
 llvm-toolchain-3.4 (1:3.4.2-9) unstable; urgency=medium
 
   * Upload in unstable

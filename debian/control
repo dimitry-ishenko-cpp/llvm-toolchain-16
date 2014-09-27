@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: LLVM Packaging Team <pkg-llvm-team@lists.alioth.debian.org>
 Uploaders: Sylvestre Ledru <sylvestre@debian.org>
 Build-Depends: debhelper (>= 9.0), flex, bison, dejagnu, tcl, expect,
-    autoconf, automake, perl, libtool, doxygen, chrpath, texinfo,
+    autoconf, automake, perl, libtool, chrpath, texinfo,
     sharutils, autotools-dev (>= 20060702.1), libffi-dev (>= 3.0.9),
     lsb-release, patchutils, diffstat, xz-utils, chrpath, python-dev,
     libedit-dev, swig, python-sphinx, ocaml-nox, binutils-dev, libcloog-isl-dev,
@@ -420,7 +420,7 @@ Package: python-lldb-3.4
 Section: python
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, python
-Conflicts: python-lldb-3.5, python-lldb-3.6
+Conflicts: python-lldb-3.5, python-lldb-3.6, lldb-3.3
 Pre-Depends: ${misc:Pre-Depends}
 Description: Next generation, high-performance debugger, python lib
  LLDB is a next generation, high-performance debugger. It is built as a set of
