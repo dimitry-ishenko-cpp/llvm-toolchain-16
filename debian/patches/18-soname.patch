@@ -15,7 +15,7 @@ Index: llvm-toolchain-3.5-3.5~+rc2/clang/tools/libclang/Makefile
  # Add soname to the library.
  ifeq ($(HOST_OS), $(filter $(HOST_OS), Linux FreeBSD GNU GNU/kFreeBSD))
 -        LLVMLibsOptions += -Wl,-soname,lib$(LIBRARYNAME)$(SHLIBEXT)
-+        LLVMLibsOptions += -Wl,-soname,lib$(LIBRARYNAME)-$(LLVM_VERSION_MAJOR).$(LLVM_VERSION_MINOR)$(SHLIBEXT)
++        LLVMLibsOptions += -Wl,-soname,lib$(LIBRARYNAME)-$(LLVM_VERSION_MAJOR).$(LLVM_VERSION_MINOR)$(SHLIBEXT).$(SONAME_MAJOR)
  endif
  
  ifeq ($(ENABLE_CLANG_ARCMT),1)
