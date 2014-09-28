@@ -1,6 +1,8 @@
-llvm-toolchain-3.5 (1:3.5-4) UNRELEASED; urgency=medium
+llvm-toolchain-3.5 (1:3.5-4) unstable; urgency=medium
 
   * scan-build could not find clang binary (Closes: #758998)
+  * Fix the ABI issues by installing a symlink (Closes: #762959, #763058).
+    This should fix the doxygen breakage. Many thanks to Andreas Barth.
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 28 Sep 2014 10:13:22 +0200
 
