@@ -392,9 +392,10 @@ endif
 
 # clang tests
 # setup the env
-	cd $(TARGET_BUILD)/Release/lib/ && ln -s libclang.so libclang.so.1
+	cd $(TARGET_BUILD)/Release/lib/ && ln -s libclang.so libclang.so.1 && ln -s libclang.so libclang-3.6.so.1
 	cd $(TARGET_BUILD)/ && $(MAKE) -C tools/clang/ test || true
-	rm -f $(TARGET_BUILD)/Release/lib/libclang.so.1
+	rm -f $(TARGET_BUILD)/Release/lib/libclang.so.1 $(TARGET_BUILD)/Release/lib/libclang-$(LLVM_VERSION).so.1
+
 
 # lldb tests
 ifeq (,$(filter $(DEB_HOST_ARCH), $(LLDB_DISABLE_ARCHS) armhf armel))
@@ -407,6 +408,10 @@ ifeq (,$(filter $(DEB_HOST_ARCH), $(LLDB_DISABLE_ARCHS) armhf armel))
 		ln -s ../../../libLLVM-$(LLVM_VERSION_FULL).so libLLVM-$(LLVM_VERSION_FULL).so.$(SONAME_EXT); \
 	fi; \
 	fi
+	cd $(TARGET_BUILD)/Release/lib && \
+	rm -f liblldb-$(LLVM_VERSION).so && \
+	ln -s liblldb.so liblldb-$(LLVM_VERSION).so
+
 	cd $(TARGET_BUILD)/ && $(MAKE) -C tools/lldb/test || true
 	if test -d $(TARGET_BUILD)/tools/lldb/test/lldb-test-traces/; then \
 		cat $(TARGET_BUILD)/tools/lldb/test/lldb-test-traces/*; \
