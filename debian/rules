@@ -24,9 +24,9 @@ DEB_HOST_ARCH       = $(shell dpkg-architecture -qDEB_HOST_ARCH)
 OCAML_STDLIB_DIR    ?= $(shell ocamlc -where)
 
 
-LDFLAGS_EXTRA=
-CXXFLAGS_EXTRA=
-CONFIGURE_EXTRA=
+LDFLAGS_EXTRA =
+CXXFLAGS_EXTRA = -D_FILE_OFFSET_BITS=64 -std=c++0x
+CONFIGURE_EXTRA =
 
 ifneq (,$(filter $(DEB_HOST_ARCH),powerpc powerpcspe))
 LDFLAGS_EXTRA += -latomic
@@ -221,7 +221,7 @@ override_dh_auto_configure: preconfigure
 
 
 override_dh_auto_build:
-	$(PRE_PROCESS) $(MAKE) $(NJOBS) -C $(TARGET_BUILD) VERBOSE=1 CLANG_VENDOR=$(VENDOR) CXXFLAGS="$(CXXFLAGS_EXTRA) -std=c++0x"  LDFLAGS="$(LDFLAGS_EXTRA)" REQUIRES_RTTI=1 DEBUGMAKE=1
+	$(PRE_PROCESS) $(MAKE) $(NJOBS) -C $(TARGET_BUILD) VERBOSE=1 CLANG_VENDOR=$(VENDOR) CXXFLAGS="$(CXXFLAGS_EXTRA)"  LDFLAGS="$(LDFLAGS_EXTRA)" REQUIRES_RTTI=1 DEBUGMAKE=1
 
 # We run the build with the Asserts, new directory, make a symlink to make
 # sure the rest still work
