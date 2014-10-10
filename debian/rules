@@ -23,7 +23,7 @@ DEB_HOST_ARCH       = $(shell dpkg-architecture -qDEB_HOST_ARCH)
 OCAML_STDLIB_DIR    ?= $(shell ocamlc -where)
 
 LDFLAGS_EXTRA =
-CXXFLAGS_EXTRA = -D_FILE_OFFSET_BITS=64 -std=c++0x
+CXXFLAGS_EXTRA = -std=c++0x
 CONFIGURE_EXTRA =
 
 ifneq (,$(filter $(DEB_HOST_ARCH),powerpc powerpcspe))
