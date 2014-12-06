@@ -401,7 +401,7 @@ Architecture: amd64 armel armhf i386  kfreebsd-amd64 kfreebsd-i386 s390 s390x sp
 Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.5 (= ${binary:Version})
 Pre-Depends: ${misc:Pre-Depends}
 Section: libs
-Replaces: lldb-3.5 (<< 1:3.5~+rc4-2~)
+Replaces: lldb-3.5 (<< 1:3.5~+rc4-2~), lldb-3.3
 Breaks: lldb-3.5 (<< 1:3.5~+rc4-2~), lldb-3.3
 Description: Next generation, high-performance debugger, library
  LLDB is a next generation, high-performance debugger. It is built as a set of
