@@ -46,3 +46,6 @@ gcc-compat-1.diff
 gcc-compat-2.diff
 lldb-kfreebsd-mi.diff
 bashsim.diff
+kfreebsd-path.diff
+kfreebsd-readline.diff
+ignore-ifcvt3.ll.diff
