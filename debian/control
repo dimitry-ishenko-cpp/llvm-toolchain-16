@@ -1,4 +1,4 @@
-Source: llvm-toolchain-snapshot
+Source: llvm-toolchain-3.6
 Section: devel
 Priority: optional
 Maintainer: LLVM Packaging Team <pkg-llvm-team@lists.alioth.debian.org>
@@ -12,7 +12,7 @@ Build-Depends: debhelper (>= 9.0), flex, bison, dejagnu, tcl, expect,
     lcov, procps, help2man, dh-ocaml, zlib1g-dev
 Build-Conflicts: oprofile, ocaml, libllvm-3.4-ocaml-dev, libllvm-3.5-ocaml-dev,
  libllvm-3.6-ocaml-dev
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Homepage: http://www.llvm.org/
 Vcs-Svn: svn://svn.debian.org/svn/pkg-llvm/llvm-toolchain/branches/snapshot/
 Vcs-Browser: http://svn.debian.org/viewsvn/pkg-llvm/llvm-toolchain/branches/snapshot/
