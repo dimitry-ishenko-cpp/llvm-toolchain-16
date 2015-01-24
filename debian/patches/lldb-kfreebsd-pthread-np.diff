@@ -1,0 +1,97 @@
+Index: llvm-toolchain-3.6-3.6~+rc1/lldb/source/Host/freebsd/HostThreadFreeBSD.cpp
+===================================================================
+--- llvm-toolchain-3.6-3.6~+rc1.orig/lldb/source/Host/freebsd/HostThreadFreeBSD.cpp
++++ llvm-toolchain-3.6-3.6~+rc1/lldb/source/Host/freebsd/HostThreadFreeBSD.cpp
+@@ -14,7 +14,9 @@
+ // C includes
+ #include <errno.h>
+ #include <pthread.h>
++#if defined (__FreeBSD__)
+ #include <pthread_np.h>
++#endif
+ #include <stdlib.h>
+ #include <sys/sysctl.h>
+ #include <sys/user.h>
+Index: llvm-toolchain-3.6-3.6~+rc1/lldb/source/Host/common/Host.cpp
+===================================================================
+--- llvm-toolchain-3.6-3.6~+rc1.orig/lldb/source/Host/common/Host.cpp
++++ llvm-toolchain-3.6-3.6~+rc1/lldb/source/Host/common/Host.cpp
+@@ -1061,7 +1061,7 @@ Host::LaunchApplication (const FileSpec
+ 
+ #endif
+ 
+-#if !defined (__linux__) && !defined (__FreeBSD__) && !defined (__NetBSD__)
++#if !defined (__linux__) && !defined (__FreeBSD__) && !defined (__NetBSD__) && !defined(__FreeBSD_kernel__)
+ 
+ const lldb_private::UnixSignalsSP&
+ Host::GetUnixSignals ()
+Index: llvm-toolchain-3.6-3.6~+rc1/lldb/tools/lldb-mi/MICmnLogMediumFile.cpp
+===================================================================
+--- llvm-toolchain-3.6-3.6~+rc1.orig/lldb/tools/lldb-mi/MICmnLogMediumFile.cpp
++++ llvm-toolchain-3.6-3.6~+rc1/lldb/tools/lldb-mi/MICmnLogMediumFile.cpp
+@@ -24,7 +24,7 @@
+ #include "MICmnResources.h"
+ #if defined(_MSC_VER)
+ #include "MIUtilSystemWindows.h"
+-#elif defined(__FreeBSD__) || defined(__linux__)
++#elif defined(__FreeBSD__) || defined(__linux__) || defined(__FreeBSD_kernel__)
+ #include "MIUtilSystemLinux.h"
+ #elif defined(__APPLE__)
+ #include "MIUtilSystemOsx.h"
+Index: llvm-toolchain-3.6-3.6~+rc1/lldb/tools/lldb-mi/MIUtilSystemLinux.cpp
+===================================================================
+--- llvm-toolchain-3.6-3.6~+rc1.orig/lldb/tools/lldb-mi/MIUtilSystemLinux.cpp
++++ llvm-toolchain-3.6-3.6~+rc1/lldb/tools/lldb-mi/MIUtilSystemLinux.cpp
+@@ -19,7 +19,7 @@
+ // Copyright:   None.
+ //--
+ 
+-#if defined(__FreeBSD__) || defined(__linux__)
++#if defined(__FreeBSD__) || defined(__linux__) || defined(__FreeBSD_kernel__)
+ 
+ // In-house headers:
+ #include "MIUtilSystemLinux.h"
+Index: llvm-toolchain-3.6-3.6~+rc1/lldb/tools/lldb-mi/MIUtilSystemLinux.h
+===================================================================
+--- llvm-toolchain-3.6-3.6~+rc1.orig/lldb/tools/lldb-mi/MIUtilSystemLinux.h
++++ llvm-toolchain-3.6-3.6~+rc1/lldb/tools/lldb-mi/MIUtilSystemLinux.h
+@@ -21,7 +21,7 @@
+ 
+ #pragma once
+ 
+-#if defined(__FreeBSD__) || defined(__linux__)
++#if defined(__FreeBSD__) || defined(__linux__) || defined(__FreeBSD_kernel__)
+ 
+ // In-house headers:
+ #include "MIUtilString.h"
+Index: llvm-toolchain-3.6-3.6~+rc1/lldb/source/Host/freebsd/ThisThread.cpp
+===================================================================
+--- llvm-toolchain-3.6-3.6~+rc1.orig/lldb/source/Host/freebsd/ThisThread.cpp
++++ llvm-toolchain-3.6-3.6~+rc1/lldb/source/Host/freebsd/ThisThread.cpp
+@@ -13,18 +13,26 @@
+ #include "llvm/ADT/SmallVector.h"
+ 
+ #include <pthread.h>
++#if defined (__FreeBSD__)
+ #include <pthread_np.h>
++#endif
+ 
+ using namespace lldb_private;
+ 
+ void
+ ThisThread::SetName(llvm::StringRef name)
+ {
++#if defined (__FreeBSD__)
+     ::pthread_set_name_np(::pthread_self(), name.data());
++#endif
+ }
+ 
+ void
+ ThisThread::GetName(llvm::SmallVectorImpl<char> &name)
+ {
++#if defined
+     HostNativeThread::GetName(::pthread_getthreadid_np(), name);
++#else
++    HostNativeThread::GetName((unsigned)pthread_self(), name);
++#endif
+ }

@@ -34,3 +34,4 @@ follow-parallel-var.diff
 hurd-EIEIO-undef.diff
 silent-MCJIIT-tests.diff
 lldb-libname.diff
+lldb-kfreebsd-pthread-np.diff
