@@ -1,0 +1,15 @@
+Index: llvm-toolchain-3.6-3.6~+rc1/lldb/scripts/Python/modules/Makefile
+===================================================================
+--- llvm-toolchain-3.6-3.6~+rc1.orig/lldb/scripts/Python/modules/Makefile
++++ llvm-toolchain-3.6-3.6~+rc1/lldb/scripts/Python/modules/Makefile
+@@ -12,8 +12,8 @@ include $(LLDB_LEVEL)/../../Makefile.con
+ 
+ DIRS:=
+ 
+-# only build the readline suppression module on Linux
+-ifeq ($(HOST_OS), Linux)
++# only build the readline suppression module on Linux, Kfreebsd & Hurd
++ifeq ($(HOST_OS), $(filter $(HOST_OS), Linux GNU GNU/kFreeBSD))
+ DIRS += readline
+ endif
+ 
