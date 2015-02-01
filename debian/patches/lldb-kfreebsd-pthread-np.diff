@@ -89,7 +89,7 @@ Index: llvm-toolchain-3.6-3.6~+rc1/lldb/source/Host/freebsd/ThisThread.cpp
  void
  ThisThread::GetName(llvm::SmallVectorImpl<char> &name)
  {
-+#if defined
++#if defined (__FreeBSD__)
      HostNativeThread::GetName(::pthread_getthreadid_np(), name);
 +#else
 +    HostNativeThread::GetName((unsigned)pthread_self(), name);
