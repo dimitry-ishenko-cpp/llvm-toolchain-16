@@ -36,3 +36,4 @@ silent-MCJIIT-tests.diff
 lldb-libname.diff
 lldb-kfreebsd-pthread-np.diff
 kfreebsd-readline.diff
+bashsim.diff
