@@ -256,7 +256,7 @@ build_doc:
 	CMDS="llvm-dwarfdump llvm-mc llvm-mcmarkup llvm-objdump llvm-rtdyld llvm-size llvm-tblgen llvm-ranlib macho-dump lldb clang-format clang-modernize clang clang-tblgen clang-check clang-tidy clang-apply-replacements pp-trace"; \
 	for f in $$CMDS; do \
 		echo "Generating manpage of $$f"; \
-		LD_LIBRARY_PATH=$(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/ help2man --version-string=$(LLVM_VERSION) $(TARGET_BUILD)/Release/bin/$$f > debian/man/$$f-$(LLVM_VERSION).1; \
+		LD_LIBRARY_PATH=$(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/ help2man --no-discard-stderr --version-string=$(LLVM_VERSION) $(TARGET_BUILD)/Release/bin/$$f > debian/man/$$f-$(LLVM_VERSION).1; \
 	done
 
 override_dh_auto_install:

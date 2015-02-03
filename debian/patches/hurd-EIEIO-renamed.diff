@@ -1,0 +1,13 @@
+Index: llvm-toolchain-3.6-3.6~+rc1/lib/Target/PowerPC/PPCInstrInfo.td
+===================================================================
+--- llvm-toolchain-3.6-3.6~+rc1.orig/lib/Target/PowerPC/PPCInstrInfo.td
++++ llvm-toolchain-3.6-3.6~+rc1/lib/Target/PowerPC/PPCInstrInfo.td
+@@ -3134,7 +3134,7 @@ def ISYNC : XLForm_2_ext<19, 150, 0, 0,
+ def ICBI : XForm_1a<31, 982, (outs), (ins memrr:$src),
+                     "icbi $src", IIC_LdStICBI, []>;
+ 
+-def EIEIO : XForm_24_eieio<31, 854, (outs), (ins),
++def E_IEIO : XForm_24_eieio<31, 854, (outs), (ins),
+                            "eieio", IIC_LdStLoad, []>;
+ 
+ def WAIT : XForm_24_sync<31, 62, (outs), (ins i32imm:$L),
