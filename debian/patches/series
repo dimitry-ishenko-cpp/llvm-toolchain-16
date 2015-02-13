@@ -31,9 +31,6 @@ compiler-rt-path.diff
 lldb-soname.diff
 force-link-pass.o.diff
 follow-parallel-var.diff
-hurd-EIEIO-renamed.diff
 silent-MCJIIT-tests.diff
 lldb-libname.diff
-lldb-kfreebsd-pthread-np.diff
-kfreebsd-readline.diff
 bashsim.diff
