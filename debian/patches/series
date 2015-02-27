@@ -51,3 +51,4 @@ kfreebsd-readline.diff
 ignore-ifcvt3.ll.diff
 scan-build-clang-path.diff
 
+lldb-arch.diff

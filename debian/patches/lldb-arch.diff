@@ -1,0 +1,13 @@
+Index: llvm-toolchain-3.5-3.5/lldb/source/Core/Module.cpp
+===================================================================
+--- llvm-toolchain-3.5-3.5.orig/lldb/source/Core/Module.cpp
++++ llvm-toolchain-3.5-3.5/lldb/source/Core/Module.cpp
+@@ -1590,7 +1590,7 @@ Module::SetArchitecture (const ArchSpec
+         m_arch = new_arch;
+         return true;
+     }    
+-    return m_arch.IsExactMatch(new_arch);
++    return m_arch.IsCompatibleMatch(new_arch);
+ }
+ 
+ bool 
