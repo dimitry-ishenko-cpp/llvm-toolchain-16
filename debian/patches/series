@@ -34,3 +34,4 @@ follow-parallel-var.diff
 silent-MCJIIT-tests.diff
 lldb-libname.diff
 bashsim.diff
+lldb-arch.diff
