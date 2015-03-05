@@ -35,3 +35,4 @@ silent-MCJIIT-tests.diff
 lldb-libname.diff
 bashsim.diff
 lldb-arch.diff
+clang-analyzer-force-version.diff
