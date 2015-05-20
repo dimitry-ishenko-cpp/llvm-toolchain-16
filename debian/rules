@@ -331,6 +331,9 @@ override_dh_auto_install:
 	rm -f $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/include/llvm/Support/LICENSE.TXT \
 	$(CURDIR)/debian/llvm-$(LLVM_VERSION)-dev/usr/lib/llvm-$(LLVM_VERSION)/build/autoconf/LICENSE.TXT
 
+# Change CMake module dir
+	sed -i 's|LLVM_CMAKE_DIR "/usr/lib/llvm-$(LLVM_VERSION)/share/llvm/cmake"|LLVM_CMAKE_DIR "/usr/share/llvm-$(LLVM_VERSION)/cmake"|' $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/share/llvm/cmake/LLVMConfig.cmake
+
 # Managed in lldb-X.Y.links.in
 	rm -f $(CURDIR)/$(TARGET_BUILD)/Release/lib/python*/site-packages/lldb/_lldb.so
 
