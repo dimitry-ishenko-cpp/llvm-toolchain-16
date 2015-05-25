@@ -21,7 +21,7 @@ atomic_library_2.diff
 python-clangpath.diff
 removeduplicatedeclaration.diff
 fix-clang-path-and-build.diff
-force-gcc-header-obj.diff
+#force-gcc-header-obj.diff
 do-not-fail-on-unexpected-pass.diff
 silent-more-tests.diff
 disable-display-PASS-UNSUPPORTED-XFAIL.diff
