@@ -1,9 +1,9 @@
-llvm-toolchain-3.6 (1:3.6.2-3) UNRELEASED; urgency=medium
+llvm-toolchain-3.6 (1:3.6.2~+rc1-1~exp1) experimental; urgency=medium
 
   * Preparation of the new stable release
   * Disable the patch force-gcc-header-obj.diff. Seems to cause bug #23556
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Mon, 01 Jun 2015 19:19:19 +0200
+ -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 24 Jun 2015 02:54:16 +0200
 
 llvm-toolchain-3.6 (1:3.6.1-1) unstable; urgency=medium
 
