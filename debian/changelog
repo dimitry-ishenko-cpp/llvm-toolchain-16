@@ -1,3 +1,13 @@
+llvm-toolchain-3.4 (1:3.4.2-15) unstable; urgency=medium
+
+  * Team upload
+  * d/rule: fix gcc-5 detection, since gcc-5.2
+    doesn't provide a g++-5.2 binary (but it is called
+    g++-5)
+    (copying the patch from llvm-3.7)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 10 Aug 2015 10:55:26 +0200
+
 llvm-toolchain-3.4 (1:3.4.2-14) unstable; urgency=medium
 
   * d/patches/isl-0.13-compat.diff, ensure compatibility with libisl13
