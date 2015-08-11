@@ -361,7 +361,7 @@ override_dh_installman:
 
 override_dh_strip:
 	dh_strip -p libclang$(SONAME_EXT)-$(LLVM_VERSION) --dbg-package=libclang$(SONAME_EXT)-$(LLVM_VERSION)-dbg
-	dh_strip -p libllvm$(LLVM_VERSION) --dbg-package=libllvm$(LLVM_VERSION)-dbg
+	dh_strip -p libllvm$(LLVM_VERSION)v5 --dbg-package=libllvm$(LLVM_VERSION)-dbg
 	dh_strip -a
 
 
