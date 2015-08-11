@@ -154,7 +154,7 @@ Description: clang library - Development package
 Package: libclang-common-3.6-dev
 Architecture: any
 Section: libdevel
-Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.6 (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.6v5 (= ${binary:Version})
 Description: clang library - Common development package
  Clang project is a C, C++, Objective C and Objective C++ front-end
  for the LLVM compiler. Its goal is to offer a replacement to the GNU Compiler
@@ -200,11 +200,13 @@ Description: Clang examples
 
 # ------------- LLVM -------------
 
-Package: libllvm3.6
+Package: libllvm3.6v5
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
+Conflicts: libllvm3.6
+Replaces: libllvm3.6
 Multi-Arch: same
 Description: Modular compiler and toolchain technologies, runtime library
  LLVM is a collection of libraries and tools that make it easy to build
@@ -217,7 +219,7 @@ Package: libllvm3.6-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.6
+Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.6v5
 Pre-Depends: ${misc:Pre-Depends}
 Multi-Arch: same
 Description: Modular compiler and toolchain technologies, debugging libraries
@@ -388,7 +390,7 @@ Description: Modular compiler and toolchain technologies, examples
 Package: lldb-3.6
 Architecture: amd64 armel armhf i386  kfreebsd-amd64 kfreebsd-i386 s390 s390x sparc alpha hppa m68k powerpcspe ppc64 sh4 sparc64 x32 powerpc mips mipsel
 # ia64 mips mipsel hurd ppc64el have been removed
-Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.6 (= ${binary:Version}), python, llvm-3.6-dev, python-lldb-3.6
+Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.6v5 (= ${binary:Version}), python, llvm-3.6-dev, python-lldb-3.6
 Conflicts: lldb-3.4, lldb-3.5
 Pre-Depends: ${misc:Pre-Depends}
 Description: Next generation, high-performance debugger
@@ -399,7 +401,7 @@ Description: Next generation, high-performance debugger
 Package: liblldb-3.6
 Architecture: amd64 armel armhf i386  kfreebsd-amd64 kfreebsd-i386 s390 s390x sparc alpha hppa m68k powerpcspe ppc64 sh4 sparc64 x32 powerpc mips mipsel
 # ia64 mips mipsel hurd ppc64el have been removed
-Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.6 (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.6v5 (= ${binary:Version})
 Pre-Depends: ${misc:Pre-Depends}
 Section: libs
 Replaces: lldb-3.6 (<= 1:3.6~svn215195-2)
