@@ -1,5 +1,6 @@
 llvm-toolchain-3.6 (1:3.6.2-1) unstable; urgency=medium
 
+  [ Sylvestre Ledru ]
   * New upstream release
   * Upload in unstable
   * Add a workaround to build against g++ 5.2 (which does not provide
@@ -7,6 +8,9 @@ llvm-toolchain-3.6 (1:3.6.2-1) unstable; urgency=medium
   * Transition to gcc 5. Thanks to Matthias Klose for the patch.
     For this, we had to rename libllvm3.6 to libllvm3.6v5
     (Closes: #793899)
+
+  [ Gianfranco Costamagna ]
+  * d/p/bug783205.patch rebase s390x patch to apply to 3.6
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 11 Aug 2015 11:33:01 +0200
 
