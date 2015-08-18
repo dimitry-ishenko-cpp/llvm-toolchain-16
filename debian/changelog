@@ -1,11 +1,19 @@
 llvm-toolchain-3.6 (1:3.6.2-2) UNRELEASED; urgency=medium
 
   * Team upload
+
+  [ Gianfranco Costamagna ]
+  * Fix many lintian warning/errors
+    - copyright fixes
+    - updated overrides for v5 switch
+    - control files
+    - disabled ocaml documentation
+
   [ Luciano Bello ]
   * debian/patches/CVE-2015-2305.patch
     (Closes: #778393)
 
- -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 17 Aug 2015 15:22:56 +0200
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Tue, 18 Aug 2015 13:27:08 +0200
 
 llvm-toolchain-3.6 (1:3.6.2-1) unstable; urgency=medium
 
