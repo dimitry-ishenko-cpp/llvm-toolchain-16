@@ -6,7 +6,7 @@ Uploaders: Sylvestre Ledru <sylvestre@debian.org>
 Build-Depends: debhelper (>= 9.0), flex, bison, dejagnu, tcl, expect,
     autoconf, automake, perl, libtool, chrpath, texinfo,
     sharutils, autotools-dev (>= 20060702.1), libffi-dev (>= 3.0.9),
-    lsb-release, patchutils, diffstat, xz-utils, chrpath, python-dev,
+    lsb-release, patchutils, diffstat, xz-utils, python-dev,
     libedit-dev, swig, python-sphinx, ocaml-nox, binutils-dev, libcloog-isl-dev,
     libisl-dev (>= 0.11.1), libjsoncpp-dev,
     lcov, procps, help2man, dh-ocaml, zlib1g-dev
@@ -14,7 +14,7 @@ Build-Conflicts: oprofile, ocaml, libllvm-3.4-ocaml-dev, libllvm-3.5-ocaml-dev,
  libllvm-3.6-ocaml-dev
 Standards-Version: 3.9.6
 Homepage: http://www.llvm.org/
-Vcs-Svn: svn://svn.debian.org/svn/pkg-llvm/llvm-toolchain/branches/3.6/
+Vcs-Svn: svn://anonscm.debian.org/pkg-llvm/llvm-toolchain/branches/3.6/
 Vcs-Browser: http://svn.debian.org/viewsvn/pkg-llvm/llvm-toolchain/branches/3.6/
 
 # ------------- clang -------------
@@ -122,9 +122,10 @@ Description: C interface to the clang library
 
 Package: libclang1-3.6-dbg
 Architecture: any
+Multi-Arch: same
 Section: debug
 Priority: extra
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs}, libclang1-3.6
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs}, libclang1-3.6 (= ${binary:Version})
 Description: clang library
  Clang project is a C, C++, Objective C and Objective C++ front-end
  for the LLVM compiler. Its goal is to offer a replacement to the GNU Compiler
@@ -219,7 +220,7 @@ Package: libllvm3.6-dbg
 Architecture: any
 Section: debug
 Priority: extra
-Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.6v5
+Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.6v5 (= ${binary:Version})
 Pre-Depends: ${misc:Pre-Depends}
 Multi-Arch: same
 Description: Modular compiler and toolchain technologies, debugging libraries
