@@ -61,7 +61,7 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, clang-modernize-3.6
 Replaces: cpp11-migrate-3.3
 Breaks: cpp11-migrate-3.3
-Description: Tool to convert C++98 and C++03 code to C++11
+Description: Tool to convert C++98 and C++03 code to C++11 - transition package
  The purpose of the C++11 Migrator is to do source-to-source translation to
  migrate existing C++ code to use C++11 features to enhance
  maintainability, readability, runtime performance, and compile-time

@@ -1,4 +1,4 @@
-llvm-toolchain-3.6 (1:3.6.2-2) UNRELEASED; urgency=medium
+llvm-toolchain-3.6 (1:3.6.2-3) UNRELEASED; urgency=medium
 
   * Team upload
 
@@ -12,6 +12,10 @@ llvm-toolchain-3.6 (1:3.6.2-2) UNRELEASED; urgency=medium
   [ Luciano Bello ]
   * debian/patches/CVE-2015-2305.patch
     (Closes: #778393)
+
+  [ Sylvestre Ledru ]
+  * Fix the warning "duplicate-short-description cpp11-migrate-3.6
+    clang-modernize-3.6". cpp11-migrate is the old name of clang-modernize
 
  -- Gianfranco Costamagna <locutusofborg@debian.org>  Tue, 18 Aug 2015 13:27:08 +0200
 
