@@ -35,7 +35,6 @@ silent-MCJIIT-tests.diff
 lldb-libname.diff
 bashsim.diff
 clang-analyzer-force-version.diff
-# Breaking the build...
-#bug783205.patch
+bug783205.patch
 bug-24472.diff
 CVE-2015-2305.patch

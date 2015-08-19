@@ -2,21 +2,8 @@ From: Steven Chamberlain <steven@pyro.eu.org>
 Date: Sun, 10 May 2015 19:46:59 +0100
 Subject: support Debian s390x multiarch paths
 
-Index: llvm-toolchain-3.6-3.6.2/clang/lib/Driver/ToolChains.cpp
-===================================================================
---- llvm-toolchain-3.6-3.6.2.orig/clang/lib/Driver/ToolChains.cpp
-+++ llvm-toolchain-3.6-3.6.2/clang/lib/Driver/ToolChains.cpp
-@@ -2630,6 +2630,10 @@ void NetBSD::AddClangCXXStdlibIncludeArg
-     addSystemInclude(DriverArgs, CC1Args,
-                      getDriver().SysRoot + "/usr/include/g++/backward");
-     break;
-+  case llvm::Triple::systemz:
-+    if (llvm::sys::fs::exists(SysRoot + "/lib/s390x-linux-gnu"))
-+      return "s390x-linux-gnu";
-+    break;
-   }
- }
- 
+--- a/clang/lib/Driver/ToolChains.cpp
++++ b/clang/lib/Driver/ToolChains.cpp
 @@ -2877,6 +2881,10 @@ static std::string getMultiarchTriple(co
      if (llvm::sys::fs::exists(SysRoot + "/lib/powerpc64le-linux-gnu"))
        return "powerpc64le-linux-gnu";
@@ -47,10 +34,8 @@ Index: llvm-toolchain-3.6-3.6.2/clang/lib/Driver/ToolChains.cpp
    }
    for (StringRef Dir : MultiarchIncludeDirs) {
      if (llvm::sys::fs::exists(SysRoot + Dir)) {
-Index: llvm-toolchain-3.6-3.6.2/clang/lib/Driver/Tools.cpp
-===================================================================
---- llvm-toolchain-3.6-3.6.2.orig/clang/lib/Driver/Tools.cpp
-+++ llvm-toolchain-3.6-3.6.2/clang/lib/Driver/Tools.cpp
+--- a/clang/lib/Driver/Tools.cpp
++++ b/clang/lib/Driver/Tools.cpp
 @@ -7333,7 +7333,7 @@ static std::string getLinuxDynamicLinker
        return "/lib64/ld64.so.1";
      return "/lib64/ld64.so.2";
