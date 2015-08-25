@@ -10,7 +10,7 @@ llvm-toolchain-3.6 (1:3.6.2-2) UNRELEASED; urgency=medium
     - disabled ocaml documentation
   * d/p/bug783205.patch: rebase to 3.6.
   * Team Upload
-  * d/control: Add more conflicting packages (clang and lldb)
+  * d/control: Add more conflicting packages (python-clang and python-lldb)
 
   [ Luciano Bello ]
   * debian/patches/CVE-2015-2305.patch
