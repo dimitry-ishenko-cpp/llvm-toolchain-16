@@ -172,8 +172,8 @@ Package: python-clang-3.6
 Section: python
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, python
-Replaces: python-clang-3.3, python-clang-3.4
-Breaks: python-clang-3.3, python-clang-3.4
+Replaces: python-clang-3.3, python-clang-3.4, python-clang-3.5, python-clang-3.7, python-clang-3.8
+Breaks: python-clang-3.3, python-clang-3.4, python-clang-3.5, python-clang-3.7, python-clang-3.8
 Description: Clang Python Bindings
  Clang project is a C, C++, Objective C and Objective C++ front-end
  for the LLVM compiler. Its goal is to offer a replacement to the GNU Compiler
@@ -390,7 +390,7 @@ Package: lldb-3.6
 Architecture: amd64 armel armhf i386  kfreebsd-amd64 kfreebsd-i386 s390 s390x sparc alpha hppa m68k powerpcspe ppc64 sh4 sparc64 x32 powerpc mips mipsel
 # ia64 mips mipsel hurd ppc64el have been removed
 Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.6v5 (= ${binary:Version}), python, llvm-3.6-dev, python-lldb-3.6
-Conflicts: lldb-3.4, lldb-3.5
+Conflicts: lldb-3.4, lldb-3.5, lldb-3.7, lldb-3.8
 Pre-Depends: ${misc:Pre-Depends}
 Description: Next generation, high-performance debugger
  LLDB is a next generation, high-performance debugger. It is built as a set of
@@ -417,7 +417,7 @@ Package: python-lldb-3.6
 Section: python
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, python
-Conflicts: python-lldb-3.4, python-lldb-3.5
+Conflicts: python-lldb-3.4, python-lldb-3.5, python-lldb-3.7, python-lldb-3.8
 Pre-Depends: ${misc:Pre-Depends}
 Description: Next generation, high-performance debugger, python lib
  LLDB is a next generation, high-performance debugger. It is built as a set of
