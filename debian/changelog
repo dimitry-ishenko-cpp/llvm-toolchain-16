@@ -12,10 +12,6 @@ llvm-toolchain-3.6 (1:3.6.2-2) UNRELEASED; urgency=medium
   * Team Upload
   * d/control: Add more conflicting packages (python-clang and python-lldb)
 
-  [ Luciano Bello ]
-  * debian/patches/CVE-2015-2305.patch
-    (Closes: #778393)
-
   [ Sylvestre Ledru ]
   * Fix the warning "duplicate-short-description cpp11-migrate-3.6
     clang-modernize-3.6". cpp11-migrate is the old name of clang-modernize
