@@ -1,6 +1,8 @@
 llvm-toolchain-3.6 (1:3.6.2-2) UNRELEASED; urgency=medium
 
-  * Team upload
+  * Fix the warning "duplicate-short-description cpp11-migrate-3.6
+      clang-modernize-3.6". cpp11-migrate is the old name of clang-modernize
+  * Bring back the build-id (Closes: #790686)
 
   [ Gianfranco Costamagna ]
   * Fix many lintian warning/errors
@@ -12,11 +14,7 @@ llvm-toolchain-3.6 (1:3.6.2-2) UNRELEASED; urgency=medium
   * Team Upload
   * d/control: Add more conflicting packages (python-clang and python-lldb)
 
-  [ Sylvestre Ledru ]
-  * Fix the warning "duplicate-short-description cpp11-migrate-3.6
-    clang-modernize-3.6". cpp11-migrate is the old name of clang-modernize
-
- -- Gianfranco Costamagna <locutusofborg@debian.org>  Tue, 18 Aug 2015 13:27:08 +0200
+ -- Sylvestre Ledru <sylvestre@debian.org>  Mon, 21 Sep 2015 11:14:28 +0200
 
 llvm-toolchain-3.6 (1:3.6.2-1) unstable; urgency=medium
 

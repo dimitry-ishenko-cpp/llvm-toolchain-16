@@ -37,3 +37,4 @@ bashsim.diff
 clang-analyzer-force-version.diff
 bug783205.patch
 bug-24472.diff
+bug-790686-build-id.diff
