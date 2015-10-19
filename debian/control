@@ -84,6 +84,15 @@ Description: Tool to convert C++98 and C++03 code to C++11
  the first two categories. The migrator is based on Clang's LibTooling and
  the AST Matching library.
 
+Package: clang-tidy-3.6
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: clang-based C++ linter tool
+ Provide an extensible framework for diagnosing and fixing typical programming
+ errors, like style violations, interface misuse, or bugs that can be deduced
+ via static analysis. clang-tidy is modular and provides a convenient interface
+ for writing new checks.
+
 
 Package: clang-3.6-doc
 Architecture: all
