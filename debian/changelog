@@ -1,9 +1,9 @@
 llvm-toolchain-3.6 (1:3.6.2-3) unstable; urgency=medium
 
   * Add a Break/Replaces clang-3.6 (<< 1:3.6.2-2) from clang-tidy-3.6
-    to simplify the transition
+    to simplify the transition (Closes: #802456)
 
- --
+ -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 20 Oct 2015 09:28:00 +0200
 
 llvm-toolchain-3.6 (1:3.6.2-2) unstable; urgency=medium
 
