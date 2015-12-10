@@ -1,8 +1,10 @@
-llvm-toolchain-3.7 (1:3.7.1~+rc2-1~exp2) UNRELEASED; urgency=medium
+llvm-toolchain-3.7 (1:3.7.1-1) unstable; urgency=medium
 
+  * New stable release
   * Fix bad symlinks (Closes: #806319)
+  * Fix an install issue with clang-tidy
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 26 Nov 2015 14:13:58 +0100
+ -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 10 Dec 2015 05:29:55 +0100
 
 llvm-toolchain-3.7 (1:3.7.1~+rc2-1~exp1) experimental; urgency=medium
 
