@@ -45,3 +45,4 @@ fix-cmake-config-prefix.diff
 kfreebsd-build-fix.patch
 ubuntu-precise-compiler-rt.diff
 clang-apply-replacements.diff
+llvm-3.6.0-ocaml-ctypes-0.4.0.5~patch
