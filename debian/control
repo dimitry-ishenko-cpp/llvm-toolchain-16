@@ -36,8 +36,9 @@ Description: C, C++ and Objective-C compiler (LLVM based)
  for the LLVM compiler. Its goal is to offer a replacement to the GNU Compiler
  Collection (GCC).
  .
- Clang implements all of the ISO C++ 1998 and 2001 standards and also provides
- a partial support of C++1y.
+ Clang fully implements all published ISO C++ standards including C++11, as
+ well as the upcoming C++14 standard, and some parts of the fledgling C++1z
+ standard, and is considered a production-quality C++ compiler.
 
 Package: clang-format-3.7
 Architecture: any
@@ -105,8 +106,9 @@ Description: C, C++ and Objective-C compiler (LLVM based) - Documentation
  for the LLVM compiler. Its goal is to offer a replacement to the GNU Compiler
  Collection (GCC).
  .
- Clang implements all of the ISO C++ 1998 and 2001 standards and also provides
- a partial support of C++1y.
+ Clang fully implements all published ISO C++ standards including C++11, as
+ well as the upcoming C++14 standard, and some parts of the fledgling C++1z
+ standard, and is considered a production-quality C++ compiler.
  .
  This package contains the documentation.
 
@@ -120,8 +122,9 @@ Description: C interface to the clang library
  for the LLVM compiler. Its goal is to offer a replacement to the GNU Compiler
  Collection (GCC).
  .
- Clang implements all of the ISO C++ 1998 and 2001 standards and also provides
- a partial support of C++1y.
+ Clang fully implements all published ISO C++ standards including C++11, as
+ well as the upcoming C++14 standard, and some parts of the fledgling C++1z
+ standard, and is considered a production-quality C++ compiler.
  .
  This package contains the clang library.
  .
@@ -142,8 +145,9 @@ Description: clang library
  for the LLVM compiler. Its goal is to offer a replacement to the GNU Compiler
  Collection (GCC).
  .
- Clang implements all of the ISO C++ 1998 and 2001 standards and also provides
- a partial support of C++1y.
+ Clang fully implements all published ISO C++ standards including C++11, as
+ well as the upcoming C++14 standard, and some parts of the fledgling C++1z
+ standard, and is considered a production-quality C++ compiler.
  .
  This package contains the debugging symbols.
 
@@ -157,8 +161,9 @@ Description: clang library - Development package
  for the LLVM compiler. Its goal is to offer a replacement to the GNU Compiler
  Collection (GCC).
  .
- Clang implements all of the ISO C++ 1998 and 2001 standards and also provides
- a partial support of C++1y.
+ Clang fully implements all published ISO C++ standards including C++11, as
+ well as the upcoming C++14 standard, and some parts of the fledgling C++1z
+ standard, and is considered a production-quality C++ compiler.
  .
  This package contains the clang headers to develop extensions over
  libclang1-3.7.
@@ -172,8 +177,9 @@ Description: clang library - Common development package
  for the LLVM compiler. Its goal is to offer a replacement to the GNU Compiler
  Collection (GCC).
  .
- Clang implements all of the ISO C++ 1998 and 2001 standards and also provides
- a partial support of C++1y.
+ Clang fully implements all published ISO C++ standards including C++11, as
+ well as the upcoming C++14 standard, and some parts of the fledgling C++1z
+ standard, and is considered a production-quality C++ compiler.
  .
  This package contains the clang generic headers and some libraries
  (profiling, etc).
@@ -190,8 +196,9 @@ Description: Clang Python Bindings
  for the LLVM compiler. Its goal is to offer a replacement to the GNU Compiler
  Collection (GCC).
  .
- Clang implements all of the ISO C++ 1998 and 2001 standards and also provides
- a partial support of C++1y.
+ Clang fully implements all published ISO C++ standards including C++11, as
+ well as the upcoming C++14 standard, and some parts of the fledgling C++1z
+ standard, and is considered a production-quality C++ compiler.
  .
  This binding package provides access to the Clang compiler and libraries.
 
@@ -205,8 +212,9 @@ Description: Clang examples
  for the LLVM compiler. Its goal is to offer a replacement to the GNU Compiler
  Collection (GCC).
  .
- Clang implements all of the ISO C++ 1998 and 2001 standards and also provides
- a partial support of C++1y.
+ Clang fully implements all published ISO C++ standards including C++11, as
+ well as the upcoming C++14 standard, and some parts of the fledgling C++1z
+ standard, and is considered a production-quality C++ compiler.
  .
  This package contains the clang examples.
 

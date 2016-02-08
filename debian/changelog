@@ -2,6 +2,7 @@ llvm-toolchain-3.7 (1:3.7.1-2) unstable; urgency=medium
 
   * Bring back the ocaml binding support. Thanks to Pierre Chifflier
     for the patch (Closes: #783919)
+  * Update the clang description for something more accurate (C++-11, 14, etc)
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 16 Jan 2016 12:32:12 +0100
 
