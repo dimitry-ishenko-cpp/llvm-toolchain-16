@@ -1,15 +1,12 @@
-llvm-toolchain-3.7 (1:3.7.1-3) UNRELEASED; urgency=medium
-
-  * Team upload.
-  * Disable polly on mips, powerpc and s390x, the testsuite is failing.
-
- -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 19 Feb 2016 01:25:06 +0100
-
 llvm-toolchain-3.7 (1:3.7.1-2) unstable; urgency=medium
 
+  [ Sylvestre Ledru]
   * Bring back the ocaml binding support. Thanks to Pierre Chifflier
     for the patch (Closes: #783919)
   * Update the clang description for something more accurate (C++-11, 14, etc)
+
+  [ Gianfranco Costamagna ]
+  * Disable polly on mips, powerpc and s390x, the testsuite is failing.
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 16 Jan 2016 12:32:12 +0100
 
