@@ -75,6 +75,12 @@ endif
 
 # Enable polly (or not)
 POLLY_ENABLE=yes
+POLLY_DISABLE_ARCHS := mips powerpc s390x
+# disable POLLY on some architectures
+ifeq (,$(filter-out $(POLLY_DISABLE_ARCHS), $(DEB_HOST_ARCH)))
+# Disable POLLY for this arch.
+		POLLY_ENABLE=no
+endif
 
 ifneq (,$(filter codecoverage,$(DEB_BUILD_OPTIONS)))
 # enable the code coverage
