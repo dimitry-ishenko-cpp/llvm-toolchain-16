@@ -6,7 +6,7 @@ llvm-toolchain-3.7 (1:3.7.1-2) unstable; urgency=medium
   [ Gianfranco Costamagna ]
   * Disable polly on mips, powerpc and s390x, the testsuite is failing (Closes: #816743).
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 16 Jan 2016 12:32:12 +0100
+ -- Sylvestre Ledru <sylvestre@debian.org>  Mon, 07 Mar 2016 09:53:48 +0100
 
 llvm-toolchain-3.7 (1:3.7.1-1) unstable; urgency=medium
 
