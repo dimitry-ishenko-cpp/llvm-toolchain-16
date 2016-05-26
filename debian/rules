@@ -250,7 +250,7 @@ override_dh_prep: build_doc
 
 build_doc:
 	cd $(CURDIR)/docs && make -f Makefile.sphinx && make -f Makefile.sphinx man
-	cd $(CURDIR)/tools/clang/docs && make -f Makefile.sphinx
+	cd $(CURDIR)/clang/docs && make -f Makefile.sphinx && make -f Makefile.sphinx man
 
 # Rename manpages
 	d=$(CURDIR)/docs/_build/man/; \
@@ -258,6 +258,8 @@ build_doc:
 	for f in *.1; do \
 		echo "$$f"|grep $(LLVM_VERSION) || mv $$f `echo $$f|sed "s|\.1|-$(LLVM_VERSION).1|"`; \
 	done
+
+	cd $(CURDIR)/clang/docs/_build/man/; mv clang.1 clang-$(LLVM_VERSION).1
 
 # Remove the copy of jquery. See bug #701087
 	for d in $(CURDIR)/clang/docs/_build/html/_static/ $(CURDIR)/docs/_build/html/_static/; do \
@@ -324,8 +326,6 @@ override_dh_auto_install:
 	done
 
 # Rename some stuff with the version name
-#	cp $(CURDIR)/$(TARGET_BUILD)/tools/clang/docs/tools/clang.1 $(CURDIR)/$(TARGET_BUILD)/tools/clang/docs/tools/clang-$(LLVM_VERSION).1
-
 	cp $(CURDIR)/clang/tools/scan-build/scan-build.1 $(CURDIR)/clang/tools/scan-build/scan-build-$(LLVM_VERSION).1
 
 	# copy the vim files (exept that tablegen does not exist for indent
