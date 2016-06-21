@@ -45,3 +45,4 @@ fix-cmake-config-prefix.diff
 kfreebsd-build-fix.patch
 ubuntu-precise-compiler-rt.diff
 clang-apply-replacements.diff
+mips-fpxx-enable.diff
