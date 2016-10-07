@@ -1,4 +1,4 @@
-llvm-toolchain-3.7 (1:3.7.1-3) yakkety; urgency=medium
+llvm-toolchain-3.7 (1:3.7.1-3) unstable; urgency=medium
 
   * Team upload.
 
@@ -12,6 +12,9 @@ llvm-toolchain-3.7 (1:3.7.1-3) yakkety; urgency=medium
 
   [ YunQiang Su ]
   * Enable FPXX by default on mips/mipsel (Closes: #826749)
+
+  [ Pablo Oliveira ]
+  * Fix clang manpage. (bug 26158)
 
  -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 07 Oct 2016 08:55:25 +0200
 
