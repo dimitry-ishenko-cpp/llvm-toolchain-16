@@ -65,9 +65,9 @@ else
 	control_vars = '-Vdep:devlibs=libstdc++6-$(GCC_VERSION)-dev'
 endif
 
-BINUTILS_GOLD_ARCHS := amd64 armhf i386 powerpc powerpcspe ppc64 ppc64el sparc sparc64 x32
+BINUTILS_GOLD_ARCHS := amd64 armhf i386 powerpcspe ppc64 ppc64el sparc sparc64 x32
 ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' binutils) ge 2.23.1-1~exp3 ; echo $$?),0)
-ifneq (,$(findstring $(DEB_HOST_ARCH),$(BINUTILS_GOLD_ARCHS)))
+ifneq (,$(filter $(DEB_HOST_ARCH),$(BINUTILS_GOLD_ARCHS)))
 # -fused-ld=gold enables the gold linker (but is not supported by all archs / distro)
 	LDFLAGS_EXTRA += -fuse-ld=gold
 endif
