@@ -1,3 +1,12 @@
+llvm-toolchain-3.7 (1:3.7.1-4~exp1) experimental; urgency=medium
+
+  * Disable clang, lldb, polly and compiler-rt to keep only
+    LLVM for ghc. Please use llvm-toolchain-3.{8,9} for anything
+    else.
+  * Only build on arm* as ghc only uses it on these archs
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 11 Jan 2017 15:06:46 +0100
+
 llvm-toolchain-3.7 (1:3.7.1-3) unstable; urgency=medium
 
   * Team upload.
