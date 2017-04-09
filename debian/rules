@@ -27,7 +27,7 @@ DEB_HOST_GNU_TYPE   = $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_HOST_ARCH_BITS  = $(shell dpkg-architecture -qDEB_HOST_ARCH_BITS)
 DEB_HOST_ARCH       = $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
-OCAML_STDLIB_DIR    ?= $(shell ocamlc -where)
+#OCAML_STDLIB_DIR    ?= $(shell ocamlc -where)
 
 LDFLAGS_EXTRA =
 CXXFLAGS_EXTRA = -std=c++0x -gsplit-dwarf
@@ -138,7 +138,8 @@ endif
 
 
 %:
-	dh $@ --with ocaml
+	dh $@
+# --with ocaml
 
 
 
@@ -148,13 +149,13 @@ preconfigure:
 		echo "$$f => $$f2"; \
 		sed -e 's|@DEB_HOST_MULTIARCH@|$(DEB_HOST_MULTIARCH)|g' \
 			-e "s|@LLVM_VERSION_FULL@|$(LLVM_VERSION_FULL)|g" \
-			-e "s|@OCAML_STDLIB_DIR@|$(OCAML_STDLIB_DIR)|g" \
 			-e "s|@LLVM_VERSION@|$(LLVM_VERSION)|g" $$f > $$f2; \
 	done
+#                        -e "s|@OCAML_STDLIB_DIR@|$(OCAML_STDLIB_DIR)|g"
 
 # Override this two targets. They are trying to manage the .in conversion for me
-override_dh_ocamlinit:
-override_dh_ocamlclean:
+#override_dh_ocamlinit:
+#override_dh_ocamlclean:
 
 override_dh_auto_configure: preconfigure
 	echo "Using gcc: "
@@ -284,7 +285,7 @@ override_dh_prep: build_doc
 build_doc:
 	cd $(CURDIR)/docs && make -f Makefile.sphinx && make -f Makefile.sphinx man
 	cd $(CURDIR)/clang/docs && make -f Makefile.sphinx && make -f Makefile.sphinx man
-	$(PRE_PROCESS) $(MAKE) $(NJOBS) -C "$(TARGET_BUILD)/docs" ocaml_doc
+#	$(PRE_PROCESS) $(MAKE) $(NJOBS) -C "$(TARGET_BUILD)/docs" ocaml_doc
 
 # Rename manpages
 	d=$(CURDIR)/docs/_build/man/; \
@@ -443,11 +444,11 @@ endif
 	fi
 
 # Rename OCaml bindings
-	if test -d "$(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/ocaml"; then \
-		mkdir -p "$(DEB_INST)$(OCAML_STDLIB_DIR)"; \
-		mv -f "$(DEB_INST)usr/lib/llvm-$(LLVM_VERSION)/lib/ocaml" \
-			"$(DEB_INST)$(OCAML_STDLIB_DIR)/llvm-$(LLVM_VERSION)"; \
-	fi
+#	if test -d "$(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/ocaml"; then \
+#		mkdir -p "$(DEB_INST)$(OCAML_STDLIB_DIR)"; \
+#		mv -f "$(DEB_INST)usr/lib/llvm-$(LLVM_VERSION)/lib/ocaml" \
+#			"$(DEB_INST)$(OCAML_STDLIB_DIR)/llvm-$(LLVM_VERSION)"; \
+#	fi
 
 # Delete the target build directory to save some space on the build systems
 # All the files have been installed in $(CURDIR)/debian/tmp/ already
