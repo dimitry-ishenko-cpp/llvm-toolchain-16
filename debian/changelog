@@ -5,6 +5,7 @@ llvm-toolchain-3.9 (1:3.9.1-6~exp2) experimental; urgency=medium
   * Bring back the ocaml binding. thanks to Cyril Soldani for the patch
     (Closes: #858626)
   * change the min version of the libclang1 symbols to 1:3.8.1-19~
+  * Fix the symlink on scan-build-py
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 28 Mar 2017 06:32:40 +0200
 
