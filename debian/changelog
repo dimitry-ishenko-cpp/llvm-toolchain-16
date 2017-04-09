@@ -4,6 +4,7 @@ llvm-toolchain-3.8 (1:3.8.1-19~exp4) experimental; urgency=medium
     Thanks to Julien Cristau for the patch
   * Bring back the ocaml binding. thanks to Cyril Soldani for the patch
     (Closes: #858626)
+  * Fix the symlink on scan-build-py
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 28 Mar 2017 06:32:40 +0200
 
