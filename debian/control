@@ -7,9 +7,12 @@ Build-Depends: debhelper (>= 9.0), flex, bison, dejagnu, tcl, expect,
     cmake, perl, libtool, chrpath, texinfo, sharutils, libffi-dev (>= 3.0.9),
     lsb-release, patchutils, diffstat, xz-utils, python-dev,
     libedit-dev, swig, python-six, python-sphinx, binutils-dev,
-    libjsoncpp-dev, ocaml-nox, libctypes-ocaml, ocaml-findlib,
-    libctypes-ocaml-dev, dh-ocaml,
+    libjsoncpp-dev,
     lcov, procps, help2man, zlib1g-dev,
+    ocaml-nox [amd64 arm64 armel armhf i386],
+    ocaml-findlib [amd64 arm64 armel armhf i386],
+    libctypes-ocaml-dev [amd64 arm64 armel armhf i386],
+    dh-ocaml [amd64 arm64 armel armhf i386],
     g++-multilib [amd64 i386 kfreebsd-amd64 mips mips64 mips64el mipsel powerpc ppc64 s390 s390x sparc sparc64 x32]
 Build-Conflicts: oprofile, ocaml, libllvm-3.4-ocaml-dev, libllvm-3.5-ocaml-dev,
   libllvm-3.8-ocaml-dev, libllvm-3.9-ocaml-dev
@@ -334,7 +337,7 @@ Description: Modular compiler and toolchain technologies, tools
 
 Package: libllvm-3.9-ocaml-dev
 Section: ocaml
-Architecture: any
+Architecture: amd64 arm64 armel armhf i386
 Suggests: llvm-3.9-doc
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${ocaml:Depends}, llvm-3.9-dev (= ${binary:Version})
 Provides: ${ocaml:Provides}

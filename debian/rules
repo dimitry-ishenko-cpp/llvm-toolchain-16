@@ -22,8 +22,6 @@ DEB_HOST_GNU_TYPE   = $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_HOST_ARCH_BITS  = $(shell dpkg-architecture -qDEB_HOST_ARCH_BITS)
 DEB_HOST_ARCH       = $(shell dpkg-architecture -qDEB_HOST_ARCH)
 
-OCAML_STDLIB_DIR    ?= $(shell ocamlc -where)
-
 LDFLAGS_EXTRA =
 CXXFLAGS_EXTRA = -std=c++0x
 CONFIGURE_EXTRA =
@@ -119,7 +117,6 @@ else
 	COVERITY_ENABLE=0
 endif
 
-
 LLDB_ENABLE=yes
 LLDB_DISABLE_ARCHS := hurd-i386 ia64 ppc64el powerpc s390x sparc64 mips64el ppc64
 # hurd has threading issues
@@ -133,10 +130,19 @@ endif
 
 LLD_ENABLE=NO
 
-%:
-	dh $@
-# --with ocaml
+DH_OPTIONS=
+OCAML_ENABLE= no
+OCAML_ARCHS := amd64 arm64 armel armhf i386
+ifneq (,$(filter $(DEB_HOST_ARCH),$(OCAML_ARCHS)))
+# Enable OCAML for this arch.
+	OCAML_ENABLE=yes
+	OCAML_STDLIB_DIR    ?= $(shell ocamlc -where)
+	DH_OPTIONS=--with ocaml
+endif
 
+
+%:
+	dh $@ $(DH_OPTIONS)
 
 
 preconfigure:
@@ -150,8 +156,8 @@ preconfigure:
 	done
 
 # Override this two targets. They are trying to manage the .in conversion for me
-#override_dh_ocamlinit:
-#override_dh_ocamlclean:
+override_dh_ocamlinit:
+override_dh_ocamlclean:
 
 override_dh_auto_configure: preconfigure
 	echo "Using gcc: "
@@ -256,7 +262,9 @@ override_dh_prep: build_doc
 build_doc:
 	cd $(CURDIR)/docs && make -f Makefile.sphinx && make -f Makefile.sphinx man
 	cd $(CURDIR)/clang/docs && make -f Makefile.sphinx && make -f Makefile.sphinx man
-	$(PRE_PROCESS) $(MAKE) $(NJOBS) -C "$(TARGET_BUILD)/docs" ocaml_doc
+	if test "$(OCAML_ENABLE)" = yes; then \
+	$(PRE_PROCESS) $(MAKE) $(NJOBS) -C "$(TARGET_BUILD)/docs" ocaml_doc; \
+	fi
 
 # Continue if failing, Ubuntu precise cannot generate manpages as sphinx is too old
 	-(cd $(TARGET_BUILD) && make $(NJOBS) docs-llvm-html docs-clang-html docs-clang-tools-html docs-polly-html docs-polly-man docs-clang-tools-man docs-clang-man docs-llvm-man)
@@ -407,10 +415,12 @@ override_dh_auto_install:
 	cp -R $(TARGET_BUILD)/tools/clang/tools/extra/docs/html $(CURDIR)/debian/usr/share/doc/clang-$(LLVM_VERSION)-doc/clang-extra
 
 # Rename OCaml bindings
-	if test -d "$(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/ocaml"; then \
-		mkdir -p "$(DEB_INST)$(OCAML_STDLIB_DIR)"; \
-		mv -f "$(DEB_INST)usr/lib/llvm-$(LLVM_VERSION)/lib/ocaml" \
+	if test "$(OCAML_ENABLE)" = yes; then \
+		if test -d "$(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/ocaml"; then \
+			mkdir -p "$(DEB_INST)$(OCAML_STDLIB_DIR)"; \
+			mv -f "$(DEB_INST)usr/lib/llvm-$(LLVM_VERSION)/lib/ocaml" \
 			"$(DEB_INST)$(OCAML_STDLIB_DIR)/llvm-$(LLVM_VERSION)"; \
+		fi; \
 	fi
 
 # Delete the target build directory to save some space on the build systems
