@@ -1,3 +1,10 @@
+llvm-toolchain-3.7 (1:3.7.1-4) unstable; urgency=medium
+
+  * Upload to unstable
+    Seems that the arm64 issue is experimental only
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Fri, 14 Apr 2017 18:58:55 +0200
+
 llvm-toolchain-3.7 (1:3.7.1-4~exp2) experimental; urgency=medium
 
   * Add -gsplit-dwarf to the CXXFLAGS to be able to link on armhf
