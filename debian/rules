@@ -28,7 +28,14 @@ DEB_HOST_ARCH       = $(shell dpkg-architecture -qDEB_HOST_ARCH)
 OCAML_STDLIB_DIR    ?= $(shell ocamlc -where)
 
 LDFLAGS_EXTRA =
-CXXFLAGS_EXTRA = -std=c++0x -gsplit-dwarf
+CXXFLAGS_EXTRA = -std=c++0x
+
+ifneq (,$(findstring $(DEB_HOST_ARCH),armhf))
+# Fix the link issue on armhf
+# Create an illegal instruction on arm64
+CXXFLAGS_EXTRA += -gsplit-dwarf
+endif
+
 CONFIGURE_EXTRA =
 
 ifneq (,$(filter $(DEB_HOST_ARCH),powerpc powerpcspe))
