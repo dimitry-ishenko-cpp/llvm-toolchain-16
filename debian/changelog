@@ -1,4 +1,11 @@
-llvm-toolchain-3.9 (1:3.9.1-7) UNRELEASED; urgency=medium
+llvm-toolchain-3.9 (1:3.9.1-8) unstable; urgency=medium
+
+  * Really fix "use versioned symbols" for llvm
+    Thanks to Julien Cristau for the patch (Closes: #849098)
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 25 Apr 2017 15:10:10 +0200
+
+llvm-toolchain-3.9 (1:3.9.1-7) unstable; urgency=medium
 
   * Limit the archs where the ocaml binding is built
     Should fix the FTBFS
