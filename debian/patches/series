@@ -57,3 +57,5 @@ clang-arm-default-vfp3-on-armv7a.patch
 lldb-server-path.diff
 lldb-server-link.diff
 add_symbols_versioning.patch
+fix-R_AARCH64_MOVW_UABS_G3-relocation.patch
+asan-48bit-VMA-aarch64.patch
