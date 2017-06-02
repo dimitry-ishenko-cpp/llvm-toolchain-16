@@ -1,0 +1,16 @@
+Description: Fix R_AARCH64_MOVW_UABS_G3 relocation
+Origin: upstream, https://reviews.llvm.org/D27609?id=80860
+Bug-Debian: https://bugs.debian.org/862360
+Author: Yichao Yu <yyc1992@gmail.com>
+Last-Update: 2016-12-15
+--- a/lib/ExecutionEngine/RuntimeDyld/RuntimeDyldELF.cpp
++++ b/lib/ExecutionEngine/RuntimeDyld/RuntimeDyldELF.cpp
+@@ -357,7 +357,7 @@
+     // bits affected by the relocation on entry is garbage.
+     *TargetPtr &= 0xffe0001fU;
+     // Immediate goes in bits 20:5 of MOVZ/MOVK instruction
+-    *TargetPtr |= Result >> (48 - 5);
++    *TargetPtr |= (Result & 0xffff000000000000ULL) >> (48 - 5);
+     // Shift must be "lsl #48", in bits 22:21
+     assert((*TargetPtr >> 21 & 0x3) == 3 && "invalid shift for relocation");
+     break;

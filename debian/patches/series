@@ -49,3 +49,4 @@ esan-Fix-ESan-test-failure-on-Debian-Sid-bot.diff
 esan-Fix-ESan-test-failure-on-Debian-Sid-bot2.diff
 857623-allow-opencl-pointer-to-bool.diff
 add_symbols_versioning.patch
+fix-R_AARCH64_MOVW_UABS_G3-relocation.patch
