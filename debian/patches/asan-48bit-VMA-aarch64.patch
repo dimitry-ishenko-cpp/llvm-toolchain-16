@@ -1,0 +1,16 @@
+Description: [asan] Enable 48-bit VMA support on aarch64
+Origin: upstream, https://reviews.llvm.org/D22095?id=63084
+Bug-Debian: https://bugs.debian.org/862360
+Author: Adhemerval Zanella <adhemerval.zanella@linaro.org>
+Last-Update: 2016-07-07
+--- a/compiler-rt/lib/sanitizer_common/sanitizer_platform.h
++++ b/compiler-rt/lib/sanitizer_common/sanitizer_platform.h
+@@ -114,6 +114,8 @@
+ // will still work but will consume more memory for TwoLevelByteMap.
+ #if defined(__mips__)
+ # define SANITIZER_MMAP_RANGE_SIZE FIRST_32_SECOND_64(1ULL << 32, 1ULL << 40)
++#elif defined(__aarch64__)
++# define SANITIZER_MMAP_RANGE_SIZE FIRST_32_SECOND_64(1ULL << 32, 1ULL << 48)
+ #else
+ # define SANITIZER_MMAP_RANGE_SIZE FIRST_32_SECOND_64(1ULL << 32, 1ULL << 47)
+ #endif
