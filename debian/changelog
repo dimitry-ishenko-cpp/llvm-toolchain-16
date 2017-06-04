@@ -1,9 +1,10 @@
-llvm-toolchain-3.9 (1:3.9.1-9) UNRELEASED; urgency=medium
+llvm-toolchain-3.9 (1:3.9.1-9) unstable; urgency=medium
 
   * debian/patches/fix-R_AARCH64_MOVW_UABS_G3-relocation.patch:
     fix relocation issue, preventing Julia from working correctly on
     arm64 (Closes: #862535)
-
+  * Fix doc generation (Closes: #862597)
+    - there was a missing install file
 
  -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 02 Jun 2017 15:14:18 +0200
 
