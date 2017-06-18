@@ -253,7 +253,7 @@ override_dh_auto_build:
 	CFLAGS=`dpkg-buildflags --get CFLAGS`; \
 	CFLAGS="$$CFLAGS `dpkg-buildflags --get CPPFLAGS`"; \
 	echo $$CFLAGS; \
-	bin/clang++ -c $$CFLAGS -std=c++11 ../lib/Fuzzer/*.cpp -IFuzzer; \
+	bin/clang++ -v -c $$CFLAGS -std=c++11 ../lib/Fuzzer/*.cpp -IFuzzer; \
 	ar ruv libFuzzer.a Fuzzer*.o
 
 override_dh_prep: build_doc

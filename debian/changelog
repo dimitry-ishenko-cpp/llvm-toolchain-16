@@ -1,3 +1,13 @@
+llvm-toolchain-3.9 (1:3.9.1-10) unstable; urgency=medium
+
+  * Now that strech has been released, upload in unstable!
+    This is necessary for rust in unstable
+  * Try to fix some PATH_MAX on hurd
+  * Enable the verbose mode when trying to build libfuzzer
+    to detect potential issues in the path search
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 18 Jun 2017 19:12:15 +0200
+
 llvm-toolchain-3.9 (1:3.9.1-10~exp1) experimental; urgency=medium
 
   [ Ximin Luo ]

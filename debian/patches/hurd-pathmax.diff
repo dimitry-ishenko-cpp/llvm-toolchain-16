@@ -1,8 +1,8 @@
-Index: llvm-toolchain-snapshot_3.9~svn265113/clang/lib/Basic/FileManager.cpp
+Index: llvm-toolchain-3.9-3.9.1/clang/lib/Basic/FileManager.cpp
 ===================================================================
---- llvm-toolchain-snapshot_3.9~svn265113.orig/clang/lib/Basic/FileManager.cpp
-+++ llvm-toolchain-snapshot_3.9~svn265113/clang/lib/Basic/FileManager.cpp
-@@ -494,6 +494,10 @@ void FileManager::invalidateCache(const
+--- llvm-toolchain-3.9-3.9.1.orig/clang/lib/Basic/FileManager.cpp
++++ llvm-toolchain-3.9-3.9.1/clang/lib/Basic/FileManager.cpp
+@@ -497,6 +497,10 @@ void FileManager::invalidateCache(const
    UniqueRealFiles.erase(Entry->getUniqueID());
  }
  
@@ -13,10 +13,10 @@ Index: llvm-toolchain-snapshot_3.9~svn265113/clang/lib/Basic/FileManager.cpp
  
  void FileManager::GetUniqueIDMapping(
                     SmallVectorImpl<const FileEntry *> &UIDToFiles) const {
-Index: llvm-toolchain-snapshot_3.9~svn265113/lldb/include/lldb/lldb-defines.h
+Index: llvm-toolchain-3.9-3.9.1/lldb/include/lldb/lldb-defines.h
 ===================================================================
---- llvm-toolchain-snapshot_3.9~svn265113.orig/lldb/include/lldb/lldb-defines.h
-+++ llvm-toolchain-snapshot_3.9~svn265113/lldb/include/lldb/lldb-defines.h
+--- llvm-toolchain-3.9-3.9.1.orig/lldb/include/lldb/lldb-defines.h
++++ llvm-toolchain-3.9-3.9.1/lldb/include/lldb/lldb-defines.h
 @@ -28,6 +28,11 @@
      #define INT32_MAX 2147483647
  #endif
@@ -29,11 +29,11 @@ Index: llvm-toolchain-snapshot_3.9~svn265113/lldb/include/lldb/lldb-defines.h
  #if !defined(UINT32_MAX)
      #define UINT32_MAX 4294967295U
  #endif
-Index: llvm-toolchain-snapshot_3.9~svn265113/lib/Support/Unix/Path.inc
+Index: llvm-toolchain-3.9-3.9.1/lib/Support/Unix/Path.inc
 ===================================================================
---- llvm-toolchain-snapshot_3.9~svn265113.orig/lib/Support/Unix/Path.inc
-+++ llvm-toolchain-snapshot_3.9~svn265113/lib/Support/Unix/Path.inc
-@@ -58,6 +58,7 @@
+--- llvm-toolchain-3.9-3.9.1.orig/lib/Support/Unix/Path.inc
++++ llvm-toolchain-3.9-3.9.1/lib/Support/Unix/Path.inc
+@@ -62,6 +62,7 @@
  // For GNU Hurd
  #if defined(__GNU__) && !defined(PATH_MAX)
  # define PATH_MAX 4096
@@ -41,10 +41,10 @@ Index: llvm-toolchain-snapshot_3.9~svn265113/lib/Support/Unix/Path.inc
  #endif
  
  #include <sys/types.h>
-Index: llvm-toolchain-snapshot_3.9~svn265113/tools/dsymutil/DwarfLinker.cpp
+Index: llvm-toolchain-3.9-3.9.1/tools/dsymutil/DwarfLinker.cpp
 ===================================================================
---- llvm-toolchain-snapshot_3.9~svn265113.orig/tools/dsymutil/DwarfLinker.cpp
-+++ llvm-toolchain-snapshot_3.9~svn265113/tools/dsymutil/DwarfLinker.cpp
+--- llvm-toolchain-3.9-3.9.1.orig/tools/dsymutil/DwarfLinker.cpp
++++ llvm-toolchain-3.9-3.9.1/tools/dsymutil/DwarfLinker.cpp
 @@ -41,6 +41,11 @@
  #include <string>
  #include <tuple>
@@ -57,3 +57,42 @@ Index: llvm-toolchain-snapshot_3.9~svn265113/tools/dsymutil/DwarfLinker.cpp
  namespace llvm {
  namespace dsymutil {
  
+Index: llvm-toolchain-3.9-3.9.1/polly/lib/External/ppcg/cuda_common.c
+===================================================================
+--- llvm-toolchain-3.9-3.9.1.orig/polly/lib/External/ppcg/cuda_common.c
++++ llvm-toolchain-3.9-3.9.1/polly/lib/External/ppcg/cuda_common.c
+@@ -14,6 +14,7 @@
+ 
+ #include "cuda_common.h"
+ #include "ppcg.h"
++#include "util.h"
+ 
+ /* Open the host .cu file and the kernel .hu and .cu files for writing.
+  * Add the necessary includes.
+Index: llvm-toolchain-3.9-3.9.1/polly/lib/External/ppcg/util.h
+===================================================================
+--- llvm-toolchain-3.9-3.9.1.orig/polly/lib/External/ppcg/util.h
++++ llvm-toolchain-3.9-3.9.1/polly/lib/External/ppcg/util.h
+@@ -10,4 +10,10 @@ static inline int prefixcmp(const char *
+ 	return strncmp(s, prefix, strlen(prefix));
+ }
+ 
++// For GNU Hurd
++#if defined(__GNU__) && !defined(PATH_MAX)
++# define PATH_MAX 4096
++#endif
++
++
+ #endif
+Index: llvm-toolchain-3.9-3.9.1/polly/lib/External/ppcg/cpu.c
+===================================================================
+--- llvm-toolchain-3.9-3.9.1.orig/polly/lib/External/ppcg/cpu.c
++++ llvm-toolchain-3.9-3.9.1/polly/lib/External/ppcg/cpu.c
+@@ -22,6 +22,7 @@
+ #include "ppcg_options.h"
+ #include "cpu.h"
+ #include "print.h"
++#include "util.h"
+ 
+ /* Representation of a statement inside a generated AST.
+  *
