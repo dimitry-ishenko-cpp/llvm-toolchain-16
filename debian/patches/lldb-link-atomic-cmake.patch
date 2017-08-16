@@ -6,13 +6,14 @@ Index: llvm-toolchain-3.9_3.9~+rc1/lldb/cmake/LLDBDependencies.cmake
 ===================================================================
 --- llvm-toolchain-3.9_3.9~+rc1.orig/lldb/cmake/LLDBDependencies.cmake
 +++ llvm-toolchain-3.9_3.9~+rc1/lldb/cmake/LLDBDependencies.cmake
-@@ -182,6 +182,12 @@ if (LLVM_BUILD_STATIC)
+@@ -182,6 +182,13 @@ if (LLVM_BUILD_STATIC)
    endif()
  endif()
  
 +if(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "mips" OR
 +   CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "mipsel" OR
-+   CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "mips64el")
++   CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "mips64el" OR
++   CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "powerpcspe")
 +  list(APPEND LLDB_SYSTEM_LIBS atomic)
 +endif()
 +
