@@ -2,6 +2,8 @@ llvm-toolchain-3.9 (1:3.9.1-11) unstable; urgency=medium
 
   [ Sylvestre Ledru ]
   * Remove the --no-discard-stderr option from help2man calls
+  * Also add a missing include in ftfbs-gcc.diff to fix a ftbfs
+    with gcc 7
   * clang was producing unusable binaries on armv5tel (Closes #873304)
     Thanks to Adrian Bunk for the patch
   * Disable -gsplit-dwarf when using gcc 7 for causing a linking issue

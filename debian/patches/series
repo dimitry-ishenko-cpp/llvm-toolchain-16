@@ -51,3 +51,4 @@ esan-Fix-ESan-test-failure-on-Debian-Sid-bot2.diff
 add_symbols_versioning.patch
 fix-R_AARCH64_MOVW_UABS_G3-relocation.patch
 rust-0032-Fix-computeKnownBits-for-ARMISD-CMOV.patch
+ftfbs-gcc.diff

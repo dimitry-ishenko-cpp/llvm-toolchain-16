@@ -1,0 +1,12 @@
+Index: llvm-toolchain-4.0-4.0.1~+rc3/lldb/include/lldb/Utility/TaskPool.h
+===================================================================
+--- llvm-toolchain-4.0-4.0.1~+rc3.orig/lldb/include/lldb/Utility/TaskPool.h
++++ llvm-toolchain-4.0-4.0.1~+rc3/lldb/include/lldb/Utility/TaskPool.h
+@@ -33,6 +33,7 @@
+ #include <queue>
+ #include <thread>
+ #include <vector>
++#include <functional>
+ 
+ // Global TaskPool class for running tasks in parallel on a set of worker thread
+ // created the first
