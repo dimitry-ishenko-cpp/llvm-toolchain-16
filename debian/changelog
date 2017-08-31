@@ -1,3 +1,11 @@
+llvm-toolchain-3.9 (1:3.9.1-12) unstable; urgency=medium
+
+  * Fix the FTBFS because of -gsplit-dwarf:
+    - Only enable it on archs which needs it
+    - Only enable it when gcc supports it correctly
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 31 Aug 2017 18:49:20 +0200
+
 llvm-toolchain-3.9 (1:3.9.1-11) unstable; urgency=medium
 
   [ Sylvestre Ledru ]
@@ -10,7 +18,7 @@ llvm-toolchain-3.9 (1:3.9.1-11) unstable; urgency=medium
     See https://bugs.llvm.org/show_bug.cgi?id=34140 (Closes: #853524)
 
   [ Gianfranco Costamagna, John Paul Adrian Glaubitz ]
-  * Add powerpcspe to latomic archs 
+  * Add powerpcspe to latomic archs
 
   [ Katsuhiko Nishimra ]
   * Ensure /usr/bin/g++-$(GCC_VERSION) exists (Closes: #871591)
