@@ -40,13 +40,12 @@ ifneq (,$(filter $(DEB_HOST_ARCH),$(ENABLE_SPLIT_DWARF_ARCHS)))
 ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' binutils) ge 2.22.52.0.4 ; echo $$?),0)
 # when using -gsplit-dwarf, it will requires extract-dwo which doesn't exist on precise:
 # More: https://llvm.org/bugs/show_bug.cgi?id=28841
-ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' g++-$(GCC_VERSION)) lt 7.1.0-7~ ; echo $$?),0)
-ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' g++-$(GCC_VERSION)) ge 7.2.0-2 ; echo $$?),0)
+ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' g++-$(GCC_VERSION)) lt 7.1.0-7~ || \
+	dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' g++-$(GCC_VERSION)) ge 7.2.0-2; echo $$?),0)
 # Only pass -gsplit-dwarf with working version of gcc 7
 # More: https://bugs.llvm.org/show_bug.cgi?id=34140 & https://bugs.debian.org/873609
 CXXFLAGS_EXTRA += -gsplit-dwarf
-endif # > 7.2.0-2
-endif # < gcc 7
+endif # < gcc 7 or > 7.2.0-2
 endif # binutils
 endif # archs
 
