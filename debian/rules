@@ -34,7 +34,7 @@ ifneq (,$(filter $(DEB_HOST_ARCH),powerpc powerpcspe))
 LDFLAGS_EXTRA += -latomic
 endif
 
-ENABLE_SPLIT_DWARF_ARCHS := armel armhf i386 mips powerpc
+ENABLE_SPLIT_DWARF_ARCHS := armel armhf i386 mips powerpc amd64
 # Only enable gsplit dwarf on archs which needs it
 ifneq (,$(filter $(DEB_HOST_ARCH),$(ENABLE_SPLIT_DWARF_ARCHS)))
 ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' binutils) ge 2.22.52.0.4 ; echo $$?),0)
@@ -45,6 +45,8 @@ ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' g++
 # Only pass -gsplit-dwarf with working version of gcc 7
 # More: https://bugs.llvm.org/show_bug.cgi?id=34140 & https://bugs.debian.org/873609
 CXXFLAGS_EXTRA += -gsplit-dwarf
+else 
+$(error "Broken gcc version for -gsplit-dwarf support. Please use < gcc 7 or > 7.2.0-2")
 endif # < gcc 7 or > 7.2.0-2
 endif # binutils
 endif # archs

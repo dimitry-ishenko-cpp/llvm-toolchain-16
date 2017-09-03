@@ -1,3 +1,9 @@
+llvm-toolchain-3.9 (1:3.9.1-15) unstable; urgency=medium
+
+  * Fail the build if the arch + gcc has a broken gsplit-dwarf support
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 03 Sep 2017 15:12:37 +0200
+
 llvm-toolchain-3.9 (1:3.9.1-13) unstable; urgency=medium
 
   * Fix the previous declaration, incorrect gcc comparison
