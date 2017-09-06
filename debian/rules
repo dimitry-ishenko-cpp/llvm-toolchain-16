@@ -34,7 +34,7 @@ ifneq (,$(filter $(DEB_HOST_ARCH),powerpc powerpcspe))
 LDFLAGS_EXTRA += -latomic
 endif
 
-ENABLE_SPLIT_DWARF_ARCHS := armel armhf i386 mips powerpc amd64
+ENABLE_SPLIT_DWARF_ARCHS := armel armhf i386 mips powerpc
 # Only enable gsplit dwarf on archs which needs it
 ifneq (,$(filter $(DEB_HOST_ARCH),$(ENABLE_SPLIT_DWARF_ARCHS)))
 ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' binutils) ge 2.22.52.0.4 ; echo $$?),0)
