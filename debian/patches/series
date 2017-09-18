@@ -53,4 +53,3 @@ fix-R_AARCH64_MOVW_UABS_G3-relocation.patch
 rust-0032-Fix-computeKnownBits-for-ARMISD-CMOV.patch
 ftfbs-gcc.diff
 pr81066.diff
-armhf-bitfield.diff
