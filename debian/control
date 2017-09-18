@@ -225,6 +225,8 @@ Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
 Multi-Arch: same
+Breaks: libllvm3.9v4
+Replaces: libllvm3.9v4
 Description: Modular compiler and toolchain technologies, runtime library
  LLVM is a collection of libraries and tools that make it easy to build
  compilers, optimizers, just-in-time code generators, and many other
@@ -239,6 +241,8 @@ Priority: extra
 Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm3.9 (= ${binary:Version})
 Pre-Depends: ${misc:Pre-Depends}
 Multi-Arch: same
+Breaks: libllvm3.9v4-dbg
+Replaces: libllvm3.9v4-dbg
 Description: Modular compiler and toolchain technologies, debugging libraries
  LLVM is a collection of libraries and tools that make it easy to build
  compilers, optimizers, just-in-time code generators, and many other

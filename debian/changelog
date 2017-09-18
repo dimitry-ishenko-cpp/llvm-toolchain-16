@@ -2,6 +2,12 @@ llvm-toolchain-3.9 (1:3.9.1-16) UNRELEASED; urgency=medium
 
   [ Matthias Klose ]
   * Link with --no-keep-files-mapped --no-map-whole-files when using gold.
+  * Fix sanitizer build failure with glibc-2.26.
+  * build using gold on arm64 and s390x. For backports, arm64 might still
+    need the BFD linker, and building with only one or two processes in
+    parallel.
+  * On amd64, s390x, arm64 and ppc64el, build with -g1 instead of -g.
+  * Set CMAKE_CXX_FLAGS_RELWITHDEBINFO and pass opt_flags.
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Fri, 08 Sep 2017 11:57:07 +0200
 
