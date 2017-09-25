@@ -59,10 +59,13 @@ endif
 export CC=gcc-$(GCC_VERSION)
 export CXX=g++-$(GCC_VERSION)
 
-opt_flags = -g -O2
+opt_flags = -O2 -DNDEBUG
 ifneq (,$(filter $(DEB_HOST_ARCH),amd64 arm64 ppc64el s390x))
-  opt_flags = -g1 -O2
+  opt_flags += -g1
+else
+  opt_flags += -g
 endif
+
 ifneq (,$(findstring $(DEB_HOST_ARCH),armel))
   opt_flags += -marm
   # 3.8 fails to build, disable the compiler_rt builtins
