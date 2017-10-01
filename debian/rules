@@ -91,7 +91,7 @@ ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' bin
 ifneq (,$(filter $(DEB_HOST_ARCH),$(BINUTILS_GOLD_ARCHS)))
 # -fused-ld=gold enables the gold linker (but is not supported by all archs / distro)
 	LDFLAGS_EXTRA += -fuse-ld=gold --no-keep-files-mapped --no-map-whole-files
-	CXXFLAGS_EXTRA += -Wl,-fuse-ld=gold -Wl,--no-keep-files-mapped -Wl,--no-map-whole-files
+	CXXFLAGS_EXTRA += -fuse-ld=gold -Wl,--no-keep-files-mapped -Wl,--no-map-whole-files
 	CMAKE_EXTRA += -DLLVM_BINUTILS_INCDIR=/usr/include/
 endif
 endif
