@@ -158,9 +158,9 @@ OCAML_ENABLE= no
 OCAML_ARCHS := amd64 arm64 armel armhf i386
 ifneq (,$(filter $(DEB_HOST_ARCH),$(OCAML_ARCHS)))
 # Enable OCAML for this arch.
-	OCAML_ENABLE=yes
-	OCAML_STDLIB_DIR    ?= $(shell ocamlc -where)
-	DH_OPTIONS=--with ocaml
+#	OCAML_ENABLE=yes
+#	OCAML_STDLIB_DIR    ?= $(shell ocamlc -where)
+#	DH_OPTIONS=--with ocaml
 endif
 
 
