@@ -9,11 +9,11 @@ Build-Depends: debhelper (>= 9.0), flex, bison, dejagnu, tcl, expect,
     libedit-dev, swig, python-six, python-sphinx, binutils-dev,
     libjsoncpp-dev,
     lcov, procps, help2man, zlib1g-dev,
-    g++-multilib [amd64 i386 kfreebsd-amd64 mips mips64 mips64el mipsel powerpc ppc64 s390 s390x sparc sparc64 x32],
-    # ocaml-nox [amd64 arm64 armel armhf i386],
-    # ocaml-findlib [amd64 arm64 armel armhf i386],
-    # libctypes-ocaml-dev [amd64 arm64 armel armhf i386],
-    # dh-ocaml [amd64 arm64 armel armhf i386],
+    g++-multilib [amd64 i386 kfreebsd-amd64 mips mips64 mips64el mipsel powerpc ppc64 s390 s390x sparc sparc64 x32]
+# ocaml-nox [amd64 arm64 armel armhf i386],
+# ocaml-findlib [amd64 arm64 armel armhf i386],
+# libctypes-ocaml-dev [amd64 arm64 armel armhf i386],
+# dh-ocaml [amd64 arm64 armel armhf i386],
 Build-Conflicts: oprofile, ocaml, libllvm-3.4-ocaml-dev, libllvm-3.5-ocaml-dev,
  libllvm-3.8-ocaml-dev
 Standards-Version: 4.1.0
