@@ -3,11 +3,14 @@ llvm-toolchain-3.8 (1:3.8.1-25) unstable; urgency=medium
   * Fix the detection of gcc (Closes: #853523)
   * Force the deactivation of ocaml until the transition is done
   * Standards-Version: 4.1.0
+  * Backport the gsplit dwarf fix (Closes: #853523)
   * Try to fix the mipsel FTBFS (Closes: #877567)
     I am trying the first option from the bug:
     - gsplit-dward on 32 bits archs
     - -g everywhere
     Many thanks to Adrian Bunk for that
+  * clang was producing unusable binaries on armv5tel (Closes: #868779)
+    Thanks to Adrian Bunk for the patch
 
   [ Gianfranco Costamagna, John Paul Adrian Glaubitz ]
   * Add powerpcspe to latomic archs

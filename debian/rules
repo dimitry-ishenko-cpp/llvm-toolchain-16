@@ -80,6 +80,9 @@ ifneq (,$(findstring $(DEB_HOST_ARCH),armel))
   # 3.8 fails to build, disable the compiler_rt builtins
   # See http://lists.llvm.org/pipermail/llvm-dev/2016-May/099761.html
   CMAKE_EXTRA += -DCOMPILER_RT_BUILD_BUILTINS=OFF
+  # Prevent clang from getting a > v4t default
+  # See bug #868779
+  CMAKE_EXTRA += -DLLVM_HOST_TRIPLE=arm-linux-gnueabi
 endif
 
 ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' g++-$(GCC_VERSION)) ge 4.8-20121128-1~ ; echo $$?),0)
