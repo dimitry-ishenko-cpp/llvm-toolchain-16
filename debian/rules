@@ -5,7 +5,10 @@ DEB_INST		:= $(CURDIR)/debian/tmp/
 #GCC_VERSION     := 4.8
 # The 5|6| in the regexp is a crappy workaround. g++ 5.2 in Debian is not providing a g++-5.2 binary (only g++-5)
 # accomodate that by hardcoding the 5 detection
-GCC_VERSION     := $(shell dpkg-query -W -f '$${Version}' g++ | sed -rne 's,^([0-9]+:)?(5|6|[0-9]+\.[0-9]+|[0-9]+).*$$,\2,p')
+GXX_VERSIONED_PACKAGE    := $(shell dpkg-query -W -f '$${Depends}' g++ | grep -o 'g++-[0-9][0-9.]*' | tail -n1 )
+GXX_VERSIONED_EXECUTABLE := $(shell dpkg -L $(GXX_VERSIONED_PACKAGE) | grep '/usr/bin/g++-[0-9][0-9.]*' | xargs ls -d | tail -n1 )
+GCC_VERSION              := $(subst /usr/bin/g++-,,$(GXX_VERSIONED_EXECUTABLE))
+
 LLVM_VERSION	:= 3.8
 LLVM_VERSION_FULL := $(LLVM_VERSION).1
 SONAME_EXT      := 1
@@ -146,9 +149,9 @@ OCAML_ENABLE= no
 OCAML_ARCHS := amd64 arm64 armel armhf i386
 ifneq (,$(filter $(DEB_HOST_ARCH),$(OCAML_ARCHS)))
 # Enable OCAML for this arch.
-	OCAML_ENABLE=yes
-	OCAML_STDLIB_DIR    ?= $(shell ocamlc -where)
-	DH_OPTIONS=--with ocaml
+	# OCAML_ENABLE=yes
+	# OCAML_STDLIB_DIR    ?= $(shell ocamlc -where)
+	# DH_OPTIONS=--with ocaml
 endif
 
 

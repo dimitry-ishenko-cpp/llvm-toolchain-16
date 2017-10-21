@@ -9,14 +9,14 @@ Build-Depends: debhelper (>= 9.0), flex, bison, dejagnu, tcl, expect,
     libedit-dev, swig, python-six, python-sphinx, binutils-dev,
     libjsoncpp-dev,
     lcov, procps, help2man, zlib1g-dev,
-    ocaml-nox [amd64 arm64 armel armhf i386],
-    ocaml-findlib [amd64 arm64 armel armhf i386],
-    libctypes-ocaml-dev [amd64 arm64 armel armhf i386],
-    dh-ocaml [amd64 arm64 armel armhf i386],
-    g++-multilib [amd64 i386 kfreebsd-amd64 mips mips64 mips64el mipsel powerpc ppc64 s390 s390x sparc sparc64 x32]
+    g++-multilib [amd64 i386 kfreebsd-amd64 mips mips64 mips64el mipsel powerpc ppc64 s390 s390x sparc sparc64 x32],
+    # ocaml-nox [amd64 arm64 armel armhf i386],
+    # ocaml-findlib [amd64 arm64 armel armhf i386],
+    # libctypes-ocaml-dev [amd64 arm64 armel armhf i386],
+    # dh-ocaml [amd64 arm64 armel armhf i386],
 Build-Conflicts: oprofile, ocaml, libllvm-3.4-ocaml-dev, libllvm-3.5-ocaml-dev,
  libllvm-3.8-ocaml-dev
-Standards-Version: 3.9.8
+Standards-Version: 4.1.0
 Homepage: http://www.llvm.org/
 Vcs-Svn: svn://anonscm.debian.org/svn/pkg-llvm/llvm-toolchain/branches/3.8/
 Vcs-Browser: https://svn.debian.org/viewsvn/pkg-llvm/llvm-toolchain/branches/3.8/
@@ -335,26 +335,26 @@ Description: Modular compiler and toolchain technologies, tools
  .
  This package provides tools for testing.
 
-Package: libllvm-3.8-ocaml-dev
-Section: ocaml
-Architecture: amd64 arm64 armel armhf i386
-Suggests: llvm-3.8-doc
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${ocaml:Depends}, llvm-3.8-dev (= ${binary:Version})
-Provides: ${ocaml:Provides}
-Description: Modular compiler and toolchain technologies, OCaml bindings
- LLVM is a collection of libraries and tools that make it easy to build
- compilers, optimizers, just-in-time code generators, and many other
- compiler-related programs.
- .
- LLVM uses a single, language-independent virtual instruction set both
- as an offline code representation (to communicate code between
- compiler phases and to run-time systems) and as the compiler internal
- representation (to analyze and transform programs). This persistent
- code representation allows a common set of sophisticated compiler
- techniques to be applied at compile-time, link-time, install-time,
- run-time, or "idle-time" (between program runs).
- .
- This package provides the OCaml bindings to develop applications using llvm.
+# Package: libllvm-3.8-ocaml-dev
+# Section: ocaml
+# Architecture: amd64 arm64 armel armhf i386
+# Suggests: llvm-3.8-doc
+# Depends: ${shlibs:Depends}, ${misc:Depends}, ${ocaml:Depends}, llvm-3.8-dev (= ${binary:Version})
+# Provides: ${ocaml:Provides}
+# Description: Modular compiler and toolchain technologies, OCaml bindings
+#  LLVM is a collection of libraries and tools that make it easy to build
+#  compilers, optimizers, just-in-time code generators, and many other
+#  compiler-related programs.
+#  .
+#  LLVM uses a single, language-independent virtual instruction set both
+#  as an offline code representation (to communicate code between
+#  compiler phases and to run-time systems) and as the compiler internal
+#  representation (to analyze and transform programs). This persistent
+#  code representation allows a common set of sophisticated compiler
+#  techniques to be applied at compile-time, link-time, install-time,
+#  run-time, or "idle-time" (between program runs).
+#  .
+#  This package provides the OCaml bindings to develop applications using llvm.
 
 Package: llvm-3.8-doc
 Section: doc
