@@ -77,7 +77,6 @@ clang-arm-default-vfp3-on-armv7a.patch
 # Julia compa (to avoid yet-a-new-fork-of-llvm)
 # See bug 919628
 # (1) [unwind] llvm-D27629-AArch64-large_model_6.0.1
-julia/llvm-D27629-AArch64-large_model_4.0.patch
 julia/llvm-D27629-AArch64-large_model_6.0.1.patch
 # (2) [performance] llvm-D34078-vectorize-fdiv
 julia/llvm-D34078-vectorize-fdiv.patch
