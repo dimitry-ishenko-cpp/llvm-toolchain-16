@@ -94,7 +94,8 @@ julia/llvm-rL326967-aligned-load.patch
 julia/llvm-rL327898.patch
 # (11) [profiling] llvm-D44892-Perf-integration
 julia/llvm-D44892-Perf-integration.patch
-
+# Dep of llvm-PPC-addrspaces.patch
+julia/llvm-6.0-NVPTX-addrspaces.patch
 # (12) [bug fix] llvm-D49832-SCEVPred
 #     [bug fix] llvm-rL323946-LSRTy
 # Already applied before
