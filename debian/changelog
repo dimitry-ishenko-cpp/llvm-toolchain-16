@@ -1,4 +1,4 @@
-llvm-toolchain-7 (1:7.1.0~svn353565-1~exp1) UNRELEASED; urgency=medium
+llvm-toolchain-7 (1:7.1.0~svn354203-1~exp1) experimental; urgency=medium
 
   * New stable release.
     To be clear, this is the same as release 7.0.1
@@ -15,7 +15,10 @@ llvm-toolchain-7 (1:7.1.0~svn353565-1~exp1) UNRELEASED; urgency=medium
     More info on https://bugs.llvm.org/show_bug.cgi?id=39427
     and https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=913271
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 09 Feb 2019 16:34:12 +0100
+  [ Matthias Klose ]
+  * Remove the autopkg test for a genuine LLVM bug.
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 16 Feb 2019 17:16:16 +0100
 
 llvm-toolchain-7 (1:7.0.1-7) unstable; urgency=medium
 

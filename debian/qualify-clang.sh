@@ -193,43 +193,6 @@ clang-$VERSION -flto foo.c -o foo
 clang-$VERSION -fuse-ld=gold foo.c -o foo
 ./foo > /dev/null
 
-# Segfault https://bugs.llvm.org/show_bug.cgi?id=26580
-echo '
-extern int a;
-extern void bar (void);
-int main() {
-  bar ();
-  if (a != 30)
-    __builtin_abort();
-  return 0;
-}' > x.c
-
-echo 'int a;
-__attribute__((visibility("protected"))) int a;
-void bar () {
-  a = 30;
-}
-' > bar.c
-
-# reported in https://bugs.llvm.org/show_bug.cgi?id=26580#c18
-if [ $DEB_HOST_ARCH != "i386" ]; then
-    clang-$VERSION -O3 -c -o x.o x.c
-    clang-$VERSION -O3 -fpic -c -o bar.o bar.c
-    clang-$VERSION -fuse-ld=bfd -shared -o libfoo.so bar.o
-    clang-$VERSION -fuse-ld=bfd -o y x.o libfoo.so -Wl,-R,.
-    # Still failing, commenting
-    ./y || true
-fi
-
-clang-$VERSION -O3 -c -o x.o x.c
-clang-$VERSION -O3 -fpic -c -o bar.o bar.c
-clang-$VERSION -fuse-ld=gold -shared -o libfoo.so bar.o
-# Still failing, commenting
-clang-$VERSION -fuse-ld=gold -o y x.o libfoo.so -Wl,-R,. || true
-
-rm -f x.c bar.c libfoo.so bar.o y x.o
-
-
 # test thinlto
 echo "int foo(void) {	return 0; }"> foo.c
 echo "int foo(void); int main() {foo();	return 0;}">main.c
