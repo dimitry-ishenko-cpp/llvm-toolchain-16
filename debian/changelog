@@ -14,6 +14,8 @@ llvm-toolchain-7 (1:7.1.0~svn354203-1~exp1) experimental; urgency=medium
     As I kept the ABI, I reverted the patches (debian/patches/7.1.0/*)
     More info on https://bugs.llvm.org/show_bug.cgi?id=39427
     and https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=913271
+  * Fix an ABI issue introduced with the kfreebsd support
+    Thanks to Svante Signell (Closes: #922731)
 
   [ Matthias Klose ]
   * Remove the autopkg test for a genuine LLVM bug.
