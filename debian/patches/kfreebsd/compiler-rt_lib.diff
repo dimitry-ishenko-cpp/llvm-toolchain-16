@@ -415,7 +415,15 @@ Index: llvm-toolchain-7-7.0.1/compiler-rt/lib/fuzzer/FuzzerDefs.h
 ===================================================================
 --- llvm-toolchain-7-7.0.1.orig/compiler-rt/lib/fuzzer/FuzzerDefs.h
 +++ llvm-toolchain-7-7.0.1/compiler-rt/lib/fuzzer/FuzzerDefs.h
-@@ -54,6 +54,15 @@
+@@ -26,6 +26,7 @@
+ #define LIBFUZZER_APPLE 0
+ #define LIBFUZZER_FUCHSIA 0
+ #define LIBFUZZER_LINUX 1
++#define LIBFUZZER_KFREEBSD 0
+ #define LIBFUZZER_NETBSD 0
+ #define LIBFUZZER_FREEBSD 0
+ #define LIBFUZZER_OPENBSD 0
+@@ -54,6 +55,15 @@
  #define LIBFUZZER_FREEBSD 1
  #define LIBFUZZER_OPENBSD 0
  #define LIBFUZZER_WINDOWS 0
@@ -431,7 +439,7 @@ Index: llvm-toolchain-7-7.0.1/compiler-rt/lib/fuzzer/FuzzerDefs.h
  #elif __OpenBSD__
  #define LIBFUZZER_APPLE 0
  #define LIBFUZZER_FUCHSIA 0
-@@ -88,7 +97,7 @@
+@@ -88,7 +98,7 @@
  
  #define LIBFUZZER_POSIX                                                        \
    (LIBFUZZER_APPLE || LIBFUZZER_LINUX || LIBFUZZER_NETBSD ||                   \
