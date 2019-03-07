@@ -33,7 +33,6 @@ lldb-link-atomic-cmake.patch
 disable-source-interleave.diff
 silent-gold-utils.diff
 disable-llvm-symbolizer-test.diff
-#fix-lldb-server-build
 clang-tidy-run-bin.diff
 fix-scan-view-path.diff
 #clang-fix-cmpxchg8-detection-on-i386.patch
