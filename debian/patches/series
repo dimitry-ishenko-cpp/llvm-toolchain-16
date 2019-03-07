@@ -35,7 +35,6 @@ silent-gold-utils.diff
 disable-llvm-symbolizer-test.diff
 #fix-lldb-server-build
 clang-tidy-run-bin.diff
-#bug-30342.diff
 fix-scan-view-path.diff
 #clang-fix-cmpxchg8-detection-on-i386.patch
 lldb-addversion-suffix-to-llvm-server-exec.patch
