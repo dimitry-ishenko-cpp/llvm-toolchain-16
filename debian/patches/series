@@ -61,8 +61,7 @@ PowerPC-Make-AddrSpaceCast-noop.diff
 D51108-rust-powerpc.diff
 pr38663-pgo-lto-crash.patch
 D51335-alignment-issue.diff
-# Doesn't fully apply
-# D51639-optim-issue.diff
+D51639-optim-issue.diff
 rL338481-cherry-pick-really-subtle-miscompile.diff
 disable-sse2-old-x86.diff
 powerpcspe-add-missing-include-path.diff
