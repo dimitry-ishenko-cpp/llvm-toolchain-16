@@ -78,7 +78,7 @@ julia/llvm-D34078-vectorize-fdiv.patch
 # (4) [performance regression] llvm-D42262-jumpthreading-not-i1
 julia/llvm-D42262-jumpthreading-not-i1.patch
 # (14) llvm-D50167-scev-umin
-julia/llvm-D50167-scev-umin.patch
+#julia/llvm-D50167-scev-umin.patch # Causes FTBFS
 # (13) llvm-D50010-VNCoercion-ni
 julia/llvm-D50010-VNCoercion-ni.patch
 # (5) [???] llvm-PPC-addrspaces
