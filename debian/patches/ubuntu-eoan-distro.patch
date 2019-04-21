@@ -1,0 +1,35 @@
+Description: Add disco and eoan as supported architectures
+Author: Gianfranco Costamagna <locutusofborg@debian.org>
+Last-Update: 2019-04-21
+
+--- llvm-toolchain-7-7.0.1.orig/clang/include/clang/Driver/Distro.h
++++ llvm-toolchain-7-7.0.1/clang/include/clang/Driver/Distro.h
+@@ -62,6 +62,8 @@ public:
+     UbuntuArtful,
+     UbuntuBionic,
+     UbuntuCosmic,
++    UbuntuDisco,
++    UbuntuEoan,
+     UnknownDistro
+   };
+ 
+@@ -115,7 +117,7 @@ public:
+   }
+ 
+   bool IsUbuntu() const {
+-    return DistroVal >= UbuntuHardy && DistroVal <= UbuntuCosmic;
++    return DistroVal >= UbuntuHardy && DistroVal <= UbuntuEoan;
+   }
+ 
+   bool IsAlpineLinux() const {
+--- llvm-toolchain-7-7.0.1.orig/clang/lib/Driver/Distro.cpp
++++ llvm-toolchain-7-7.0.1/clang/lib/Driver/Distro.cpp
+@@ -50,6 +50,8 @@ static Distro::DistroType DetectDistro(v
+                       .Case("artful", Distro::UbuntuArtful)
+                       .Case("bionic", Distro::UbuntuBionic)
+                       .Case("cosmic", Distro::UbuntuCosmic)
++                      .Case("disco", Distro::UbuntuDisco)
++                      .Case("eoan", Distro::UbuntuEoan)
+                       .Default(Distro::UnknownDistro);
+     if (Version != Distro::UnknownDistro)
+       return Version;

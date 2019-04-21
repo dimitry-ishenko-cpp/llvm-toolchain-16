@@ -158,3 +158,4 @@ kfreebsd/lldb_source_Host_freebsd_Host.cpp.diff
 kfreebsd/lldb_source_Plugins_Process_FreeBSD.diff
 kfreebsd/tools_llvm-shlib_CMakeLists.txt.diff
 kfreebsd/include_llvm_MC_MCELFObjectWriter.h.diff
+ubuntu-eoan-distro.patch
