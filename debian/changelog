@@ -1,16 +1,16 @@
-llvm-toolchain-6.0 (1:6.0.1-11) UNRELEASED; urgency=medium
+llvm-toolchain-6.0 (1:6.0.1-11) unstable; urgency=medium
 
   [ Sylvestre Ledru ]
   * Remove 'Multi-Arch: same' in libclang (Closes: #874248)
   * Cherry-pick various llvm fixes for Julia (Closes: #919628)
 
   [ Mo Zhou ]
-  * Remove install-lldb-sb-headers.patch, merged upstream.
   * Rebase and enable D51639-optim-issue.diff .
+  * Remove install-lldb-sb-headers.patch, merged upstream.
   * Remove empty file: bug-30342.diff
   * Remove deprecated patch: fix-lldb-server-build. (See 602ceb9ec)
 
- -- Mo Zhou <cdluminate@gmail.com>  Fri, 08 Mar 2019 01:14:25 +0000
+ -- Mo Zhou <cdluminate@gmail.com>  Sat, 09 Mar 2019 06:10:15 +0000
 
 llvm-toolchain-6.0 (1:6.0.1-10) unstable; urgency=medium
 
