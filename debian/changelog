@@ -1,3 +1,10 @@
+llvm-toolchain-6.0 (1:6.0.1-12) UNRELEASED; urgency=medium
+
+  * For now, lld doesn't generate shared libs. Removing the files
+    (Closes: #857653)
+
+ -- Andreas Beckmann <anbe@debian.org>  Sat, 11 May 2019 17:19:32 +0200
+
 llvm-toolchain-6.0 (1:6.0.1-11) unstable; urgency=medium
 
   [ Sylvestre Ledru ]
