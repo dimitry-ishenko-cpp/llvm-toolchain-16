@@ -1,6 +1,7 @@
 llvm-toolchain-7 (1:7.1.0~svn354203-1~exp2) UNRELEASED; urgency=medium
 
   * Add ubuntu disco and eoan to supported ubuntu releases
+  * Fixed wrong shlib generation of libomp5 library
 
   [ Andreas Beckmann ]
   * For now, lld doesn't generate shared libs. Removing the files
