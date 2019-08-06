@@ -1,3 +1,14 @@
+llvm-toolchain-7 (1:7.0.1-9) unstable; urgency=medium
+
+  * Add ubuntu disco and eoan to supported ubuntu releases
+  * Fixed wrong shlib generation of libomp5 library
+
+  [ Andreas Beckmann ]
+  * For now, lld doesn't generate shared libs. Removing the files
+    (Closes: #857653, LP: #1829677)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Sun, 21 Apr 2019 22:55:47 +0200
+
 llvm-toolchain-7 (1:7.0.1-8) unstable; urgency=medium
 
   * Fix a segfault in autopkgtest by brining
