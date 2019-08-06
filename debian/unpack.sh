@@ -1,6 +1,6 @@
 set -e
 ORIG_VERSION=7
-MAJOR_VERSION=7.1.0
+MAJOR_VERSION=7.0.1
 SVN_REV=`ls -1 *-${ORIG_VERSION}*svn*bz2 | tail -1|perl -ne 'print "$1\n" if /svn(\d+)/;' | sort -ru`
 #SVN_REV=353565
 VERSION=svn$SVN_REV

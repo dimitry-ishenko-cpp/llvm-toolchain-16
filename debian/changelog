@@ -1,46 +1,24 @@
-llvm-toolchain-7 (1:7.1.0~svn354203-1~exp2) UNRELEASED; urgency=medium
+llvm-toolchain-7 (1:7.0.1-8) unstable; urgency=medium
 
-  * Add ubuntu disco and eoan to supported ubuntu releases
-  * Fixed wrong shlib generation of libomp5 library
+  * Fix a segfault in autopkgtest by brining
+    pr39427-misscompile.diff back
+    (Closes: #923456)
 
-  [ Andreas Beckmann ]
-  * For now, lld doesn't generate shared libs. Removing the files
-    (Closes: #857653, LP: #1829677)
+ -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 28 Feb 2019 13:50:21 +0100
 
- -- Gianfranco Costamagna <locutusofborg@debian.org>  Sun, 21 Apr 2019 22:55:47 +0200
+llvm-toolchain-7 (1:7.0.1-7) unstable; urgency=medium
 
-llvm-toolchain-7 (1:7.1.0~svn354203-1~exp1) experimental; urgency=medium
-
-  * New stable release.
-    To be clear, this is the same as release 7.0.1
-    To be ABI compliant in Debian between 7 and 7.0.1,
-    I took the pr39427-misscompile.diff.
-    7.1.0 is an official release for downstream users to bring
-    back the ABI comptability.
-    I am uploading this new version in the archive to:
-    - avoid question like "why we don't have 7.1.0 in the archive?"
-    - align with upstream
-    - clearly show that we kept the ABI
-    Upstream decided to rename the library from 7 to 7.1.0
-    As I kept the ABI, I reverted the patches (debian/patches/7.1.0/*)
-    More info on https://bugs.llvm.org/show_bug.cgi?id=39427
-    and https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=913271
   * Fix an ABI issue introduced with the kfreebsd support
-    Thanks to Svante Signell (Closes: #922731)
+    (Closes: #922731)
+  * kfreebsd/kfreebsd-triple-clang.diff: update of the patch to fix
+    the kfreebsd FTBFS  (Closes: #921246)
+  * Enable ld gold for kfreebsd-amd64 and kfreebsd-i386
+    Many thanks to Svante Signell for the three updates
 
   [ Matthias Klose ]
   * Remove the autopkg test for a genuine LLVM bug.
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 16 Feb 2019 17:16:16 +0100
-
-llvm-toolchain-7 (1:7.0.1-7) unstable; urgency=medium
-
-  * kfreebsd/kfreebsd-triple-clang.diff: update of the patch to fix
-    the kfreebsd FTBFS  (Closes: #921246)
-  * Enable ld gold for kfreebsd-amd64 and kfreebsd-i386
-    Many thanks to Svante Signell for the two updates
-
- -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 07 Feb 2019 17:17:40 +0100
+ -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 27 Feb 2019 10:07:00 +0100
 
 llvm-toolchain-7 (1:7.0.1-6) unstable; urgency=medium
 

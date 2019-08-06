@@ -20,7 +20,7 @@ set -e
 
 SVN_BASE_URL=https://llvm.org/svn/llvm-project/
 MAJOR_VERSION=7
-CURRENT_VERSION=7.1.0 # Should be changed to 3.5.1 later
+CURRENT_VERSION=7.0.1 # Should be changed to 3.5.1 later
 
 if test -n "$1"; then
 # https://llvm.org/svn/llvm-project/{cfe,llvm,compiler-rt,...}/branches/google/stable/

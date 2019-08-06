@@ -138,8 +138,11 @@ D52340-rustc-debuginfo.diff
 # Disable https://llvm.org/viewvc/llvm-project?view=revision&revision=352580
 # 7.0.1 was always abi compatible with 7.0
 # Therefor, the libraries are still compatible with the 7.1.0 version
-7.1.0/revert-change-soname-2.diff
-7.1.0/revert-change-soname.diff
+#7.1.0/revert-change-soname-2.diff
+#7.1.0/revert-change-soname.diff
+
+# fix the abi issue
+pr39427-misscompile.diff
 
 
 # kfreebsd
@@ -158,4 +161,3 @@ kfreebsd/lldb_source_Host_freebsd_Host.cpp.diff
 kfreebsd/lldb_source_Plugins_Process_FreeBSD.diff
 kfreebsd/tools_llvm-shlib_CMakeLists.txt.diff
 kfreebsd/include_llvm_MC_MCELFObjectWriter.h.diff
-ubuntu-eoan-distro.patch
