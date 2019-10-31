@@ -104,7 +104,7 @@ reproducible-pch.diff
 # Hurd port
 hurd/hurd-pathmax.diff
 hurd/hurd-EIEIO-undef.diff
-hurd/impl-path-hurd.diff
+hurd/D69683-impl-path-hurd.diff
 hurd/D54677-hurd-path_max.diff
 
 # powerpcspe
