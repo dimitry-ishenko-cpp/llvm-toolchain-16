@@ -18,7 +18,8 @@ Build-Depends: debhelper (>= 9.0), cmake, chrpath, texinfo, sharutils,
     ocaml-findlib [amd64 arm64 armhf i386 ppc64el s390x],
     libctypes-ocaml-dev [amd64 arm64 armhf i386 ppc64el s390x],
     dh-exec, dh-ocaml [amd64 arm64 armhf i386 ppc64el s390x],
-    libpfm4-dev [linux-any]
+    libpfm4-dev [linux-any],
+    g++-8 | g++-7 | g++-6 | g++-5 | g++-4.7
 Build-Conflicts: oprofile, ocaml
 Standards-Version: 4.2.1
 Homepage: https://www.llvm.org/
