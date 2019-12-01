@@ -1,3 +1,10 @@
+llvm-toolchain-8 (1:8.0.1-5) UNRELEASED; urgency=medium
+
+  * impl-path-hurd.diff: Rename to D69683-impl-path-hurd.diff
+  * hurd-cxx-paths.diff: Re-introduce patch to find C++ headers.
+
+ -- Samuel Thibault <sthibault@debian.org>  Sun, 01 Dec 2019 14:13:27 +0100
+
 llvm-toolchain-8 (1:8.0.1-4) unstable; urgency=medium
 
   * Add clangd-X => libclang-common-X-dev dependency
