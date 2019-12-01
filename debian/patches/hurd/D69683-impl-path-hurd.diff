@@ -1,3 +1,7 @@
+[Hurd]: use /proc/self/exe to get program path
+
+https://reviews.llvm.org/D69683
+
 Index: llvm-toolchain-snapshot_7~svn334230/lib/Support/Unix/Path.inc
 ===================================================================
 --- llvm-toolchain-snapshot_7~svn334230.orig/lib/Support/Unix/Path.inc
