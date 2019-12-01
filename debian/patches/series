@@ -106,6 +106,7 @@ hurd/hurd-pathmax.diff
 hurd/hurd-EIEIO-undef.diff
 hurd/D69683-impl-path-hurd.diff
 hurd/D54677-hurd-path_max.diff
+hurd/hurd-cxx-paths.diff
 
 # powerpcspe
 powerpcspe/D49754-powerpcspe-clang.diff
