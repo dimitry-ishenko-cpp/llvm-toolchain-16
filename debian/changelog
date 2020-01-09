@@ -1,9 +1,15 @@
 llvm-toolchain-8 (1:8.0.1-5) UNRELEASED; urgency=medium
 
+  [ Samuel Thibault ]
   * impl-path-hurd.diff: Rename to D69683-impl-path-hurd.diff
   * hurd-cxx-paths.diff: Re-introduce patch to find C++ headers.
 
- -- Samuel Thibault <sthibault@debian.org>  Sun, 01 Dec 2019 14:13:27 +0100
+  [ Sylvestre Ledru ]
+  * Update the apt.llvm.org repack script to increase the version
+    to be above the distro version. See
+    https://bugs.llvm.org/show_bug.cgi?id=44218 for more info
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 09 Jan 2020 23:05:57 +0100
 
 llvm-toolchain-8 (1:8.0.1-4) unstable; urgency=medium
 

@@ -121,7 +121,7 @@ if test -n "$RCRELEASE"; then
     if test "$TAG" = "final"; then
 	    VERSION=$EXACT_VERSION
     else
-        VERSION=$EXACT_VERSION"~+"$TAG
+        VERSION=$EXACT_VERSION"+"$TAG
     fi
     FULL_VERSION="llvm-toolchain-"$MAJOR_VERSION"_"$VERSION
 else
