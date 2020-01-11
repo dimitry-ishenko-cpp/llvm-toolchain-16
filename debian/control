@@ -5,8 +5,9 @@ Rules-Requires-Root: no
 Maintainer: LLVM Packaging Team <pkg-llvm-team@lists.alioth.debian.org>
 Uploaders: Sylvestre Ledru <sylvestre@debian.org>
 Build-Depends: debhelper (>= 9.0), cmake, chrpath, texinfo, sharutils,
+    dh-python,
     libffi-dev (>= 3.0.9),
-    lsb-release, patchutils, diffstat, xz-utils, python-dev,
+    lsb-release, patchutils, diffstat, xz-utils, python2-dev,
     libedit-dev, libncurses5-dev, swig, python-six, python-sphinx (>= 1.3.6),
     binutils-dev,
     libjsoncpp-dev, pkg-config,
@@ -32,7 +33,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
  ${dep:devlibs-objc}, libclang-common-7-dev (= ${binary:Version}),
  libclang1-7 (= ${binary:Version}), libc6-dev, binutils
 Provides: c-compiler, objc-compiler, c++-compiler
-Recommends: llvm-7-dev, python, libomp-7-dev
+Recommends: llvm-7-dev, python2, libomp-7-dev
 Suggests: clang-7-doc
 Description: C, C++ and Objective-C compiler
  Clang project is a C, C++, Objective C and Objective C++ front-end
@@ -45,7 +46,7 @@ Description: C, C++ and Objective-C compiler
 Package: clang-tools-7
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, clang-7 (= ${binary:Version}),
- python
+ python2
 Description: clang-based tools for C/C++ developments
  Clang project is a C, C++, Objective C and Objective C++ front-end
  based on the LLVM compiler. Its goal is to offer a replacement to the
@@ -59,7 +60,7 @@ Description: clang-based tools for C/C++ developments
 
 Package: clang-format-7
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python,
+Depends: ${shlibs:Depends}, ${misc:Depends}, python2,
  libllvm7 (= ${binary:Version})
 Description: Tool to format C/C++/Obj-C code
  Clang-format is both a library and a stand-alone tool with the goal of
@@ -75,7 +76,7 @@ Description: Tool to format C/C++/Obj-C code
 
 Package: clang-tidy-7
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python,
+Depends: ${shlibs:Depends}, ${misc:Depends}, python2,
  libllvm7 (= ${binary:Version}), libclang-common-7-dev,
  clang-tools-7, python-yaml
 Replaces: clang-modernize-7, clang-7 (<< 7~svn250696-1)
@@ -178,7 +179,7 @@ Description: Library for coverage-guided fuzz testing
 Package: python-clang-7
 Section: python
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python
+Depends: ${shlibs:Depends}, ${misc:Depends}, python2
 Replaces: python-clang-3.8, python-clang-3.9, python-clang-x.y
 Breaks: python-clang-3.8, python-clang-3.9
 Conflicts: python-clang-x.y
@@ -294,7 +295,7 @@ Description: Modular compiler and toolchain technologies, libraries and headers
 
 Package: llvm-7-tools
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python,
+Depends: ${shlibs:Depends}, ${misc:Depends}, python2,
  python-pygments, python-yaml,
  llvm-7-dev (= ${binary:Version})
 Description: Modular compiler and toolchain technologies, tools
@@ -447,7 +448,7 @@ Package: python-lldb-7
 Section: python
 Architecture: amd64 arm64 armel armhf i386 mips mipsel mips64el ppc64el kfreebsd-amd64 kfreebsd-i386 s390 sparc hppa m68k sh4 x32
 # ia64 hurd powerpc powerpcspe ppc64 alpha s390x sparc64 have been removed
-Depends: ${shlibs:Depends}, ${misc:Depends}, python, python-six
+Depends: ${shlibs:Depends}, ${misc:Depends}, python2, python-six
 Conflicts: python-lldb-3.8, python-lldb-3.9, python-lldb-x.y
 Replaces: python-lldb-x.y
 Provides: python-lldb-x.y

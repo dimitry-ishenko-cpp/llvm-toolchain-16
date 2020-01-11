@@ -1,5 +1,8 @@
 #!/usr/bin/make -f
 
+PATH := $(PATH):$(CURDIR)/bin
+export PATH
+
 TARGET_BUILD	:= build-llvm
 TARGET_BUILD_STAGE2    := $(TARGET_BUILD)/tools/clang/stage2-bins
 DEB_INST		:= $(CURDIR)/debian/tmp/
@@ -217,7 +220,9 @@ ifneq (,$(filter $(DEB_HOST_ARCH),$(OCAML_ARCHS)))
 # Enable OCAML for this arch.
 	OCAML_ENABLE=yes
 	OCAML_STDLIB_DIR    ?= $(shell ocamlc -where)
-	DH_OPTIONS=--with ocaml
+	DH_OPTIONS=--with ocaml,python2
+else
+	DH_OPTIONS=--with python2
 endif
 # Force the deactivation of ocaml until the transition is done
 #OCAML_ENABLE=no
@@ -249,6 +254,8 @@ preconfigure:
 			-e "s|@LLVM_VERSION_FULL@|$(LLVM_VERSION_FULL)|g" \
 			-e "s|@LLVM_VERSION@|$(LLVM_VERSION)|g" $$f > $$f2; \
 	done
+	mkdir -p bin
+	ln -sf /usr/bin/python2 bin/python
 
 # Override this two targets. They are trying to manage the .in conversion for me
 override_dh_ocamlinit:
@@ -839,5 +846,6 @@ override_dh_auto_clean:
 	if test -f lld/docs/ld.lld-$(LLVM_VERSION).1; then \
 		mv lld/docs/ld.lld-$(LLVM_VERSION).1 lld/docs/ld.lld.1; \
 	fi
+	rm -rf bin
 
 .PHONY: override_dh_strip preconfigure debian-full-build debian-libfuzzer-build debian-libcxx-build debian-libcxxabi-build
