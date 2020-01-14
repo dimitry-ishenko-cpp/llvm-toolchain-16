@@ -308,7 +308,7 @@ Description: Modular compiler and toolchain technologies, libraries and headers
 
 Package: llvm-8-tools
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python, python3,
+Depends: ${shlibs:Depends}, ${misc:Depends}, python2, python3,
  python-pygments, python-yaml,
  python3-pygments, python3-yaml,
  llvm-8-dev (= ${binary:Version})
