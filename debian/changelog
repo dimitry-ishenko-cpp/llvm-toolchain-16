@@ -1,7 +1,16 @@
 llvm-toolchain-6.0 (1:6.0.1-12) UNRELEASED; urgency=medium
 
+  [ Andreas Beckmann ]
   * For now, lld doesn't generate shared libs. Removing the files
     (Closes: #857653, LP: #1829677)
+
+  [ Gianfranco Costamagna ]
+  * Import the Ubuntu delta
+
+  [ Matthias Klose ]
+  * (Build-)depend on python2 instead of python.
+  * Fix the build to use python2 instead of python.
+  * Call dh_python2 to rewrite shebangs.
 
  -- Andreas Beckmann <anbe@debian.org>  Sat, 11 May 2019 17:19:32 +0200
 

@@ -1,5 +1,8 @@
 #!/usr/bin/make -f
 
+PATH := $(PATH):$(CURDIR)/bin
+export PATH
+
 TARGET_BUILD	:= build-llvm
 DEB_INST		:= $(CURDIR)/debian/tmp/
 
@@ -165,7 +168,9 @@ ifneq (,$(filter $(DEB_HOST_ARCH),$(OCAML_ARCHS)))
 # Enable OCAML for this arch.
 	# OCAML_ENABLE=yes
 	# OCAML_STDLIB_DIR    ?= $(shell ocamlc -where)
-	# DH_OPTIONS=--with ocaml
+	# DH_OPTIONS=--with ocaml,python2
+else
+	DH_OPTIONS=--with python2
 endif
 # Force the deactivation of ocaml until the transition is done
 OCAML_ENABLE=no
@@ -189,6 +194,8 @@ preconfigure:
 			-e "s|@LLVM_VERSION_FULL@|$(LLVM_VERSION_FULL)|g" \
 			-e "s|@LLVM_VERSION@|$(LLVM_VERSION)|g" $$f > $$f2; \
 	done
+	mkdir -p bin
+	ln -sf /usr/bin/python2 bin/python
 
 # Override this two targets. They are trying to manage the .in conversion for me
 override_dh_ocamlinit:
@@ -478,6 +485,7 @@ endif
 			"$(DEB_INST)$(OCAML_STDLIB_DIR)/llvm-$(LLVM_VERSION)"; \
 		fi; \
 	fi
+	rm -rf bin
 
 # Delete the target build directory to save some space on the build systems
 # All the files have been installed in $(CURDIR)/debian/tmp/ already
