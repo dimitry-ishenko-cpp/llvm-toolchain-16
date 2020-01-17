@@ -1,1 +1,1 @@
-usr/lib/llvm-@LLVM_VERSION@/lib/python*/site-packages/lldb/
+usr/lib/llvm-@LLVM_VERSION@/lib/python3*/*-packages/lldb/

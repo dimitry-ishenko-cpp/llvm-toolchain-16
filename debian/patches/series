@@ -139,3 +139,4 @@ ubuntu-eoan-distro.patch
 
 # Python 3
 0050-Remove-explicit-python-version-list.patch
+python3-shebang.patch

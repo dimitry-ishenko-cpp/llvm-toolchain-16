@@ -1,4 +1,4 @@
-llvm-toolchain-8 (1:8.0.1-5) UNRELEASED; urgency=medium
+llvm-toolchain-8 (1:8.0.1-5) unstable; urgency=medium
 
   [ Samuel Thibault ]
   * impl-path-hurd.diff: Rename to D69683-impl-path-hurd.diff
@@ -9,7 +9,10 @@ llvm-toolchain-8 (1:8.0.1-5) UNRELEASED; urgency=medium
     to be above the distro version. See
     https://bugs.llvm.org/show_bug.cgi?id=44218 for more info
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 09 Jan 2020 23:05:57 +0100
+  [ Gianfranco Costamagna ]
+  * Finish the porting to Python3
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Thu, 16 Jan 2020 19:12:33 +0100
 
 llvm-toolchain-8 (1:8.0.1-4) unstable; urgency=medium
 

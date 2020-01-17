@@ -1,0 +1,1490 @@
+--- llvm-toolchain-8-8.0.1.orig/clang-tools-extra/include-fixer/find-all-symbols/tool/run-find-all-symbols.py
++++ llvm-toolchain-8-8.0.1/clang-tools-extra/include-fixer/find-all-symbols/tool/run-find-all-symbols.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ #=- run-find-all-symbols.py - Parallel find-all-symbols runner -*- python  -*-=#
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang-tools-extra/clang-tidy/add_new_check.py
++++ llvm-toolchain-8-8.0.1/clang-tools-extra/clang-tidy/add_new_check.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ #===- add_new_check.py - clang-tidy check generator ----------*- python -*--===#
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang-tools-extra/clang-tidy/rename_check.py
++++ llvm-toolchain-8-8.0.1/clang-tools-extra/clang-tidy/rename_check.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ #===- rename_check.py - clang-tidy check renamer -------------*- python -*--===#
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang-tools-extra/clang-tidy/tool/clang-tidy-diff.py
++++ llvm-toolchain-8-8.0.1/clang-tools-extra/clang-tidy/tool/clang-tidy-diff.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ #===- clang-tidy-diff.py - ClangTidy Diff Checker ------------*- python -*--===#
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang-tools-extra/clang-tidy/tool/run-clang-tidy.py
++++ llvm-toolchain-8-8.0.1/clang-tools-extra/clang-tidy/tool/run-clang-tidy.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ #===- run-clang-tidy.py - Parallel clang-tidy runner ---------*- python -*--===#
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang-tools-extra/test/clang-tidy/check_clang_tidy.py
++++ llvm-toolchain-8-8.0.1/clang-tools-extra/test/clang-tidy/check_clang_tidy.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ #===- check_clang_tidy.py - ClangTidy Test Helper ------------*- python -*--===#
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang/bindings/python/examples/cindex/cindex-dump.py
++++ llvm-toolchain-8-8.0.1/clang/bindings/python/examples/cindex/cindex-dump.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ #===- cindex-dump.py - cindex/Python Source Dump -------------*- python -*--===#
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang/bindings/python/examples/cindex/cindex-includes.py
++++ llvm-toolchain-8-8.0.1/clang/bindings/python/examples/cindex/cindex-includes.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ #===- cindex-includes.py - cindex/Python Inclusion Graph -----*- python -*--===#
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang/docs/tools/dump_ast_matchers.py
++++ llvm-toolchain-8-8.0.1/clang/docs/tools/dump_ast_matchers.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # A tool to parse ASTMatchers.h and update the documentation in
+ # ../LibASTMatchersReference.html automatically. Run from the
+ # directory in which this file is located to update the docs.
+--- llvm-toolchain-8-8.0.1.orig/clang/docs/tools/dump_format_style.py
++++ llvm-toolchain-8-8.0.1/clang/docs/tools/dump_format_style.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # A tool to parse the FormatStyle struct from Format.h and update the
+ # documentation in ../ClangFormatStyleOptions.rst automatically.
+ # Run from the directory in which this file is located to update the docs.
+--- llvm-toolchain-8-8.0.1.orig/clang/tools/clang-format/clang-format-diff.py
++++ llvm-toolchain-8-8.0.1/clang/tools/clang-format/clang-format-diff.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ #===- clang-format-diff.py - ClangFormat Diff Reformatter ----*- python -*--===#
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang/tools/clang-format/git-clang-format
++++ llvm-toolchain-8-8.0.1/clang/tools/clang-format/git-clang-format
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ #===- git-clang-format - ClangFormat Git Integration ---------*- python -*--===#
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang/tools/scan-build-py/bin/analyze-build
++++ llvm-toolchain-8-8.0.1/clang/tools/scan-build-py/bin/analyze-build
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
+ #                     The LLVM Compiler Infrastructure
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang/tools/scan-build-py/bin/analyze-c++
++++ llvm-toolchain-8-8.0.1/clang/tools/scan-build-py/bin/analyze-c++
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
+ #                     The LLVM Compiler Infrastructure
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang/tools/scan-build-py/bin/analyze-cc
++++ llvm-toolchain-8-8.0.1/clang/tools/scan-build-py/bin/analyze-cc
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
+ #                     The LLVM Compiler Infrastructure
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang/tools/scan-build-py/bin/intercept-build
++++ llvm-toolchain-8-8.0.1/clang/tools/scan-build-py/bin/intercept-build
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
+ #                     The LLVM Compiler Infrastructure
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang/tools/scan-build-py/bin/intercept-c++
++++ llvm-toolchain-8-8.0.1/clang/tools/scan-build-py/bin/intercept-c++
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
+ #                     The LLVM Compiler Infrastructure
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang/tools/scan-build-py/bin/intercept-cc
++++ llvm-toolchain-8-8.0.1/clang/tools/scan-build-py/bin/intercept-cc
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
+ #                     The LLVM Compiler Infrastructure
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang/tools/scan-build-py/bin/scan-build
++++ llvm-toolchain-8-8.0.1/clang/tools/scan-build-py/bin/scan-build
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
+ #                     The LLVM Compiler Infrastructure
+ #
+--- llvm-toolchain-8-8.0.1.orig/clang/tools/scan-view/bin/scan-view
++++ llvm-toolchain-8-8.0.1/clang/tools/scan-view/bin/scan-view
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/clang/tools/scan-view/share/Reporter.py
++++ llvm-toolchain-8-8.0.1/clang/tools/scan-view/share/Reporter.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
+ 
+ """Methods for reporting bugs."""
+--- llvm-toolchain-8-8.0.1.orig/clang/tools/scan-view/share/startfile.py
++++ llvm-toolchain-8-8.0.1/clang/tools/scan-view/share/startfile.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
+ 
+ """Utility for opening a file using the default application in a cross-platform
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/ABITest/ABITestGen.py
++++ llvm-toolchain-8-8.0.1/clang/utils/ABITest/ABITestGen.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import absolute_import, division, print_function
+ from pprint import pprint
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/CIndex/completion_logger_server.py
++++ llvm-toolchain-8-8.0.1/clang/utils/CIndex/completion_logger_server.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ from __future__ import absolute_import, division, print_function
+ import sys
+ from socket import *
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/CaptureCmd
++++ llvm-toolchain-8-8.0.1/clang/utils/CaptureCmd
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """CaptureCmd - A generic tool for capturing information about the
+ invocations of another program.
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/CmpDriver
++++ llvm-toolchain-8-8.0.1/clang/utils/CmpDriver
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ A simple utility that compares tool invocations and exit codes issued by
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/FindSpecRefs
++++ llvm-toolchain-8-8.0.1/clang/utils/FindSpecRefs
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import os
+ import re
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/FuzzTest
++++ llvm-toolchain-8-8.0.1/clang/utils/FuzzTest
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ This is a generic fuzz testing tool, see --help for more information.
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/TestUtils/deep-stack.py
++++ llvm-toolchain-8-8.0.1/clang/utils/TestUtils/deep-stack.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import absolute_import, division, print_function
+ def pcall(f, N):
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/analyzer/CmpRuns.py
++++ llvm-toolchain-8-8.0.1/clang/utils/analyzer/CmpRuns.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ CmpRuns - A simple tool for comparing two static analyzer runs to determine
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/analyzer/SATestAdd.py
++++ llvm-toolchain-8-8.0.1/clang/utils/analyzer/SATestAdd.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ Static Analyzer qualification infrastructure: adding a new project to
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/analyzer/SATestBuild.py
++++ llvm-toolchain-8-8.0.1/clang/utils/analyzer/SATestBuild.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ Static Analyzer qualification infrastructure.
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/analyzer/SATestUpdateDiffs.py
++++ llvm-toolchain-8-8.0.1/clang/utils/analyzer/SATestUpdateDiffs.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ Update reference results for static analyzer.
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/analyzer/SumTimerInfo.py
++++ llvm-toolchain-8-8.0.1/clang/utils/analyzer/SumTimerInfo.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ Script to Summarize statistics in the scan-build output.
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/check_cfc/check_cfc.py
++++ llvm-toolchain-8-8.0.1/clang/utils/check_cfc/check_cfc.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """Check CFC - Check Compile Flow Consistency
+ 
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/check_cfc/obj_diff.py
++++ llvm-toolchain-8-8.0.1/clang/utils/check_cfc/obj_diff.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import absolute_import, division, print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/check_cfc/test_check_cfc.py
++++ llvm-toolchain-8-8.0.1/clang/utils/check_cfc/test_check_cfc.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """Test internal functions within check_cfc.py."""
+ 
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/hmaptool/hmaptool
++++ llvm-toolchain-8-8.0.1/clang/utils/hmaptool/hmaptool
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ from __future__ import absolute_import, division, print_function
+ 
+ import json
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/modfuzz.py
++++ llvm-toolchain-8-8.0.1/clang/utils/modfuzz.py
+@@ -1,4 +1,4 @@
+-#! /usr/bin/env python
++#! /usr/bin/env python3
+ 
+ # To use:
+ #  1) Update the 'decls' list below with your fuzzing configuration.
+--- llvm-toolchain-8-8.0.1.orig/clang/utils/token-delta.py
++++ llvm-toolchain-8-8.0.1/clang/utils/token-delta.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import absolute_import, division, print_function
+ import os
+--- llvm-toolchain-8-8.0.1.orig/clang/www/builtins.py
++++ llvm-toolchain-8-8.0.1/clang/www/builtins.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import sys, fileinput
+ 
+--- llvm-toolchain-8-8.0.1.orig/clang/www/make_cxx_dr_status
++++ llvm-toolchain-8-8.0.1/clang/www/make_cxx_dr_status
+@@ -1,4 +1,4 @@
+-#! /usr/bin/env python
++#! /usr/bin/env python3
+ import sys, os, re
+ 
+ index = 'cwg_index.html'
+--- llvm-toolchain-8-8.0.1.orig/compiler-rt/lib/asan/scripts/asan_symbolize.py
++++ llvm-toolchain-8-8.0.1/compiler-rt/lib/asan/scripts/asan_symbolize.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #===- lib/asan/scripts/asan_symbolize.py -----------------------------------===#
+ #
+ #                     The LLVM Compiler Infrastructure
+--- llvm-toolchain-8-8.0.1.orig/compiler-rt/lib/dfsan/scripts/build-libc-list.py
++++ llvm-toolchain-8-8.0.1/compiler-rt/lib/dfsan/scripts/build-libc-list.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #===- lib/dfsan/scripts/build-libc-list.py ---------------------------------===#
+ #
+ #                     The LLVM Compiler Infrastructure
+--- llvm-toolchain-8-8.0.1.orig/compiler-rt/lib/fuzzer/scripts/collect_data_flow.py
++++ llvm-toolchain-8-8.0.1/compiler-rt/lib/fuzzer/scripts/collect_data_flow.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #===- lib/fuzzer/scripts/collect_data_flow.py ------------------------------===#
+ #
+ #                     The LLVM Compiler Infrastructure
+--- llvm-toolchain-8-8.0.1.orig/compiler-rt/lib/fuzzer/scripts/merge_data_flow.py
++++ llvm-toolchain-8-8.0.1/compiler-rt/lib/fuzzer/scripts/merge_data_flow.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #===- lib/fuzzer/scripts/merge_data_flow.py ------------------------------===#
+ #
+ #                     The LLVM Compiler Infrastructure
+--- llvm-toolchain-8-8.0.1.orig/compiler-rt/lib/fuzzer/scripts/unbalanced_allocs.py
++++ llvm-toolchain-8-8.0.1/compiler-rt/lib/fuzzer/scripts/unbalanced_allocs.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #===- lib/fuzzer/scripts/unbalanced_allocs.py ------------------------------===#
+ #
+ #                     The LLVM Compiler Infrastructure
+--- llvm-toolchain-8-8.0.1.orig/compiler-rt/lib/sanitizer_common/scripts/cpplint.py
++++ llvm-toolchain-8-8.0.1/compiler-rt/lib/sanitizer_common/scripts/cpplint.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ # Copyright (c) 2009 Google Inc. All rights reserved.
+ #
+--- llvm-toolchain-8-8.0.1.orig/compiler-rt/lib/sanitizer_common/scripts/gen_dynamic_list.py
++++ llvm-toolchain-8-8.0.1/compiler-rt/lib/sanitizer_common/scripts/gen_dynamic_list.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #===- lib/sanitizer_common/scripts/gen_dynamic_list.py ---------------------===#
+ #
+ #                     The LLVM Compiler Infrastructure
+--- llvm-toolchain-8-8.0.1.orig/compiler-rt/lib/sanitizer_common/scripts/litlint.py
++++ llvm-toolchain-8-8.0.1/compiler-rt/lib/sanitizer_common/scripts/litlint.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ # litlint
+ #
+--- llvm-toolchain-8-8.0.1.orig/compiler-rt/lib/sanitizer_common/scripts/sancov.py
++++ llvm-toolchain-8-8.0.1/compiler-rt/lib/sanitizer_common/scripts/sancov.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # Merge or print the coverage data collected by asan's coverage.
+ # Input files are sequences of 4-byte integers.
+ # We need to merge these integers into a set and then
+--- llvm-toolchain-8-8.0.1.orig/examples/Kaleidoscope/MCJIT/cached/genk-timing.py
++++ llvm-toolchain-8-8.0.1/examples/Kaleidoscope/MCJIT/cached/genk-timing.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/examples/Kaleidoscope/MCJIT/cached/split-lib.py
++++ llvm-toolchain-8-8.0.1/examples/Kaleidoscope/MCJIT/cached/split-lib.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/examples/Kaleidoscope/MCJIT/complete/genk-timing.py
++++ llvm-toolchain-8-8.0.1/examples/Kaleidoscope/MCJIT/complete/genk-timing.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/examples/Kaleidoscope/MCJIT/complete/split-lib.py
++++ llvm-toolchain-8-8.0.1/examples/Kaleidoscope/MCJIT/complete/split-lib.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/examples/Kaleidoscope/MCJIT/lazy/genk-timing.py
++++ llvm-toolchain-8-8.0.1/examples/Kaleidoscope/MCJIT/lazy/genk-timing.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/libcxx/test/std/language.support/support.limits/support.limits.general/generate_feature_test_macro_components.py
++++ llvm-toolchain-8-8.0.1/libcxx/test/std/language.support/support.limits/support.limits.general/generate_feature_test_macro_components.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import os
+ import tempfile
+--- llvm-toolchain-8-8.0.1.orig/libcxx/utils/cat_files.py
++++ llvm-toolchain-8-8.0.1/libcxx/utils/cat_files.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #===----------------------------------------------------------------------===##
+ #
+ #                     The LLVM Compiler Infrastructure
+--- llvm-toolchain-8-8.0.1.orig/libcxx/utils/gen_link_script.py
++++ llvm-toolchain-8-8.0.1/libcxx/utils/gen_link_script.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #===----------------------------------------------------------------------===##
+ #
+ #                     The LLVM Compiler Infrastructure
+--- llvm-toolchain-8-8.0.1.orig/libcxx/utils/google-benchmark/mingw.py
++++ llvm-toolchain-8-8.0.1/libcxx/utils/google-benchmark/mingw.py
+@@ -1,4 +1,4 @@
+-#! /usr/bin/env python
++#! /usr/bin/env python3
+ # encoding: utf-8
+ 
+ import argparse
+--- llvm-toolchain-8-8.0.1.orig/libcxx/utils/google-benchmark/tools/compare.py
++++ llvm-toolchain-8-8.0.1/libcxx/utils/google-benchmark/tools/compare.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import unittest
+ """
+--- llvm-toolchain-8-8.0.1.orig/libcxx/utils/google-benchmark/tools/strip_asm.py
++++ llvm-toolchain-8-8.0.1/libcxx/utils/google-benchmark/tools/strip_asm.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ strip_asm.py - Cleanup ASM output for the specified file
+--- llvm-toolchain-8-8.0.1.orig/libcxx/utils/merge_archives.py
++++ llvm-toolchain-8-8.0.1/libcxx/utils/merge_archives.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #===----------------------------------------------------------------------===##
+ #
+ #                     The LLVM Compiler Infrastructure
+--- llvm-toolchain-8-8.0.1.orig/libcxx/utils/sym_diff.py
++++ llvm-toolchain-8-8.0.1/libcxx/utils/sym_diff.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #===----------------------------------------------------------------------===##
+ #
+ #                     The LLVM Compiler Infrastructure
+--- llvm-toolchain-8-8.0.1.orig/libcxx/utils/sym_extract.py
++++ llvm-toolchain-8-8.0.1/libcxx/utils/sym_extract.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #===----------------------------------------------------------------------===##
+ #
+ #                     The LLVM Compiler Infrastructure
+--- llvm-toolchain-8-8.0.1.orig/libcxx/utils/sym_match.py
++++ llvm-toolchain-8-8.0.1/libcxx/utils/sym_match.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #===----------------------------------------------------------------------===##
+ #
+ #                     The LLVM Compiler Infrastructure
+--- llvm-toolchain-8-8.0.1.orig/lld/utils/benchmark.py
++++ llvm-toolchain-8-8.0.1/lld/utils/benchmark.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ #                     The LLVM Compiler Infrastructure
+ #
+--- llvm-toolchain-8-8.0.1.orig/lldb/examples/python/file_extract.py
++++ llvm-toolchain-8-8.0.1/lldb/examples/python/file_extract.py
+@@ -1,4 +1,4 @@
+-#! /usr/bin/env python
++#! /usr/bin/env python3
+ 
+ import string
+ import struct
+--- llvm-toolchain-8-8.0.1.orig/lldb/lit/helper/build.py
++++ llvm-toolchain-8-8.0.1/lldb/lit/helper/build.py
+@@ -1,4 +1,4 @@
+-#! /usr/bin/env python
++#! /usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/lldb/lldb.xcodeproj/project.pbxproj
++++ llvm-toolchain-8-8.0.1/lldb/lldb.xcodeproj/project.pbxproj
+@@ -7429,7 +7429,7 @@
+ 			);
+ 			runOnlyForDeploymentPostprocessing = 0;
+ 			shellPath = /bin/sh;
+-			shellScript = "/usr/bin/env python -u $SRCROOT/scripts/Xcode/build-llvm.py\n";
++			shellScript = "/usr/bin/env python3 -u $SRCROOT/scripts/Xcode/build-llvm.py\n";
+ 		};
+ 		26DC6A5813380D4300FF7998 /* Prepare Swig Bindings */ = {
+ 			isa = PBXShellScriptBuildPhase;
+--- llvm-toolchain-8-8.0.1.orig/lldb/packages/Python/lldbsuite/test/attic/tester.py
++++ llvm-toolchain-8-8.0.1/lldb/packages/Python/lldbsuite/test/attic/tester.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # -*- coding: utf8 -*-
+ 
+ from __future__ import print_function
+--- llvm-toolchain-8-8.0.1.orig/lldb/packages/Python/lldbsuite/test/bench.py
++++ llvm-toolchain-8-8.0.1/lldb/packages/Python/lldbsuite/test/bench.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ A simple bench runner which delegates to the ./dotest.py test driver to run the
+--- llvm-toolchain-8-8.0.1.orig/lldb/packages/Python/lldbsuite/test/issue_verification/disable.py
++++ llvm-toolchain-8-8.0.1/lldb/packages/Python/lldbsuite/test/issue_verification/disable.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ """Renames *.py files to *.py.park."""
+ import os
+ import sys
+--- llvm-toolchain-8-8.0.1.orig/lldb/packages/Python/lldbsuite/test/issue_verification/enable.py
++++ llvm-toolchain-8-8.0.1/lldb/packages/Python/lldbsuite/test/issue_verification/enable.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ """Renames *.py.park files to *.py."""
+ import os
+ import sys
+--- llvm-toolchain-8-8.0.1.orig/lldb/packages/Python/lldbsuite/test/redo.py
++++ llvm-toolchain-8-8.0.1/lldb/packages/Python/lldbsuite/test/redo.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ A simple utility to redo the failed/errored tests.
+--- llvm-toolchain-8-8.0.1.orig/lldb/packages/Python/lldbsuite/test/test_runner/test/inferior.py
++++ llvm-toolchain-8-8.0.1/lldb/packages/Python/lldbsuite/test/test_runner/test/inferior.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ """Inferior program used by process control tests."""
+ 
+ from __future__ import print_function
+--- llvm-toolchain-8-8.0.1.orig/lldb/packages/Python/lldbsuite/test/test_runner/test/test_process_control.py
++++ llvm-toolchain-8-8.0.1/lldb/packages/Python/lldbsuite/test/test_runner/test/test_process_control.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ """
+ The LLVM Compiler Infrastructure
+ 
+--- llvm-toolchain-8-8.0.1.orig/lldb/packages/Python/lldbsuite/test/tools/lldb-vscode/vscode.py
++++ llvm-toolchain-8-8.0.1/lldb/packages/Python/lldbsuite/test/tools/lldb-vscode/vscode.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import binascii
+ import json
+--- llvm-toolchain-8-8.0.1.orig/lldb/packages/Python/lldbsuite/test_event/test/src/TestCatchInvalidDecorator.py
++++ llvm-toolchain-8-8.0.1/lldb/packages/Python/lldbsuite/test_event/test/src/TestCatchInvalidDecorator.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ """
+ Tests that the event system reports issues during decorator
+ handling as errors.
+--- llvm-toolchain-8-8.0.1.orig/lldb/scripts/Python/finish-swig-Python-LLDB.sh
++++ llvm-toolchain-8-8.0.1/lldb/scripts/Python/finish-swig-Python-LLDB.sh
+@@ -55,7 +55,7 @@ else
+ fi
+ 
+ OS_NAME=`uname -s`
+-PYTHON=${PYTHON_EXECUTABLE:-/usr/bin/env python}
++PYTHON=${PYTHON_EXECUTABLE:-/usr/bin/env python3}
+ PYTHON_VERSION=`${PYTHON} --version 2>&1 | sed -e 's,Python ,,' -e 's,[.][0-9],,2' -e 's,[a-z][a-z][0-9],,'`
+ 
+ 
+--- llvm-toolchain-8-8.0.1.orig/lldb/scripts/Xcode/build-llvm.py
++++ llvm-toolchain-8-8.0.1/lldb/scripts/Xcode/build-llvm.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import errno
+ import hashlib
+--- llvm-toolchain-8-8.0.1.orig/lldb/scripts/Xcode/package-clang-headers.py
++++ llvm-toolchain-8-8.0.1/lldb/scripts/Xcode/package-clang-headers.py
+@@ -1,4 +1,4 @@
+-#! /usr/bin/env python
++#! /usr/bin/env python3
+ 
+ # package-clang-headers.py
+ #
+--- llvm-toolchain-8-8.0.1.orig/lldb/scripts/analyze-project-deps.py
++++ llvm-toolchain-8-8.0.1/lldb/scripts/analyze-project-deps.py
+@@ -1,4 +1,4 @@
+-#! /usr/bin/env python
++#! /usr/bin/env python3
+ 
+ import argparse
+ import itertools
+--- llvm-toolchain-8-8.0.1.orig/lldb/scripts/buildbot.py
++++ llvm-toolchain-8-8.0.1/lldb/scripts/buildbot.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import argparse
+ import os
+--- llvm-toolchain-8-8.0.1.orig/lldb/scripts/prepare_bindings.py
++++ llvm-toolchain-8-8.0.1/lldb/scripts/prepare_bindings.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ """
+                      The LLVM Compiler Infrastructure
+ 
+--- llvm-toolchain-8-8.0.1.orig/lldb/scripts/shush
++++ llvm-toolchain-8-8.0.1/lldb/scripts/shush
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import sys
+ import subprocess
+--- llvm-toolchain-8-8.0.1.orig/lldb/scripts/swig_bot.py
++++ llvm-toolchain-8-8.0.1/lldb/scripts/swig_bot.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ SWIG generation top-level script.  Supports both local and remote generation
+--- llvm-toolchain-8-8.0.1.orig/lldb/scripts/swig_bot_lib/client.py
++++ llvm-toolchain-8-8.0.1/lldb/scripts/swig_bot_lib/client.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ SWIG generation client.  Supports both local and remote generation of SWIG
+--- llvm-toolchain-8-8.0.1.orig/lldb/scripts/swig_bot_lib/local.py
++++ llvm-toolchain-8-8.0.1/lldb/scripts/swig_bot_lib/local.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ Shared functionality used by `client` and `server` when generating or preparing
+--- llvm-toolchain-8-8.0.1.orig/lldb/scripts/swig_bot_lib/remote.py
++++ llvm-toolchain-8-8.0.1/lldb/scripts/swig_bot_lib/remote.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ Shared functionality used by `client` and `server` when dealing with
+--- llvm-toolchain-8-8.0.1.orig/lldb/scripts/swig_bot_lib/server.py
++++ llvm-toolchain-8-8.0.1/lldb/scripts/swig_bot_lib/server.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ SWIG generation server.  Listens for connections from swig generation clients
+--- llvm-toolchain-8-8.0.1.orig/lldb/scripts/verify_api.py
++++ llvm-toolchain-8-8.0.1/lldb/scripts/verify_api.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import commands
+ import optparse
+--- llvm-toolchain-8-8.0.1.orig/lldb/test/dotest.py
++++ llvm-toolchain-8-8.0.1/lldb/test/dotest.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ if __name__ == "__main__":
+     import use_lldb_suite
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/FSM.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/FSM.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """This module implements a Finite State Machine (FSM). In addition to state
+ this FSM also maintains a user defined "memory". So this FSM can be used as a
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/astat.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/astat.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """This runs Apache Status on the remote host and returns the number of requests per second.
+ 
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/bd_client.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/bd_client.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """This is a very simple client for the backdoor daemon. This is intended more
+ for testing rather than normal use. See bd_serv.py """
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/bd_serv.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/bd_serv.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """Back door shell server
+ 
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/cgishell.cgi
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/cgishell.cgi
+@@ -1,5 +1,5 @@
+ #!/usr/bin/python
+-##!/usr/bin/env python
++##!/usr/bin/env python3
+ """CGI shell server
+ 
+ This exposes a shell terminal on a web page.
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/chess.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/chess.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ '''This demonstrates controlling a screen oriented application (curses).
+ It starts two instances of gnuchess and then pits them against each other.
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/chess2.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/chess2.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ '''This demonstrates controlling a screen oriented application (curses).
+ It starts two instances of gnuchess and then pits them against each other.
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/chess3.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/chess3.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ '''This demonstrates controlling a screen oriented application (curses).
+ It starts two instances of gnuchess and then pits them against each other.
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/df.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/df.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """This collects filesystem capacity info using the 'df' command. Tuples of
+ filesystem name and percentage are stored in a list. A simple report is
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/fix_cvs_files.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/fix_cvs_files.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """This is for cleaning up binary files improperly added to CVS. This script
+ scans the given path to find binary files; checks with CVS to see if the sticky
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/ftp.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/ftp.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """This demonstrates an FTP "bookmark". This connects to an ftp site; does a
+ few ftp stuff; and then gives the user interactive control over the session. In
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/hive.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/hive.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """hive -- Hive Shell
+ 
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/monitor.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/monitor.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """ This runs a sequence of commands on a remote host using SSH. It runs a
+ simple system checks such as uptime and free to monitor the state of the remote
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/passmass.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/passmass.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """Change passwords on the named machines. passmass host1 host2 host3 . . .
+ Note that login shell prompt on remote machine must end in # or $. """
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/python.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/python.py
+@@ -1,13 +1,13 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """This starts the python interpreter; captures the startup message; then gives
+ the user interactive control over the session. Why? For fun... """
+ 
+ # Don't do this unless you like being John Malkovich
+-# c = pexpect.spawn ('/usr/bin/env python ./python.py')
++# c = pexpect.spawn ('/usr/bin/env python3 ./python.py')
+ 
+ import pexpect
+-c = pexpect.spawn('/usr/bin/env python')
++c = pexpect.spawn('/usr/bin/env python3')
+ c.expect('>>>')
+ print 'And now for something completely different...'
+ f = lambda s: s and f(s[1:]) + s[0]  # Makes a function to reverse a string.
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/rippy.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/rippy.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """Rippy!
+ 
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/script.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/script.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """This spawns a sub-shell (bash) and gives the user interactive control. The
+ entire shell session is logged to a file called script.log. This behaves much
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/ssh_tunnel.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/ssh_tunnel.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """This starts an SSH tunnel to a given host. If the SSH process ever dies then
+ this script will detect that and restart it. I use this under Cygwin to keep
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/sshls.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/sshls.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """This runs 'ls -l' on a remote host using SSH. At the prompts enter hostname,
+ user, and password.
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/topip.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/topip.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """ This runs netstat on a local or remote server. It calculates some simple
+ statistical information on the number of external inet connections. It groups
+--- llvm-toolchain-8-8.0.1.orig/lldb/third_party/Python/module/pexpect-2.4/examples/uptime.py
++++ llvm-toolchain-8-8.0.1/lldb/third_party/Python/module/pexpect-2.4/examples/uptime.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """This displays uptime information using uptime. This is redundant,
+ but it demonstrates expecting for a regular expression that uses subgroups.
+--- llvm-toolchain-8-8.0.1.orig/lldb/utils/git-svn/convert.py
++++ llvm-toolchain-8-8.0.1/lldb/utils/git-svn/convert.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ Convert the raw message sources from git patch emails to git-am friendly files.
+--- llvm-toolchain-8-8.0.1.orig/lldb/utils/lldb-dotest/lldb-dotest.in
++++ llvm-toolchain-8-8.0.1/lldb/utils/lldb-dotest/lldb-dotest.in
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ import subprocess
+ import sys
+ 
+--- llvm-toolchain-8-8.0.1.orig/lldb/utils/lui/lui.py
++++ llvm-toolchain-8-8.0.1/lldb/utils/lui/lui.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ ##===-- lui.py -----------------------------------------------*- Python -*-===##
+ ##
+ # The LLVM Compiler Infrastructure
+--- llvm-toolchain-8-8.0.1.orig/lldb/utils/lui/sandbox.py
++++ llvm-toolchain-8-8.0.1/lldb/utils/lui/sandbox.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ ##===-- sandbox.py -------------------------------------------*- Python -*-===##
+ ##
+ # The LLVM Compiler Infrastructure
+--- llvm-toolchain-8-8.0.1.orig/lldb/utils/misc/grep-svn-log.py
++++ llvm-toolchain-8-8.0.1/lldb/utils/misc/grep-svn-log.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ Greps and returns the first svn log entry containing a line matching the regular
+--- llvm-toolchain-8-8.0.1.orig/lldb/utils/sync-source/syncsource.py
++++ llvm-toolchain-8-8.0.1/lldb/utils/sync-source/syncsource.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ """
+                      The LLVM Compiler Infrastructure
+ 
+--- llvm-toolchain-8-8.0.1.orig/lldb/utils/test/disasm.py
++++ llvm-toolchain-8-8.0.1/lldb/utils/test/disasm.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ Run gdb to disassemble a function, feed the bytes to 'llvm-mc -disassemble' command,
+--- llvm-toolchain-8-8.0.1.orig/lldb/utils/test/lldb-disasm.py
++++ llvm-toolchain-8-8.0.1/lldb/utils/test/lldb-disasm.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ Run lldb to disassemble all the available functions for an executable image.
+--- llvm-toolchain-8-8.0.1.orig/lldb/utils/test/llvm-mc-shell.py
++++ llvm-toolchain-8-8.0.1/lldb/utils/test/llvm-mc-shell.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ Run llvm-mc interactively.
+--- llvm-toolchain-8-8.0.1.orig/lldb/utils/test/ras.py
++++ llvm-toolchain-8-8.0.1/lldb/utils/test/ras.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ Run the test suite and send the result as an email message.
+--- llvm-toolchain-8-8.0.1.orig/lldb/utils/test/run-dis.py
++++ llvm-toolchain-8-8.0.1/lldb/utils/test/run-dis.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ Run lldb disassembler on all the binaries specified by a combination of root dir
+--- llvm-toolchain-8-8.0.1.orig/lldb/utils/test/run-until-faulted.py
++++ llvm-toolchain-8-8.0.1/lldb/utils/test/run-until-faulted.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ Run a program via lldb until it fails.
+--- llvm-toolchain-8-8.0.1.orig/test/BugPoint/compile-custom.ll.py
++++ llvm-toolchain-8-8.0.1/test/BugPoint/compile-custom.ll.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/test/Other/opt-bisect-helper.py
++++ llvm-toolchain-8-8.0.1/test/Other/opt-bisect-helper.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/test/TableGen/JSON-check.py
++++ llvm-toolchain-8-8.0.1/test/TableGen/JSON-check.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import sys
+ import subprocess
+--- llvm-toolchain-8-8.0.1.orig/test/tools/llvm-readobj/Inputs/relocs.py
++++ llvm-toolchain-8-8.0.1/test/tools/llvm-readobj/Inputs/relocs.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/tools/opt-viewer/opt-diff.py
++++ llvm-toolchain-8-8.0.1/tools/opt-viewer/opt-diff.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/tools/opt-viewer/opt-stats.py
++++ llvm-toolchain-8-8.0.1/tools/opt-viewer/opt-stats.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/tools/opt-viewer/opt-viewer.py
++++ llvm-toolchain-8-8.0.1/tools/opt-viewer/opt-viewer.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/tools/opt-viewer/optrecord.py
++++ llvm-toolchain-8-8.0.1/tools/opt-viewer/optrecord.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/Misc/zkill
++++ llvm-toolchain-8-8.0.1/utils/Misc/zkill
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import os
+ import re
+--- llvm-toolchain-8-8.0.1.orig/utils/Reviewing/find_interesting_reviews.py
++++ llvm-toolchain-8-8.0.1/utils/Reviewing/find_interesting_reviews.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/Target/ARM/analyze-match-table.py
++++ llvm-toolchain-8-8.0.1/utils/Target/ARM/analyze-match-table.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/abtest.py
++++ llvm-toolchain-8-8.0.1/utils/abtest.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ # Given a previous good compile narrow down miscompiles.
+ # Expects two directories named "before" and "after" each containing a set of
+--- llvm-toolchain-8-8.0.1.orig/utils/benchmark/mingw.py
++++ llvm-toolchain-8-8.0.1/utils/benchmark/mingw.py
+@@ -1,4 +1,4 @@
+-#! /usr/bin/env python
++#! /usr/bin/env python3
+ # encoding: utf-8
+ 
+ import argparse
+--- llvm-toolchain-8-8.0.1.orig/utils/benchmark/tools/compare.py
++++ llvm-toolchain-8-8.0.1/utils/benchmark/tools/compare.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ compare.py - versatile benchmark output compare tool
+--- llvm-toolchain-8-8.0.1.orig/utils/benchmark/tools/strip_asm.py
++++ llvm-toolchain-8-8.0.1/utils/benchmark/tools/strip_asm.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ strip_asm.py - Cleanup ASM output for the specified file
+--- llvm-toolchain-8-8.0.1.orig/utils/bisect
++++ llvm-toolchain-8-8.0.1/utils/bisect
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import os
+ import sys
+--- llvm-toolchain-8-8.0.1.orig/utils/bisect-skip-count
++++ llvm-toolchain-8-8.0.1/utils/bisect-skip-count
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # This script is used to bisect skip and count arguments for --debug-counter.
+ # It is similar to bisect, except it understands how to increase skip and decrease count
+ #
+--- llvm-toolchain-8-8.0.1.orig/utils/bugpoint_gisel_reducer.py
++++ llvm-toolchain-8-8.0.1/utils/bugpoint_gisel_reducer.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """Reduces GlobalISel failures.
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/clang-parse-diagnostics-file
++++ llvm-toolchain-8-8.0.1/utils/clang-parse-diagnostics-file
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import os
+ import plistlib
+--- llvm-toolchain-8-8.0.1.orig/utils/create_ladder_graph.py
++++ llvm-toolchain-8-8.0.1/utils/create_ladder_graph.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ """A ladder graph creation program.
+ 
+ This is a python program that creates c source code that will generate
+--- llvm-toolchain-8-8.0.1.orig/utils/extract_symbols.py
++++ llvm-toolchain-8-8.0.1/utils/extract_symbols.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """A tool for extracting a list of symbols to export
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/extract_vplan.py
++++ llvm-toolchain-8-8.0.1/utils/extract_vplan.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ # This script extracts the VPlan digraphs from the vectoriser debug messages
+ # and saves them in individual dot files (one for each plan). Optionally, and
+--- llvm-toolchain-8-8.0.1.orig/utils/git-svn/git-llvm
++++ llvm-toolchain-8-8.0.1/utils/git-svn/git-llvm
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ #
+ # ======- git-llvm - LLVM Git Help Integration ---------*- python -*--========#
+ #
+--- llvm-toolchain-8-8.0.1.orig/utils/gn/build/run_tablegen.py
++++ llvm-toolchain-8-8.0.1/utils/gn/build/run_tablegen.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ """Runs tablegen."""
+ 
+ import subprocess
+--- llvm-toolchain-8-8.0.1.orig/utils/gn/build/symlink_or_copy.py
++++ llvm-toolchain-8-8.0.1/utils/gn/build/symlink_or_copy.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """Symlinks, or on Windows copies, an existing file to a second location.
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/gn/build/sync_source_lists_from_cmake.py
++++ llvm-toolchain-8-8.0.1/utils/gn/build/sync_source_lists_from_cmake.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """Helps to keep BUILD.gn files in sync with the corresponding CMakeLists.txt.
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/gn/build/write_cmake_config.py
++++ llvm-toolchain-8-8.0.1/utils/gn/build/write_cmake_config.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ """Emulates the bits of CMake's configure_file() function needed in LLVM.
+ 
+ The CMake build uses configure_file() for several things.  This emulates that
+--- llvm-toolchain-8-8.0.1.orig/utils/gn/build/write_vcsrevision.py
++++ llvm-toolchain-8-8.0.1/utils/gn/build/write_vcsrevision.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """Gets the current revision and writes it to VCSRevision.h."""
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/gn/gn.py
++++ llvm-toolchain-8-8.0.1/utils/gn/gn.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ """Calls `gn` with the right --dotfile= and --root= arguments for LLVM."""
+ 
+ # GN normally expects a file called '.gn' at the root of the repository.
+--- llvm-toolchain-8-8.0.1.orig/utils/indirect_calls.py
++++ llvm-toolchain-8-8.0.1/utils/indirect_calls.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """A tool for looking for indirect jumps and calls in x86 binaries.
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/lit/lit.py
++++ llvm-toolchain-8-8.0.1/utils/lit/lit.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ import sys
+ 
+ from lit.main import main
+--- llvm-toolchain-8-8.0.1.orig/utils/lit/lit/ProgressBar.py
++++ llvm-toolchain-8-8.0.1/utils/lit/lit/ProgressBar.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ # Source: http://code.activestate.com/recipes/475116/, with
+ # modifications by Daniel Dunbar.
+--- llvm-toolchain-8-8.0.1.orig/utils/lit/lit/main.py
++++ llvm-toolchain-8-8.0.1/utils/lit/lit/main.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ lit - LLVM Integrated Tester.
+--- llvm-toolchain-8-8.0.1.orig/utils/lit/tests/Inputs/googletest-format/DummySubDir/OneTest.py
++++ llvm-toolchain-8-8.0.1/utils/lit/tests/Inputs/googletest-format/DummySubDir/OneTest.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import sys
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/lit/tests/Inputs/googletest-timeout/DummySubDir/OneTest.py
++++ llvm-toolchain-8-8.0.1/utils/lit/tests/Inputs/googletest-timeout/DummySubDir/OneTest.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import sys
+ import time
+--- llvm-toolchain-8-8.0.1.orig/utils/lit/tests/Inputs/googletest-upstream-format/DummySubDir/OneTest.py
++++ llvm-toolchain-8-8.0.1/utils/lit/tests/Inputs/googletest-upstream-format/DummySubDir/OneTest.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import sys
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/lit/tests/Inputs/shtest-env/print_environment.py
++++ llvm-toolchain-8-8.0.1/utils/lit/tests/Inputs/shtest-env/print_environment.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_statement
+ import os
+--- llvm-toolchain-8-8.0.1.orig/utils/lit/tests/Inputs/shtest-format/external_shell/write-bad-encoding.py
++++ llvm-toolchain-8-8.0.1/utils/lit/tests/Inputs/shtest-format/external_shell/write-bad-encoding.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import sys
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/lit/tests/Inputs/shtest-shell/check_args.py
++++ llvm-toolchain-8-8.0.1/utils/lit/tests/Inputs/shtest-shell/check_args.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import argparse
+ import platform
+--- llvm-toolchain-8-8.0.1.orig/utils/lit/tests/Inputs/shtest-shell/check_path.py
++++ llvm-toolchain-8-8.0.1/utils/lit/tests/Inputs/shtest-shell/check_path.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/lit/tests/Inputs/shtest-shell/write-to-stderr.py
++++ llvm-toolchain-8-8.0.1/utils/lit/tests/Inputs/shtest-shell/write-to-stderr.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import sys
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/lit/tests/Inputs/shtest-shell/write-to-stdout-and-stderr.py
++++ llvm-toolchain-8-8.0.1/utils/lit/tests/Inputs/shtest-shell/write-to-stdout-and-stderr.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import sys
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/llvm-build/llvm-build
++++ llvm-toolchain-8-8.0.1/utils/llvm-build/llvm-build
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ import llvmbuild
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/llvm-gisel-cov.py
++++ llvm-toolchain-8-8.0.1/utils/llvm-gisel-cov.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ """
+ Summarize the information in the given coverage files.
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/llvm-lit/llvm-lit.in
++++ llvm-toolchain-8-8.0.1/utils/llvm-lit/llvm-lit.in
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # -*- coding: utf-8 -*-
+ 
+ import os
+--- llvm-toolchain-8-8.0.1.orig/utils/prepare-code-coverage-artifact.py
++++ llvm-toolchain-8-8.0.1/utils/prepare-code-coverage-artifact.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/release/findRegressions-nightly.py
++++ llvm-toolchain-8-8.0.1/utils/release/findRegressions-nightly.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ from __future__ import print_function
+ 
+ import re, string, sys, os, time
+--- llvm-toolchain-8-8.0.1.orig/utils/release/findRegressions-simple.py
++++ llvm-toolchain-8-8.0.1/utils/release/findRegressions-simple.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ from __future__ import print_function
+ import re, string, sys, os, time, math
+--- llvm-toolchain-8-8.0.1.orig/utils/shuffle_fuzz.py
++++ llvm-toolchain-8-8.0.1/utils/shuffle_fuzz.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """A shuffle vector fuzz tester.
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/shuffle_select_fuzz_tester.py
++++ llvm-toolchain-8-8.0.1/utils/shuffle_select_fuzz_tester.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """A shuffle-select vector fuzz tester.
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/sort_includes.py
++++ llvm-toolchain-8-8.0.1/utils/sort_includes.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """Script to sort the top-most block of #include lines.
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/unicode-case-fold.py
++++ llvm-toolchain-8-8.0.1/utils/unicode-case-fold.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ """
+ Unicode case folding database conversion utility
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/update_analyze_test_checks.py
++++ llvm-toolchain-8-8.0.1/utils/update_analyze_test_checks.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """A script to generate FileCheck statements for 'opt' analysis tests.
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/update_llc_test_checks.py
++++ llvm-toolchain-8-8.0.1/utils/update_llc_test_checks.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """A test case update script.
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/update_mca_test_checks.py
++++ llvm-toolchain-8-8.0.1/utils/update_mca_test_checks.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """A test case update script.
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/update_mir_test_checks.py
++++ llvm-toolchain-8-8.0.1/utils/update_mir_test_checks.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """Updates FileCheck checks in MIR tests.
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/update_test_checks.py
++++ llvm-toolchain-8-8.0.1/utils/update_test_checks.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """A script to generate FileCheck statements for 'opt' regression tests.
+ 
+--- llvm-toolchain-8-8.0.1.orig/utils/wciia.py
++++ llvm-toolchain-8-8.0.1/utils/wciia.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ """
+ wciia - Whose Code Is It Anyway

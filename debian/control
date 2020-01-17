@@ -18,7 +18,7 @@ Build-Depends: debhelper (>= 9.0), cmake, chrpath, texinfo, sharutils,
     ocaml-findlib [amd64 arm64 armhf i386 ppc64el s390x],
     libctypes-ocaml-dev [amd64 arm64 armhf i386 ppc64el s390x],
     dh-exec, dh-ocaml [amd64 arm64 armhf i386 ppc64el s390x],
-    libpfm4-dev [linux-any],
+    libpfm4-dev [linux-any], python3-setuptools,
     g++-8 | g++-7 | g++-6 | g++-5 | g++-4.7
 Build-Conflicts: oprofile, ocaml
 Standards-Version: 4.2.1
@@ -190,13 +190,14 @@ Description: Library for coverage-guided fuzz testing
  instrumentation.
 
 
-Package: python-clang-8
+Package: python3-clang-8
 Section: python
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, python3, libclang-8-dev
-Replaces: python-clang-x.y
+Replaces: python-clang-x.y, python-clang-8 (<< 1:8.0.1-4)
 Conflicts: python-clang-x.y
 Provides: python-clang-x.y
+Breaks: python-clang-8 (<< 1:8.0.1-4)
 Description: Clang Python Bindings
  Clang project is a C, C++, Objective C and Objective C++ front-end
  based on the LLVM compiler. Its goal is to offer a replacement to the
@@ -207,6 +208,13 @@ Description: Clang Python Bindings
  .
  This binding package provides access to the Clang compiler and libraries.
 
+Package: python-clang-8
+Depends: python3-clang-8, ${misc:Depends}
+Architecture: any
+Priority: optional
+Section: oldlibs
+Description: transitional package to python3-clang-8
+ This is a transitional package. It can safely be removed.
 
 Package: clang-8-examples
 Architecture: any
@@ -308,8 +316,7 @@ Description: Modular compiler and toolchain technologies, libraries and headers
 
 Package: llvm-8-tools
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python2, python3,
- python-pygments, python-yaml,
+Depends: ${shlibs:Depends}, ${misc:Depends}, python3,
  python3-pygments, python3-yaml,
  llvm-8-dev (= ${binary:Version})
 Description: Modular compiler and toolchain technologies, tools
@@ -436,7 +443,7 @@ Package: lldb-8
 Architecture: amd64 arm64 armel armhf i386 mips mipsel mips64el ppc64el kfreebsd-amd64 kfreebsd-i386 s390 sparc hppa m68k sh4 x32
 # ia64 hurd powerpc powerpcspe ppc64 alpha s390x sparc64 have been removed
 Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm8 (= ${binary:Version}), llvm-8-dev,
- python-lldb-8
+ python3-lldb-8
 Pre-Depends: ${misc:Pre-Depends}
 Description: Next generation, high-performance debugger
  LLDB is a next generation, high-performance debugger. It is built as a set of
@@ -457,30 +464,22 @@ Description: Next generation, high-performance debugger, library
  This package contains the LLDB runtime library.
 
 Package: python-lldb-8
-Section: python
+Depends: python3-lldb-8, ${misc:Depends}
 Architecture: amd64 arm64 armel armhf i386 mips mipsel mips64el ppc64el kfreebsd-amd64 kfreebsd-i386 s390 sparc hppa m68k sh4 x32
-# ia64 hurd powerpc powerpcspe ppc64 alpha s390x sparc64 have been removed
-Depends: ${shlibs:Depends}, ${misc:Depends}, python3, python3-six
-Conflicts: python-lldb-x.y
-Replaces: python-lldb-x.y
-Provides: python-lldb-x.y
-Pre-Depends: ${misc:Pre-Depends}
-Description: Next generation, high-performance debugger, python lib
- LLDB is a next generation, high-performance debugger. It is built as a set of
- reusable components which highly leverage existing libraries in the larger LLVM
- Project, such as the Clang expression parser and LLVM disassembler.
- .
- This binding package provides access to lldb.
-
+Priority: optional
+Section: oldlibs
+Description: transitional package to python3-lldb-8
+ This is a transitional package. It can safely be removed.
 
 Package: python3-lldb-8
 Section: python
 Architecture: amd64 arm64 armel armhf i386 mips mipsel mips64el ppc64el kfreebsd-amd64 kfreebsd-i386 s390 sparc hppa m69k sh4 x32
 # ia64 hurd powerpc powerpcspe ppc64 alpha s390x sparc64 have been removed
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends}, python3-six
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends}, liblldb-8, python3-six
 Conflicts: python3-lldb-x.y
-Replaces: python3-lldb-x.y
+Replaces: python3-lldb-x.y, python-lldb-8 (<< 1:8.0.1-4)
 Provides: python3-lldb-x.y
+Breaks: python-lldb-8 (<< 1:8.0.1-4)
 Pre-Depends: ${misc:Pre-Depends}
 Description: Next generation, high-performance debugger, python3 lib
  LLDB is a next generation, high-performance debugger. It is built as a set of
