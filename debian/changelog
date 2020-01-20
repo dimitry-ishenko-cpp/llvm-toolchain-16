@@ -1,4 +1,4 @@
-llvm-toolchain-6.0 (1:6.0.1-12) UNRELEASED; urgency=medium
+llvm-toolchain-6.0 (1:6.0.1-12) unstable; urgency=medium
 
   [ Andreas Beckmann ]
   * For now, lld doesn't generate shared libs. Removing the files
@@ -6,13 +6,14 @@ llvm-toolchain-6.0 (1:6.0.1-12) UNRELEASED; urgency=medium
 
   [ Gianfranco Costamagna ]
   * Import the Ubuntu delta
+  * Upload to unstable
 
   [ Matthias Klose ]
   * (Build-)depend on python2 instead of python.
   * Fix the build to use python2 instead of python.
   * Call dh_python2 to rewrite shebangs.
 
- -- Andreas Beckmann <anbe@debian.org>  Sat, 11 May 2019 17:19:32 +0200
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 20 Jan 2020 10:26:04 +0100
 
 llvm-toolchain-6.0 (1:6.0.1-11) unstable; urgency=medium
 
