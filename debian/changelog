@@ -1,3 +1,9 @@
+llvm-toolchain-8 (1:8.0.1-6) unstable; urgency=medium
+
+  * fix lldb-8 -P path print (Closes: #945445)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Tue, 21 Jan 2020 12:34:48 +0100
+
 llvm-toolchain-8 (1:8.0.1-5) unstable; urgency=medium
 
   [ Samuel Thibault ]

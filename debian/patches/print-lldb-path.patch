@@ -1,0 +1,20 @@
+Author: Gianfranco Costamagna <locutusofborg@debian.org>
+Last-Update: 2020-01-21
+
+--- llvm-toolchain-8-8.0.1.orig/lldb/source/Plugins/ScriptInterpreter/Python/ScriptInterpreterPython.cpp
++++ llvm-toolchain-8-8.0.1/lldb/source/Plugins/ScriptInterpreter/Python/ScriptInterpreterPython.cpp
+@@ -385,10 +385,11 @@ void ScriptInterpreterPython::ComputePyt
+   llvm::sys::path::remove_filename(path, style);
+   llvm::sys::path::append(path, style, LLDB_PYTHON_RELATIVE_LIBDIR);
+ #else
++  llvm::sys::path::remove_filename(path, style);
+   llvm::sys::path::append(path, style,
+-                          "python" + llvm::Twine(PY_MAJOR_VERSION) + "." +
+-                              llvm::Twine(PY_MINOR_VERSION),
+-                          "site-packages");
++                          "python3"/* + llvm::Twine(PY_MAJOR_VERSION) + "." +
++                              llvm::Twine(PY_MINOR_VERSION)*/,
++                          "dist-packages");
+ #endif
+ }
+ 
