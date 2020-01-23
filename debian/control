@@ -3,7 +3,7 @@ Section: devel
 Priority: optional
 Rules-Requires-Root: no
 Maintainer: LLVM Packaging Team <pkg-llvm-team@lists.alioth.debian.org>
-Uploaders: Sylvestre Ledru <sylvestre@debian.org>
+Uploaders: Sylvestre Ledru <sylvestre@debian.org>, Gianfranco Costamagna <locutusofborg@debian.org>
 Build-Depends: debhelper (>= 9.0), cmake, chrpath, texinfo, sharutils,
     libffi-dev (>= 3.0.9),
     lsb-release, patchutils, diffstat, xz-utils, python3-dev,
