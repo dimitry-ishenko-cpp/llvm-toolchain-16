@@ -615,7 +615,7 @@ endif
 
 # idem for the lldb python binding
 	mkdir -p $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/python3/dist-packages/
-	mv $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/python3.*/site-packages/* $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/python3/dist-packages/
+	mv $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/python3.*/site-packages/* $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/python3/dist-packages/ || true
 
 # Remove things that CMake  install but which aren't packaged yet,
 # or are packaged from the source or build tree.

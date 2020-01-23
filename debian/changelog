@@ -1,6 +1,7 @@
-llvm-toolchain-8 (1:8.0.1-7) UNRELEASED; urgency=medium
+llvm-toolchain-8 (1:8.0.1-7) unstable; urgency=medium
 
   * Add two new python autopkgtests to avoid regressions in the future
+  * Do not fail if lldb python binding is not built.
 
  -- Gianfranco Costamagna <locutusofborg@debian.org>  Thu, 23 Jan 2020 10:17:54 +0100
 
