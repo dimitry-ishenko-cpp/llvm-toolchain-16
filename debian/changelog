@@ -1,3 +1,9 @@
+llvm-toolchain-7 (1:7.0.1-11) UNRELEASED; urgency=medium
+
+  * Fix python lldb import, due to missing dependency on lldb-7 package
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Thu, 23 Jan 2020 09:25:15 +0100
+
 llvm-toolchain-7 (1:7.0.1-10) unstable; urgency=medium
 
   * Cherry-pick Ubuntu fixes from Matthias Klose:
