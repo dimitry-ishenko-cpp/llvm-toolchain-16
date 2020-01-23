@@ -475,7 +475,7 @@ Package: python3-lldb-8
 Section: python
 Architecture: amd64 arm64 armel armhf i386 mips mipsel mips64el ppc64el kfreebsd-amd64 kfreebsd-i386 s390 sparc hppa m69k sh4 x32
 # ia64 hurd powerpc powerpcspe ppc64 alpha s390x sparc64 have been removed
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends}, liblldb-8, python3-six
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends}, liblldb-8 (= ${binary:Version}), python3-six
 Conflicts: python3-lldb-x.y
 Replaces: python3-lldb-x.y, python-lldb-8 (<< 1:8.0.1-4)
 Provides: python3-lldb-x.y
