@@ -4,3 +4,10 @@ Depends: @, cmake, g++, file, dpkg-dev
 # dbgsym packages not being available in testing
 # clang-8-dbgsym, libclang1-8-dbgsym
 Restrictions: allow-stderr
+
+
+Test-Command: python3 -c "import lldb; print(lldb.__file__); print(lldb)"
+Depends: python3-lldb-8
+
+Test-Command: python3 -c "import clang; print(clang.__file__); print(clang)"
+Depends: python3-clang-8
