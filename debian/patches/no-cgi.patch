@@ -1,0 +1,48 @@
+Description: cgi method is deprecated, use html instead
+Author: Gianfranco Costamagna <locutusofborg@debian.org>
+Last-Update: 2020-02-25
+
+Index: llvm-toolchain-8-8.0.1/tools/opt-viewer/opt-viewer.py
+===================================================================
+--- llvm-toolchain-8-8.0.1.orig/tools/opt-viewer/opt-viewer.py
++++ llvm-toolchain-8-8.0.1/tools/opt-viewer/opt-viewer.py
+@@ -3,7 +3,7 @@
+ from __future__ import print_function
+ 
+ import argparse
+-import cgi
++import html
+ import codecs
+ import errno
+ import functools
+@@ -169,7 +169,7 @@
+         self.max_hottest_remarks_on_index = max_hottest_remarks_on_index
+ 
+     def render_entry(self, r, odd):
+-        escaped_name = cgi.escape(r.DemangledFunctionName)
++        escaped_name = html.escape(r.DemangledFunctionName)
+         print(u'''
+ <tr>
+ <td class=\"column-entry-{odd}\"><a href={r.Link}>{r.DebugLocString}</a></td>
+Index: llvm-toolchain-8-8.0.1/tools/opt-viewer/optrecord.py
+===================================================================
+--- llvm-toolchain-8-8.0.1.orig/tools/opt-viewer/optrecord.py
++++ llvm-toolchain-8-8.0.1/tools/opt-viewer/optrecord.py
+@@ -10,7 +10,7 @@
+     print("For faster parsing, you may want to install libYAML for PyYAML")
+     from yaml import Loader
+ 
+-import cgi
++import html
+ from collections import defaultdict
+ import fnmatch
+ import functools
+@@ -156,7 +156,7 @@
+         (key, value) = list(mapping.items())[0]
+ 
+         if key == 'Caller' or key == 'Callee' or key == 'DirectCallee':
+-            value = cgi.escape(self.demangle(value))
++            value = html.escape(self.demangle(value))
+ 
+         if dl and key != 'Caller':
+             dl_dict = dict(list(dl))

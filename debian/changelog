@@ -1,3 +1,12 @@
+llvm-toolchain-8 (1:8.0.1-8) UNRELEASED; urgency=medium
+
+  * debian/patches/swig.patch
+    - cherry-pick and rebase upstream commit 89b658428bae3b749f174ca79f0fe390451d8f69
+  * debian/patches/no-cgi.patch
+    - patch to use html instead of cgi, deprecated in Python3.8
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Tue, 25 Feb 2020 15:08:36 +0100
+
 llvm-toolchain-8 (1:8.0.1-7) unstable; urgency=medium
 
   * Add two new python autopkgtests to avoid regressions in the future
