@@ -143,3 +143,4 @@ python3-shebang.patch
 print-lldb-path.patch
 no-cgi.patch
 swig.patch
+947f9692440836dcb8d88b74b69dd379d85974ce.patch
