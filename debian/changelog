@@ -1,9 +1,9 @@
-llvm-toolchain-8 (1:8.0.1-9) UNRELEASED; urgency=medium
+llvm-toolchain-8 (1:8.0.1-9) unstable; urgency=medium
 
   * debian/patches/947f9692440836dcb8d88b74b69dd379d85974ce.patch:
     - usptream fix for new glibc 2.31
 
- -- Gianfranco Costamagna <locutusofborg@debian.org>  Sat, 07 Mar 2020 01:01:49 +0100
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Thu, 19 Mar 2020 09:50:20 +0100
 
 llvm-toolchain-8 (1:8.0.1-8) unstable; urgency=medium
 
