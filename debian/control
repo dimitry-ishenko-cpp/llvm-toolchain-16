@@ -6,7 +6,7 @@ Uploaders: Sylvestre Ledru <sylvestre@debian.org>, Gianfranco Costamagna <locutu
 Build-Depends: debhelper (>= 9.0), cmake, chrpath, texinfo, sharutils,
     libffi-dev (>= 3.0.9),
     lsb-release, patchutils, diffstat, xz-utils, python2-dev,
-    libedit-dev, libncurses5-dev, swig, python-six, python-sphinx, binutils-dev,
+    libedit-dev, libncurses5-dev, swig, python-six, binutils-dev,
     libjsoncpp-dev, pkg-config,
     lcov, procps, help2man, zlib1g-dev,
     g++-multilib [amd64 i386 kfreebsd-amd64 mips mips64 mips64el mipsel powerpc ppc64 s390 s390x sparc sparc64 x32],
@@ -30,7 +30,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
  libclang1-6.0 (= ${binary:Version}), libc6-dev, binutils
 Provides: c-compiler, objc-compiler, c++-compiler
 Recommends: llvm-6.0-dev, python2, libomp-dev
-Suggests: gnustep, gnustep-devel, clang-6.0-doc
+Suggests: gnustep, gnustep-devel
 Description: C, C++ and Objective-C compiler
  Clang project is a C, C++, Objective C and Objective C++ front-end
  based on the LLVM compiler. Its goal is to offer a replacement to the
@@ -81,20 +81,6 @@ Description: clang-based C++ linter tool
  errors, like style violations, interface misuse, or bugs that can be deduced
  via static analysis. clang-tidy is modular and provides a convenient interface
  for writing new checks.
-
-Package: clang-6.0-doc
-Architecture: all
-Section: doc
-Depends: ${shlibs:Depends}, ${misc:Depends}, libjs-mathjax
-Description: C, C++ and Objective-C compiler - Documentation
- Clang project is a C, C++, Objective C and Objective C++ front-end
- based on the LLVM compiler. Its goal is to offer a replacement to the
- GNU Compiler Collection (GCC).
- .
- Clang implements all of the ISO C++ 1998, 11 and 14 standards and also
- provides most of the support of C++17.
- .
- This package contains the documentation.
 
 Package: libclang1-6.0
 Section: libs
@@ -223,7 +209,6 @@ Description: Modular compiler and toolchain technologies, runtime library
 
 Package: llvm-6.0
 Architecture: any
-Suggests: llvm-6.0-doc
 Depends: llvm-6.0-runtime (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Recommends: llvm-6.0-dev
 Description: Modular compiler and toolchain technologies
@@ -313,7 +298,6 @@ Description: Modular compiler and toolchain technologies, tools
 # Package: libllvm-6.0-ocaml-dev
 # Section: ocaml
 # Architecture: amd64 arm64 armel armhf i386 ppc64el s390x
-# Suggests: llvm-6.0-doc
 # Depends: ${shlibs:Depends}, ${misc:Depends}, ${ocaml:Depends}, llvm-6.0-dev (= ${binary:Version})
 # Replaces: libllvm-x.y-ocaml-dev
 # Conflicts: libllvm-x.y-ocaml-dev
@@ -332,25 +316,6 @@ Description: Modular compiler and toolchain technologies, tools
 #  run-time, or "idle-time" (between program runs).
 #  .
 #  This package provides the OCaml bindings to develop applications using llvm.
-
-Package: llvm-6.0-doc
-Section: doc
-Architecture: all
-Depends: ${misc:Depends}, libjs-jquery, libjs-underscore
-Description: Modular compiler and toolchain technologies, documentation
- LLVM is a collection of libraries and tools that make it easy to build
- compilers, optimizers, just-in-time code generators, and many other
- compiler-related programs.
- .
- LLVM uses a single, language-independent virtual instruction set both
- as an offline code representation (to communicate code between
- compiler phases and to run-time systems) and as the compiler internal
- representation (to analyze and transform programs). This persistent
- code representation allows a common set of sophisticated compiler
- techniques to be applied at compile-time, link-time, install-time,
- run-time, or "idle-time" (between program runs).
- .
- This package contains all documentation (extensive).
 
 Package: llvm-6.0-examples
 Section: doc
