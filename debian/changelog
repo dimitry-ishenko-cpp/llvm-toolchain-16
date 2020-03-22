@@ -1,8 +1,8 @@
-llvm-toolchain-6.0 (1:6.0.1-13) UNRELEASED; urgency=medium
+llvm-toolchain-6.0 (1:6.0.1-13) unstable; urgency=medium
 
   * Drop -doc packages, in order to reduce rdeps of python-sphinx
 
- -- Sandro Tosi <morph@debian.org>  Sun, 22 Mar 2020 13:27:50 -0400
+ -- Sandro Tosi <morph@debian.org>  Sun, 22 Mar 2020 19:32:55 -0400
 
 llvm-toolchain-6.0 (1:6.0.1-12) unstable; urgency=medium
 
