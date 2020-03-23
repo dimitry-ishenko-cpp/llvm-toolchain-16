@@ -363,7 +363,7 @@ override_dh_auto_configure: preconfigure
 	-DLLVM_LINK_LLVM_DYLIB=ON \
 	-DLLVM_INSTALL_UTILS=ON \
 	-DLLVM_VERSION_SUFFIX= \
-	-DLLVM_ENABLE_SPHINX=ON \
+	-DLLVM_ENABLE_SPHINX=OFF \
 	-DSPHINX_WARNINGS_AS_ERRORS=OFF \
 	-DLLVM_BUILD_LLVM_DYLIB=ON \
 	-DLLVM_ENABLE_RTTI=ON \
@@ -472,8 +472,6 @@ override_dh_prep: build_doc
 	dh_prep
 
 build_doc:
-	cd $(CURDIR)/docs && make -f Makefile.sphinx && make -f Makefile.sphinx man
-	cd $(CURDIR)/clang/docs && make -f Makefile.sphinx && make -f Makefile.sphinx man
 	-(if test "$(OCAML_ENABLE)" = yes; then \
 	make $(NJOBS) -C "$(TARGET_BUILD_STAGE2)/docs" ocaml_doc; \
 	fi)
@@ -491,15 +489,6 @@ build_doc:
 	else \
 		echo "could not find $$d"; \
 	fi
-# the clang doc generation only generates clang manpage
-# When it will do more, we should move that in the loop above
-	cd $(CURDIR)/clang/docs/_build/man/; mv clang.1 clang-$(LLVM_VERSION).1
-
-# Remove the copy of jquery. See bug #701087
-	for d in $(TARGET_BUILD)/docs/html/_static/ $(TARGET_BUILD)/tools/clang/docs/html/_static/ $(TARGET_BUILD)/tools/clang/tools/extra/docs/html/_static/; do \
-		cd $$d && rm -f jquery.js && ln -s /usr/share/javascript/jquery/jquery.js && cd -; \
-		cd $$d && rm -f underscore.js && ln -s /usr/share/javascript/underscore/underscore.js && cd -; \
-	done
 
 	mkdir -p debian/man/
 	help2man --no-info --version-string=$(LLVM_VERSION) clang/tools/scan-view/bin/scan-view > debian/man/scan-view-$(LLVM_VERSION).1
@@ -649,11 +638,6 @@ endif
 		mv -f $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/include/polly/ \
 		$(CURDIR)/debian/libclang-common-$(LLVM_VERSION)-dev/usr/lib/llvm-$(LLVM_VERSION)/include/; \
 	fi
-
-	mkdir -p $(CURDIR)/debian/usr/share/doc/llvm-$(LLVM_VERSION)-doc/ $(CURDIR)/debian/usr/share/doc/clang-$(LLVM_VERSION)-doc/
-	cp -R $(TARGET_BUILD)/docs/html $(CURDIR)/debian/usr/share/doc/llvm-$(LLVM_VERSION)-doc/
-	cp -R $(TARGET_BUILD)/tools/clang/docs/html $(CURDIR)/debian/usr/share/doc/clang-$(LLVM_VERSION)-doc/
-	cp -R $(TARGET_BUILD)/tools/clang/tools/extra/docs/html $(CURDIR)/debian/usr/share/doc/clang-$(LLVM_VERSION)-doc/clang-extra
 
 # Rename OCaml bindings
 	if test "$(OCAML_ENABLE)" = yes; then \
