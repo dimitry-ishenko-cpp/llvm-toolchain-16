@@ -94,3 +94,4 @@ julia/llvm-6.0-NVPTX-addrspaces.patch
 # (12) [bug fix] llvm-D49832-SCEVPred
 #     [bug fix] llvm-rL323946-LSRTy
 # Already applied before
+947f9692440836dcb8d88b74b69dd379d85974ce.patch

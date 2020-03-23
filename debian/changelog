@@ -1,3 +1,10 @@
+llvm-toolchain-6.0 (1:6.0.1-14) unstable; urgency=medium
+
+  * debian/patches/947f9692440836dcb8d88b74b69dd379d85974ce.patch:
+    - usptream fix for new glibc 2.31
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 23 Mar 2020 11:59:23 +0100
+
 llvm-toolchain-6.0 (1:6.0.1-13) unstable; urgency=medium
 
   * Drop -doc packages, in order to reduce rdeps of python-sphinx
