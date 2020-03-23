@@ -1,4 +1,4 @@
-llvm-toolchain-7 (1:7.0.1-11) UNRELEASED; urgency=medium
+llvm-toolchain-7 (1:7.0.1-11) unstable; urgency=medium
 
   [ Gianfranco Costamagna ]
   * Fix python lldb import, due to missing dependency on lldb-7 package
@@ -6,7 +6,7 @@ llvm-toolchain-7 (1:7.0.1-11) UNRELEASED; urgency=medium
   [ Sandro Tosi ]
   * Drop -doc packages, in order to reduce rdeps of python-sphinx
 
- -- Sandro Tosi <morph@debian.org>  Sun, 22 Mar 2020 19:45:48 -0400
+ -- Sandro Tosi <morph@debian.org>  Mon, 23 Mar 2020 00:21:01 -0400
 
 llvm-toolchain-7 (1:7.0.1-10) unstable; urgency=medium
 
