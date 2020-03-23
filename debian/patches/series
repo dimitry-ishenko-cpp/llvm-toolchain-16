@@ -162,3 +162,4 @@ kfreebsd/lldb_source_Plugins_Process_FreeBSD.diff
 kfreebsd/tools_llvm-shlib_CMakeLists.txt.diff
 kfreebsd/include_llvm_MC_MCELFObjectWriter.h.diff
 ubuntu-eoan-distro.patch
+947f9692440836dcb8d88b74b69dd379d85974ce.patch
