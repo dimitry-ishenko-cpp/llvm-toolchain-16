@@ -1,6 +1,7 @@
 llvm-toolchain-8 (1:8.0.1-10) UNRELEASED; urgency=low
 
   * Use secure URI in debian/watch.
+  * Move source package lintian overrides to debian/source.
 
  -- Debian Janitor <janitor@jelmer.uk>  Thu, 02 Jul 2020 07:15:35 -0000
 
