@@ -1,10 +1,16 @@
-llvm-toolchain-8 (1:8.0.1-10) UNRELEASED; urgency=low
+llvm-toolchain-8 (1:8.0.1-10) unstable; urgency=medium
 
+  [ Debian Janitor ]
   * Use secure URI in debian/watch.
   * Move source package lintian overrides to debian/source.
   * Rely on pre-initialized dpkg-architecture variables.
 
- -- Debian Janitor <janitor@jelmer.uk>  Thu, 02 Jul 2020 07:15:35 -0000
+  [ Gianfranco Costamagna ]
+  * Fix ftbfs in Ubuntu with newer gcc (use gcc-8) (Closes: #957496)
+  * debian/patches/b288d90b39f4b905c02092a9bfcfd6d78f99b191.patch:
+    - cherry-pick upstream fix for newer glibc
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Sat, 15 Aug 2020 22:34:33 +0200
 
 llvm-toolchain-8 (1:8.0.1-9) unstable; urgency=medium
 
