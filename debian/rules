@@ -63,7 +63,7 @@ ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' g++
 	GCC_VERSION := 4.9
 endif
 
-FORCE_NOT_GCC_9_DISTRO := eoan focal bullseye sid
+FORCE_NOT_GCC_9_DISTRO := eoan focal groovy bullseye sid
 ifneq (,$(filter $(DISTRO),$(FORCE_NOT_GCC_9_DISTRO)))
 # Force gcc before 9 (gcc 8 on Debian unstable) because it causes
 # huge increase of the size of the .deb (because of .a and .so) and issues in the libs
