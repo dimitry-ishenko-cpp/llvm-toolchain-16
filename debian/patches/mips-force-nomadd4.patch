@@ -6,11 +6,11 @@ support both, we have to disabled those instructions.
 For that, the patch below basically corresponds to the --with-madd4=no
 used on the GCC side.
 
-Index: llvm-toolchain-10-10.0.1~+rc4/clang/lib/Basic/Targets/Mips.h
+Index: llvm-toolchain-10-10.0.1/clang/lib/Basic/Targets/Mips.h
 ===================================================================
---- llvm-toolchain-10-10.0.1~+rc4.orig/clang/lib/Basic/Targets/Mips.h
-+++ llvm-toolchain-10-10.0.1~+rc4/clang/lib/Basic/Targets/Mips.h
-@@ -332,6 +332,8 @@
+--- llvm-toolchain-10-10.0.1.orig/clang/lib/Basic/Targets/Mips.h
++++ llvm-toolchain-10-10.0.1/clang/lib/Basic/Targets/Mips.h
+@@ -332,6 +332,8 @@ public:
          HasMSA = true;
        else if (Feature == "+nomadd4")
          DisableMadd4 = true;
@@ -19,11 +19,11 @@ Index: llvm-toolchain-10-10.0.1~+rc4/clang/lib/Basic/Targets/Mips.h
        else if (Feature == "+fp64")
          FPMode = FP64;
        else if (Feature == "-fp64")
-Index: llvm-toolchain-10-10.0.1~+rc4/llvm/lib/Target/Mips/MipsSubtarget.cpp
+Index: llvm-toolchain-10-10.0.1/llvm/lib/Target/Mips/MipsSubtarget.cpp
 ===================================================================
---- llvm-toolchain-10-10.0.1~+rc4.orig/llvm/lib/Target/Mips/MipsSubtarget.cpp
-+++ llvm-toolchain-10-10.0.1~+rc4/llvm/lib/Target/Mips/MipsSubtarget.cpp
-@@ -79,7 +79,7 @@
+--- llvm-toolchain-10-10.0.1.orig/llvm/lib/Target/Mips/MipsSubtarget.cpp
++++ llvm-toolchain-10-10.0.1/llvm/lib/Target/Mips/MipsSubtarget.cpp
+@@ -79,7 +79,7 @@ MipsSubtarget::MipsSubtarget(const Tripl
        InMips16Mode(false), InMips16HardFloat(Mips16HardFloat),
        InMicroMipsMode(false), HasDSP(false), HasDSPR2(false), HasDSPR3(false),
        AllowMixed16_32(Mixed16_32 | Mips_Os16), Os16(Mips_Os16), HasMSA(false),
@@ -32,7 +32,7 @@ Index: llvm-toolchain-10-10.0.1~+rc4/llvm/lib/Target/Mips/MipsSubtarget.cpp
        HasMT(false), HasCRC(false), HasVirt(false), HasGINV(false),
        UseIndirectJumpsHazard(false), StackAlignOverride(StackAlignOverride),
        TM(TM), TargetTriple(TT), TSInfo(),
-@@ -91,6 +91,9 @@
+@@ -91,6 +91,9 @@ MipsSubtarget::MipsSubtarget(const Tripl
    if (MipsArchVersion == MipsDefault)
      MipsArchVersion = Mips32;
  
@@ -42,7 +42,7 @@ Index: llvm-toolchain-10-10.0.1~+rc4/llvm/lib/Target/Mips/MipsSubtarget.cpp
    // Don't even attempt to generate code for MIPS-I and MIPS-V. They have not
    // been tested and currently exist for the integrated assembler only.
    if (MipsArchVersion == Mips1)
-@@ -238,6 +241,7 @@
+@@ -238,6 +241,7 @@ MipsSubtarget &
  MipsSubtarget::initializeSubtargetDependencies(StringRef CPU, StringRef FS,
                                                 const TargetMachine &TM) {
    std::string CPUName = MIPS_MC::selectMipsCPU(TM.getTargetTriple(), CPU);
@@ -50,7 +50,7 @@ Index: llvm-toolchain-10-10.0.1~+rc4/llvm/lib/Target/Mips/MipsSubtarget.cpp
  
    // Parse features string.
    ParseSubtargetFeatures(CPUName, FS);
-@@ -260,6 +264,13 @@
+@@ -260,6 +264,13 @@ MipsSubtarget::initializeSubtargetDepend
      report_fatal_error("64-bit code requested on a subtarget that doesn't "
                         "support it!");
  
@@ -64,11 +64,11 @@ Index: llvm-toolchain-10-10.0.1~+rc4/llvm/lib/Target/Mips/MipsSubtarget.cpp
    return *this;
  }
  
-Index: llvm-toolchain-10-10.0.1~+rc4/llvm/lib/Target/Mips/Mips.td
+Index: llvm-toolchain-10-10.0.1/llvm/lib/Target/Mips/Mips.td
 ===================================================================
---- llvm-toolchain-10-10.0.1~+rc4.orig/llvm/lib/Target/Mips/Mips.td
-+++ llvm-toolchain-10-10.0.1~+rc4/llvm/lib/Target/Mips/Mips.td
-@@ -205,7 +205,7 @@
+--- llvm-toolchain-10-10.0.1.orig/llvm/lib/Target/Mips/Mips.td
++++ llvm-toolchain-10-10.0.1/llvm/lib/Target/Mips/Mips.td
+@@ -205,7 +205,7 @@ def FeatureUseTCCInDIV : SubtargetFeatur
                                 "UseTCCInDIV", "false",
                                 "Force the assembler to use trapping">;
  
@@ -77,11 +77,11 @@ Index: llvm-toolchain-10-10.0.1~+rc4/llvm/lib/Target/Mips/Mips.td
      : SubtargetFeature<"nomadd4", "DisableMadd4", "true",
                         "Disable 4-operand madd.fmt and related instructions">;
  
-Index: llvm-toolchain-10-10.0.1~+rc4/llvm/lib/Target/Mips/MipsInstrInfo.td
+Index: llvm-toolchain-10-10.0.1/llvm/lib/Target/Mips/MipsInstrInfo.td
 ===================================================================
---- llvm-toolchain-10-10.0.1~+rc4.orig/llvm/lib/Target/Mips/MipsInstrInfo.td
-+++ llvm-toolchain-10-10.0.1~+rc4/llvm/lib/Target/Mips/MipsInstrInfo.td
-@@ -242,7 +242,7 @@
+--- llvm-toolchain-10-10.0.1.orig/llvm/lib/Target/Mips/MipsInstrInfo.td
++++ llvm-toolchain-10-10.0.1/llvm/lib/Target/Mips/MipsInstrInfo.td
+@@ -242,7 +242,7 @@ def HasEVA       :    Predicate<"Subtarg
  def HasMSA : Predicate<"Subtarget->hasMSA()">,
               AssemblerPredicate<"FeatureMSA">;
  def HasMadd4 : Predicate<"!Subtarget->disableMadd4()">,
