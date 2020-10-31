@@ -147,6 +147,5 @@ no-cgi.patch
 ubuntu-groovy.diff
 clang_vendor_pass_stage2.diff
 remove-trailing-space-version.diff
-mips-force-nomadd4.patch
 PowerPC-PPCBoolRetToInt-Dont-translate-Constants-operands.diff
 
