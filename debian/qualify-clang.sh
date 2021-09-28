@@ -1200,7 +1200,7 @@ rm -rf cmaketest && mkdir cmaketest
 cat > cmaketest/CMakeLists.txt <<EOF
 cmake_minimum_required(VERSION 3.7)
 project(SanityCheck)
-find_package(LLVM $VERSION REQUIRED CONFIG)
+find_package(LLVM 11.1 REQUIRED CONFIG)
 message(STATUS "LLVM_CMAKE_DIR: \${LLVM_CMAKE_DIR}")
 if(NOT EXISTS "\${LLVM_TOOLS_BINARY_DIR}/clang")
 message(FATAL_ERROR "Invalid LLVM_TOOLS_BINARY_DIR: \${LLVM_TOOLS_BINARY_DIR}")

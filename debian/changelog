@@ -1,3 +1,9 @@
+llvm-toolchain-11 (1:11.1.0-4) unstable; urgency=medium
+
+  * Force version to 11.1 in another qualify-clang.sh test.
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Tue, 28 Sep 2021 12:06:50 +0200
+
 llvm-toolchain-11 (1:11.1.0-3) unstable; urgency=medium
 
   * Add two patches from ubuntu to fix lto and gcc-11 build failures
