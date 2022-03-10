@@ -3,6 +3,7 @@ llvm-toolchain-12 (1:12.0.1-20) unstable; urgency=medium
   * Also install usr/lib/llvm-@LLVM_VERSION@/lib/libRemoteIndexProto.a
     usr/lib/llvm-@LLVM_VERSION@/lib/libRemoteIndexServiceProto.a
     in libclang-X.Y-dev
+    (closes: #1004923)
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 13 Feb 2022 14:04:40 +0100
 
