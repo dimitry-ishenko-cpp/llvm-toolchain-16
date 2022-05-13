@@ -1,3 +1,10 @@
+llvm-toolchain-12 (1:12.0.1-21) UNRELEASED; urgency=medium
+
+  [ John Paul Adrian Glaubitz ]
+  * Enable GRPC build dependency only on supported targets
+
+ -- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>  Fri, 13 May 2022 21:10:00 +0200
+
 llvm-toolchain-12 (1:12.0.1-20) unstable; urgency=medium
 
   * Also install usr/lib/llvm-@LLVM_VERSION@/lib/libRemoteIndexProto.a
