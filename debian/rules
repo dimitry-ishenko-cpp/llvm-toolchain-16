@@ -424,6 +424,7 @@ preconfigure:
 	# Make install file executable for dh-exec
 	chmod +x \
 		debian/clang-tools-$(LLVM_VERSION).install \
+		debian/libclang-$(LLVM_VERSION)-dev.install \
 		debian/libclang-common-$(LLVM_VERSION)-dev.install \
 		debian/libomp-$(LLVM_VERSION)-dev.install \
 		debian/llvm-$(LLVM_VERSION)-dev.install \

@@ -2,6 +2,7 @@ llvm-toolchain-12 (1:12.0.1-21) UNRELEASED; urgency=medium
 
   [ John Paul Adrian Glaubitz ]
   * Enable GRPC build dependency only on supported targets
+  * Exclude libRemoteIndex*Proto.a on m68k and sparc64
 
  -- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>  Fri, 13 May 2022 21:10:00 +0200
 
