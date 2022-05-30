@@ -153,6 +153,8 @@ Section: libdevel
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
  ${dep:devlibs-objc}, libclang1-12 (= ${binary:Version}),
  libclang-common-12-dev (= ${binary:Version})
+Breaks: llvm-12-dev (<< 1:12.0.1-21)
+Replaces: llvm-12-dev (<< 1:12.0.1-21)
 Description: Clang library - Development package
  Clang project is a C, C++, Objective C and Objective C++ front-end
  based on the LLVM compiler. Its goal is to offer a replacement to the
