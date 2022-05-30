@@ -1,10 +1,15 @@
-llvm-toolchain-12 (1:12.0.1-21) UNRELEASED; urgency=medium
+llvm-toolchain-12 (1:12.0.1-21) unstable; urgency=medium
 
   [ John Paul Adrian Glaubitz ]
   * Enable GRPC build dependency only on supported targets
   * Exclude libRemoteIndex*Proto.a on m68k and sparc64
 
- -- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>  Fri, 13 May 2022 21:10:00 +0200
+  [ Gianfranco Costamagna ]
+  * fix GRPC list for all ports
+  * Break/Replaces llvm-12-dev to ease Ubuntu upgrade path,
+    where grpc libs were misplaced in another library
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 30 May 2022 22:09:12 +0200
 
 llvm-toolchain-12 (1:12.0.1-20) unstable; urgency=medium
 
