@@ -1,0 +1,13 @@
+Index: llvm-toolchain-13-13.0.1/lldb/bindings/python/python-typemaps.swig
+===================================================================
+--- llvm-toolchain-13-13.0.1.orig/lldb/bindings/python/python-typemaps.swig
++++ llvm-toolchain-13-13.0.1/lldb/bindings/python/python-typemaps.swig
+@@ -439,7 +439,7 @@ bool SetNumberFromPyObject<double>(doubl
+ 
+ %typemap(out) lldb::FileSP {
+   $result = nullptr;
+-  lldb::FileSP &sp = $1;
++  const lldb::FileSP &sp = $1;
+   if (sp) {
+     PythonFile pyfile = unwrapOrSetPythonException(PythonFile::FromFile(*sp));
+     if (!pyfile.IsValid())

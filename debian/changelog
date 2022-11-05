@@ -1,8 +1,12 @@
-llvm-toolchain-13 (1:13.0.1-9) UNRELEASED; urgency=medium
+llvm-toolchain-13 (1:13.0.1-9) unstable; urgency=medium
 
+  * Fix the lldb swig issues (closes: #1023466)
+
+  [ Jordan Justen ]
   * d/rules: Don't send an empty string to cmake when llvm-spirv is not found
+    (Closes: #1022295)
 
- -- Jordan Justen <jljusten@debian.org>  Fri, 28 Oct 2022 10:17:57 -0700
+ -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 05 Nov 2022 09:14:23 +0100
 
 llvm-toolchain-13 (1:13.0.1-8) unstable; urgency=medium
 

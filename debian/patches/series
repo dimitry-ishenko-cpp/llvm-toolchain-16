@@ -159,3 +159,5 @@ fix-merge-MergeFunctions-scheduling.diff
 llvm-objcopy-COFF-Consider-section-flags-when-adding.patch
 yaml2obj-COFF-Allow-variable-number-of-directories.patch
 llvm-objcopy-COFF-Fix-test-for-debug-dir-presence.patch
+lldb/lldb-swig-2.diff
+lldb/lldb-swig.diff
