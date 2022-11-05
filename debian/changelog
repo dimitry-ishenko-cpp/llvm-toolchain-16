@@ -4,7 +4,11 @@ llvm-toolchain-13 (1:13.0.1-9) unstable; urgency=medium
 
   [ Jordan Justen ]
   * d/rules: Don't send an empty string to cmake when llvm-spirv is not found
+  * d/rules: Check for llvm-spirv-14 first, and then llvm-spirv
+  * d/control: Add llvm-spirv-14 as the first build dep option
     (Closes: #1022295)
+  * d/rules: Run sed to include .spv files if LLVM_SPIRV is defined
+  * d/rules: Don't check package version of llvm-spirv-14
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 05 Nov 2022 09:14:23 +0100
 
