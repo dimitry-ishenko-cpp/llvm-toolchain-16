@@ -432,6 +432,7 @@ ifeq ($(shell test -e /tmp/cmake/bin/cmake && echo -n yes),yes)
 endif
 
 SCCACHE_ENABLE=no
+SCCACHE_CMAKE =
 # if sccache is installed in the chroot, use it
 ifeq ($(shell test -e /opt/sccache/sccache && echo -n yes),yes)
 	SCCACHE_CMAKE = -DCMAKE_C_COMPILER_LAUNCHER=/opt/sccache/sccache -DCMAKE_CXX_COMPILER_LAUNCHER=/opt/sccache/sccache
