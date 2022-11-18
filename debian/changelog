@@ -1,3 +1,11 @@
+llvm-toolchain-13 (1:13.0.1-10) unstable; urgency=medium
+
+  * cherry-pick the cmake workaround from 14 (Closes: #1024183)
+  * Unbreak the build with a new version protobuf
+    Thanks to gcs for the patch (Closes: #1023532)
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Fri, 18 Nov 2022 09:47:27 +0100
+
 llvm-toolchain-13 (1:13.0.1-9) unstable; urgency=medium
 
   * Fix the lldb swig issues (closes: #1023466)
