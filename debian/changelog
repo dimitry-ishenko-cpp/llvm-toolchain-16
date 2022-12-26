@@ -1,3 +1,10 @@
+llvm-toolchain-13 (1:13.0.1-11) unstable; urgency=medium
+
+  * link-grpc.diff: add the detection of other libs necessary for
+    grpc (Closes: #1027029)
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Mon, 26 Dec 2022 17:50:24 +0100
+
 llvm-toolchain-13 (1:13.0.1-10) unstable; urgency=medium
 
   * cherry-pick the cmake workaround from 14 (Closes: #1024183)

@@ -162,3 +162,4 @@ llvm-objcopy-COFF-Fix-test-for-debug-dir-presence.patch
 lldb/lldb-swig-2.diff
 lldb/lldb-swig.diff
 protobuf_llvm_13.0.1-8.patch
+link-grpc.diff
