@@ -719,7 +719,7 @@ override_dh_auto_install:
 	# Clean up temporary files to make sure the install works
 	rm -rf $(find $(TARGET_BUILD) -wholename '*CMakeFiles*' -not -name CMakeLists.txt -a -name "*.dir" -type d)
 	# install/fast enables a make install without recompiling temporary files
-	LD_LIBRARY_PATH=$(STAGE_2_LIB_DIR) DESTDIR=$(DEB_INST)/ ninja -C $(TARGET_BUILD) $(VERBOSE) stage2-install
+	LD_LIBRARY_PATH=$(STAGE_2_LIB_DIR):$$LD_LIBRARY_PATH DESTDIR=$(DEB_INST)/ ninja -C $(TARGET_BUILD) $(VERBOSE) stage2-install
 
 	# Not used on Linux.
 	rm -f $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/bin/argdumper
