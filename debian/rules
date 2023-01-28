@@ -553,9 +553,9 @@ override_dh_ocamlclean:
 override_dh_ocaml:
 
 override_dh_auto_configure: preconfigure
-	if test -f $(SCCACHE_CMD); then \
-		ls -al $(SCCACHE_PATH)*; \
-	fi
+ifeq (${SCCACHE_ENABLE},yes)
+	ls -al $(SCCACHE_PATH)*
+endif
 	echo "Using gcc: "
 	$(CC) -v
 	$(CXX) -v
