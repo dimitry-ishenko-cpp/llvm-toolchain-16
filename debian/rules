@@ -525,6 +525,12 @@ preconfigure:
 			sed -i -e "s|(<< 1:13.0.0-4)|(<< 1:13.0.0~++20211013044936)|g" debian/control; \
 		fi; \
 	fi
+	# Do the same with the libclang-common move
+	if test "$(LLVM_VERSION)" = "14"; then \
+		if echo "$(LLVM_VERSION_SNAPSHOT)"|grep -q "++"; then \
+			sed -i -e "s|(<< 1:14.0.6-10~exp4)|(<< 1:14.0.6~++20230115063651+f28c006a5895)|g" debian/control; \
+		fi; \
+	fi
 
 	# Conditionally enable *.spv files. Debian buster and Ubuntu 18.04
 	# don't have llvm-spirv to create the *.spv files.
