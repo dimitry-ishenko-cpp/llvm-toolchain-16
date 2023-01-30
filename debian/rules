@@ -476,8 +476,10 @@ preconfigure:
 	# Add a check to avoid a mistake that I did many times
 	if test "$(TARGET_DISTRO)" = "unstable"; then \
 		if echo "$(DEBIAN_REVISION)"|grep -q "exp"; then \
-			echo "$(DEBIAN_REVISION) contains exp but target unstable"; \
-			exit 1; \
+			if ! echo "$(LLVM_VERSION_SNAPSHOT)"|grep -q "++"; then \
+				echo "$(DEBIAN_REVISION) contains exp but target unstable"; \
+				eexit 1; \
+			fi; \
 		fi; \
 	fi
 
