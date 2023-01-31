@@ -12,6 +12,9 @@ llvm-toolchain-14 (1:14.0.6-11) UNRELEASED; urgency=medium
   [ Gianfranco Costamagna ]
   * Fix riscv64 build by adding spirv again (from @paravoid)
 
+  [ Samuel Thibault ]
+  * Fix hurd build by fixing Linux-specific lines.
+
  -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 15 Jan 2023 09:40:55 +0100
 
 llvm-toolchain-14 (1:14.0.6-10) unstable; urgency=medium
