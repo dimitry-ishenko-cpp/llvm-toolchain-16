@@ -1,5 +1,5 @@
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/share/*.txt
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/sanitizer/
-usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/lib/linux/*clang_rt*
+usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/lib/*/*clang_rt*
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/README.txt
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/fuzzer/
