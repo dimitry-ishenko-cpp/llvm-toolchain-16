@@ -976,7 +976,9 @@ override_dh_auto_install:
 	# Only run on executable, not script
 	chrpath -d `find $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/bin/ -type f -executable -exec file -i '{}' \; | grep 'x-executable; charset=binary'|cut -d: -f1`
 	# To fix custom-library-search-path
+ifeq (,$(filter $(DEB_HOST_ARCH_OS),hurd))
 	chrpath -d $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/clang/$(LLVM_VERSION)*/lib/*/*.so
+endif
 
 	: # libclang
 	cd debian/tmp/usr/lib/llvm-$(LLVM_VERSION)/lib/ && \
