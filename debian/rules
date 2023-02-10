@@ -478,7 +478,7 @@ preconfigure:
 		if echo "$(DEBIAN_REVISION)"|grep -q "exp"; then \
 			if ! echo "$(LLVM_VERSION_SNAPSHOT)"|grep -q "++"; then \
 				echo "$(DEBIAN_REVISION) contains exp but target unstable"; \
-				eexit 1; \
+				exit 1; \
 			fi; \
 		fi; \
 	fi
