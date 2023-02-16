@@ -163,3 +163,4 @@ protobuf_3.21.patch
 basic_string.patch
 link-grpc.diff
 libcxx-D124227-wasm.patch
+libclang-cpp-test-link-failure.patch

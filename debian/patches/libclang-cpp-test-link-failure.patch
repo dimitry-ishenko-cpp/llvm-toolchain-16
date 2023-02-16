@@ -1,0 +1,14 @@
+Description: Fix link with as-needed default flag, by tweaking upstream patch and cherry-picking to branch 14
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1027013
+Origin: https://github.com/LocutusOfBorg/llvm-toolchain-integration-test-suite/commit/14b0d058ecf88744add2a4c5e38d1d8ecef1dbf8
+--- a/integration-test-suite/tests/libclang_cpp.cpp	2022-06-25 09:48:37.000000000 +0200
++++ b/integration-test-suite/tests/libclang_cpp.cpp	2023-02-16 10:29:40.192927807 +0100
+@@ -1,7 +1,7 @@
+ // Test the link against libclang-cppXX
+ //
+ // REQUIRES: clang, llvm-config
+-// RUN: %clangxx -lclang-cpp -v %s -o %t `%llvm-config --cxxflags --ldflags --libs`
++// RUN: %clangxx -v %s -o %t `%llvm-config --cxxflags --ldflags --libs` -lclang-cpp
+ // RUN: ldd %t 2>&1|grep -q libclang-cpp
+ 
+ #include "clang/Tooling/CommonOptionsParser.h"
