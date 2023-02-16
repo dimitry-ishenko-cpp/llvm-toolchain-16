@@ -1,4 +1,4 @@
-llvm-toolchain-14 (1:14.0.6-11) UNRELEASED; urgency=medium
+llvm-toolchain-14 (1:14.0.6-11) unstable; urgency=medium
 
   [ Sylvestre Ledru ]
   * Update SV to 4.6.2
@@ -11,11 +11,15 @@ llvm-toolchain-14 (1:14.0.6-11) UNRELEASED; urgency=medium
 
   [ Gianfranco Costamagna ]
   * Fix riscv64 build by adding spirv again (from @paravoid)
+  * debian/patches/libclang-cpp-test-link-failure.patch: Cherry-pick
+    and change in a minimal way, upstream patch to fix underlinking
+    with as-needed default flag (Closes: #1027013)
+  * Ignore some wasm32 failures with c++ for now
 
   [ Samuel Thibault ]
   * Fix hurd build by fixing Linux-specific lines.
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 15 Jan 2023 09:40:55 +0100
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Thu, 16 Feb 2023 10:44:03 +0100
 
 llvm-toolchain-14 (1:14.0.6-10) unstable; urgency=medium
 
