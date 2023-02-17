@@ -2,6 +2,8 @@ llvm-toolchain-14 (1:14.0.6-12) UNRELEASED; urgency=medium
 
   [ Samuel Thibault ]
   * Fix hurd build due to missing shared libclang-rt
+  * Fix installation conflict between libclang_rt from libclang-rt-14-dev and
+    libclang-rt-14-dev-wasm*.
 
  -- Samuel Thibault <sthibault@debian.org>  Thu, 16 Feb 2023 13:56:11 +0100
 
