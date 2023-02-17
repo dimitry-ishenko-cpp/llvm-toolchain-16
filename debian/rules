@@ -978,7 +978,9 @@ override_dh_auto_install:
 	chrpath -d `find $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/bin/ -type f -executable -exec file -i '{}' \; | grep 'x-executable; charset=binary'|cut -d: -f1`
 	# To fix custom-library-search-path
 ifeq (,$(filter $(DEB_HOST_ARCH_OS),hurd))
+ifeq (,$(filter $(DEB_HOST_ARCH), powerpc powerpcspe))
 	chrpath -d $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/clang/$(LLVM_VERSION)*/lib/*/*.so
+endif
 endif
 
 	: # libclang
