@@ -513,6 +513,7 @@ preconfigure:
 	chmod +x \
 		debian/clang-tools-$(LLVM_VERSION).install \
 		debian/libclang-$(LLVM_VERSION)-dev.install \
+		debian/libclang-rt-$(LLVM_VERSION)-dev.install \
 		debian/libpolly-$(LLVM_VERSION)-dev.install \
 		debian/libomp-$(LLVM_VERSION)-dev.install \
 		debian/llvm-$(LLVM_VERSION)-dev.install \
