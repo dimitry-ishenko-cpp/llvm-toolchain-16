@@ -16,7 +16,7 @@ Index: llvm-toolchain-snapshot_16~++20220920091612+a7d2409bac7f/libcxxabi/src/cx
  #ifdef __USING_SJLJ_EXCEPTIONS__
      _Unwind_SjLj_RaiseException(&exception_header->unwindHeader);
 -#else
-+#elif !_LIBCXXABI_ARM_EHABI
++#elif !LIBCXXABI_ARM_EHABI
      _Unwind_RaiseException(&exception_header->unwindHeader);
 +#else
 +    _Unwind_RaiseException(exception_header->unwindHeader);
@@ -34,7 +34,7 @@ Index: llvm-toolchain-snapshot_16~++20220920091612+a7d2409bac7f/libcxxabi/src/cx
              //    to touch a foreign exception in any way, that is undefined
              //     behavior.  They likely can't since the only way to catch
              //     a foreign exception is with catch (...)!
-+#if !_LIBCXXABI_ARM_EHABI
++#if !LIBCXXABI_ARM_EHABI
              _Unwind_DeleteException(&globals->caughtExceptions->unwindHeader);
 +#else
 +            _Unwind_DeleteException(globals->caughtExceptions->unwindHeader);
@@ -47,7 +47,7 @@ Index: llvm-toolchain-snapshot_16~++20220920091612+a7d2409bac7f/libcxxabi/src/cx
  #ifdef __USING_SJLJ_EXCEPTIONS__
      _Unwind_SjLj_RaiseException(&exception_header->unwindHeader);
 -#else
-+#elif !_LIBCXXABI_ARM_EHABI
++#elif !LIBCXXABI_ARM_EHABI
      _Unwind_RaiseException(&exception_header->unwindHeader);
 +#else
 +    _Unwind_RaiseException(exception_header->unwindHeader);
@@ -58,7 +58,7 @@ Index: llvm-toolchain-snapshot_16~++20220920091612+a7d2409bac7f/libcxxabi/src/cx
          dep_exception_header->unwindHeader.exception_cleanup = dependent_exception_cleanup;
  #ifdef __USING_SJLJ_EXCEPTIONS__
          _Unwind_SjLj_RaiseException(&dep_exception_header->unwindHeader);
-+#elif !_LIBCXXABI_ARM_EHABI
++#elif !LIBCXXABI_ARM_EHABI
 +	_Unwind_RaiseException(&dep_exception_header->unwindHeader);
  #else
 -        _Unwind_RaiseException(&dep_exception_header->unwindHeader);
@@ -74,7 +74,7 @@ Index: llvm-toolchain-snapshot_16~++20220920091612+a7d2409bac7f/libcxxabi/src/cx
  _LIBCXXABI_HIDDEN void     __setExceptionClass  (      _Unwind_Exception*, uint64_t);
  _LIBCXXABI_HIDDEN bool     __isOurExceptionClass(const _Unwind_Exception*);
  
-+#if _LIBCXXABI_ARM_EHABI
++#if LIBCXXABI_ARM_EHABI
 +// GCC has _Unwind_Control_Block in unwind.h (unwind_arm_common.h)
 +#if defined(__clang__)
 +struct _Unwind_Control_Block
