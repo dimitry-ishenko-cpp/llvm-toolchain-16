@@ -213,6 +213,13 @@ llvm-toolchain-snapshot (1:16~++20220731055325+02b3a358926e-1~exp1) experimental
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 27 Jul 2022 21:36:27 +0200
 
+llvm-toolchain-15 (1:15.0.7-6) unstable; urgency=medium
+
+  * Revert LIBCXXABI_ARM_EHABI => _LIBCXXABI_ARM_EHABI change,
+    FTBFS on arm*.
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Tue, 27 Jun 2023 08:56:12 +0200
+
 llvm-toolchain-15 (1:15.0.7-5) unstable; urgency=medium
 
   [ Graham Inggs ]
