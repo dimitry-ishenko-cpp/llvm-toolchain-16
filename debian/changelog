@@ -1,6 +1,11 @@
-llvm-toolchain-15 (1:15.0.7-6) UNRELEASED; urgency=medium
+llvm-toolchain-15 (1:15.0.7-6) unstable; urgency=medium
 
+  [ Sylvestre Ledru ]
   * Only pass -Bno-symbolic if it exists
+
+  [ Gianfranco Costamagna ]
+  * Revert LIBCXXABI_ARM_EHABI => _LIBCXXABI_ARM_EHABI change,
+    FTBFS on arm*.
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Mon, 26 Jun 2023 10:13:40 +0200
 
@@ -32,8 +37,10 @@ llvm-toolchain-15 (1:15.0.7-5~exp1) experimental; urgency=medium
   * Remove old code to manage Debian stretch
   * Force the replacement of new Ubuntu packages introduced in
     https://bugs.launchpad.net/ubuntu/+source/llvm-toolchain-15/+bug/2008755
+  * Adjust LIBCXXABI_ARM_EHABI => _LIBCXXABI_ARM_EHABI
+    Issue: https://github.com/llvm/llvm-project/issues/59240
 
- --
+ -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 04 Jun 2023 11:35:54 +0200
 
 llvm-toolchain-15 (1:15.0.7-4) unstable; urgency=medium
 
