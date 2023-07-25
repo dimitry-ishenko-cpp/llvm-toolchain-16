@@ -164,3 +164,4 @@ lldb/lldb-swig.diff
 protobuf_llvm_13.0.1-8.patch
 link-grpc.diff
 new-cmake-build-fix.patch
+gcc-13-build-fix.patch
