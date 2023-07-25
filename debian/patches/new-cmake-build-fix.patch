@@ -21,6 +21,48 @@ Differential Revision: https://reviews.llvm.org/D148798
  2 files changed, 9 insertions(+), 81 deletions(-)
  delete mode 100644 openmp/runtime/cmake/LibompCheckLinkerFlag.cmake
 
+Add also part of 24d144571dbffc6993d13fb7ca781248eed024de
+diff --git a/cmake/Modules/LLVMCheckCompilerLinkerFlag.cmake b/cmake/Modules/LLVMCheckCompilerLinkerFlag.cmake
+new file mode 100644
+index 00000000000000..f61ec0585f9a45
+--- /dev/null
++++ b/cmake/Modules/LLVMCheckCompilerLinkerFlag.cmake
+@@ -0,0 +1,35 @@
++include(CMakePushCheckState)
++
++include(CheckCompilerFlag OPTIONAL)
++
++if(NOT COMMAND check_compiler_flag)
++  include(CheckCCompilerFlag)
++  include(CheckCXXCompilerFlag)
++endif()
++
++function(llvm_check_compiler_linker_flag lang flag out_var)
++  # If testing a flag with check_c_compiler_flag, it gets added to the compile
++  # command only, but not to the linker command in that test. If the flag
++  # is vital for linking to succeed, the test would fail even if it would
++  # have succeeded if it was included on both commands.
++  #
++  # Therefore, try adding the flag to CMAKE_REQUIRED_FLAGS, which gets
++  # added to both compiling and linking commands in the tests.
++
++  cmake_push_check_state()
++  set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} ${flag}")
++  if(COMMAND check_compiler_flag)
++    check_compiler_flag("${lang}" "" ${out_var})
++  else()
++    # Until the minimum CMAKE version is 3.19
++    # cmake builtin compatible, except we assume lang is C or CXX
++    if("${lang}" STREQUAL "C")
++      check_c_compiler_flag("" ${out_var})
++    elseif("${lang}" STREQUAL "CXX")
++      check_cxx_compiler_flag("" ${out_var})
++    else()
++      message(FATAL_ERROR "\"${lang}\" is not C or CXX")
++    endif()
++  endif()
++  cmake_pop_check_state()
++endfunction()
 Index: llvm-toolchain-13-13.0.1/openmp/runtime/cmake/LibompCheckLinkerFlag.cmake
 ===================================================================
 --- llvm-toolchain-13-13.0.1.orig/openmp/runtime/cmake/LibompCheckLinkerFlag.cmake
