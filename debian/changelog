@@ -1,3 +1,25 @@
+llvm-toolchain-13 (1:13.0.1-12) UNRELEASED; urgency=medium
+
+  [ Gianfranco Costamagna
+  * Apply new cmake build fix from llvm-toolchain-16 branch
+  * Add gcc-13-build-fix.patch (Closes: #1037757)
+  [ Nishit Majithia ]
+  * SECURITY UPDATE: canonicalize pass crashed with segmentation fault
+    - debian/patches/CVE-2023-29932.patch: Use default attributes for
+      intrinsics
+    - CVE-2023-29932
+  * SECURITY UPDATE: convert-scf-to-spirv Pass crashed with segmentation
+    fault
+    - debian/patches/CVE-2023-29934.patch: Account for type conversion
+      failures in scf-to-spirv
+    - CVE-2023-29934
+  * SECURITY UPDATE: spirv-lower-abi-attrs crashes with segmentation faults
+    - debian/patches/CVE-2023-29939.patch: Fix crash in
+      spirv-lower-abi-attributes when the are no SPIR-V env attributes
+    - CVE-2023-29939
+
+ -- Nishit Majithia <nishit.majithia@canonical.com>  Fri, 28 Jul 2023 08:42:29 +0530
+
 llvm-toolchain-13 (1:13.0.1-11) unstable; urgency=medium
 
   * link-grpc.diff: add the detection of other libs necessary for
