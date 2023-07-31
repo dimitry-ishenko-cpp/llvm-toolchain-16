@@ -1,3 +1,29 @@
+llvm-toolchain-15 (1:15.0.7-7) unstable; urgency=medium
+
+  [ Gianfranco Costamagna ]
+  * Add patch to fix build failure with gcc-13 (Closes: #1037760)
+
+  [ Nishit Majithia ]
+  * SECURITY UPDATE: canonicalize pass crashed with segmentation fault
+    - debian/patches/CVE-2023-29932.patch: Use default attributes for
+      intrinsics
+    - CVE-2023-29932
+  * SECURITY UPDATE: One shot bufferize crashed with segmentation fault
+    - debian/patches/CVE-2023-29933.patch: Fix bug in WhileOp analysis
+      verification
+    - CVE-2023-29933
+  * SECURITY UPDATE: convert-scf-to-spirv Pass crashed with segmentation
+    fault
+    - debian/patches/CVE-2023-29934.patch: Account for type conversion
+      failures in scf-to-spirv
+    - CVE-2023-29934
+  * SECURITY UPDATE: spirv-lower-abi-attrs crashes with segmentation faults
+    - debian/patches/CVE-2023-29939.patch: Fix crash in
+      spirv-lower-abi-attributes when the are no SPIR-V env attributes
+    - CVE-2023-29939
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 31 Jul 2023 22:31:23 +0200
+
 llvm-toolchain-15 (1:15.0.7-6) unstable; urgency=medium
 
   [ Sylvestre Ledru ]
@@ -432,8 +458,8 @@ llvm-toolchain-snapshot (1:15~++20220202093833+1a3137dc8451-1~exp1) experimental
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 13 Feb 2022 23:25:57 +0100
 
-llvm-toolchain-14 (1:14.0.6-11) UNRELEASED; urgency=medium
-=======
+llvm-toolchain-14 (1:14.0.6-13) unstable; urgency=medium
+
   [ Gianfranco Costamagna ]
   * Fix build with newer cmake and gcc-13 (Closes: #1037759)
 
@@ -464,7 +490,6 @@ llvm-toolchain-14 (1:14.0.6-12) unstable; urgency=medium
  -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 17 Feb 2023 12:57:29 +0100
 
 llvm-toolchain-14 (1:14.0.6-11) unstable; urgency=medium
->>>>>>> 14
 
   [ Sylvestre Ledru ]
   * Update SV to 4.6.2
