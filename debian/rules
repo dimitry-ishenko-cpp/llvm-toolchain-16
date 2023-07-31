@@ -232,15 +232,20 @@ else
 	control_vars = '-Vdep:devlibs=libstdc++6-$(GCC_VERSION)-dev'
 endif
 
-LLVM_SPIRV := $(shell bash -c "command -v llvm-spirv llvm-spirv-$(LLVM_VERSION)" 2>/dev/null)
+LLVM_SPIRV_VERSION := 14
+LLVM_SPIRV := $(shell bash -c "command -v llvm-spirv-$(LLVM_SPIRV_VERSION)" 2>/dev/null)
+ifndef LLVM_SPIRV
+	LLVM_SPIRV_VERSION := $(LLVM_VERSION)
+	LLVM_SPIRV := $(shell bash -c "command -v llvm-spirv" 2>/dev/null)
+endif
 
 ifndef LLVM_SPIRV
 	LLVM_SPIRV_INSTALLED = no
 else
 	# if executable is llvm-spirv without a -$(LLVM_VERSION) suffix
-	ifeq ($(LLVM_SPIRV:-$(LLVM_VERSION)=),$(LLVM_SPIRV))
+	ifeq ($(LLVM_SPIRV:-$(LLVM_SPIRV_VERSION)=),$(LLVM_SPIRV))
 		# Too old llvm-spirv version are failing. See #52200
-		ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' llvm-spirv) gt 10.0.0 ; echo $$?),0)
+		ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' $(notdir $(LLVM_SPIRV))) gt 10.0.0 ; echo $$?),0)
 			LLVM_SPIRV_INSTALLED = yes
 		else
 			LLVM_SPIRV_INSTALLED = no
@@ -535,11 +540,12 @@ preconfigure:
 		fi; \
 	fi
 
-	# Conditionally enable *.spv files. Debian buster and Ubuntu 18.04
-	# don't have llvm-spirv to create the *.spv files.
-	if test "$(LLVM_SPIRV_INSTALLED)" = "yes"; then \
-		sed -i -e "s|#spv\ ||g" debian/libclc-$(LLVM_VERSION).install; \
-	fi
+ifdef LLVM_SPIRV
+	# llvm-spirv was found, so we can enable *.spv files. Debian
+	# buster and Ubuntu 18.04 don't have llvm-spirv to create the
+	# *.spv files.
+	sed -i -e "s|#spv\ ||g" debian/libclc-$(LLVM_VERSION).install
+endif
 
 	# disable libc++-X.Y-dev-wasm32.install.in on old distro
 	if test "$(LIBCXX_WASM_ENABLE)" = "no"; then \

@@ -164,3 +164,8 @@ basic_string.patch
 link-grpc.diff
 libcxx-D124227-wasm.patch
 libclang-cpp-test-link-failure.patch
+new-cmake-build-fix.patch
+gcc-13-build-fix.patch
+CVE-2023-29932.patch
+CVE-2023-29934.patch
+CVE-2023-29939.patch
