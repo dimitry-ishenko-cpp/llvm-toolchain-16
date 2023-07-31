@@ -261,8 +261,6 @@ else
 	else
 		# llvm-spirv renamed llvm-spirv-$(LLVM_VERSION) as of llvm-spirv-13
 		LLVM_SPIRV_INSTALLED = yes
-	else
-		LLVM_SPIRV_INSTALLED = no
 	endif
 endif
 
