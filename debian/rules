@@ -31,6 +31,7 @@ SONAME_EXT      := 1
 SONAME_OPENMP	:= 5
 # Manage the case when the version is 3.5~svn213052-1~exp1 or 3.4.2-1
 DEBIAN_REVISION := $(shell dpkg-parsechangelog |  sed -rne "s,^Version: 1:([0-9.]+)(~|-)(.*),\3,p")
+TARGET_DISTRO := $(shell dpkg-parsechangelog -S Distribution)
 ifneq (,$(filter parallel=%,$(subst $(COMMA), ,$(DEB_BUILD_OPTIONS))))
   NJOBS := $(subst parallel=,,$(filter parallel=%,$(subst $(COMMA), ,$(DEB_BUILD_OPTIONS))))
 else
@@ -249,8 +250,16 @@ endif
 ifndef LLVM_SPIRV
 	LLVM_SPIRV_INSTALLED = no
 else
-	ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' llvm-spirv-$(LLVM_SPIRV_VERSION)) gt 14.0.0 ; echo $$?),0)
-# Too old llvm-spirv version are failing. See #52200
+	# if executable is llvm-spirv without a -$(LLVM_VERSION) suffix
+	ifeq ($(LLVM_SPIRV:-$(LLVM_SPIRV_VERSION)=),$(LLVM_SPIRV))
+		# Too old llvm-spirv version are failing. See #52200
+		ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' $(notdir $(LLVM_SPIRV))) gt 10.0.0 ; echo $$?),0)
+			LLVM_SPIRV_INSTALLED = yes
+		else
+			LLVM_SPIRV_INSTALLED = no
+		endif
+	else
+		# llvm-spirv renamed llvm-spirv-$(LLVM_VERSION) as of llvm-spirv-13
 		LLVM_SPIRV_INSTALLED = yes
 	else
 		LLVM_SPIRV_INSTALLED = no
@@ -490,8 +499,14 @@ preconfigure:
 		exit 1; \
 	fi
 
-	if test "$(DISTRO)" = "bookworm" -a "$(LLVM_SPIRV_INSTALLED)" = "no"; then \
-		echo "llvm spriv isn't detected while it should probably for this distro"; \
+	# Add a check to avoid a mistake that I did many times
+	if test "$(TARGET_DISTRO)" = "unstable"; then \
+		if echo "$(DEBIAN_REVISION)"|grep -q "exp"; then \
+			if ! echo "$(LLVM_VERSION_SNAPSHOT)"|grep -q "++"; then \
+				echo "$(DEBIAN_REVISION) contains exp but target unstable"; \
+				exit 1; \
+			fi; \
+		fi; \
 	fi
 
 	@echo "DEB_HOST_MULTIARCH=$(DEB_HOST_MULTIARCH)"
@@ -527,6 +542,7 @@ preconfigure:
 	chmod +x \
 		debian/clang-tools-$(LLVM_VERSION).install \
 		debian/libclang-$(LLVM_VERSION)-dev.install \
+		debian/libclang-rt-$(LLVM_VERSION)-dev.install \
 		debian/libpolly-$(LLVM_VERSION)-dev.install \
 		debian/libomp-$(LLVM_VERSION)-dev.install \
 		debian/llvm-$(LLVM_VERSION)-dev.install \
@@ -558,6 +574,7 @@ ifdef LLVM_SPIRV
 	# *.spv files.
 	sed -i -e "s|#spv\ ||g" debian/libclc-$(LLVM_VERSION).install
 endif
+
 	# disable libc++-X.Y-dev-wasm32.install.in on old distro
 	if test "$(LIBCXX_WASM_ENABLE)" = "no"; then \
 		echo "" > debian/libc++-$(LLVM_VERSION)-dev-wasm32.install; \
@@ -575,9 +592,9 @@ override_dh_ocamlclean:
 override_dh_ocaml:
 
 override_dh_auto_configure: preconfigure
-	if test -f $(SCCACHE_CMD); then \
-		ls -al $(SCCACHE_PATH)*; \
-	fi
+ifeq (${SCCACHE_ENABLE},yes)
+	ls -al $(SCCACHE_PATH)*
+endif
 	echo "Using gcc: "
 	$(CC) -v
 	$(CXX) -v

@@ -70,6 +70,8 @@ llvm-toolchain-15 (1:15.0.7-2) unstable; urgency=medium
   [ Samuel Thibault ]
   * Fix disabling amdgpu on non-Linux.
 
+llvm-toolchain-14 (1:14.0.6-13) unstable; urgency=medium
+
   [ John Paul Adrian Glaubitz ]
   * Don't run chrpath for libclang on powerpc and powerpcspe
 
@@ -431,6 +433,38 @@ llvm-toolchain-snapshot (1:15~++20220202093833+1a3137dc8451-1~exp1) experimental
  -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 13 Feb 2022 23:25:57 +0100
 
 llvm-toolchain-14 (1:14.0.6-11) UNRELEASED; urgency=medium
+=======
+  [ Gianfranco Costamagna ]
+  * Fix build with newer cmake and gcc-13 (Closes: #1037759)
+
+  [ Nishit Majithia ]
+  * SECURITY UPDATE: canonicalize pass crashed with segmentation fault
+    - debian/patches/CVE-2023-29932.patch: Use default attributes for
+      intrinsics
+    - CVE-2023-29932
+  * SECURITY UPDATE: convert-scf-to-spirv Pass crashed with segmentation
+    fault
+    - debian/patches/CVE-2023-29934.patch: Account for type conversion
+      failures in scf-to-spirv
+    - CVE-2023-29934
+  * SECURITY UPDATE: spirv-lower-abi-attrs crashes with segmentation faults
+    - debian/patches/CVE-2023-29939.patch: Fix crash in
+      spirv-lower-abi-attributes when the are no SPIR-V env attributes
+    - CVE-2023-29939
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 31 Jul 2023 22:10:38 +0200
+
+llvm-toolchain-14 (1:14.0.6-12) unstable; urgency=medium
+
+  [ Samuel Thibault ]
+  * Fix hurd build due to missing shared libclang-rt
+  * Fix installation conflict between libclang_rt from libclang-rt-14-dev and
+    libclang-rt-14-dev-wasm*.
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 17 Feb 2023 12:57:29 +0100
+
+llvm-toolchain-14 (1:14.0.6-11) unstable; urgency=medium
+>>>>>>> 14
 
   [ Sylvestre Ledru ]
   * Update SV to 4.6.2
@@ -443,8 +477,15 @@ llvm-toolchain-14 (1:14.0.6-11) UNRELEASED; urgency=medium
 
   [ Gianfranco Costamagna ]
   * Fix riscv64 build by adding spirv again (from @paravoid)
+  * debian/patches/libclang-cpp-test-link-failure.patch: Cherry-pick
+    and change in a minimal way, upstream patch to fix underlinking
+    with as-needed default flag (Closes: #1027013)
+  * Ignore some wasm32 failures with c++ for now
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 15 Jan 2023 09:40:55 +0100
+  [ Samuel Thibault ]
+  * Fix hurd build by fixing Linux-specific lines.
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Thu, 16 Feb 2023 10:44:03 +0100
 
 llvm-toolchain-14 (1:14.0.6-10) unstable; urgency=medium
 
@@ -1019,11 +1060,63 @@ llvm-toolchain-snapshot (1:14~++20210715093511+afc760ef3527-1~exp2) unstable; ur
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Fri, 06 Aug 2021 08:40:58 +0200
 
-llvm-toolchain-13 (1:13.0.1-9) UNRELEASED; urgency=medium
+llvm-toolchain-13 (1:13.0.1-13) unstable; urgency=medium
 
+  * Fixup typo in SPIRV detection
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 31 Jul 2023 22:16:10 +0200
+
+llvm-toolchain-13 (1:13.0.1-12) unstable; urgency=medium
+
+  [ Gianfranco Costamagna ]
+  * Apply new cmake build fix from llvm-toolchain-16 branch
+  * Add gcc-13-build-fix.patch (Closes: #1037757)
+
+  [ Nishit Majithia ]
+  * SECURITY UPDATE: canonicalize pass crashed with segmentation fault
+    - debian/patches/CVE-2023-29932.patch: Use default attributes for
+      intrinsics
+    - CVE-2023-29932
+  * SECURITY UPDATE: convert-scf-to-spirv Pass crashed with segmentation
+    fault
+    - debian/patches/CVE-2023-29934.patch: Account for type conversion
+      failures in scf-to-spirv
+    - CVE-2023-29934
+  * SECURITY UPDATE: spirv-lower-abi-attrs crashes with segmentation faults
+    - debian/patches/CVE-2023-29939.patch: Fix crash in
+      spirv-lower-abi-attributes when the are no SPIR-V env attributes
+    - CVE-2023-29939
+
+ -- Nishit Majithia <nishit.majithia@canonical.com>  Fri, 28 Jul 2023 08:42:29 +0530
+
+llvm-toolchain-13 (1:13.0.1-11) unstable; urgency=medium
+
+  * link-grpc.diff: add the detection of other libs necessary for
+    grpc (Closes: #1027029)
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Mon, 26 Dec 2022 17:50:24 +0100
+
+llvm-toolchain-13 (1:13.0.1-10) unstable; urgency=medium
+
+  * cherry-pick the cmake workaround from 14 (Closes: #1024183)
+  * Unbreak the build with a new version protobuf
+    Thanks to gcs for the patch (Closes: #1023532)
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Fri, 18 Nov 2022 09:47:27 +0100
+
+llvm-toolchain-13 (1:13.0.1-9) unstable; urgency=medium
+
+  * Fix the lldb swig issues (closes: #1023466)
+
+  [ Jordan Justen ]
   * d/rules: Don't send an empty string to cmake when llvm-spirv is not found
+  * d/rules: Check for llvm-spirv-14 first, and then llvm-spirv
+  * d/control: Add llvm-spirv-14 as the first build dep option
+    (Closes: #1022295)
+  * d/rules: Run sed to include .spv files if LLVM_SPIRV is defined
+  * d/rules: Don't check package version of llvm-spirv-14
 
- -- Jordan Justen <jljusten@debian.org>  Fri, 28 Oct 2022 10:17:57 -0700
+ -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 05 Nov 2022 09:14:23 +0100
 
 llvm-toolchain-13 (1:13.0.1-8) unstable; urgency=medium
 

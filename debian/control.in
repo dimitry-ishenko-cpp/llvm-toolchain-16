@@ -888,7 +888,6 @@ Description: Multi-Level Intermediate Representation library
  heterogeneous hardware, significantly reduce the cost of building domain
  specific compilers, and aid in connecting existing compilers together.
 
-
 Package: libmlir-@LLVM_VERSION@-dev
 Section: libdevel
 Architecture: any

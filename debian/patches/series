@@ -165,3 +165,8 @@ amdgpu/bitcode-multiarch.patch
 ubuntu-releases.patch
 new-cmake-build-fix.patch
 HIP-search-path-fix.patch
+CVE-2023-29932.patch
+CVE-2023-29933.patch
+CVE-2023-29934.patch
+CVE-2023-29939.patch
+gcc-13-build-fix.patch
