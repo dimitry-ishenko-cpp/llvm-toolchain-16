@@ -620,6 +620,12 @@ llvm-toolchain-snapshot (1:14~++20210715093511+afc760ef3527-1~exp2) unstable; ur
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Fri, 06 Aug 2021 08:40:58 +0200
 
+llvm-toolchain-13 (1:13.0.1-13) unstable; urgency=medium
+
+  * Fixup typo in SPIRV detection
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 31 Jul 2023 22:16:10 +0200
+
 llvm-toolchain-13 (1:13.0.1-12) unstable; urgency=medium
 
   [ Gianfranco Costamagna ]
