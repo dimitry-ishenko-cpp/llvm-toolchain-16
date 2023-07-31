@@ -22,11 +22,11 @@ Differential Revision: https://reviews.llvm.org/D148798
  delete mode 100644 openmp/runtime/cmake/LibompCheckLinkerFlag.cmake
 
 Add also part of 24d144571dbffc6993d13fb7ca781248eed024de
-diff --git a/cmake/Modules/LLVMCheckCompilerLinkerFlag.cmake b/cmake/Modules/LLVMCheckCompilerLinkerFlag.cmake
+diff --git a/openmp/runtime/cmake/LLVMCheckCompilerLinkerFlag.cmake b/openmp/runtime/cmake/LLVMCheckCompilerLinkerFlag.cmake
 new file mode 100644
 index 00000000000000..f61ec0585f9a45
 --- /dev/null
-+++ b/cmake/Modules/LLVMCheckCompilerLinkerFlag.cmake
++++ b/openmp/runtime/cmake/LLVMCheckCompilerLinkerFlag.cmake
 @@ -0,0 +1,35 @@
 +include(CMakePushCheckState)
 +
