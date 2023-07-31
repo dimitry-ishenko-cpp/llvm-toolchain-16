@@ -225,7 +225,7 @@ ifndef LLVM_SPIRV
 	LLVM_SPIRV_INSTALLED = no
 else
 	# if executable is llvm-spirv without a -$(LLVM_VERSION) suffix
-	ifeq ($(LLVM_SPIRV:-$(LLVM_SPIR_VERSION)=),$(LLVM_SPIRV))
+	ifeq ($(LLVM_SPIRV:-$(LLVM_SPIRV_VERSION)=),$(LLVM_SPIRV))
 		# Too old llvm-spirv version are failing. See #52200
 		ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' $(notdir $(LLVM_SPIRV))) gt 10.0.0 ; echo $$?),0)
 			LLVM_SPIRV_INSTALLED = yes

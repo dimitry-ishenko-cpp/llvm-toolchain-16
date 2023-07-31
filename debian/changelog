@@ -1,3 +1,9 @@
+llvm-toolchain-13 (1:13.0.1-13) unstable; urgency=medium
+
+  * Fixup typo in SPIRV detection
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 31 Jul 2023 22:16:10 +0200
+
 llvm-toolchain-13 (1:13.0.1-12) unstable; urgency=medium
 
   [ Gianfranco Costamagna ]
