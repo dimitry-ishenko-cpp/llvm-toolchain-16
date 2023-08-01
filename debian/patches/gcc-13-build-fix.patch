@@ -22,4 +22,25 @@ index 4e7da8b7d53f24..387dfe50659e43 100644
  /// 32-Bit field data attributes controlling information presented to the user.
  enum OpenMPInfoType : uint32_t {
 
-27°
+commit 08ce89d3088dc0a6dd9d3b7455222aa35894c1d5
+Author: Nikita Popov <npopov@redhat.com>
+Date:   Thu Jan 19 14:28:58 2023 +0100
+
+    [Flang] Explicitly include cstdint (NFC)
+    
+    This header uses std::int8_t, but does not include cstdint.
+    
+    This fixes the build against libstc++ 13, where some indirect
+    header includes have been removed.
+
+diff --git a/flang/include/flang/Parser/characters.h b/flang/include/flang/Parser/characters.h
+index 1a7d395be2bf..239be8d4bf4a 100644
+--- a/flang/include/flang/Parser/characters.h
++++ b/flang/include/flang/Parser/characters.h
+@@ -14,6 +14,7 @@
+ // also to accomodate Fortran tokenization.
+ 
+ #include <cstddef>
++#include <cstdint>
+ #include <optional>
+ #include <string>
