@@ -1,3 +1,10 @@
+llvm-toolchain-15 (1:15.0.7-9) UNRELEASED; urgency=medium
+
+  [ John Paul Adrian Glaubitz ]
+  * Disable wasm support on powerpc and powerpcspe
+
+ -- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>  Wed, 30 Aug 2023 11:22:20 +0200
+
 llvm-toolchain-15 (1:15.0.7-8) unstable; urgency=medium
 
   * Update gcc-13 patch with another flang build fix.

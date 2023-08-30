@@ -404,6 +404,10 @@ ifeq (,$(filter-out $(LIBCXX_WASM_DISABLE_DISTRO), $(DISTRO)))
   LIBCXX_WASM_ENABLE=no
 endif
 
+ifneq (,$(filter $(DEB_HOST_ARCH),powerpc powerpcspe))
+  LIBCXX_WASM_ENABLE=no
+endif
+
 LLD_ENABLE=yes
 
 ifneq (,$(filter $(DEB_HOST_ARCH_OS),linux))
