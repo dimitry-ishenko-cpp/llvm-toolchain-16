@@ -1,10 +1,14 @@
-llvm-toolchain-15 (1:15.0.7-9) UNRELEASED; urgency=medium
+llvm-toolchain-15 (1:15.0.7-9) unstable; urgency=medium
 
   [ John Paul Adrian Glaubitz ]
   * Disable wasm support on powerpc and powerpcspe
   * Remove powerpc from BINUTILS_GOLD_ARCHS again
 
- -- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>  Wed, 30 Aug 2023 11:22:20 +0200
+  [ Samuel Henrique ]
+  * Explicitly depend on libcurl4-openssl-dev,
+    since nss is being removed. (Closes: #1043551)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Thu, 07 Sep 2023 01:40:17 +0200
 
 llvm-toolchain-15 (1:15.0.7-8) unstable; urgency=medium
 
