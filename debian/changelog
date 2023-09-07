@@ -114,6 +114,31 @@ llvm-toolchain-15 (1:15.0.7-2) unstable; urgency=medium
   [ Samuel Thibault ]
   * Fix disabling amdgpu on non-Linux.
 
+llvm-toolchain-14 (1:14.0.6-16) unstable; urgency=medium
+
+  [ Sylvestre Ledru ]
+  * also apply the wasm build fix
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 08 Sep 2023 00:41:35 +0200
+
+llvm-toolchain-14 (1:14.0.6-15) unstable; urgency=medium
+
+  [ Sylvestre Ledru ]
+  * Strip -fcf-protection for wasm build - new flag added in dpkg 1.22
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Thu, 07 Sep 2023 11:25:23 +0200
+
+llvm-toolchain-14 (1:14.0.6-14) unstable; urgency=medium
+
+  [ Gianfranco Costamagna ]
+  * Fixup typo in spirv detection
+
+  [ Samuel Henrique ]
+  * Explicitly depend on libcurl4-openssl-dev,
+    since nss is being removed. (Closes: #1043550)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Thu, 07 Sep 2023 01:39:17 +0200
+
 llvm-toolchain-14 (1:14.0.6-13) unstable; urgency=medium
 
   [ John Paul Adrian Glaubitz ]

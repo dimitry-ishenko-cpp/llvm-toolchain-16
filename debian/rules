@@ -798,6 +798,10 @@ ifndef LLVM_SPIRV
 endif
 	touch $@
 
+# Remove some new flags introduced by dpkg 1.22.0;
+STAGE_2_WASM_CFLAGS := $(shell echo $(STAGE_2_CFLAGS) | sed -e "s/-fcf-protection//g")
+STAGE_2_WASM_CXXFLAGS := $(shell echo $(STAGE_2_CXXFLAGS) | sed -e "s/-fcf-protection//g")
+
 build-wasm/compiler-rt-%: cpu = $(@:build-wasm/compiler-rt-%=%)
 build-wasm/compiler-rt-%:
 	@echo "Building compiler-rt for $(cpu)"
@@ -811,8 +815,8 @@ build-wasm/compiler-rt-%:
 		-DCMAKE_ASM_COMPILER_TARGET=$(cpu)-unknown-unknown \
 		-DCMAKE_C_COMPILER=$(STAGE_2_BIN_DIR)/clang \
 		-DCMAKE_CXX_COMPILER=$(STAGE_2_BIN_DIR)/clang++ \
-		-DCMAKE_C_FLAGS="$(opt_flags) $(STAGE_2_CFLAGS)" \
-		-DCMAKE_CXX_FLAGS="$(opt_flags) $(STAGE_2_CXXFLAGS)" \
+		-DCMAKE_C_FLAGS="$(opt_flags) $(STAGE_2_WASM_CFLAGS)" \
+		-DCMAKE_CXX_FLAGS="$(opt_flags) $(STAGE_2_WASM_CXXFLAGS)" \
 		-DCMAKE_SHARED_LINKER_FLAGS="$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
 		-DCMAKE_MODULE_LINKER_FLAGS="$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
 		-DCMAKE_EXE_LINKER_FLAGS="$(STAGE_2_LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
@@ -875,8 +879,8 @@ build-wasm/libcxx-%-wasi: build-wasm/compiler-rt-%
 		-DCMAKE_CXX_COMPILER=$(STAGE_2_BIN_DIR)/clang++ \
 		-DCMAKE_AR=$(STAGE_2_BIN_DIR)/llvm-ar \
 		-DCMAKE_RANLIB=$(STAGE_2_BIN_DIR)/llvm-ranlib \
-		-DCMAKE_C_FLAGS="$(opt_flags) $(STAGE_2_CFLAGS) -fno-stack-protector" \
-		-DCMAKE_CXX_FLAGS="$(opt_flags) $(STAGE_2_CXXFLAGS) -fno-stack-protector" \
+		-DCMAKE_C_FLAGS="$(opt_flags) $(STAGE_2_WASM_CFLAGS) -fno-stack-protector" \
+		-DCMAKE_CXX_FLAGS="$(opt_flags) $(STAGE_2_WASM_CXXFLAGS) -fno-stack-protector" \
 		-DCMAKE_SHARED_LINKER_FLAGS="$(LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
 		-DCMAKE_MODULE_LINKER_FLAGS="$(LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
 		-DCMAKE_EXE_LINKER_FLAGS="$(LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
