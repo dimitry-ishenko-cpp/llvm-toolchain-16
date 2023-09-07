@@ -1,3 +1,10 @@
+llvm-toolchain-14 (1:14.0.6-16) unstable; urgency=medium
+
+  [ Sylvestre Ledru ]
+  * also apply the wasm build fix
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 08 Sep 2023 00:41:35 +0200
+
 llvm-toolchain-14 (1:14.0.6-15) unstable; urgency=medium
 
   [ Sylvestre Ledru ]
