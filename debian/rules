@@ -843,8 +843,8 @@ build-wasm/libcxx-%-wasi: build-wasm/compiler-rt-%
 		-DCMAKE_CXX_COMPILER=$(STAGE_2_BIN_DIR)/clang++ \
 		-DCMAKE_AR=$(STAGE_2_BIN_DIR)/llvm-ar \
 		-DCMAKE_RANLIB=$(STAGE_2_BIN_DIR)/llvm-ranlib \
-		-DCMAKE_C_FLAGS="$(opt_flags) $(STAGE_2_CFLAGS) -fno-stack-protector" \
-		-DCMAKE_CXX_FLAGS="$(opt_flags) $(STAGE_2_CXXFLAGS) -fno-stack-protector" \
+		-DCMAKE_C_FLAGS="$(opt_flags) $(STAGE_2_WASM_CFLAGS) -fno-stack-protector" \
+		-DCMAKE_CXX_FLAGS="$(opt_flags) $(STAGE_2_WASM_CXXFLAGS) -fno-stack-protector" \
 		-DCMAKE_SHARED_LINKER_FLAGS="$(LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
 		-DCMAKE_MODULE_LINKER_FLAGS="$(LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
 		-DCMAKE_EXE_LINKER_FLAGS="$(LDFLAGS) -L$(STAGE_2_LIB_DIR)" \
