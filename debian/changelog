@@ -1,4 +1,4 @@
-llvm-toolchain-17 (1:17.0.2-1~exp2) UNRELEASED; urgency=medium
+llvm-toolchain-17 (1:17.0.3-1~exp1) experimental; urgency=medium
 
   [ Matthias Klose ]
   * Consolidate the build flags for the wasm builds.
@@ -10,7 +10,10 @@ llvm-toolchain-17 (1:17.0.2-1~exp2) UNRELEASED; urgency=medium
   * Factor-out the calls to dh_listpackages.
   * d/rules/preconfigure: Print info about build environment.
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 04 Oct 2023 09:46:49 +0200
+  [ Sylvestre Ledru ]
+  * New upstream release
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 17 Oct 2023 08:44:01 +0200
 
 llvm-toolchain-17 (1:17.0.2-1~exp1) experimental; urgency=medium
 
