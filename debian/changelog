@@ -1,4 +1,4 @@
-llvm-toolchain-17 (1:17.0.4-2) UNRELEASED; urgency=medium
+llvm-toolchain-17 (1:17.0.5-1) unstable; urgency=medium
 
   [ John Paul Adrian Glaubitz ]
   * Don't run chrpath for libclang on sparc and sparc64
@@ -6,7 +6,10 @@ llvm-toolchain-17 (1:17.0.4-2) UNRELEASED; urgency=medium
   [ Matthias Klose ]
   * Build-depend on llvm-spirv-17.
 
- -- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>  Thu, 09 Nov 2023 10:07:49 +0100
+  [ Sylvestre Ledru ]
+  * New supstream release
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 14 Nov 2023 11:27:22 +0100
 
 llvm-toolchain-17 (1:17.0.4-1) unstable; urgency=medium
 
