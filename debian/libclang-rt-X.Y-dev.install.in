@@ -2,7 +2,7 @@
 
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/share/*.txt
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/sanitizer/
-[linux-any] usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/lib/linux/*clang_rt*
+[!hurd-any !sparc !sparc64] usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/lib/linux/*clang_rt*
 [hurd-any] usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/lib/gnu/*clang_rt*
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/README.txt
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/fuzzer/
