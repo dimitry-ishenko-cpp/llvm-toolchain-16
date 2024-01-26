@@ -1,6 +1,8 @@
-llvm-toolchain-18 (1:18~++20240126094319+0991d3c7b53d-1~exp1) experimental; urgency=medium
+llvm-toolchain-18 (1:18.1.0~++20240126095841+0991d3c7b53d-1~exp1) experimental; urgency=medium
 
   * Branching of 18
+    note that it is normal that the versionning starts from 18.1
+    See https://discourse.llvm.org/t/rfc-name-the-first-release-from-a-branch-n-1-0-instead-of-n-0-0/75384
   * refresh libomp5 symbol list
   * For the usage of -DLIBCXXABI_USE_LLVM_UNWINDER=OFF when we don't build unwind
     https://github.com/llvm/llvm-project/issues/77846
