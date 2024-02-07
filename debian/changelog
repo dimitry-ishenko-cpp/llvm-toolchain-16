@@ -5,7 +5,10 @@ llvm-toolchain-15 (1:15.0.7-11) UNRELEASED; urgency=medium
   * Don't install *clang_rt* on sparc and sparc64
   * Disable wasm support on sparc and sparc64
 
- -- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>  Tue, 14 Nov 2023 10:23:06 +0100
+  [ Matthias Klose ]
+  * Remove unused import of imp module in scan-view, removed in Python 3.12.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 07 Feb 2024 23:47:24 +0100
 
 llvm-toolchain-15 (1:15.0.7-10) unstable; urgency=medium
 
