@@ -1,3 +1,10 @@
+llvm-toolchain-15 (1:15.0.7-11.1) experimental; urgency=medium
+
+  * Non-maintainer upload.
+  * Rename libraries for 64-bit time_t transition.
+
+ -- Steve Langasek <vorlon@debian.org>  Mon, 26 Feb 2024 19:26:12 +0000
+
 llvm-toolchain-15 (1:15.0.7-11) unstable; urgency=medium
 
   [ John Paul Adrian Glaubitz ]
