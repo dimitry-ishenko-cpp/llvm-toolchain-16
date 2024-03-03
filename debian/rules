@@ -3,7 +3,6 @@
 # polly & lldb aren't enabled for every platform
 PROJECTS = clang;clang-tools-extra;lld;cross-project-tests;mlir
 # openmp & libunwind aren't enabled for every platform
-RUNTIMES = compiler-rt;libcxx;libcxxabi
 
 TARGET_BUILD	:= build-llvm
 TARGET_BUILD_STAGE2    := $(TARGET_BUILD)/tools/clang/stage2-bins
@@ -18,6 +17,20 @@ LLVM_VERSION_FULL := $(shell dpkg-parsechangelog | sed -rne "s,^Version: 1:([0-9
 LLVM_VERSION_SNAPSHOT := $(shell dpkg-parsechangelog | sed -rne "s,^Version: 1:(.*),\1,p")
 ifeq ($(LLVM_VERSION),$(LLVM_VERSION_FULL))
 	LLVM_VERSION_FULL := $(LLVM_VERSION).0.0
+endif
+
+# dpkg-buildflags support
+# disable fixfilepath in favor of the llvm-project supplied flavor, disable lto
+export DEB_BUILD_MAINT_OPTIONS = reproducible=-fixfilepath,-fixdebugpath optimize=-lto
+ifeq ($(DEB_HOST_ARCH),i386)
+  RUNTIMES = compiler-rt;libcxx;libcxxabi
+else
+  ifeq ($(DEB_HOST_ARCH_BITS),32)
+    RUNTIMES = libcxx;libcxxabi
+    skip_packages = -Nlibclang-rt-$(LLVM_VERSION)-dev
+  else
+    RUNTIMES = compiler-rt;libcxx;libcxxabi
+  endif
 endif
 
 SOURCE_NAME := $(shell dpkg-parsechangelog -S Source)
@@ -51,9 +64,6 @@ include /usr/share/dpkg/architecture.mk
 
 CONFIGURE_EXTRA =
 
-# dpkg-buildflags support
-# disable fixfilepath in favor of the llvm-project supplied flavor, disable lto
-export DEB_BUILD_MAINT_OPTIONS = reproducible=-fixfilepath,-fixdebugpath optimize=-lto
 # these are handled on a per stage / build basis
 export DEB_CFLAGS_MAINT_STRIP = -g -O2
 export DEB_CXXFLAGS_MAINT_STRIP = -g -O2
@@ -989,7 +999,7 @@ override_dh_auto_install:
 	# To fix custom-library-search-path
 ifeq (,$(filter $(DEB_HOST_ARCH_OS),hurd))
 ifeq (,$(filter $(DEB_HOST_ARCH), powerpc powerpcspe))
-	chrpath -d $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/clang/$(LLVM_VERSION)*/lib/*/*.so
+	chrpath -d $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/clang/$(LLVM_VERSION)*/lib/*/*.so || true
 endif
 endif
 
@@ -1224,7 +1234,7 @@ else
 	rm -rf $(CURDIR)/debian/tmp/usr/lib/llvm-$(LLVM_VERSION)/lib/cmake/polly/*.cmake
 endif
 endif
-	dh_install --fail-missing
+	dh_install --fail-missing ${skip_packages}
 # Move the libc++ abi files from libc++ to libc++-abi for the wasm32 packages
 # These packages are arch: all, so only do so when the packages are built
 ifneq (,$(filter libc++-$(LLVM_VERSION)-dev-wasm32, $(shell dh_listpackages)))
@@ -1341,8 +1351,11 @@ override_dh_auto_test:
 endif
 
 
+override_dh_builddeb:
+	dh_builddeb ${skip_packages}
+
 override_dh_gencontrol: sccache-stats
-	dh_gencontrol -- $(control_vars)
+	dh_gencontrol ${skip_packages} -- $(control_vars)
 
 
 override_dh_auto_clean:
