@@ -44,7 +44,7 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
  ${dep:devlibs-objc}, libclang-common-@LLVM_VERSION@-dev (= ${source:Version}),
  llvm-@LLVM_VERSION@-linker-tools (= ${binary:Version}),
- libclang1-@LLVM_VERSION@ (= ${binary:Version}), libc6-dev, binutils
+ libclang1-@LLVM_VERSION@t64 (= ${binary:Version}), libc6-dev, binutils
 Provides: c-compiler, objc-compiler, c++-compiler
 Recommends: llvm-@LLVM_VERSION@-dev, python3
 # libomp-@LLVM_VERSION@-dev
@@ -74,7 +74,7 @@ Description: clang-based tools for C/C++ developments
 Package: clang-format-@LLVM_VERSION@
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, python3,
- libllvm@LLVM_VERSION@ (= ${binary:Version})
+ libllvm@LLVM_VERSION@t64 (= ${binary:Version})
 Description: Tool to format C/C++/Obj-C code
  Clang-format is both a library and a stand-alone tool with the goal of
  automatically reformatting C++ sources files according to configurable
@@ -90,7 +90,7 @@ Description: Tool to format C/C++/Obj-C code
 Package: clang-tidy-@LLVM_VERSION@
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, python3,
- libllvm@LLVM_VERSION@ (= ${binary:Version}), libclang-common-@LLVM_VERSION@-dev,
+ libllvm@LLVM_VERSION@t64 (= ${binary:Version}), libclang-common-@LLVM_VERSION@-dev,
  clang-tools-@LLVM_VERSION@, python3-yaml
 Description: clang-based C++ linter tool
  Provide an extensible framework for diagnosing and fixing typical programming
@@ -126,7 +126,10 @@ Description: C, C++ and Objective-C compiler - Documentation
  .
  This package contains the documentation.
 
-Package: libclang1-@LLVM_VERSION@
+Package: libclang1-@LLVM_VERSION@t64
+Provides: ${t64:Provides}
+Replaces: libclang1-@LLVM_VERSION@
+Breaks: libclang1-@LLVM_VERSION@ (<< ${source:Version})
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -151,7 +154,7 @@ Package: libclang-@LLVM_VERSION@-dev
 Architecture: any
 Section: libdevel
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
- ${dep:devlibs-objc}, libclang1-@LLVM_VERSION@ (= ${binary:Version}),
+ ${dep:devlibs-objc}, libclang1-@LLVM_VERSION@t64 (= ${binary:Version}),
  libclang-common-@LLVM_VERSION@-dev (= ${source:Version})
 Breaks: llvm-@LLVM_VERSION@-dev (<< 1:14.0.4-2)
 Replaces: llvm-@LLVM_VERSION@-dev (<< 1:14.0.4-2)
@@ -169,7 +172,7 @@ Description: Clang library - Development package
 Package: libclang-common-@LLVM_VERSION@-dev
 Architecture: all
 Section: libdevel
-Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm@LLVM_VERSION@ (>= ${source:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm@LLVM_VERSION@t64 (>= ${source:Version})
 Recommends: libclang-rt-@LLVM_VERSION@-dev (>= 1:14.0.6-10~exp4)
 Description: Clang library - Common development package
  Clang project is a C, C++, Objective C and Objective C++ front-end
@@ -238,10 +241,13 @@ Description: High-level loop and data-locality optimizer
 
 # ------------- clang libraries -------------
 
-Package: libclang-cpp@LLVM_VERSION@
+Package: libclang-cpp@LLVM_VERSION@t64
+Provides: ${t64:Provides}
+Replaces: libclang-cpp@LLVM_VERSION@
+Breaks: libclang-cpp@LLVM_VERSION@ (<< ${source:Version})
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm@LLVM_VERSION@ (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm@LLVM_VERSION@t64 (= ${binary:Version})
 Pre-Depends: ${misc:Pre-Depends}
 Description: C++ interface to the Clang library
  Clang project is a C, C++, Objective C and Objective C++ front-end
@@ -263,7 +269,7 @@ Package: libclang-cpp@LLVM_VERSION@-dev
 Architecture: any
 Section: libdevel
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
- libclang-cpp@LLVM_VERSION@ (= ${binary:Version})
+ libclang-cpp@LLVM_VERSION@t64 (= ${binary:Version})
 # Move of libclang-cpp.so into libclang-cpp@LLVM_VERSION@.dev
 Description: C++ interface to the Clang library
  Clang project is a C, C++, Objective C and Objective C++ front-end
@@ -339,7 +345,10 @@ Description: Clang examples
 
 # ------------- LLVM -------------
 
-Package: libllvm@LLVM_VERSION@
+Package: libllvm@LLVM_VERSION@t64
+Provides: ${t64:Provides}
+Replaces: libllvm@LLVM_VERSION@
+Breaks: libllvm@LLVM_VERSION@ (<< ${source:Version})
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -415,8 +424,8 @@ Description: Modular compiler and toolchain technologies, IR interpreter
 Package: llvm-@LLVM_VERSION@-dev
 Architecture: any
 Depends: ${shlibs:Depends}, libffi-dev, ${misc:Depends},
- llvm-@LLVM_VERSION@ (= ${binary:Version}), libllvm@LLVM_VERSION@ (= ${binary:Version}), libtinfo-dev,
- llvm-@LLVM_VERSION@-tools (= ${binary:Version}), libclang-cpp@LLVM_VERSION@ (= ${binary:Version}),
+ llvm-@LLVM_VERSION@ (= ${binary:Version}), libllvm@LLVM_VERSION@t64 (= ${binary:Version}), libtinfo-dev,
+ llvm-@LLVM_VERSION@-tools (= ${binary:Version}), libclang-cpp@LLVM_VERSION@t64 (= ${binary:Version}),
  libz3-dev, libxml2-dev
 Description: Modular compiler and toolchain technologies, libraries and headers
  LLVM is a collection of libraries and tools that make it easy to build
@@ -522,7 +531,7 @@ Description: Modular compiler and toolchain technologies, examples
 Package: lld-@LLVM_VERSION@
 Architecture: amd64 arm64 armel armhf i386 mipsel mips64el ppc64el kfreebsd-amd64 kfreebsd-i386 s390 s390x sparc alpha hppa m68k powerpcspe ppc64 sh4 sparc64 x32 riscv64
 # ia64 hurd powerpc have been removed
-Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm@LLVM_VERSION@ (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm@LLVM_VERSION@t64 (= ${binary:Version})
 Pre-Depends: ${misc:Pre-Depends}
 Description: LLVM-based linker
  LLD is a new, high-performance linker. It is built as a set of reusable
@@ -532,7 +541,7 @@ Description: LLVM-based linker
 Package: liblld-@LLVM_VERSION@
 Architecture: amd64 arm64 armel armhf i386 mipsel mips64el ppc64el kfreebsd-amd64 kfreebsd-i386 s390 s390x sparc alpha hppa m68k powerpcspe ppc64 sh4 sparc64 x32 riscv64
 # ia64 hurd powerpc have been removed
-Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm@LLVM_VERSION@ (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm@LLVM_VERSION@t64 (= ${binary:Version})
 Pre-Depends: ${misc:Pre-Depends}
 Section: libs
 Description: LLVM-based linker, library
@@ -562,7 +571,7 @@ Description: LLVM-based linker, header files
 Package: lldb-@LLVM_VERSION@
 Architecture: amd64 arm64 armel armhf i386 ppc64el kfreebsd-amd64 kfreebsd-i386 s390 s390x sparc hppa m68k sh4 x32
 # ia64 hurd powerpc powerpcspe ppc64 alpha riscv64 s390x sparc64 mipsel mips64el have been removed
-Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm@LLVM_VERSION@ (= ${binary:Version}), llvm-@LLVM_VERSION@-dev,
+Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm@LLVM_VERSION@t64 (= ${binary:Version}), llvm-@LLVM_VERSION@-dev,
  python3-lldb-@LLVM_VERSION@
 Pre-Depends: ${misc:Pre-Depends}
 Description: Next generation, high-performance debugger
@@ -570,10 +579,13 @@ Description: Next generation, high-performance debugger
  reusable components which highly leverage existing libraries in the larger LLVM
  Project, such as the Clang expression parser and LLVM disassembler.
 
-Package: liblldb-@LLVM_VERSION@
+Package: liblldb-@LLVM_VERSION@t64
+Provides: ${t64:Provides}
+Replaces: liblldb-@LLVM_VERSION@
+Breaks: liblldb-@LLVM_VERSION@ (<< ${source:Version})
 Architecture: amd64 arm64 armel armhf i386 ppc64el kfreebsd-amd64 kfreebsd-i386 s390 s390x sparc hppa m68k sh4 x32
 # ia64 hurd powerpc powerpcspe ppc64 alpha riscv64 s390x sparc64 mipsel mips64el have been removed
-Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm@LLVM_VERSION@ (= ${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm@LLVM_VERSION@t64 (= ${binary:Version})
 Pre-Depends: ${misc:Pre-Depends}
 Section: libs
 Description: Next generation, high-performance debugger, library
@@ -587,7 +599,7 @@ Package: python3-lldb-@LLVM_VERSION@
 Section: python
 Architecture: amd64 arm64 armel armhf i386 ppc64el kfreebsd-amd64 kfreebsd-i386 s390 s390x sparc hppa m68k sh4 x32
 # ia64 hurd powerpc powerpcspe ppc64 alpha riscv64 s390x sparc64 mipsel mips64el have been removed
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends}, liblldb-@LLVM_VERSION@ (= ${binary:Version}), python3-six
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python3:Depends}, liblldb-@LLVM_VERSION@t64 (= ${binary:Version}), python3-six
 Conflicts: python3-lldb-x.y
 Replaces: python3-lldb-x.y
 Provides: python3-lldb-x.y
@@ -620,7 +632,7 @@ Description: Next generation, high-performance debugger, header files
 Package: libomp-@LLVM_VERSION@-dev
 Section: libdevel
 Architecture: amd64 arm64 armhf i386 mips64el ppc64el ppc64 riscv64
-Depends: libomp5-@LLVM_VERSION@ (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Depends: libomp5-@LLVM_VERSION@t64 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Suggests: libomp-@LLVM_VERSION@-doc
 Breaks: libiomp-dev (<< 3.7-1), libomp-dev (<< 44), llvm-@LLVM_VERSION@ (<< 1:14~++20211011113307+f7ca54289c14)
 Provides: libomp-x.y-dev
@@ -631,14 +643,14 @@ Description: LLVM OpenMP runtime - dev package
  linked against, and that manages the multiple threads in an OpenMP program
  while it is executing.
 
-Package: libomp5-@LLVM_VERSION@
+Package: libomp5-@LLVM_VERSION@t64
 Multi-Arch: same
 Architecture: amd64 arm64 armhf i386 mips64el ppc64el ppc64 riscv64
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Breaks: libomp5 (<< 44)
-Provides: libomp-x.y
+Breaks: libomp5-@LLVM_VERSION@ (<< ${source:Version}), libomp5 (<< 44)
+Provides: ${t64:Provides}, libomp-x.y
 Conflicts: libomp-x.y
-Replaces: libomp-x.y
+Replaces: libomp5-@LLVM_VERSION@, libomp-x.y
 Description: LLVM OpenMP runtime
  The runtime is the part of the OpenMP implementation that your code is
  linked against, and that manages the multiple threads in an OpenMP program
@@ -659,17 +671,17 @@ Description: LLVM OpenMP runtime - Documentation
 
 # ------------- libcxx -------------
 
-Package: libc++1-@LLVM_VERSION@
+Package: libc++1-@LLVM_VERSION@t64
 Section: libs
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: clang
-Breaks: libc++1 (<< 44)
-Provides: libc++-x.y
+Breaks: libc++1-@LLVM_VERSION@ (<< ${source:Version}), libc++1 (<< 44)
+Provides: ${t64:Provides}, libc++-x.y
 Conflicts: libc++-x.y
-Replaces: libc++-x.y
+Replaces: libc++1-@LLVM_VERSION@, libc++-x.y
 Description: LLVM C++ Standard library
  libc++ is another implementation of the C++ standard library.
  .
@@ -687,7 +699,7 @@ Package: libc++-@LLVM_VERSION@-dev
 Section: libdevel
 Architecture: any
 Multi-Arch: same
-Depends: libc++1-@LLVM_VERSION@ (= ${binary:Version}), ${misc:Depends},
+Depends: libc++1-@LLVM_VERSION@t64 (= ${binary:Version}), ${misc:Depends},
  libunwind-@LLVM_VERSION@-dev [amd64 arm64 armhf i386 mips64el ppc64el ppc64 riscv64]
 Breaks: libc++-dev (<< 44)
 Provides: libc++-x.y-dev
@@ -731,16 +743,16 @@ Description: LLVM C++ Standard library (WASI)
 
 # ------------- libcxxabi -------------
 
-Package: libc++abi1-@LLVM_VERSION@
+Package: libc++abi1-@LLVM_VERSION@t64
 Section: libs
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Breaks: libc++abi1 (<< 44)
-Provides: libc++abi-x.y
+Breaks: libc++abi1-@LLVM_VERSION@ (<< ${source:Version}), libc++abi1 (<< 44)
+Provides: ${t64:Provides}, libc++abi-x.y
 Conflicts: libc++abi-x.y
-Replaces: libc++abi-x.y
+Replaces: libc++abi1-@LLVM_VERSION@, libc++abi-x.y
 Description: LLVM low level support for a standard C++ library
  libc++abi is another implementation of low level support for a standard C++
  library.
@@ -754,7 +766,7 @@ Package: libc++abi-@LLVM_VERSION@-dev
 Section: libdevel
 Architecture: any
 Multi-Arch: same
-Depends: libc++abi1-@LLVM_VERSION@ (= ${binary:Version}), ${misc:Depends}
+Depends: libc++abi1-@LLVM_VERSION@t64 (= ${binary:Version}), ${misc:Depends}
 Breaks: libc++abi-dev (<= 44)
 Provides: libc++abi-x.y-dev
 Conflicts: libc++abi-x.y-dev
@@ -826,15 +838,16 @@ Description: OpenCL C language implementation - development files
 
 # ------------- libunwind -------------
 
-Package: libunwind-@LLVM_VERSION@
+Package: libunwind-@LLVM_VERSION@t64
+Breaks: libunwind-@LLVM_VERSION@ (<< ${source:Version})
 Section: libs
 Architecture: amd64 arm64 armhf i386 mips64el ppc64el ppc64 riscv64
 Multi-Arch: same
 Depends: ${shlibs:Depends},
  ${misc:Depends}
-Provides: libunwind-x.y
+Provides: ${t64:Provides}, libunwind-x.y
 Conflicts: libunwind-x.y
-Replaces: libunwind-x.y
+Replaces: libunwind-@LLVM_VERSION@, libunwind-x.y
 Description: production-quality unwinder
  libunwind is a production-quality unwinder, with platform support for DWARF
  unwind info, SjLj, and ARM EHABI.
@@ -849,7 +862,7 @@ Architecture: amd64 arm64 armhf i386 mips64el ppc64el ppc64 riscv64
 Multi-Arch: same
 Depends:
  ${misc:Depends},
- libunwind-@LLVM_VERSION@ (= ${binary:Version})
+ libunwind-@LLVM_VERSION@t64 (= ${binary:Version})
 Provides: libunwind-dev, libunwind-x.y-dev
 Conflicts: libunwind-dev, libunwind-x.y-dev
 Replaces: libunwind-dev, libunwind-x.y-dev
@@ -874,15 +887,16 @@ Description: Multi-Level Intermediate Representation tools
  .
  This package provides tools.
 
-Package: libmlir-@LLVM_VERSION@
+Package: libmlir-@LLVM_VERSION@t64
+Breaks: libmlir-@LLVM_VERSION@ (<< ${source:Version})
 Section: libs
 Architecture: any
 Multi-Arch: same
 Depends: ${shlibs:Depends},
  ${misc:Depends}
-Provides: libmlir-x.y
+Provides: ${t64:Provides}, libmlir-x.y
 Conflicts: libmlir-x.y
-Replaces: libmlir-x.y
+Replaces: libmlir-@LLVM_VERSION@, libmlir-x.y
 Description: Multi-Level Intermediate Representation library
  Novel approach to building reusable and extensible compiler infrastructure.
  MLIR aims to address software fragmentation, improve compilation for
@@ -895,7 +909,7 @@ Architecture: any
 Multi-Arch: same
 Depends:
  ${misc:Depends},
- libmlir-@LLVM_VERSION@ (= ${binary:Version})
+ libmlir-@LLVM_VERSION@t64 (= ${binary:Version})
 Breaks: libmlir-dev
 Provides: libmlir-x.y-dev
 Conflicts: libmlir-x.y-dev

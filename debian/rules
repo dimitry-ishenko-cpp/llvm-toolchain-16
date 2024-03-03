@@ -1158,10 +1158,10 @@ endif
 
 
 override_dh_makeshlibs:
-	dh_makeshlibs -plibclang$(SONAME_EXT)-$(LLVM_VERSION)
-	dh_makeshlibs -pliblldb-$(LLVM_VERSION)
-	dh_makeshlibs -plibllvm$(LLVM_VERSION)
-	dh_makeshlibs -plibomp$(SONAME_OPENMP)-$(LLVM_VERSION)
+	dh_makeshlibs -plibclang$(SONAME_EXT)-$(LLVM_VERSION)t64
+	dh_makeshlibs -pliblldb-$(LLVM_VERSION)t64
+	dh_makeshlibs -plibllvm$(LLVM_VERSION)t64
+	dh_makeshlibs -plibomp$(SONAME_OPENMP)-$(LLVM_VERSION)t64
 	dh_makeshlibs --remaining-packages -V
 
 override_dh_shlibdeps:
@@ -1182,10 +1182,10 @@ override_dh_strip:
 	find $(TARGET_BUILD) -name '*.o' -o -name '*.a' -type f | xargs -r rm -f
 ifeq (0, $(strip $(shell dpkg --compare-versions $(DH_VERSION) ge 9.20160114; echo $$?)))
 	: # If we don't have the right version of debhelper, don't run the option
-	dh_strip -p libclang$(SONAME_EXT)-$(LLVM_VERSION) --dbgsym-migration='libclang$(SONAME_EXT)-$(LLVM_VERSION)-dbg'
-	dh_strip -p libllvm$(LLVM_VERSION) --dbgsym-migration='libllvm$(LLVM_VERSION)-dbg'
-	dh_strip -p liblldb-$(LLVM_VERSION) --dbgsym-migration='liblldb-$(LLVM_VERSION)-dbg'
-	dh_strip -p libomp$(SONAME_OPENMP)-$(LLVM_VERSION) --dbgsym-migration='libomp$(SONAME_OPENMP)-$(LLVM_VERSION)-dbg'
+	dh_strip -p libclang$(SONAME_EXT)-$(LLVM_VERSION)t64 --dbgsym-migration='libclang$(SONAME_EXT)-$(LLVM_VERSION)t64-dbg'
+	dh_strip -p libllvm$(LLVM_VERSION)t64 --dbgsym-migration='libllvm$(LLVM_VERSION)t64-dbg'
+	dh_strip -p liblldb-$(LLVM_VERSION)t64 --dbgsym-migration='liblldb-$(LLVM_VERSION)t64-dbg'
+	dh_strip -p libomp$(SONAME_OPENMP)-$(LLVM_VERSION)t64 --dbgsym-migration='libomp$(SONAME_OPENMP)-$(LLVM_VERSION)t64-dbg'
 endif
 # ifeq (${LLD_ENABLE},yes)
 # 	PATH=$(CURDIR)/:$$PATH dh_strip -p liblld-$(LLVM_VERSION) --dbg-package=liblld-$(LLVM_VERSION)-dbg

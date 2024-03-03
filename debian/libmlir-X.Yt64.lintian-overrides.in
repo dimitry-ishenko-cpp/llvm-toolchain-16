@@ -1,0 +1,2 @@
+libmlir-@LLVM_VERSION@t64: arch-dependent-file-not-in-arch-specific-directory *usr/lib/llvm-@LLVM_VERSION@/lib/*
+libmlir-@LLVM_VERSION@t64: package-name-doesnt-match-sonames libmlir-@LLVM_VERSION@

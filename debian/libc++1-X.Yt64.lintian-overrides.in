@@ -1,0 +1,2 @@
+libc++1-@LLVM_VERSION@t64: arch-dependent-file-not-in-arch-specific-directory *usr/lib/llvm-@LLVM_VERSION@/lib/libc++.so.1.0*
+libc++1-@LLVM_VERSION@t64: package-name-doesnt-match-sonames libc++1-@LLVM_VERSION@

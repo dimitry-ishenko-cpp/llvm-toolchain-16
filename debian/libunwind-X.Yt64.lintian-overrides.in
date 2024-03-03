@@ -1,0 +1,2 @@
+libunwind-@LLVM_VERSION@t64: arch-dependent-file-not-in-arch-specific-directory *usr/lib/llvm-@LLVM_VERSION@/lib/libunwind.so.1.0*
+libunwind-@LLVM_VERSION@t64: package-name-doesnt-match-sonames libunwind-@LLVM_VERSION@
