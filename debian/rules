@@ -356,8 +356,8 @@ ifeq (riscv64,$(DEB_HOST_ARCH))
 endif
 endif
 
-# llvm tests timeout, disable it on mipsel
-ifeq (mipsel,$(DEB_HOST_ARCH))
+# llvm tests timeout, disable it on mips64el
+ifeq (mips64el,$(DEB_HOST_ARCH))
 	RUN_TEST=no
 endif
 
