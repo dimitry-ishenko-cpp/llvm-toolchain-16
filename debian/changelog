@@ -1,4 +1,4 @@
-llvm-toolchain-15 (1:15.0.7-13) UNRELEASED; urgency=medium
+llvm-toolchain-15 (1:15.0.7-13) unstable; urgency=medium
 
   [ Zixing Liu ]
   * d/p/fix-unwind-detection-logic.patch: use an upstream patch to fix
