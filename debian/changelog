@@ -1,11 +1,8 @@
 llvm-toolchain-14 (1:14.0.6-18) unstable; urgency=medium
 
-  [ Zixing Liu ]
-  * d/p/fix-unwind-detection-logic.patch: use an upstream patch to fix
-    libunwind detection logic when compiler-rt is disabled.
-
   [ Gianfranco Costamagna ]
   * Disable tests on mips64el
+  * Fix compiler-rt hack on 32bit architectures
 
  -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 06 Mar 2024 08:43:25 +0100
 
