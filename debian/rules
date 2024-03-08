@@ -22,16 +22,7 @@ endif
 # dpkg-buildflags support
 # disable fixfilepath in favor of the llvm-project supplied flavor, disable lto
 export DEB_BUILD_MAINT_OPTIONS = reproducible=-fixfilepath,-fixdebugpath optimize=-lto
-ifeq ($(DEB_HOST_ARCH),i386)
-  RUNTIMES = compiler-rt;libcxx;libcxxabi
-else
-  ifeq ($(DEB_HOST_ARCH_BITS),32)
-    RUNTIMES = libcxx;libcxxabi
-    skip_packages = -Nlibclang-rt-$(LLVM_VERSION)-dev
-  else
-    RUNTIMES = compiler-rt;libcxx;libcxxabi
-  endif
-endif
+RUNTIMES = compiler-rt;libcxx;libcxxabi
 
 SOURCE_NAME := $(shell dpkg-parsechangelog -S Source)
 ifneq (,$(findstring snapshot,$(SOURCE_NAME)))
@@ -1035,7 +1026,7 @@ override_dh_auto_install:
 	chrpath -d `find $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/bin/ -type f -executable -exec file -i '{}' \; | grep 'x-executable; charset=binary'|cut -d: -f1`
 ifeq (,$(filter $(DEB_HOST_ARCH), powerpc powerpcspe sparc sparc64))
 	# To fix custom-library-search-path
-	chrpath -d $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/clang/$(LLVM_VERSION)*/lib/linux/*.so || true
+	chrpath -d $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/clang/$(LLVM_VERSION)*/lib/linux/*.so
 endif
 
 	: # libclang
@@ -1274,7 +1265,7 @@ else
 	rm -rf $(CURDIR)/debian/tmp/usr/lib/llvm-$(LLVM_VERSION)/lib/cmake/polly/*.cmake
 endif
 endif
-	dh_install --fail-missing ${skip_packages}
+	dh_install --fail-missing
 # Move the libc++ abi files from libc++ to libc++-abi for the wasm32 packages
 # These packages are arch: all, so only do so when the packages are built
 ifneq (,$(filter libc++-$(LLVM_VERSION)-dev-wasm32, $(shell dh_listpackages)))
@@ -1400,11 +1391,8 @@ override_dh_auto_test:
 endif
 
 
-override_dh_builddeb:
-	dh_builddeb ${skip_packages}
-
 override_dh_gencontrol: sccache-stats
-	dh_gencontrol ${skip_packages} -- $(control_vars)
+	dh_gencontrol -- $(control_vars)
 
 
 override_dh_auto_clean:
