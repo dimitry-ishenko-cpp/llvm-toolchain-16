@@ -137,7 +137,6 @@ issue-54242.diff
 compiler-rt/compilerrt-fix-warn-xray-testing.diff
 compiler-rt/compilerrt-builtins-arch-fix-armhf.diff
 compiler-rt/compilerrt-build-scudo-standalone-option.diff
-fix-unwind-detection-logic.patch
 
 # wasm patches
 wasm/wasm-ld-path.diff
