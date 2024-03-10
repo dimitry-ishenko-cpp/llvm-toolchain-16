@@ -43,7 +43,7 @@ Vcs-Browser: https://salsa.debian.org/pkg-llvm-team/llvm-toolchain/tree/15
 Package: clang-15
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
- ${dep:devlibs-objc}, libclang-common-15-dev (= ${source:Version}),
+ ${dep:devlibs-objc}, libclang-common-15-dev (= ${binary:Version}),
  llvm-15-linker-tools (= ${binary:Version}),
  libclang1-15t64 (= ${binary:Version}), libc6-dev, binutils
 Provides: c-compiler, objc-compiler, c++-compiler
@@ -102,7 +102,7 @@ Description: clang-based C++ linter tool
 Package: clangd-15
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
- libclang-common-15-dev (= ${source:Version})
+ libclang-common-15-dev (= ${binary:Version})
 Description: Language server that provides IDE-like features to editors
  clangd understands your C++ code and adds smart features to your editor:
   - code completion
@@ -156,7 +156,7 @@ Architecture: any
 Section: libdevel
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
  ${dep:devlibs-objc}, libclang1-15t64 (= ${binary:Version}),
- libclang-common-15-dev (= ${source:Version})
+ libclang-common-15-dev (= ${binary:Version})
 Description: Clang library - Development package
  Clang project is a C, C++, Objective C and Objective C++ front-end
  based on the LLVM compiler. Its goal is to offer a replacement to the
@@ -169,7 +169,7 @@ Description: Clang library - Development package
  libclang1-15.
 
 Package: libclang-common-15-dev
-Architecture: all
+Architecture: any
 Section: libdevel
 Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm15t64 (>= ${source:Version})
 Recommends: libclang-rt-15-dev (>= 1:15.0.6-5)

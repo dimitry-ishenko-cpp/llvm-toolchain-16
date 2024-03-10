@@ -43,7 +43,7 @@ Vcs-Browser: https://salsa.debian.org/pkg-llvm-team/llvm-toolchain/tree/@BRANCH_
 Package: clang-@LLVM_VERSION@
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
- ${dep:devlibs-objc}, libclang-common-@LLVM_VERSION@-dev (= ${source:Version}),
+ ${dep:devlibs-objc}, libclang-common-@LLVM_VERSION@-dev (= ${binary:Version}),
  llvm-@LLVM_VERSION@-linker-tools (= ${binary:Version}),
  libclang1-@LLVM_VERSION@t64 (= ${binary:Version}), libc6-dev, binutils
 Provides: c-compiler, objc-compiler, c++-compiler
@@ -102,7 +102,7 @@ Description: clang-based C++ linter tool
 Package: clangd-@LLVM_VERSION@
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
- libclang-common-@LLVM_VERSION@-dev (= ${source:Version})
+ libclang-common-@LLVM_VERSION@-dev (= ${binary:Version})
 Description: Language server that provides IDE-like features to editors
  clangd understands your C++ code and adds smart features to your editor:
   - code completion
@@ -156,7 +156,7 @@ Architecture: any
 Section: libdevel
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
  ${dep:devlibs-objc}, libclang1-@LLVM_VERSION@t64 (= ${binary:Version}),
- libclang-common-@LLVM_VERSION@-dev (= ${source:Version})
+ libclang-common-@LLVM_VERSION@-dev (= ${binary:Version})
 Description: Clang library - Development package
  Clang project is a C, C++, Objective C and Objective C++ front-end
  based on the LLVM compiler. Its goal is to offer a replacement to the
@@ -169,7 +169,7 @@ Description: Clang library - Development package
  libclang1-@LLVM_VERSION@.
 
 Package: libclang-common-@LLVM_VERSION@-dev
-Architecture: all
+Architecture: any
 Section: libdevel
 Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm@LLVM_VERSION@t64 (>= ${source:Version})
 Recommends: libclang-rt-@LLVM_VERSION@-dev (>= 1:15.0.6-5)
