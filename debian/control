@@ -42,7 +42,7 @@ Vcs-Browser: https://salsa.debian.org/pkg-llvm-team/llvm-toolchain/tree/14
 Package: clang-14
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
- ${dep:devlibs-objc}, libclang-common-14-dev (= ${source:Version}),
+ ${dep:devlibs-objc}, libclang-common-14-dev (= ${binary:Version}),
  llvm-14-linker-tools (= ${binary:Version}),
  libclang1-14t64 (= ${binary:Version}), libc6-dev, binutils
 Provides: c-compiler, objc-compiler, c++-compiler
@@ -101,7 +101,7 @@ Description: clang-based C++ linter tool
 Package: clangd-14
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
- libclang-common-14-dev (= ${source:Version})
+ libclang-common-14-dev (= ${binary:Version})
 Description: Language server that provides IDE-like features to editors
  clangd understands your C++ code and adds smart features to your editor:
   - code completion
@@ -155,7 +155,7 @@ Architecture: any
 Section: libdevel
 Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
  ${dep:devlibs-objc}, libclang1-14t64 (= ${binary:Version}),
- libclang-common-14-dev (= ${source:Version})
+ libclang-common-14-dev (= ${binary:Version})
 Breaks: llvm-14-dev (<< 1:14.0.4-2)
 Replaces: llvm-14-dev (<< 1:14.0.4-2)
 Description: Clang library - Development package
@@ -170,7 +170,7 @@ Description: Clang library - Development package
  libclang1-14.
 
 Package: libclang-common-14-dev
-Architecture: all
+Architecture: any
 Section: libdevel
 Depends: ${shlibs:Depends}, ${misc:Depends}, libllvm14t64 (>= ${source:Version})
 Recommends: libclang-rt-14-dev (>= 1:14.0.6-10~exp4)

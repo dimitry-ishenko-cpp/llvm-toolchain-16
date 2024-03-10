@@ -4,6 +4,9 @@ llvm-toolchain-14 (1:14.0.6-18) unstable; urgency=medium
   * Disable tests on mips64el
   * Fix compiler-rt hack on 32bit architectures
 
+  [ Matthias Klose ]
+  * Make libclang-common-14-dev architecture dependent.
+
  -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 06 Mar 2024 08:43:25 +0100
 
 llvm-toolchain-14 (1:14.0.6-17) unstable; urgency=medium
