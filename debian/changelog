@@ -1,3 +1,10 @@
+llvm-toolchain-14 (1:14.0.6-19) unstable; urgency=medium
+
+  [ Matthias Klose ]
+  * Fix sanitizer build on 32bit time_t64 architectures.
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 11 Mar 2024 22:35:19 +0100
+
 llvm-toolchain-14 (1:14.0.6-18) unstable; urgency=medium
 
   [ Gianfranco Costamagna ]
@@ -5,7 +12,6 @@ llvm-toolchain-14 (1:14.0.6-18) unstable; urgency=medium
   * Fix compiler-rt hack on 32bit architectures
 
   [ Matthias Klose ]
-  * Fix sanitizer build on 32bit time_t64 architectures.
   * Make libclang-common-14-dev architecture dependent.
 
  -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 06 Mar 2024 08:43:25 +0100
