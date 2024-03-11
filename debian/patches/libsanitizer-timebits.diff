@@ -2,10 +2,12 @@
 
 --- a/compiler-rt/lib/sanitizer_common/sanitizer_procmaps_solaris.cpp
 +++ b/compiler-rt/lib/sanitizer_common/sanitizer_procmaps_solaris.cpp
-@@ -11,6 +11,7 @@
+@@ -9,6 +9,9 @@
+ // Information about the process mappings (Solaris-specific parts).
+ //===----------------------------------------------------------------------===//
  
- // Before Solaris 11.4, <procfs.h> doesn't work in a largefile environment.
- #undef _FILE_OFFSET_BITS
++// Before Solaris 11.4, <procfs.h> doesn't work in a largefile environment.
++#undef _FILE_OFFSET_BITS
 +#undef _TIME_BITS
  #include "sanitizer_platform.h"
  #if SANITIZER_SOLARIS
