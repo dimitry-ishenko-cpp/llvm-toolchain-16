@@ -1,12 +1,13 @@
-llvm-toolchain-18 (1:18.1.4-2) unstable; urgency=medium
+llvm-toolchain-18 (1:18.1.5-1) unstable; urgency=medium
 
+  * New upstream release
   * Be explicit with what ships in llvm-18-linker-tools
     to make sure we always ships gold.
     Will avoid issues like:
     https://github.com/llvm/llvm-project/issues/87553
     Might break the build on some Debian archs.
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Mon, 29 Apr 2024 11:10:49 +0200
+ -- Sylvestre Ledru <sylvestre@debian.org>  Fri, 03 May 2024 11:18:56 +0200
 
 llvm-toolchain-18 (1:18.1.4-1) unstable; urgency=medium
 
