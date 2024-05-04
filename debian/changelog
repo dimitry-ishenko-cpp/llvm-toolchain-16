@@ -1,3 +1,9 @@
+llvm-toolchain-14 (1:14.0.6-20) unstable; urgency=medium
+
+  * Add lunar/mantic/noble/oracular as supported release
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Sat, 04 May 2024 07:18:23 +0200
+
 llvm-toolchain-14 (1:14.0.6-19) unstable; urgency=medium
 
   [ Matthias Klose ]
