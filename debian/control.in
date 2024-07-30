@@ -32,6 +32,7 @@ Build-Depends: debhelper (>= 10.0), cmake, ninja-build,
     protobuf-compiler-grpc [amd64 arm64 armel armhf mips64el mipsel ppc64 ppc64el powerpc riscv64 s390x] <!stage1>,
     libprotobuf-dev [amd64 arm64 armel armhf mips64el mipsel ppc64 ppc64el powerpc riscv64 s390x] <!stage1>,
     protobuf-compiler [amd64 arm64 armel armhf mips64el mipsel ppc64 ppc64el powerpc riscv64 s390x] <!stage1>,
+    g++-13 [arm64],
 # "| hello" is for older buster/bionic distros without spirv support
 Build-Conflicts: oprofile
 Standards-Version: 4.6.2

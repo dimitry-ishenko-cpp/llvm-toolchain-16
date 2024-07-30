@@ -150,6 +150,10 @@ ifneq (,$(filter $(DEB_HOST_ARCH),i386 hurd-i386 kfreebsd-i386 armel mipsel powe
 LDFLAGS_EXTRA += -latomic
 endif
 
+ifneq (,$(filter $(DEB_HOST_ARCH),arm64))
+       GCC_VERSION := 13
+endif
+
 Z3_FLAG = -DLLVM_ENABLE_Z3_SOLVER=OFF
 ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' libz3-dev) gt 4.7.0; echo $$?),0)
 # no ocaml support in main for Ubuntu
