@@ -1,3 +1,10 @@
+llvm-toolchain-18 (1:18.1.8-8) unstable; urgency=medium
+
+  * Merge llvm-toolchain-17 1:17.0.6-13 into llvm-18 branch
+    - Make SVE types available in device targets (Closes: #1076578)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Tue, 30 Jul 2024 11:16:49 +0200
+
 llvm-toolchain-18 (1:18.1.8-7) unstable; urgency=medium
 
   * Unbreak the cmake tools
