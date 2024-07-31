@@ -1,3 +1,9 @@
+llvm-toolchain-17 (1:17.0.6-15) unstable; urgency=medium
+
+  * Drop multilib packages on s390* they have been dropped by gcc-defaults.
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 31 Jul 2024 08:40:21 +0200
+
 llvm-toolchain-17 (1:17.0.6-14) unstable; urgency=medium
 
   * Build with gcc-13 on arm64 for now (FTBFS)
