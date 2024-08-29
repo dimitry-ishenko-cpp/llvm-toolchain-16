@@ -123,7 +123,6 @@ lower-python-dep.diff
 scan-build-py-fix-default-bin.diff
 
 omp-riscv64.patch
-lldb/test-disable-lldb-i386.diff
 unbreak-atomic-mips.diff
 llvm-fix-lld-linker-check.diff
 openmp-fix-runtimes-build.diff
