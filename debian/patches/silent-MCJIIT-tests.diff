@@ -1,0 +1,44 @@
+---
+ test/BugPoint/crash-narrowfunctiontest.ll                               |    1 -
+ test/BugPoint/remove_arguments_test.ll                                  |    1 -
+ test/ExecutionEngine/MCJIT/cross-module-sm-pic-a.ll                     |    2 +-
+ test/ExecutionEngine/MCJIT/eh-lg-pic.ll                                 |    2 +-
+ test/ExecutionEngine/MCJIT/multi-module-sm-pic-a.ll                     |    2 +-
+ test/ExecutionEngine/MCJIT/stubs-sm-pic.ll                              |    2 +-
+ test/ExecutionEngine/MCJIT/test-global-init-nonzero-sm-pic.ll           |    2 +-
+ test/ExecutionEngine/MCJIT/test-ptr-reloc-sm-pic.ll                     |    2 +-
+ test/ExecutionEngine/MCJIT/cross-module-sm-pic-a.ll                  |    2 +-
+ test/ExecutionEngine/MCJIT/eh-lg-pic.ll                              |    2 +-
+ test/ExecutionEngine/MCJIT/multi-module-sm-pic-a.ll                  |    2 +-
+ test/ExecutionEngine/MCJIT/remote/test-global-init-nonzero-sm-pic.ll |    2 +-
+ test/ExecutionEngine/MCJIT/remote/test-ptr-reloc-sm-pic.ll           |    2 +-
+ test/ExecutionEngine/MCJIT/stubs-sm-pic.ll                           |    2 +-
+ test/ExecutionEngine/MCJIT/test-global-init-nonzero-sm-pic.ll        |    2 +-
+ test/ExecutionEngine/MCJIT/test-ptr-reloc-sm-pic.ll                  |    2 +-
+ test/Feature/load_module.ll                                             |    1 -
+ 17 files changed, 14 insertions(+), 17 deletions(-)
+
+Index: llvm-toolchain-snapshot_16~++20221216102605+31f4859c3e4d/llvm/test/ExecutionEngine/MCJIT/remote/test-global-init-nonzero-sm-pic.ll
+===================================================================
+--- llvm-toolchain-snapshot_16~++20221216102605+31f4859c3e4d.orig/llvm/test/ExecutionEngine/MCJIT/remote/test-global-init-nonzero-sm-pic.ll
++++ llvm-toolchain-snapshot_16~++20221216102605+31f4859c3e4d/llvm/test/ExecutionEngine/MCJIT/remote/test-global-init-nonzero-sm-pic.ll
+@@ -1,6 +1,6 @@
+ ; RUN: %lli -jit-kind=mcjit -remote-mcjit -mcjit-remote-process=lli-child-target%exeext \
+ ; RUN:   -relocation-model=pic -code-model=small %s > /dev/null
+-; XFAIL: target={{(mips|mipsel)-.*}}, target={{(aarch64|arm).*}}, target={{(i686|i386).*}}
++; XFAIL: *
+ ; XFAIL: target={{.*-windows-(gnu|msvc)}}
+ ; UNSUPPORTED: target=target=powerpc64-unknown-linux-gnu
+ ; Remove UNSUPPORTED for powerpc64-unknown-linux-gnu if problem caused by r266663 is fixed
+Index: llvm-toolchain-snapshot_16~++20221216102605+31f4859c3e4d/llvm/test/ExecutionEngine/MCJIT/remote/test-ptr-reloc-sm-pic.ll
+===================================================================
+--- llvm-toolchain-snapshot_16~++20221216102605+31f4859c3e4d.orig/llvm/test/ExecutionEngine/MCJIT/remote/test-ptr-reloc-sm-pic.ll
++++ llvm-toolchain-snapshot_16~++20221216102605+31f4859c3e4d/llvm/test/ExecutionEngine/MCJIT/remote/test-ptr-reloc-sm-pic.ll
+@@ -1,6 +1,6 @@
+ ; RUN: %lli -jit-kind=mcjit -remote-mcjit -mcjit-remote-process=lli-child-target%exeext \
+ ; RUN:   -O0 -relocation-model=pic -code-model=small %s
+-; XFAIL: target={{(mips|mipsel)-.*}}, target={{(aarch64|arm).*}}, target={{(i686|i386).*}}
++; XFAIL: *
+ ; XFAIL: target={{.*-windows-(gnu|msvc)}}
+ ; UNSUPPORTED: target=powerpc64-unknown-linux-gnu
+ ; Remove UNSUPPORTED for powerpc64-unknown-linux-gnu if problem caused by r266663 is fixed

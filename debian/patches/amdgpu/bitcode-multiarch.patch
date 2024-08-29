@@ -1,0 +1,53 @@
+From efa9394d72968e0c84c2c9283476c70807f60b80 Mon Sep 17 00:00:00 2001
+From: Cordell Bloor <cgmb@slerp.xyz>
+Date: Wed, 8 Mar 2023 02:57:51 -0700
+Subject: [PATCH] Search for the bitcode libraries in a multiarch directory
+
+The Debian path for the rocm-device-libs is
+/usr/lib/$(DEB_HOST_MULTIARCH)/amdgcn/bitcode
+
+Forwarded: not-needed
+---
+ clang/lib/Driver/ToolChains/AMDGPU.cpp | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
+
+Index: llvm-toolchain-15-15.0.7/clang/lib/Driver/ToolChains/AMDGPU.cpp
+===================================================================
+--- llvm-toolchain-15-15.0.7.orig/clang/lib/Driver/ToolChains/AMDGPU.cpp
++++ llvm-toolchain-15-15.0.7/clang/lib/Driver/ToolChains/AMDGPU.cpp
+@@ -14,6 +14,7 @@
+ #include "clang/Driver/DriverDiagnostic.h"
+ #include "clang/Driver/InputInfo.h"
+ #include "clang/Driver/Options.h"
++#include "llvm/ADT/Triple.h"
+ #include "llvm/Option/ArgList.h"
+ #include "llvm/Support/Error.h"
+ #include "llvm/Support/FileUtilities.h"
+@@ -423,16 +424,21 @@ void RocmInstallationDetector::detectDev
+     // The possible structures are:
+     // - ${ROCM_ROOT}/amdgcn/bitcode/*
+     // - ${ROCM_ROOT}/lib/*
++    // - ${ROCM_ROOT}/lib/<multiarch>/amdgcn/bitcode/*
+     // - ${ROCM_ROOT}/lib/bitcode/*
+-    // so try to detect these layouts.
+-    static constexpr std::array<const char *, 2> SubDirsList[] = {
+-        {"amdgcn", "bitcode"},
+-        {"lib", ""},
+-        {"lib", "bitcode"},
++    // so try to detect these layouts. Note that bitcode is associated with the
++    // compiler that built it (not the target architecture).
++    llvm::Triple HostTriple(llvm::sys::getProcessTriple());
++    std::string Multiarch = Twine(HostTriple.getArchName() + "-linux-gnu").str();
++    static const std::array<std::string, 4> SubDirsList[] = {
++        {"amdgcn", "bitcode", "", ""},
++        {"lib", "", "", ""},
++        {"lib", Multiarch, "amdgcn", "bitcode"},
++        {"lib", "bitcode", "", ""},
+     };
+ 
+     // Make a path by appending sub-directories to InstallPath.
+-    auto MakePath = [&](const llvm::ArrayRef<const char *> &SubDirs) {
++    auto MakePath = [&](const llvm::ArrayRef<std::string> &SubDirs) {
+       auto Path = CandidatePath;
+       for (auto SubDir : SubDirs)
+         llvm::sys::path::append(Path, SubDir);

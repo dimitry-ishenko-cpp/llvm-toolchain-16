@@ -1,0 +1,15 @@
+Index: llvm-toolchain-snapshot_14~++20211114120952+5b4bfd8c2415/llvm/lib/ExecutionEngine/PerfJITEvents/PerfJITEventListener.cpp
+===================================================================
+--- llvm-toolchain-snapshot_14~++20211114120952+5b4bfd8c2415.orig/llvm/lib/ExecutionEngine/PerfJITEvents/PerfJITEventListener.cpp
++++ llvm-toolchain-snapshot_14~++20211114120952+5b4bfd8c2415/llvm/lib/ExecutionEngine/PerfJITEvents/PerfJITEventListener.cpp
+@@ -304,8 +304,8 @@ bool PerfJITEventListener::InitDebugging
+   // search for location to dump data to
+   if (const char *BaseDir = getenv("JITDUMPDIR"))
+     Path.append(BaseDir);
+-  else if (!sys::path::home_directory(Path))
+-    Path = ".";
++  else
++    sys::path::system_temp_directory(/*ErasedOnReboot*/ true, Path);
+ 
+   // create debug directory
+   Path += "/.debug/jit/";

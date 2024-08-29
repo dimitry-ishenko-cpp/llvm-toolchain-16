@@ -1,0 +1,31 @@
+---
+ clang/tools/libclang/CMakeLists.txt |    2 +-
+ tools/llvm-shlib/CMakeLists.txt     |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+Index: llvm-toolchain-snapshot_15~++20220407011631+46f0e2ceb487/clang/tools/libclang/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-snapshot_15~++20220407011631+46f0e2ceb487.orig/clang/tools/libclang/CMakeLists.txt
++++ llvm-toolchain-snapshot_15~++20220407011631+46f0e2ceb487/clang/tools/libclang/CMakeLists.txt
+@@ -117,7 +117,7 @@ if (UNIX AND ${CMAKE_SYSTEM_NAME} MATCHE
+     remove_definitions("-D_XOPEN_SOURCE=700")
+ endif()
+ 
+-add_clang_library(libclang ${ENABLE_SHARED} ${ENABLE_STATIC} INSTALL_WITH_TOOLCHAIN
++add_clang_library(libclang ${ENABLE_SHARED} ${ENABLE_STATIC} INSTALL_WITH_TOOLCHAIN SONAME
+   OUTPUT_NAME ${output_name}
+   ${SOURCES}
+ 
+Index: llvm-toolchain-snapshot_15~++20220407011631+46f0e2ceb487/llvm/tools/llvm-shlib/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-snapshot_15~++20220407011631+46f0e2ceb487.orig/llvm/tools/llvm-shlib/CMakeLists.txt
++++ llvm-toolchain-snapshot_15~++20220407011631+46f0e2ceb487/llvm/tools/llvm-shlib/CMakeLists.txt
+@@ -32,6 +32,8 @@ if(LLVM_BUILD_LLVM_DYLIB)
+   endif()
+   add_llvm_library(LLVM SHARED DISABLE_LLVM_LINK_LLVM_DYLIB SONAME ${INSTALL_WITH_TOOLCHAIN} ${SOURCES})
+ 
++  set_property(TARGET LLVM PROPERTY VERSION "1") # Append .1 to SONAME
++
+   list(REMOVE_DUPLICATES LIB_NAMES)
+   if(("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux") OR (MINGW) OR (HAIKU)
+      OR ("${CMAKE_SYSTEM_NAME}" STREQUAL "FreeBSD")

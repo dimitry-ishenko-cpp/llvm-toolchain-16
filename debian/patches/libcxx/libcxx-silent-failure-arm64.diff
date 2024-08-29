@@ -1,0 +1,25 @@
+Index: llvm-toolchain-snapshot_15~++20220530092849+bcf3d5248678/libcxx/test/std/thread/thread.condition/thread.condition.condvar/wait_for.pass.cpp
+===================================================================
+--- llvm-toolchain-snapshot_15~++20220530092849+bcf3d5248678.orig/libcxx/test/std/thread/thread.condition/thread.condition.condvar/wait_for.pass.cpp
++++ llvm-toolchain-snapshot_15~++20220530092849+bcf3d5248678/libcxx/test/std/thread/thread.condition/thread.condition.condvar/wait_for.pass.cpp
+@@ -8,6 +8,7 @@
+ //
+ // UNSUPPORTED: no-threads
+ // ALLOW_RETRIES: 2
++// XFAIL: *
+ 
+ // <condition_variable>
+ 
+Index: llvm-toolchain-snapshot_15~++20220530092849+bcf3d5248678/libcxx/test/std/thread/thread.mutex/thread.lock/thread.lock.shared/thread.lock.shared.locking/lock.pass.cpp
+===================================================================
+--- llvm-toolchain-snapshot_15~++20220530092849+bcf3d5248678.orig/libcxx/test/std/thread/thread.mutex/thread.lock/thread.lock.shared/thread.lock.shared.locking/lock.pass.cpp
++++ llvm-toolchain-snapshot_15~++20220530092849+bcf3d5248678/libcxx/test/std/thread/thread.mutex/thread.lock/thread.lock.shared/thread.lock.shared.locking/lock.pass.cpp
+@@ -11,7 +11,7 @@
+ // ALLOW_RETRIES: 2
+ 
+ // dylib support for shared_mutex was added in macosx10.12
+-// XFAIL: use_system_cxx_lib && target={{.+}}-apple-macosx10.{{9|10|11}}
++// XFAIL: *
+ 
+ // <shared_mutex>
+ 

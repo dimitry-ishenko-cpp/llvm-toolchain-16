@@ -1,0 +1,231 @@
+diff --git a/clang/lib/Driver/ToolChains/Arch/LoongArch.cpp b/clang/lib/Driver/ToolChains/Arch/LoongArch.cpp
+--- a/clang/lib/Driver/ToolChains/Arch/LoongArch.cpp
++++ b/clang/lib/Driver/ToolChains/Arch/LoongArch.cpp
+@@ -54,7 +54,28 @@
+   }
+ 
+   // Choose a default based on the triple.
+-  return IsLA32 ? "ilp32d" : "lp64d";
++  // Honor the explicit ABI modifier suffix in triple's environment part if
++  // present, falling back to {ILP32,LP64}D otherwise.
++  switch (Triple.getEnvironment()) {
++  case llvm::Triple::GNUSF:
++    return IsLA32 ? "ilp32s" : "lp64s";
++  case llvm::Triple::GNUF32:
++    return IsLA32 ? "ilp32f" : "lp64f";
++  case llvm::Triple::GNUF64:
++    // This was originally permitted (and indeed the canonical way) to
++    // represent the {ILP32,LP64}D ABIs, but in Feb 2023 Loongson decided to
++    // drop the explicit suffix in favor of unmarked `-gnu` for the
++    // "general-purpose" ABIs, among other non-technical reasons.
++    //
++    // The spec change did not mention whether existing usages of "gnuf64"
++    // shall remain valid or not, so we are going to continue recognizing it
++    // for some time, until it is clear that everyone else has migrated away
++    // from it.
++    [[fallthrough]];
++  case llvm::Triple::GNU:
++  default:
++    return IsLA32 ? "ilp32d" : "lp64d";
++  }
+ }
+ 
+ void loongarch::getLoongArchTargetFeatures(const Driver &D,
+diff --git a/clang/lib/Driver/ToolChains/Linux.cpp b/clang/lib/Driver/ToolChains/Linux.cpp
+--- a/clang/lib/Driver/ToolChains/Linux.cpp
++++ b/clang/lib/Driver/ToolChains/Linux.cpp
+@@ -86,6 +86,39 @@
+   case llvm::Triple::aarch64_be:
+     return "aarch64_be-linux-gnu";
+ 
++  case llvm::Triple::loongarch64: {
++    const char *Libc;
++    const char *FPFlavor;
++
++    if (TargetTriple.isGNUEnvironment()) {
++      Libc = "gnu";
++    } else if (TargetTriple.isMusl()) {
++      Libc = "musl";
++    } else {
++      return TargetTriple.str();
++    }
++
++    switch (TargetEnvironment) {
++    default:
++      return TargetTriple.str();
++    case llvm::Triple::GNUSF:
++      FPFlavor = "sf";
++      break;
++    case llvm::Triple::GNUF32:
++      FPFlavor = "f32";
++      break;
++    case llvm::Triple::GNU:
++    case llvm::Triple::GNUF64:
++      // This was going to be "f64" in an earlier Toolchain Conventions
++      // revision, but starting from Feb 2023 the F64 ABI variants are
++      // unmarked in their canonical forms.
++      FPFlavor = "";
++      break;
++    }
++
++    return (Twine("loongarch64-linux-") + Libc + FPFlavor).str();
++  }
++
+   case llvm::Triple::m68k:
+     return "m68k-linux-gnu";
+ 
+diff --git a/clang/test/Driver/Inputs/debian_loong64_tree/usr/include/c++/13/backward/.keep b/clang/test/Driver/Inputs/debian_loong64_tree/usr/include/c++/13/backward/.keep
+new file mode 100644
+diff --git a/clang/test/Driver/Inputs/debian_loong64_tree/usr/include/loongarch64-linux-gnu/c++/.keep b/clang/test/Driver/Inputs/debian_loong64_tree/usr/include/loongarch64-linux-gnu/c++/.keep
+new file mode 100644
+diff --git a/clang/test/Driver/Inputs/debian_loong64_tree/usr/lib/gcc/loongarch64-linux-gnu/13/crtbegin.o b/clang/test/Driver/Inputs/debian_loong64_tree/usr/lib/gcc/loongarch64-linux-gnu/13/crtbegin.o
+new file mode 100644
+diff --git a/clang/test/Driver/Inputs/debian_loong64_tree/usr/lib/gcc/loongarch64-linux-gnu/13/crtend.o b/clang/test/Driver/Inputs/debian_loong64_tree/usr/lib/gcc/loongarch64-linux-gnu/13/crtend.o
+new file mode 100644
+diff --git a/clang/test/Driver/Inputs/debian_loong64_tree/usr/lib/gcc/loongarch64-linux-gnu/13/include/.keep b/clang/test/Driver/Inputs/debian_loong64_tree/usr/lib/gcc/loongarch64-linux-gnu/13/include/.keep
+new file mode 100644
+diff --git a/clang/test/Driver/Inputs/debian_loong64_tree/usr/lib/loongarch64-linux-gnu/crt1.o b/clang/test/Driver/Inputs/debian_loong64_tree/usr/lib/loongarch64-linux-gnu/crt1.o
+new file mode 100644
+diff --git a/clang/test/Driver/Inputs/debian_loong64_tree/usr/lib/loongarch64-linux-gnu/crti.o b/clang/test/Driver/Inputs/debian_loong64_tree/usr/lib/loongarch64-linux-gnu/crti.o
+new file mode 100644
+diff --git a/clang/test/Driver/Inputs/debian_loong64_tree/usr/lib/loongarch64-linux-gnu/crtn.o b/clang/test/Driver/Inputs/debian_loong64_tree/usr/lib/loongarch64-linux-gnu/crtn.o
+new file mode 100644
+diff --git a/clang/test/Driver/linux-header-search.cpp b/clang/test/Driver/linux-header-search.cpp
+--- a/clang/test/Driver/linux-header-search.cpp
++++ b/clang/test/Driver/linux-header-search.cpp
+@@ -244,6 +244,32 @@
+ // CHECK-GENTOO-4-9-X-32: "-internal-externc-isystem" "[[SYSROOT]]/include"
+ // CHECK-GENTOO-4-9-X-32: "-internal-externc-isystem" "[[SYSROOT]]/usr/include"
+ //
++// Check header search on Debian loong64
++// RUN: %clang -### %s -fsyntax-only 2>&1 \
++// RUN:     --target=loongarch64-unknown-linux-gnu -stdlib=libstdc++ \
++// RUN:     --sysroot=%S/Inputs/debian_loong64_tree \
++// RUN:     --gcc-toolchain="" \
++// RUN:   | FileCheck --check-prefix=CHECK-LOONG64-GNU %s
++//
++// Check that "-gnuf64" is seen as "-gnu" for loong64.
++// RUN: %clang -### %s -fsyntax-only 2>&1 \
++// RUN:     --target=loongarch64-unknown-linux-gnuf64 -stdlib=libstdc++ \
++// RUN:     --sysroot=%S/Inputs/debian_loong64_tree \
++// RUN:     --gcc-toolchain="" \
++// RUN:   | FileCheck --check-prefix=CHECK-LOONG64-GNU %s
++// CHECK-LOONG64-GNU: "-cc1"
++// CHECK-LOONG64-GNU: "-resource-dir" "[[RESOURCE_DIR:[^"]+]]"
++// CHECK-LOONG64-GNU: "-isysroot" "[[SYSROOT:[^"]+]]"
++// CHECK-LOONG64-GNU: "-internal-isystem" "[[SYSROOT]]/usr/lib/gcc/loongarch64-linux-gnu/13/../../../../include/c++/13"
++// CHECK-LOONG64-GNU: "-internal-isystem" "[[SYSROOT]]/usr/lib/gcc/loongarch64-linux-gnu/13/../../../../include/c++/13/loongarch64-linux-gnu"
++// CHECK-LOONG64-GNU: "-internal-isystem" "[[SYSROOT]]/usr/lib/gcc/loongarch64-linux-gnu/13/../../../../include/c++/13/backward"
++// CHECK-LOONG64-GNU: "-internal-isystem" "[[RESOURCE_DIR]]{{/|\\\\}}include"
++// CHECK-LOONG64-GNU: "-internal-isystem" "[[SYSROOT]]/usr/local/include"
++// CHECK-LOONG64-GNU: "-internal-isystem" "[[SYSROOT]]/usr/lib/gcc/loongarch64-linux-gnu/13/../../../../loongarch64-linux-gnu/include"
++// CHECK-LOONG64-GNU: "-internal-externc-isystem" "[[SYSROOT]]/usr/include/loongarch64-linux-gnu"
++// CHECK-LOONG64-GNU: "-internal-externc-isystem" "[[SYSROOT]]/include"
++// CHECK-LOONG64-GNU: "-internal-externc-isystem" "[[SYSROOT]]/usr/include"
++//
+ // Check header search on Debian 6 / MIPS64
+ // RUN: %clang -### %s -fsyntax-only 2>&1 \
+ // RUN:     --target=mips64-unknown-linux-gnuabi64 -stdlib=libstdc++ \
+diff --git a/clang/test/Driver/linux-ld.c b/clang/test/Driver/linux-ld.c
+--- a/clang/test/Driver/linux-ld.c
++++ b/clang/test/Driver/linux-ld.c
+@@ -830,6 +830,30 @@
+ // CHECK-ARM-HF: "-dynamic-linker" "{{.*}}/lib/ld-linux-armhf.so.3"
+ //
+ // RUN: %clang -### %s -no-pie 2>&1 \
++// RUN:     --target=loongarch64-linux-gnu \
++// RUN:   | FileCheck --check-prefix=CHECK-LOONGARCH-LP64D %s
++// RUN: %clang -### %s -no-pie 2>&1 \
++// RUN:     --target=loongarch64-linux-gnuf64 \
++// RUN:   | FileCheck --check-prefix=CHECK-LOONGARCH-LP64D %s
++// CHECK-LOONGARCH-LP64D: "{{.*}}ld{{(.exe)?}}"
++// CHECK-LOONGARCH-LP64D: "-m" "elf64loongarch"
++// CHECK-LOONGARCH-LP64D: "-dynamic-linker" "{{.*}}/lib64/ld-linux-loongarch-lp64d.so.1"
++//
++// RUN: %clang -### %s -no-pie 2>&1 \
++// RUN:     --target=loongarch64-linux-gnuf32 \
++// RUN:   | FileCheck --check-prefix=CHECK-LOONGARCH-LP64F %s
++// CHECK-LOONGARCH-LP64F: "{{.*}}ld{{(.exe)?}}"
++// CHECK-LOONGARCH-LP64F: "-m" "elf64loongarch"
++// CHECK-LOONGARCH-LP64F: "-dynamic-linker" "{{.*}}/lib64/ld-linux-loongarch-lp64f.so.1"
++//
++// RUN: %clang -### %s -no-pie 2>&1 \
++// RUN:     --target=loongarch64-linux-gnusf \
++// RUN:   | FileCheck --check-prefix=CHECK-LOONGARCH-LP64S %s
++// CHECK-LOONGARCH-LP64S: "{{.*}}ld{{(.exe)?}}"
++// CHECK-LOONGARCH-LP64S: "-m" "elf64loongarch"
++// CHECK-LOONGARCH-LP64S: "-dynamic-linker" "{{.*}}/lib64/ld-linux-loongarch-lp64s.so.1"
++//
++// RUN: %clang -### %s -no-pie 2>&1 \
+ // RUN:     --target=powerpc64-linux-gnu \
+ // RUN:   | FileCheck --check-prefix=CHECK-PPC64 %s
+ // CHECK-PPC64: "{{.*}}ld{{(.exe)?}}"
+@@ -1311,6 +1335,29 @@
+ // RUN:   | FileCheck --check-prefix=CHECK-ANDROID-PTHREAD-LINK %s
+ // CHECK-ANDROID-PTHREAD-LINK-NOT: argument unused during compilation: '-pthread'
+ //
++// Check linker invocation on a Debian LoongArch sysroot.
++// RUN: %clang -### %s -no-pie 2>&1 \
++// RUN:     --target=loongarch64-linux-gnu -rtlib=platform \
++// RUN:     --gcc-toolchain="" \
++// RUN:     --sysroot=%S/Inputs/debian_loong64_tree \
++// RUN:   | FileCheck --check-prefix=CHECK-DEBIAN-ML-LOONG64 %s
++//
++// Check that "-gnuf64" is seen as "-gnu" for loong64.
++// RUN: %clang -### %s -no-pie 2>&1 \
++// RUN:     --target=loongarch64-linux-gnuf64 -rtlib=platform \
++// RUN:     --gcc-toolchain="" \
++// RUN:     --sysroot=%S/Inputs/debian_loong64_tree \
++// RUN:   | FileCheck --check-prefix=CHECK-DEBIAN-ML-LOONG64 %s
++// CHECK-DEBIAN-ML-LOONG64: "{{.*}}ld{{(.exe)?}}" "--sysroot=[[SYSROOT:[^"]+]]"
++// CHECK-DEBIAN-ML-LOONG64: "[[SYSROOT]]/usr/lib/loongarch64-linux-gnu/crt1.o"
++// CHECK-DEBIAN-ML-LOONG64: "[[SYSROOT]]/usr/lib/loongarch64-linux-gnu/crti.o"
++// CHECK-DEBIAN-ML-LOONG64: "[[SYSROOT]]/usr/lib/gcc/loongarch64-linux-gnu/13/crtbegin.o"
++// CHECK-DEBIAN-ML-LOONG64: "-L[[SYSROOT]]/usr/lib/gcc/loongarch64-linux-gnu/13"
++// CHECK-DEBIAN-ML-LOONG64: "-L[[SYSROOT]]/usr/lib/loongarch64-linux-gnu"
++// CHECK-DEBIAN-ML-LOONG64: "-L[[SYSROOT]]/usr/lib"
++// CHECK-DEBIAN-ML-LOONG64: "[[SYSROOT]]/usr/lib/gcc/loongarch64-linux-gnu/13/crtend.o"
++// CHECK-DEBIAN-ML-LOONG64: "[[SYSROOT]]/usr/lib/loongarch64-linux-gnu/crtn.o"
++//
+ // Check linker invocation on Debian 6 MIPS 32/64-bit.
+ // RUN: %clang -### %s -no-pie 2>&1 \
+ // RUN:     --target=mipsel-linux-gnu -rtlib=platform \
+diff --git a/clang/test/Driver/loongarch-abi.c b/clang/test/Driver/loongarch-abi.c
+--- a/clang/test/Driver/loongarch-abi.c
++++ b/clang/test/Driver/loongarch-abi.c
+@@ -16,6 +16,34 @@
+ // RUN: %clang --target=loongarch64-unknown-elf %s -fsyntax-only -### -mabi=lp64d 2>&1 \
+ // RUN:   | FileCheck --check-prefix=LP64D %s
+ 
++// RUN: %clang --target=loongarch32-linux-gnusf %s -fsyntax-only -### 2>&1 \
++// RUN:   | FileCheck --check-prefix=ILP32S %s
++// RUN: %clang --target=loongarch32-linux-gnuf32 %s -fsyntax-only -### 2>&1 \
++// RUN:   | FileCheck --check-prefix=ILP32F %s
++// RUN: %clang --target=loongarch32-linux-gnuf64 %s -fsyntax-only -### 2>&1 \
++// RUN:   | FileCheck --check-prefix=ILP32D %s
++// RUN: %clang --target=loongarch32-linux-gnu %s -fsyntax-only -### 2>&1 \
++// RUN:   | FileCheck --check-prefix=ILP32D %s
++
++// RUN: %clang --target=loongarch64-linux-gnusf %s -fsyntax-only -### 2>&1 \
++// RUN:   | FileCheck --check-prefix=LP64S %s
++// RUN: %clang --target=loongarch64-linux-gnuf32 %s -fsyntax-only -### 2>&1 \
++// RUN:   | FileCheck --check-prefix=LP64F %s
++// RUN: %clang --target=loongarch64-linux-gnuf64 %s -fsyntax-only -### 2>&1 \
++// RUN:   | FileCheck --check-prefix=LP64D %s
++// RUN: %clang --target=loongarch64-linux-gnu %s -fsyntax-only -### 2>&1 \
++// RUN:   | FileCheck --check-prefix=LP64D %s
++
++// Check that -mabi prevails in case of conflicts with the triple-implied ABI.
++// RUN: %clang --target=loongarch32-linux-gnuf64 %s -fsyntax-only -### -mabi=ilp32s 2>&1 \
++// RUN:   | FileCheck --check-prefix=ILP32S %s
++// RUN: %clang --target=loongarch64-linux-gnuf64 %s -fsyntax-only -### -mabi=lp64s 2>&1 \
++// RUN:   | FileCheck --check-prefix=LP64S %s
++// RUN: %clang --target=loongarch32-linux-gnu %s -fsyntax-only -### -mabi=ilp32s 2>&1 \
++// RUN:   | FileCheck --check-prefix=ILP32S %s
++// RUN: %clang --target=loongarch64-linux-gnu %s -fsyntax-only -### -mabi=lp64s 2>&1 \
++// RUN:   | FileCheck --check-prefix=LP64S %s
++
+ // ILP32S: "-target-abi" "ilp32s"
+ // ILP32F: "-target-abi" "ilp32f"
+ // ILP32D: "-target-abi" "ilp32d"
+

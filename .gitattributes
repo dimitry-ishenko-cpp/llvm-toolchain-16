@@ -1,0 +1,6 @@
+debian/changelog merge=dpkg-mergechangelogs
+
+#  ~/.gitconfig should have
+# [merge "dpkg-mergechangelogs"]
+# name = debian/changelog merge driver
+# driver = dpkg-mergechangelogs -m %O %A %B %A 

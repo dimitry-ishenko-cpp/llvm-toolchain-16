@@ -1,0 +1,2 @@
+libomp5-@LLVM_VERSION@t64: arch-dependent-file-not-in-arch-specific-directory *usr/lib/llvm-@LLVM_VERSION@/lib/libomp.so.5*
+libomp5-@LLVM_VERSION@t64: package-name-doesnt-match-sonames libomp5-@LLVM_VERSION@

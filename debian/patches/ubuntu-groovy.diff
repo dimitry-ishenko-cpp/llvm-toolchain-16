@@ -1,0 +1,29 @@
+--- a/clang/include/clang/Driver/Distro.h
++++ b/clang/include/clang/Driver/Distro.h
+@@ -67,6 +67,7 @@ public:
+     UbuntuDisco,
+     UbuntuEoan,
+     UbuntuFocal,
++    UbuntuGroovy,
+     UnknownDistro
+   };
+ 
+@@ -120,7 +121,7 @@ public:
+   }
+ 
+   bool IsUbuntu() const {
+-    return DistroVal >= UbuntuHardy && DistroVal <= UbuntuFocal;
++    return DistroVal >= UbuntuHardy && DistroVal <= UbuntuGroovy;
+   }
+ 
+   bool IsAlpineLinux() const {
+--- a/clang/lib/Driver/Distro.cpp
++++ b/clang/lib/Driver/Distro.cpp
+@@ -70,6 +70,7 @@ static Distro::DistroType DetectDistro(l
+                       .Case("disco", Distro::UbuntuDisco)
+                       .Case("eoan", Distro::UbuntuEoan)
+                       .Case("focal", Distro::UbuntuFocal)
++                      .Case("groovy", Distro::UbuntuGroovy)
+                       .Default(Distro::UnknownDistro);
+     if (Version != Distro::UnknownDistro)
+       return Version;
