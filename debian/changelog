@@ -1,3 +1,10 @@
+llvm-toolchain-16 (2:16.0.6-27+1) unstable; urgency=medium
+
+  * Update source to cling-llvm16-20240621-02
+  * Update patches
+
+ -- Dimitry Ishenko <dimitry.ishenko@gmail.com>  Fri, 30 Aug 2024 09:47:39 -0400
+
 llvm-toolchain-16 (1:16.0.6-27) unstable; urgency=medium
 
   * Add oracular as supported release
