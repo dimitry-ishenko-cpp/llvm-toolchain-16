@@ -220,6 +220,7 @@ endif
 
 ifneq (,$(filter $(DEB_HOST_ARCH),powerpc))
   STAGE_ALL_CMAKE_EXTRA += -DLLVM_HOST_TRIPLE=powerpc-pc-linux-gnu
+  STAGE_ALL_CMAKE_EXTRA += -DCOMPILER_RT_DEFAULT_TARGET_ARCH=powerpc
 endif
 
 # debug symbols OOM in Ubuntu Ubuntu and slows down build process.
