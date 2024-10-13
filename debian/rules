@@ -178,8 +178,8 @@ endif
 endif
 endif
 
-export CC=gcc-$(GCC_VERSION)
-export CXX=g++-$(GCC_VERSION)
+export CC ?= gcc-$(GCC_VERSION)
+export CXX ?= g++-$(GCC_VERSION)
 
 ifneq (,$(findstring $(DEB_HOST_ARCH),armel))
   STAGE_ALL_CMAKE_EXTRA += -DLLVM_HOST_TRIPLE=arm-linux-gnueabi
