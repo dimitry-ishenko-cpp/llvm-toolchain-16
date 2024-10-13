@@ -3,6 +3,7 @@ llvm-toolchain-18 (1:18.1.8-13) UNRELEASED; urgency=medium
   [ John Paul Adrian Glaubitz ]
   * Allow overriding the bootstrap compiler from the environment
   * Set compiler-rt default target arch on powerpc
+  * Restrict compiler-rt build to default target arch on powerpc
 
  -- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>  Sun, 13 Oct 2024 14:56:58 +0200
 
