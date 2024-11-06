@@ -5,7 +5,11 @@ llvm-toolchain-18 (1:18.1.8-13) UNRELEASED; urgency=medium
   * Set compiler-rt default target arch on powerpc
   * Restrict compiler-rt build to default target arch on powerpc
 
- -- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>  Sun, 13 Oct 2024 14:56:58 +0200
+  [ Sylvestre Ledru ]
+  * Remove the capability to be able to disable C++ Exceptions in libc++
+  * Bring back C++ exceptions on s390x for libc++ (LP: #2086782)
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 06 Nov 2024 16:44:31 +0100
 
 llvm-toolchain-18 (1:18.1.8-12) unstable; urgency=medium
 
