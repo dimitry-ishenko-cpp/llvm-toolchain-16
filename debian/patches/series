@@ -159,3 +159,4 @@ env-lld-package-metadata.diff
 rv64-fix-PCREL_HI20-issue.diff
 rv64-fix-mm-leak.diff
 backport-miscompile-floating-point.diff
+bolt-disable-proc-check.diff

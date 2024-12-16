@@ -9,6 +9,10 @@ llvm-toolchain-18 (1:18.1.8-13) UNRELEASED; urgency=medium
   * Remove the capability to be able to disable C++ Exceptions in libc++
   * Bring back C++ exceptions on s390x for libc++ (LP: #2086782)
 
+  [ Matthias Klose ]
+  * bolt: Disable the check for /proc/self/map_files. Might not be available
+    on build machines. LP: #2084316.
+
  -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 06 Nov 2024 16:44:31 +0100
 
 llvm-toolchain-18 (1:18.1.8-12) unstable; urgency=medium
