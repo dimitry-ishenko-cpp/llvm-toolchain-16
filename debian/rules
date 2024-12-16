@@ -140,6 +140,14 @@ else
 endif
 include /usr/share/dpkg/buildflags.mk
 
+# Remove -Bsymbolic-functions for causing:
+# https://github.com/llvm/llvm-project/issues/59432#issuecomment-2500694332
+ifeq ($(shell dpkg-vendor --derives-from Ubuntu && echo yes),yes)
+ifneq (,$(LDFLAGS))
+  LDFLAGS := $(filter-out %-Bsymbolic-functions,$(LDFLAGS))
+endif
+endif
+
 # We use a stage2 build. It means that a first clang is built using gcc,
 # a second clang is built with the first
 # And the various components are built using the second clang.
