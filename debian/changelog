@@ -1,3 +1,11 @@
+llvm-toolchain-snapshot (1:20~++20241212011120+0cbdad4bd239-1~exp2) UNRELEASED; urgency=medium
+
+  [ Matthias Klose ]
+  * bolt: Disable the check for /proc/self/map_files. Might not be available
+    on build machines. LP: #2084316.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 16 Dec 2024 09:33:52 +0100
+
 llvm-toolchain-snapshot (1:20~++20241212011120+0cbdad4bd239-1~exp1) experimental; urgency=medium
 
   * Only build libc on supported arch (for real)

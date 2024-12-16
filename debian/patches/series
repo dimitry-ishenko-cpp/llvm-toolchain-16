@@ -137,3 +137,4 @@ link-with-package-metadata.diff
 mips-mlir-xgot.diff
 env-lld-package-metadata.diff
 lldb-fix-issue-117327.diff
+bolt-disable-proc-check.diff

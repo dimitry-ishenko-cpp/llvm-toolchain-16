@@ -1,0 +1,21 @@
+bolt: Disable the check for /proc/self/map_files. Might not be available on build machines
+
+--- a/bolt/CMakeLists.txt
++++ b/bolt/CMakeLists.txt
+@@ -89,16 +89,6 @@
+   set(BOLT_ENABLE_RUNTIME_default ON)
+ endif()
+ option(BOLT_ENABLE_RUNTIME "Enable BOLT runtime" ${BOLT_ENABLE_RUNTIME_default})
+-if (BOLT_ENABLE_RUNTIME)
+-  # Some systems prevent reading /proc/self/map_files
+-  execute_process(COMMAND ls /proc/self/map_files
+-    RESULT_VARIABLE LS OUTPUT_QUIET ERROR_QUIET)
+-  if (LS)
+-    message(WARNING
+-      "BOLT runtime may not be able to read /proc/self/map_files. Please use
+-      `--instrumentation-binpath <path-to-instrumented-binary>` option.")
+-  endif()
+-endif()
+ 
+ set(BOLT_CLANG_EXE "" CACHE FILEPATH "Path to clang executable for the target \
+ architecture for use in BOLT tests")
