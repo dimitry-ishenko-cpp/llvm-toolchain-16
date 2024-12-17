@@ -138,3 +138,4 @@ mips-mlir-xgot.diff
 env-lld-package-metadata.diff
 lldb-fix-issue-117327.diff
 bolt-disable-proc-check.diff
+python3.13-quote.diff
