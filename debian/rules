@@ -730,7 +730,6 @@ stamps/preconfigure:
 # Override this two targets. They are trying to manage the .in conversion for me
 override_dh_ocamlinit:
 override_dh_ocamlclean:
-override_dh_ocaml:
 
 override_dh_auto_configure: stamps/configure
 stamps/configure: stamps/preconfigure
