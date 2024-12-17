@@ -1,3 +1,9 @@
+llvm-toolchain-17 (1:17.0.6-19) UNRELEASED; urgency=medium
+
+  * Fix compatibility with Python 3.13. Closes: #1084685.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 17 Dec 2024 11:19:10 +0100
+
 llvm-toolchain-17 (1:17.0.6-18) unstable; urgency=medium
 
   * Drop ocaml on armhf, ocamlopt disappeared making build ftbfs
