@@ -1,0 +1,74 @@
+--- a/compiler-rt/test/sanitizer_common/ios_commands/iossim_run.py
++++ b/compiler-rt/test/sanitizer_common/ios_commands/iossim_run.py
+@@ -1,7 +1,10 @@
+ #!/usr/bin/env python3
+ 
+-import glob, os, pipes, sys, subprocess
+-
++import glob, os, sys, subprocess
++try:
++    from pipes import quote
++except ImportError:
++    from shlex import quote
+ 
+ device_id = os.environ.get("SANITIZER_IOSSIM_TEST_DEVICE_IDENTIFIER")
+ iossim_run_verbose = os.environ.get("SANITIZER_IOSSIM_RUN_VERBOSE")
+@@ -49,8 +52,7 @@ if prog == "rm":
+             # Don't quote glob pattern
+             rm_args.append(arg)
+         else:
+-            # FIXME(dliew): pipes.quote() is deprecated
+-            rm_args.append(pipes.quote(arg))
++            rm_args.append(quote(arg))
+     rm_cmd_line = ["/bin/rm"] + rm_args
+     rm_cmd_line_str = " ".join(rm_cmd_line)
+     # We use `shell=True` so that any wildcard globs get expanded by the shell.
+--- a/clang/utils/creduce-clang-crash.py
++++ b/clang/utils/creduce-clang-crash.py
+@@ -15,7 +15,6 @@ import shutil
+ import stat
+ import sys
+ import subprocess
+-import pipes
+ import shlex
+ import tempfile
+ import shutil
+@@ -61,7 +60,7 @@ def check_cmd(cmd_name, cmd_dir, cmd_pat
+ 
+ 
+ def quote_cmd(cmd):
+-    return " ".join(pipes.quote(arg) for arg in cmd)
++    return " ".join(shlex.quote(arg) for arg in cmd)
+ 
+ 
+ def write_to_script(text, filename):
+@@ -220,7 +219,7 @@ fi
+         )
+ 
+         for msg in self.expected_output:
+-            output += "grep -F %s t.log || exit 1\n" % pipes.quote(msg)
++            output += "grep -F %s t.log || exit 1\n" % shlex.quote(msg)
+ 
+         write_to_script(output, self.testfile)
+         self.check_interestingness()
+--- a/libcxx/utils/libcxx/test/dsl.py
++++ b/libcxx/utils/libcxx/test/dsl.py
+@@ -8,8 +8,8 @@
+ 
+ import os
+ import pickle
+-import pipes
+ import platform
++import shlex
+ import shutil
+ import tempfile
+ 
+@@ -290,7 +290,7 @@ def hasAnyLocale(config, locales):
+       }
+     #endif
+   """
+-    return programSucceeds(config, program, args=[pipes.quote(l) for l in locales])
++    return programSucceeds(config, program, args=[shlex.quote(l) for l in locales])
+ 
+ 
+ @_memoizeExpensiveOperation(lambda c, flags="": (c.substitutions, c.environment, flags))
