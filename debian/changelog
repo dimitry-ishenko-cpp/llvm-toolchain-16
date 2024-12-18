@@ -5,7 +5,10 @@ llvm-toolchain-snapshot (1:20~++20241216110735+38099d060834-1~exp1) UNRELEASED; 
     on build machines. LP: #2084316.
   * Fix compatibility with Python 3.13. Closes: #1084659.
 
- -- Matthias Klose <doko@debian.org>  Mon, 16 Dec 2024 09:33:52 +0100
+  [ Sylvestre Ledru ]
+  * Install usr/lib/llvm-20/include/shared/rpc*.h in libllvmlibc-X.Y-dev
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 18 Dec 2024 11:50:51 +0100
 
 llvm-toolchain-snapshot (1:20~++20241212011120+0cbdad4bd239-1~exp1) experimental; urgency=medium
 
