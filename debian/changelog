@@ -8,6 +8,9 @@ llvm-toolchain-18 (1:18.1.8-13) UNRELEASED; urgency=medium
   [ Sylvestre Ledru ]
   * Remove the capability to be able to disable C++ Exceptions in libc++
   * Bring back C++ exceptions on s390x for libc++ (LP: #2086782)
+  * Cherry-pick from 19
+    d/rules: ensure $(NJOBS) propagates down into cmake sub-builds
+    by Andres Salomon
 
   [ Matthias Klose ]
   * bolt: Disable the check for /proc/self/map_files. Might not be available

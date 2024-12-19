@@ -890,7 +890,7 @@ stamps/debian-full-build:
 	echo "Using cmake: $(CMAKE_BIN)"
 # linker hack so stage2 can link against stage1 libs at runtime
 	LD_LIBRARY_PATH=$(STAGE_1_LIB_DIR):$$LD_LIBRARY_PATH \
-	VERBOSE=1 $(PRE_PROCESS) $(CMAKE_BIN) --build $(TARGET_BUILD) -j $(NJOBS) --target stage2 || cat build-llvm/tools/clang/stage2-bins/CMakeFiles/CMakeOutput.log
+	VERBOSE=1 CMAKE_BUILD_PARALLEL_LEVEL=$(NJOBS) $(TIME_COMMAND) $(PRE_PROCESS) $(CMAKE_BIN) --build $(TARGET_BUILD) --target stage2 || cat build-llvm/tools/clang/stage2-bins/CMakeFiles/CMakeOutput.log
 
 # Check the stage 2 build worked
 	if ! readelf --string-dump .comment  $(TARGET_BUILD_STAGE2)/bin/clang 2>&1|grep -q "clang version"; then \
