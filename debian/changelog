@@ -1,4 +1,4 @@
-llvm-toolchain-18 (1:18.1.8-13) UNRELEASED; urgency=medium
+llvm-toolchain-18 (1:18.1.8-13) unstable; urgency=medium
 
   [ John Paul Adrian Glaubitz ]
   * Allow overriding the bootstrap compiler from the environment
@@ -18,7 +18,7 @@ llvm-toolchain-18 (1:18.1.8-13) UNRELEASED; urgency=medium
   * Fix compatibility with Python 3.13. Closes: #1084641.
   * Don't override dh_ocaml. Closes: #1078233.
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 06 Nov 2024 16:44:31 +0100
+ -- Sylvestre Ledru <sylvestre@debian.org>  Fri, 27 Dec 2024 12:43:35 +0100
 
 llvm-toolchain-18 (1:18.1.8-12) unstable; urgency=medium
 
