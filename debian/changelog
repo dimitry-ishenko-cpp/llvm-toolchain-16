@@ -1,6 +1,6 @@
-llvm-toolchain-17 (1:17.0.6-19) UNRELEASED; urgency=medium
+llvm-toolchain-17 (1:17.0.6-19) unstable; urgency=medium
 
-  * Fix compatibility with Python 3.13. Closes: #1084685.
+  * Fix compatibility with Python 3.13. (Closes: #1084685, #1091425)
   * Don't override dh_ocaml. Closes: #1078232.
 
  -- Matthias Klose <doko@debian.org>  Tue, 17 Dec 2024 11:19:10 +0100
