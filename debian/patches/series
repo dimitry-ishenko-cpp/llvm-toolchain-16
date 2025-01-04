@@ -160,3 +160,4 @@ llvm-toolchain-17-sve-types-aux-target.diff
 env-lld-package-metadata.diff
 arm64-clang-gcc-14.patch
 python3.13-quote.diff
+python3.13.diff

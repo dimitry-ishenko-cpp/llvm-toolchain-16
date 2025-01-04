@@ -1,3 +1,9 @@
+llvm-toolchain-17 (1:17.0.6-20) unstable; urgency=medium
+
+  * Fix lldb build failure with Python 3.13.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 04 Jan 2025 09:12:52 +0100
+
 llvm-toolchain-17 (1:17.0.6-19) unstable; urgency=medium
 
   * Fix compatibility with Python 3.13. (Closes: #1084685, #1091425)
