@@ -1987,6 +1987,33 @@ EOF
     assert_failure "Execution of signal handler with dynamic libunwind failed"
 }
 
+@test "Test LLDB debugging with libc++" {
+    # Create the C++ source file
+    cat > "${BATS_TMPDIR}/foo.cpp" <<EOF
+#include <vector>
+int main (void) {
+    std::vector<int> a;
+    a.push_back(0);
+}
+EOF
+
+    # Compile the program with debugging symbols
+    run clang++-$VERSION -g -o "${BATS_TMPDIR}/foo32" "${BATS_TMPDIR}/foo.cpp"
+    assert_success "Compilation with debugging symbols failed"
+
+    # Create the LLDB command script
+    echo "b main
+r
+n
+p a
+quit
+" > "${BATS_TMPDIR}/lldb_commands.txt"
+
+    run lldb-$VERSION -s "${BATS_TMPDIR}/lldb_commands.txt" "${BATS_TMPDIR}/foo32"
+    assert_output -p "stop reason = step over"
+}
+
+
 teardown() {
     # Clean up
     rm -f foo.c foo.cpp foo.f90 foo.log foo clangd.json *.o
