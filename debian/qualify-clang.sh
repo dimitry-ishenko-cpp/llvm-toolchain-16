@@ -1849,6 +1849,144 @@ EOF
     assert_success "llvm-exegesis did not produce valid output"
 }
 
+@test "Test backtrace functionality with libunwind" {
+    # Create the C++ source file for backtrace tests
+    cat > "${BATS_TMPDIR}/backtrace_test.cpp" <<EOF
+#include <libunwind.h>
+#include <stdlib.h>
+
+void backtrace(int lower_bound) {
+  unw_context_t context;
+  unw_getcontext(&context);
+
+  unw_cursor_t cursor;
+  unw_init_local(&cursor, &context);
+
+  int n = 0;
+  do {
+    ++n;
+    if (n > 100) {
+      abort();
+    }
+  } while (unw_step(&cursor) > 0);
+
+  if (n < lower_bound) {
+    abort();
+  }
+}
+
+void test1(int i) {
+  backtrace(i);
+}
+
+void test2(int i, int j) {
+  backtrace(i);
+  test1(j);
+}
+
+void test3(int i, int j, int k) {
+  backtrace(i);
+  test2(j, k);
+}
+
+void test_no_info() {
+  unw_context_t context;
+  unw_getcontext(&context);
+
+  unw_cursor_t cursor;
+  unw_init_local(&cursor, &context);
+
+  unw_proc_info_t info;
+  int ret = unw_get_proc_info(&cursor, &info);
+  if (ret != UNW_ESUCCESS)
+    abort();
+
+  unw_set_reg(&cursor, UNW_REG_IP, (unw_word_t)0);
+
+  ret = unw_get_proc_info(&cursor, &info);
+  if (ret != UNW_ENOINFO)
+    abort();
+}
+
+int main(int, char**) {
+  test1(1);
+  test2(1, 2);
+  test3(1, 2, 3);
+  test_no_info();
+  return 0;
+}
+EOF
+
+    # Compile the program with libunwind
+    run clang++-$VERSION "${BATS_TMPDIR}/backtrace_test.cpp" -lunwind -ldl -I/usr/include/libunwind -o "${BATS_TMPDIR}/backtrace_test"
+    assert_success "Compilation with libunwind failed"
+
+    # Run the compiled program
+    run "${BATS_TMPDIR}/backtrace_test"
+    assert_success "Execution of backtrace test failed"
+
+    # Compile with libunwind and compiler-rt
+    run clang++-$VERSION "${BATS_TMPDIR}/backtrace_test.cpp" -unwindlib=libunwind -rtlib=compiler-rt -I/usr/include/libunwind -ldl -o "${BATS_TMPDIR}/backtrace_test_rt"
+    assert_success "Compilation with libunwind and compiler-rt failed"
+
+    # Run the compiled program with compiler-rt
+    run "${BATS_TMPDIR}/backtrace_test_rt"
+    assert_success "Execution of backtrace test with compiler-rt failed"
+}
+@test "Test signal handling with libunwind" {
+    # Create the C++ source file for signal handling
+    cat > "${BATS_TMPDIR}/signal_test.cpp" <<EOF
+#include <assert.h>
+#include <dlfcn.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <unwind.h>
+
+_Unwind_Reason_Code frame_handler(struct _Unwind_Context* ctx, void* arg) {
+  (void)arg;
+  Dl_info info = { 0, 0, 0, 0 };
+
+  if (dladdr(reinterpret_cast<void *>(_Unwind_GetIP(ctx)), &info) &&
+      info.dli_sname && !strcmp("main", info.dli_sname)) {
+    _Exit(0);
+  }
+  return _URC_NO_REASON;
+}
+
+void signal_handler(int signum) {
+  (void)signum;
+  _Unwind_Backtrace(frame_handler, NULL);
+  _Exit(-1);
+}
+
+int main(int, char**) {
+  signal(SIGUSR1, signal_handler);
+  kill(getpid(), SIGUSR1);
+  return -2;
+}
+EOF
+
+    # Compile the program with libunwind statically
+    run clang++-$VERSION "${BATS_TMPDIR}/signal_test.cpp" /usr/lib/llvm-$VERSION/lib/libunwind.a -I/usr/include/libunwind/ -lpthread -ldl -o "${BATS_TMPDIR}/signal_test_static"
+    assert_success "Compilation of signal handler with static libunwind failed"
+
+    # Run the statically linked program (should exit gracefully)
+    run "${BATS_TMPDIR}/signal_test_static"
+    assert_failure "Execution of signal handler with static libunwind failed"
+
+    # Compile with libunwind dynamically
+    run clang++-$VERSION "${BATS_TMPDIR}/signal_test.cpp" -unwindlib=libunwind -rtlib=compiler-rt -I/usr/include/libunwind -ldl -o "${BATS_TMPDIR}/signal_test_dynamic"
+    assert_success "Compilation of signal handler with dynamic libunwind failed"
+
+    # Run the dynamically linked program (should exit gracefully)
+    run "${BATS_TMPDIR}/signal_test_dynamic"
+    assert_failure "Execution of signal handler with dynamic libunwind failed"
+}
+
 teardown() {
     # Clean up
     rm -f foo.c foo.cpp foo.f90 foo.log foo clangd.json *.o
