@@ -152,7 +152,7 @@ EOF
          }
     '> ${BATS_TMPDIR}/scan_build_test.c
 
-    run scan-build-$VERSION -o scan-build clang-$VERSION -c scan_build_test.c
+    run scan-build-$VERSION -o scan-build clang-$VERSION -c ${BATS_TMPDIR}/scan_build_test.c
     assert_output -p "1 bug found"
 }
 
