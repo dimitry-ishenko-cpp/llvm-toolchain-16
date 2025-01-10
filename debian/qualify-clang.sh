@@ -84,22 +84,13 @@ setup() {
     [ -f "/usr/share/man/man1/llc-$VERSION.1.gz" ]
 }
 
-@test "Check scan-build functionality with GCC" {
 
-    echo '
-         void test() {
-         int x;
-         x = 1; // warn
-         }
-    '> ${BATS_TMPDIR}/scan_build_test.c
+# ===================== clang
 
-    # Run scan-build with GCC
-    run scan-build-$VERSION -o "${BATS_TMPDIR}/scan_build_output" gcc -c "${BATS_TMPDIR}/scan_build_test.c"
+@test "Test clang dumpversion" {
+    run clang-$VERSION -dumpversion
     assert_success
-    assert_output -p "1 bug found"
-
-    # Clean up
-    rm -rf "${BATS_TMPDIR}/scan_build_output"
+    refute_output "4.2.1"
 }
 
 @test "Test compilation of standard library headers with Clang" {
@@ -129,6 +120,27 @@ int main() {}
 EOF
     run clang++-$VERSION -std=c++11 "${BATS_TMPDIR}/chrono_test.cpp"
     assert_success "Compilation with <chrono> and C++11 standard failed"
+}
+
+
+# ===================== scan-build
+
+@test "Check scan-build functionality with GCC" {
+
+    echo '
+         void test() {
+         int x;
+         x = 1; // warn
+         }
+    '> ${BATS_TMPDIR}/scan_build_test.c
+
+    # Run scan-build with GCC
+    run scan-build-$VERSION -o "${BATS_TMPDIR}/scan_build_output" gcc -c "${BATS_TMPDIR}/scan_build_test.c"
+    assert_success
+    assert_output -p "1 bug found"
+
+    # Clean up
+    rm -rf "${BATS_TMPDIR}/scan_build_output"
 }
 
 @test "Check scan-build functionality with Clang" {
@@ -372,20 +384,6 @@ EOF
     assert_success "Execution of C++14 binary with libc++ and experimental features failed"
 }
 
-@test "Test flang Fortran compilation" {
-    echo 'program math
-  implicit none
-  real :: x, y
-  x = 3.14
-  y = 2.71
-  print *, "x + y = ", x + y
-end program math' > foo.f90
-    run flang-new-$VERSION foo.f90 -o foo
-    assert_success
-    run ./foo
-    assert_success
-    assert_output -p  "x + y ="
-}
 
 @test "Test LLVM coverage tools" {
     echo '#include <stdio.h>
@@ -614,40 +612,8 @@ EOF
     assert_success "Compilation with AddressSanitizer and Undefined Behavior Sanitizer failed"
 }
 
-@test "Test Fuzzer compilation and execution across architectures" {
-    # Create a fuzzer test source file
-    cat > "${BATS_TMPDIR}/test_fuzzer.cc" <<EOF
-#include <stdint.h>
-#include <stddef.h>
 
-extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
-    if (size > 0 && data[0] == 'H') {
-        if (size > 1 && data[1] == 'I') {
-            if (size > 2 && data[2] == '!') {
-                __builtin_trap();
-            }
-        }
-    }
-    return 0;
-}
-EOF
-
-    # Compile the test with libFuzzer
-    run clang-$VERSION -fsanitize=fuzzer "${BATS_TMPDIR}/test_fuzzer.cc" -o "${BATS_TMPDIR}/a.out" &> "${BATS_TMPDIR}/foo.log"
-
-    # Check for missing file errors in the log
-    if grep -q "No such file or directory" "${BATS_TMPDIR}/foo.log"; then
-        skip "Fuzzer compilation failed due to missing files or incorrect libraries"
-    fi
-
-    if [[ "$DEB_HOST_ARCH" == "amd64" || "$DEB_HOST_ARCH" == "i386" ]]; then
-        run "${BATS_TMPDIR}/a.out"
-        assert_output -e "(Test unit written|PreferSmall)"
-    else
-        skip "Test not applicable on architectures other than amd64 or i386"
-    fi
-}
-
+# ===================== polly
 
 @test "Test Polly optimizations" {
     echo '#define N 512
@@ -690,6 +656,13 @@ EOF
 
 }
 
+@test "Test libpolly package presence" {
+    run test -f "/usr/lib/llvm-$VERSION/include/polly/LinkAllPasses.h"
+    assert_success
+}
+
+# ===================== lldb
+
 @test "Test LLDB debugger functionality" {
     echo '#include <stdio.h>
     int main() {
@@ -708,6 +681,35 @@ EOF
     run lldb-$VERSION -s "${BATS_TMPDIR}/lldb_commands.txt" "${BATS_TMPDIR}/lldb_test"
     assert_success
 }
+
+
+@test "Test LLDB debugging with libc++" {
+    # Create the C++ source file
+    cat > "${BATS_TMPDIR}/foo.cpp" <<EOF
+#include <vector>
+int main (void) {
+    std::vector<int> a;
+    a.push_back(0);
+}
+EOF
+
+    # Compile the program with debugging symbols
+    run clang++-$VERSION -g -o "${BATS_TMPDIR}/foo32" "${BATS_TMPDIR}/foo.cpp"
+    assert_success "Compilation with debugging symbols failed"
+
+    # Create the LLDB command script
+    echo "b main
+r
+n
+p a
+quit
+" > "${BATS_TMPDIR}/lldb_commands.txt"
+
+    run lldb-$VERSION -s "${BATS_TMPDIR}/lldb_commands.txt" "${BATS_TMPDIR}/foo32"
+    assert_output -p "stop reason = step over"
+}
+
+# ===================== cmake
 
 @test "Test CMake integration" {
     mkdir -p "${BATS_TMPDIR}/cmake_test"
@@ -808,6 +810,29 @@ EOF
     popd > /dev/null
     rm -rf "${cmake_test_dir}"
 }
+@test "Test CMake Clang detection (Bug 994827)" {
+    local cmake_test_dir="${BATS_TMPDIR}/cmaketest"
+    mkdir -p "${cmake_test_dir}"
+
+    cat > "${cmake_test_dir}/CMakeLists.txt" <<EOF
+cmake_minimum_required(VERSION 3.18)
+project(testllvm)
+
+find_package(Clang REQUIRED CONFIG HINTS "/usr/lib/llvm-${VERSION}/lib/cmake/clang/")
+EOF
+
+    mkdir -p "${cmake_test_dir}/foo"
+    pushd "${cmake_test_dir}/foo" > /dev/null
+
+    # Run CMake and check for success
+    run cmake ..
+    assert_success "CMake failed to detect Clang with the specified HINTS path"
+
+    popd > /dev/null
+    rm -rf "${cmake_test_dir}"
+}
+
+# ===================== libc++
 
 @test "Test libc++ and libc++abi integration" {
     echo '#include <vector>
@@ -831,6 +856,8 @@ skip_if_arch() {
         skip "Test not supported on $1 architecture"
     fi
 }
+
+# ===================== wasm
 
 @test "Test WASM support for C program with wasi-libc" {
     if ! dpkg -l | grep -q wasi-libc; then
@@ -893,6 +920,9 @@ skip_if_arch() {
     assert_success
 }
 
+
+# ===================== sanitizers
+
 @test "Test undefined behavior sanitizer" {
     echo '#include <stdio.h>
     int main(int argc, char **argv) {
@@ -911,15 +941,44 @@ skip_if_arch() {
     assert_output -p 'libclang_rt'
 }
 
-@test "Test clang dumpversion" {
-    run clang-$VERSION -dumpversion
-    assert_success
-    refute_output "4.2.1"
-}
+# ===================== libfuzzer
 
 @test "Test libFuzzer presence" {
     run test -f "/usr/lib/llvm-$VERSION/lib/libFuzzer.a"
     assert_success
+}
+@test "Test Fuzzer compilation and execution across architectures" {
+    # Create a fuzzer test source file
+    cat > "${BATS_TMPDIR}/test_fuzzer.cc" <<EOF
+#include <stdint.h>
+#include <stddef.h>
+
+extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
+    if (size > 0 && data[0] == 'H') {
+        if (size > 1 && data[1] == 'I') {
+            if (size > 2 && data[2] == '!') {
+                __builtin_trap();
+            }
+        }
+    }
+    return 0;
+}
+EOF
+
+    # Compile the test with libFuzzer
+    run clang-$VERSION -fsanitize=fuzzer "${BATS_TMPDIR}/test_fuzzer.cc" -o "${BATS_TMPDIR}/a.out" &> "${BATS_TMPDIR}/foo.log"
+
+    # Check for missing file errors in the log
+    if grep -q "No such file or directory" "${BATS_TMPDIR}/foo.log"; then
+        skip "Fuzzer compilation failed due to missing files or incorrect libraries"
+    fi
+
+    if [[ "$DEB_HOST_ARCH" == "amd64" || "$DEB_HOST_ARCH" == "i386" ]]; then
+        run "${BATS_TMPDIR}/a.out"
+        assert_output -e "(Test unit written|PreferSmall)"
+    else
+        skip "Test not applicable on architectures other than amd64 or i386"
+    fi
 }
 
 @test "Test libFuzzer functionality" {
@@ -1169,11 +1228,6 @@ print(fun)
     assert_output -p "_FuncPtr"
 }
 
-@test "Test libpolly package presence" {
-    run test -f "/usr/lib/llvm-$VERSION/include/polly/LinkAllPasses.h"
-    assert_success
-}
-
 @test "Test libc++ filesystem support" {
     echo '#include <filesystem>
     #include <type_traits>
@@ -1296,27 +1350,6 @@ EOF
 }
 
 
-@test "Test CMake Clang detection (Bug 994827)" {
-    local cmake_test_dir="${BATS_TMPDIR}/cmaketest"
-    mkdir -p "${cmake_test_dir}"
-
-    cat > "${cmake_test_dir}/CMakeLists.txt" <<EOF
-cmake_minimum_required(VERSION 3.18)
-project(testllvm)
-
-find_package(Clang REQUIRED CONFIG HINTS "/usr/lib/llvm-${VERSION}/lib/cmake/clang/")
-EOF
-
-    mkdir -p "${cmake_test_dir}/foo"
-    pushd "${cmake_test_dir}/foo" > /dev/null
-
-    # Run CMake and check for success
-    run cmake ..
-    assert_success "CMake failed to detect Clang with the specified HINTS path"
-
-    popd > /dev/null
-    rm -rf "${cmake_test_dir}"
-}
 
 @test "Test HIP language support" {
     if ! dpkg -l | grep -q hipcc; then
@@ -1412,6 +1445,23 @@ EOF
 
     run clang++-$VERSION -O2 -fprofile-instr-use="${BATS_TMPDIR}/profile_test.profdata" "${BATS_TMPDIR}/profile_test.cc" -o "${BATS_TMPDIR}/profile_test_final"
     assert_success
+}
+
+# ===================== flang
+
+@test "Test flang Fortran compilation" {
+    echo 'program math
+  implicit none
+  real :: x, y
+  x = 3.14
+  y = 2.71
+  print *, "x + y = ", x + y
+end program math' > foo.f90
+    run flang-new-$VERSION foo.f90 -o foo
+    assert_success
+    run ./foo
+    assert_success
+    assert_output -p  "x + y ="
 }
 
 @test "Test flang shared library functionality" {
@@ -1987,33 +2037,6 @@ EOF
     run "${BATS_TMPDIR}/signal_test_dynamic"
     assert_failure "Execution of signal handler with dynamic libunwind failed"
 }
-
-@test "Test LLDB debugging with libc++" {
-    # Create the C++ source file
-    cat > "${BATS_TMPDIR}/foo.cpp" <<EOF
-#include <vector>
-int main (void) {
-    std::vector<int> a;
-    a.push_back(0);
-}
-EOF
-
-    # Compile the program with debugging symbols
-    run clang++-$VERSION -g -o "${BATS_TMPDIR}/foo32" "${BATS_TMPDIR}/foo.cpp"
-    assert_success "Compilation with debugging symbols failed"
-
-    # Create the LLDB command script
-    echo "b main
-r
-n
-p a
-quit
-" > "${BATS_TMPDIR}/lldb_commands.txt"
-
-    run lldb-$VERSION -s "${BATS_TMPDIR}/lldb_commands.txt" "${BATS_TMPDIR}/foo32"
-    assert_output -p "stop reason = step over"
-}
-
 
 teardown() {
     # Clean up
