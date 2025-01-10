@@ -707,7 +707,7 @@ EOF
     assert_success
 }
 
-@test "Check for lit-cpuid in LLVMExports CMake files" {
+@test "Test if lit-cpuid in LLVMExports CMake files" {
     # Define the path to LLVMExports CMake files
     local cmake_files="/usr/lib/llvm-${VERSION}/lib/cmake/llvm/LLVMExports*.cmake"
 
@@ -1752,7 +1752,7 @@ EOF
     rm -f "${BATS_TMPDIR}/plugin.so"
 }
 
-@test "Check for LLVM IR bitcode in libclangIndex.a" {
+@test "Test if LLVM IR bitcode in libclangIndex.a" {
     rm -f *.o
     # Define the path to libclangIndex.a
     local archive_path="/usr/lib/llvm-${VERSION}/lib/libclangIndex.a"
