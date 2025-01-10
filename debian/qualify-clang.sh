@@ -312,77 +312,6 @@ EOF
     assert_success
 }
 
-@test "Test libc++ linking" {
-    echo '#include <vector>
-    	int main() { std::vector<int> v; v.push_back(1); return 0; }' > foo.cpp
-    run clang++-$VERSION -stdlib=libc++ foo.cpp -o foo
-    assert_success
-    run ./foo
-	assert_success
-}
-
-@test "Test libc++abi linking" {
-    echo '#include <vector>
-    	int main() { std::vector<int> v; v.push_back(1); return 0; }' > foo.cpp
-    run clang++-$VERSION -stdlib=libc++ -lc++abi foo.cpp -o foo
-    assert_success
-    run ./foo
-    assert_success
-}
-
-@test "Test libc++ compilation and linking" {
-    # Create the C++ source file
-    cat > "${BATS_TMPDIR}/libcxx_test.cpp" <<EOF
-#include <vector>
-#include <string>
-#include <iostream>
-using namespace std;
-int main(void) {
-    vector<string> tab;
-    tab.push_back("the");
-    tab.push_back("world");
-    tab.insert(tab.begin(), "Hello");
-
-    for(vector<string>::iterator it=tab.begin(); it!=tab.end(); ++it)
-    {
-        cout << *it << " ";
-    }
-    return 0;
-}
-EOF
-
-    # Compile and link with libc++
-    run clang++-$VERSION -stdlib=libc++ "${BATS_TMPDIR}/libcxx_test.cpp" -o "${BATS_TMPDIR}/o"
-    assert_success "Compilation with libc++ failed"
-
-    # Check if the binary is linked against libc++.so.1
-    run ldd "${BATS_TMPDIR}/o"
-    assert_output -p "libc++.so.1" "Binary is not linked against libc++.so.1"
-
-    # Check if the binary is linked against libc++abi.so.1
-    run ldd "${BATS_TMPDIR}/o"
-    assert_output -p "libc++abi.so.1" "Binary is not linked against libc++abi.so.1"
-
-    # Run the compiled binary
-    run "${BATS_TMPDIR}/o" > /dev/null
-    assert_success "Execution of binary with libc++ failed"
-
-    # Compile with libc++ and C++11 standard
-    run clang++-$VERSION -std=c++11 -stdlib=libc++ "${BATS_TMPDIR}/libcxx_test.cpp" -o "${BATS_TMPDIR}/o_cpp11"
-    assert_success "Compilation with libc++ and C++11 failed"
-
-    # Run the C++11 binary
-    run "${BATS_TMPDIR}/o_cpp11" > /dev/null
-    assert_success "Execution of C++11 binary with libc++ failed"
-
-    # Compile with libc++, C++14 standard, and experimental features
-    run clang++-$VERSION -std=c++14 -stdlib=libc++ "${BATS_TMPDIR}/libcxx_test.cpp" -lc++experimental -o "${BATS_TMPDIR}/o_cpp14"
-    assert_success "Compilation with libc++, C++14, and experimental features failed"
-
-    # Run the C++14 experimental binary
-    run "${BATS_TMPDIR}/o_cpp14" > /dev/null
-    assert_success "Execution of C++14 binary with libc++ and experimental features failed"
-}
 
 
 @test "Test LLVM coverage tools" {
@@ -431,33 +360,6 @@ EOF
     assert_success
 }
 
-@test "Test compilation and execution with LTO and Gold linker" {
-    cat > "${BATS_TMPDIR}/foo.c" <<EOF
-#include <stdio.h>
-int main() {
-    if (1==1) {
-        printf("true");
-    } else {
-        printf("false");
-        return 42;
-    }
-    return 0;
-}
-EOF
-
-    # Test 1: Compile with LTO and execute
-    run clang-$VERSION -flto "${BATS_TMPDIR}/foo.c" -opaque-pointers -o "${BATS_TMPDIR}/foo_lto"
-    assert_success "Compilation with LTO failed"
-    run "${BATS_TMPDIR}/foo_lto"
-    assert_success "Execution of LTO binary failed"
-
-    # Test 2: Compile with Gold linker and execute
-    run clang-$VERSION -fuse-ld=gold "${BATS_TMPDIR}/foo.c" -o "${BATS_TMPDIR}/foo_gold"
-    assert_success "Compilation with Gold linker failed"
-    run "${BATS_TMPDIR}/foo_gold"
-    assert_success "Execution of binary linked with Gold linker failed"
-}
-
 @test "Test address sanitizer" {
     echo '#include <stdlib.h>
     int main() {
@@ -490,6 +392,80 @@ EOF
     run cat foo.log
     assert_output -p "Init done"
 
+}
+@test "Test all sanitizers and multiarch compatibility" {
+    local temp_dir="${BATS_TMPDIR}/sanitizer_multi"
+    mkdir -p "${temp_dir}"
+
+    # Generate the C test file
+    cat > "${temp_dir}/test.c" <<EOF
+#include <stdlib.h>
+#include <stdio.h>
+int main ()
+{
+#if __has_feature(address_sanitizer)
+  puts("address_sanitizer");
+#endif
+#if __has_feature(thread_sanitizer)
+  puts("thread_sanitizer");
+#endif
+#if __has_feature(memory_sanitizer)
+  puts("memory_sanitizer");
+#endif
+#if __has_feature(undefined_sanitizer)
+  puts("undefined_sanitizer");
+#endif
+#if __has_feature(dataflow_sanitizer)
+  puts("dataflow_sanitizer");
+#endif
+#if __has_feature(efficiency_sanitizer)
+  puts("efficiency_sanitizer");
+#endif
+  printf("Ok\n");
+  return EXIT_SUCCESS;
+}
+EOF
+
+    # Check for compiler-rt library
+    run clang-$VERSION --target=x86_64-unknown-linux-gnu --rtlib=compiler-rt --print-libgcc-file-name
+    assert_success "Failed to locate compiler-rt runtime library"
+
+    # Multiarch compatibility testing
+    # only for AMD64 for now
+    # many sanitizers only work on AMD64
+    # x32 programs need to be enabled in the kernel bootparams for debian
+    # (https://wiki.debian.org/X32Port)
+    #
+    # SYSTEM should iterate multiple targets (eg. x86_64-unknown-none-gnu for embedded)
+    # MARCH should iterate the library architectures via flags
+    # LIB should iterate the different libraries
+    echo "if it fails, please run"
+    echo "apt-get install libc6-dev:i386 libgcc-5-dev:i386 libc6-dev-x32 libx32gcc-5-dev libx32gcc-9-dev"
+    local architectures=("-m64") # "-m32" "-mx32")
+    local sanitizers=("--rtlib=compiler-rt" "-fsanitize=address" "-fsanitize=thread" "-fsanitize=memory" "-fsanitize=undefined" "-fsanitize=dataflow")
+
+    for arch in "${architectures[@]}"; do
+        for sanitizer in "${sanitizers[@]}"; do
+            # Skip unsupported combinations
+            if [[ "$arch" == "-m32" || "$arch" == "-mx32" ]]; then
+                if [[ "$sanitizer" == "-fsanitize=thread" || "$sanitizer" == "-fsanitize=memory" || "$sanitizer" == "-fsanitize=dataflow" ]]; then
+                    continue
+                fi
+            fi
+
+            echo "Testing sanitizer: $sanitizer with architecture: $arch"
+            rm -f "${temp_dir}/test"
+            run clang-$VERSION $arch $sanitizer -o "${temp_dir}/test" "${temp_dir}/test.c"
+            assert_success "Compilation failed for sanitizer: $sanitizer with architecture: $arch"
+
+            if [ -f "${temp_dir}/test" ]; then
+                run "${temp_dir}/test"
+                assert_success "Execution failed for sanitizer: $sanitizer with architecture: $arch"
+            fi
+        done
+    done
+
+    rm -rf "${temp_dir}" 
 }
 
 @test "Test LLVM symbolizer integration with AddressSanitizer" {
@@ -551,7 +527,7 @@ EOF
     assert_success "Execution failed or AddressSanitizer detected an issue with -lc"
 }
 
-@test "Test thread sanitizer" {
+@test "Test Thread Sanitizer" {
     skip_if_arch "i386"
 
     echo '#include <pthread.h>
@@ -905,7 +881,9 @@ skip_if_arch() {
     rm -f "${BATS_TMPDIR}/wasm_cout_test.cpp" "${BATS_TMPDIR}/wasm_cout"
 }
 
-@test "Test memory sanitizer" {
+# ===================== sanitizers
+
+@test "Test Memory sanitizer" {
     skip_if_arch "i386"
 
     echo '#include <stdlib.h>
@@ -919,9 +897,6 @@ skip_if_arch() {
     run clang-$VERSION -fsanitize=memory -o "${BATS_TMPDIR}/msan_test" "${BATS_TMPDIR}/msan_test.c"
     assert_success
 }
-
-
-# ===================== sanitizers
 
 @test "Test undefined behavior sanitizer" {
     echo '#include <stdio.h>
@@ -947,7 +922,7 @@ skip_if_arch() {
     run test -f "/usr/lib/llvm-$VERSION/lib/libFuzzer.a"
     assert_success
 }
-@test "Test Fuzzer compilation and execution across architectures" {
+@test "Test libFuzzer compilation and execution across architectures" {
     # Create a fuzzer test source file
     cat > "${BATS_TMPDIR}/test_fuzzer.cc" <<EOF
 #include <stdint.h>
@@ -1228,6 +1203,80 @@ print(fun)
     assert_output -p "_FuncPtr"
 }
 
+# ===================== libc++
+
+@test "Test libc++ linking" {
+    echo '#include <vector>
+    	int main() { std::vector<int> v; v.push_back(1); return 0; }' > foo.cpp
+    run clang++-$VERSION -stdlib=libc++ foo.cpp -o foo
+    assert_success
+    run ./foo
+	assert_success
+}
+
+@test "Test libc++abi linking" {
+    echo '#include <vector>
+    	int main() { std::vector<int> v; v.push_back(1); return 0; }' > foo.cpp
+    run clang++-$VERSION -stdlib=libc++ -lc++abi foo.cpp -o foo
+    assert_success
+    run ./foo
+    assert_success
+}
+
+@test "Test libc++ compilation and linking" {
+    # Create the C++ source file
+    cat > "${BATS_TMPDIR}/libcxx_test.cpp" <<EOF
+#include <vector>
+#include <string>
+#include <iostream>
+using namespace std;
+int main(void) {
+    vector<string> tab;
+    tab.push_back("the");
+    tab.push_back("world");
+    tab.insert(tab.begin(), "Hello");
+
+    for(vector<string>::iterator it=tab.begin(); it!=tab.end(); ++it)
+    {
+        cout << *it << " ";
+    }
+    return 0;
+}
+EOF
+
+    # Compile and link with libc++
+    run clang++-$VERSION -stdlib=libc++ "${BATS_TMPDIR}/libcxx_test.cpp" -o "${BATS_TMPDIR}/o"
+    assert_success "Compilation with libc++ failed"
+
+    # Check if the binary is linked against libc++.so.1
+    run ldd "${BATS_TMPDIR}/o"
+    assert_output -p "libc++.so.1" "Binary is not linked against libc++.so.1"
+
+    # Check if the binary is linked against libc++abi.so.1
+    run ldd "${BATS_TMPDIR}/o"
+    assert_output -p "libc++abi.so.1" "Binary is not linked against libc++abi.so.1"
+
+    # Run the compiled binary
+    run "${BATS_TMPDIR}/o" > /dev/null
+    assert_success "Execution of binary with libc++ failed"
+
+    # Compile with libc++ and C++11 standard
+    run clang++-$VERSION -std=c++11 -stdlib=libc++ "${BATS_TMPDIR}/libcxx_test.cpp" -o "${BATS_TMPDIR}/o_cpp11"
+    assert_success "Compilation with libc++ and C++11 failed"
+
+    # Run the C++11 binary
+    run "${BATS_TMPDIR}/o_cpp11" > /dev/null
+    assert_success "Execution of C++11 binary with libc++ failed"
+
+    # Compile with libc++, C++14 standard, and experimental features
+    run clang++-$VERSION -std=c++14 -stdlib=libc++ "${BATS_TMPDIR}/libcxx_test.cpp" -lc++experimental -o "${BATS_TMPDIR}/o_cpp14"
+    assert_success "Compilation with libc++, C++14, and experimental features failed"
+
+    # Run the C++14 experimental binary
+    run "${BATS_TMPDIR}/o_cpp14" > /dev/null
+    assert_success "Execution of C++14 binary with libc++ and experimental features failed"
+}
+
 @test "Test libc++ filesystem support" {
     echo '#include <filesystem>
     #include <type_traits>
@@ -1274,17 +1323,6 @@ int main() { }' > "${BATS_TMPDIR}/foo.cpp"
     assert_output -p "libstdc++.so." "Binary is not linked against libstdc++"
 }
 
-@test "Test Thin LTO functionality" {
-    echo "int foo(void) { return 0; }" > "${BATS_TMPDIR}/thinlto_1.c"
-    echo "int foo(void); int main() { return foo(); }" > "${BATS_TMPDIR}/thinlto_2.c"
-
-    run clang-$VERSION -flto=thin -O2 "${BATS_TMPDIR}/thinlto_1.c" "${BATS_TMPDIR}/thinlto_2.c" -o "${BATS_TMPDIR}/thinlto_test"
-    assert_success
-
-    run "${BATS_TMPDIR}/thinlto_test"
-    assert_success
-}
-
 @test "Test C++ exception handling with libc++ (Bug 1586215)" {
     cat > "${BATS_TMPDIR}/foo.cpp" <<EOF
 #include <string>
@@ -1311,6 +1349,68 @@ EOF
 
     run "${BATS_TMPDIR}/foo"
     assert_success "Execution of binary failed"
+}
+@test "Test inline C++ compilation with libc++ (Bug 889832)" {
+    echo '#include <iostream>
+int main() {}' > foo.cpp
+    run clang++-$VERSION -std=c++1z -x c++ -stdlib=libc++ foo.cpp
+    assert_success "Inline C++ compilation with libc++ failed"
+}
+
+@test "Test inline C++ compilation and libc++ modules (Bug 889832)" {
+
+    echo '#include <iostream>
+int main() {}' > foo.cpp
+    run clang++-$VERSION -std=c++1z -x c++ -stdlib=libc++ foo.cpp
+    assert_success "Inline C++ compilation with libc++ failed"
+
+
+    cat > "${BATS_TMPDIR}/foo.cpp" <<EOF
+import std;
+import std.compat;
+
+int main() {
+  std::cout << "Hello modular world\\n";
+  ::printf("Hello compat modular world\\n");
+}
+EOF
+
+    # Build the std module
+    run clang++-$VERSION -std=c++20 \
+        -nostdinc++ \
+        -isystem /usr/lib/llvm-$VERSION/include/c++/v1/ \
+        -Wno-reserved-module-identifier -Wno-reserved-user-defined-literal \
+        --precompile -o "${BATS_TMPDIR}/std.pcm" \
+        -c /usr/lib/llvm-$VERSION/share/libc++/v1/std.cppm
+    assert_success "Compilation of std module failed"
+
+    # Build the std.compat module
+    run clang++-$VERSION -std=c++20 \
+        -nostdinc++ \
+        -isystem /usr/lib/llvm-$VERSION/include/c++/v1/ \
+        -Wno-reserved-module-identifier -Wno-reserved-user-defined-literal \
+        --precompile -o "${BATS_TMPDIR}/std.compat.pcm" \
+        -fmodule-file=std="${BATS_TMPDIR}/std.pcm" \
+        -c /usr/lib/llvm-$VERSION/share/libc++/v1/std.compat.cppm
+    assert_success "Compilation of std.compat module failed"
+
+    # Build the test application
+    run clang++-$VERSION -std=c++20 \
+        -nostdinc++ \
+        -isystem /usr/lib/llvm-$VERSION/include/c++/v1/ \
+        -L /usr/lib/llvm-$VERSION/lib \
+        -fmodule-file=std="${BATS_TMPDIR}/std.pcm" \
+        -fmodule-file=std.compat="${BATS_TMPDIR}/std.compat.pcm" \
+        "${BATS_TMPDIR}/std.pcm" \
+        "${BATS_TMPDIR}/std.compat.pcm" \
+        -lc++ \
+        "${BATS_TMPDIR}/foo.cpp" -o "${BATS_TMPDIR}/a.out"
+    assert_success "Compilation of test application failed"
+
+    run "${BATS_TMPDIR}/a.out"
+    assert_success "Execution of test application failed"
+    assert_output -p "Hello modular world"
+    assert_output -p "Hello compat modular world"
 }
 
 @test "Test libclc package presence" {
@@ -1520,7 +1620,7 @@ end program math' > foo.f90
     assert_output -p "Using llvm-symbolizer"
 }
 
-@test "Test SIMD intrinsics compilation for x86 (Debian Host AMD64/i386)" {
+@test "Test SIMD intrinsics compilation (AMD64/i386)" {
     # Skip test if not on AMD64 or i386 architectures
     if [[ "$DEB_HOST_ARCH" != "amd64" && "$DEB_HOST_ARCH" != "i386" ]]; then
         skip "Test skipped for non-x86 architectures"
@@ -1541,82 +1641,6 @@ end program math' > foo.f90
     run clang++-$VERSION -E -c "${BATS_TMPDIR}/limits_test.cc"
     assert_output -p "limits.h"
     assert_success "Preprocessing of <limits.h> failed"
-}
-
-
-@test "Test all sanitizers and multiarch compatibility" {
-    local temp_dir="${BATS_TMPDIR}/sanitizer_multi"
-    mkdir -p "${temp_dir}"
-
-    # Generate the C test file
-    cat > "${temp_dir}/test.c" <<EOF
-#include <stdlib.h>
-#include <stdio.h>
-int main ()
-{
-#if __has_feature(address_sanitizer)
-  puts("address_sanitizer");
-#endif
-#if __has_feature(thread_sanitizer)
-  puts("thread_sanitizer");
-#endif
-#if __has_feature(memory_sanitizer)
-  puts("memory_sanitizer");
-#endif
-#if __has_feature(undefined_sanitizer)
-  puts("undefined_sanitizer");
-#endif
-#if __has_feature(dataflow_sanitizer)
-  puts("dataflow_sanitizer");
-#endif
-#if __has_feature(efficiency_sanitizer)
-  puts("efficiency_sanitizer");
-#endif
-  printf("Ok\n");
-  return EXIT_SUCCESS;
-}
-EOF
-
-    # Check for compiler-rt library
-    run clang-$VERSION --target=x86_64-unknown-linux-gnu --rtlib=compiler-rt --print-libgcc-file-name
-    assert_success "Failed to locate compiler-rt runtime library"
-
-    # Multiarch compatibility testing
-    # only for AMD64 for now
-    # many sanitizers only work on AMD64
-    # x32 programs need to be enabled in the kernel bootparams for debian
-    # (https://wiki.debian.org/X32Port)
-    #
-    # SYSTEM should iterate multiple targets (eg. x86_64-unknown-none-gnu for embedded)
-    # MARCH should iterate the library architectures via flags
-    # LIB should iterate the different libraries
-    echo "if it fails, please run"
-    echo "apt-get install libc6-dev:i386 libgcc-5-dev:i386 libc6-dev-x32 libx32gcc-5-dev libx32gcc-9-dev"
-    local architectures=("-m64") # "-m32" "-mx32")
-    local sanitizers=("--rtlib=compiler-rt" "-fsanitize=address" "-fsanitize=thread" "-fsanitize=memory" "-fsanitize=undefined" "-fsanitize=dataflow")
-
-    for arch in "${architectures[@]}"; do
-        for sanitizer in "${sanitizers[@]}"; do
-            # Skip unsupported combinations
-            if [[ "$arch" == "-m32" || "$arch" == "-mx32" ]]; then
-                if [[ "$sanitizer" == "-fsanitize=thread" || "$sanitizer" == "-fsanitize=memory" || "$sanitizer" == "-fsanitize=dataflow" ]]; then
-                    continue
-                fi
-            fi
-
-            echo "Testing sanitizer: $sanitizer with architecture: $arch"
-            rm -f "${temp_dir}/test"
-            run clang-$VERSION $arch $sanitizer -o "${temp_dir}/test" "${temp_dir}/test.c"
-            assert_success "Compilation failed for sanitizer: $sanitizer with architecture: $arch"
-
-            if [ -f "${temp_dir}/test" ]; then
-                run "${temp_dir}/test"
-                assert_success "Execution failed for sanitizer: $sanitizer with architecture: $arch"
-            fi
-        done
-    done
-
-    rm -rf "${temp_dir}"
 }
 
 @test "Test cross-compiler compatibility for C++ objects (Bug 1488254)" {
@@ -1728,71 +1752,6 @@ EOF
     rm -f "${BATS_TMPDIR}/plugin.so"
 }
 
-@test "Test inline C++ compilation with libc++ (Bug 889832)" {
-    echo '#include <iostream>
-int main() {}' > foo.cpp
-    run clang++-$VERSION -std=c++1z -x c++ -stdlib=libc++ foo.cpp
-    assert_success "Inline C++ compilation with libc++ failed"
-}
-
-@test "Test inline C++ compilation and libc++ modules (Bug 889832)" {
-
-    echo '#include <iostream>
-int main() {}' > foo.cpp
-    run clang++-$VERSION -std=c++1z -x c++ -stdlib=libc++ foo.cpp
-    assert_success "Inline C++ compilation with libc++ failed"
-
-
-    cat > "${BATS_TMPDIR}/foo.cpp" <<EOF
-import std;
-import std.compat;
-
-int main() {
-  std::cout << "Hello modular world\\n";
-  ::printf("Hello compat modular world\\n");
-}
-EOF
-
-    # Build the std module
-    run clang++-$VERSION -std=c++20 \
-        -nostdinc++ \
-        -isystem /usr/lib/llvm-$VERSION/include/c++/v1/ \
-        -Wno-reserved-module-identifier -Wno-reserved-user-defined-literal \
-        --precompile -o "${BATS_TMPDIR}/std.pcm" \
-        -c /usr/lib/llvm-$VERSION/share/libc++/v1/std.cppm
-    assert_success "Compilation of std module failed"
-
-    # Build the std.compat module
-    run clang++-$VERSION -std=c++20 \
-        -nostdinc++ \
-        -isystem /usr/lib/llvm-$VERSION/include/c++/v1/ \
-        -Wno-reserved-module-identifier -Wno-reserved-user-defined-literal \
-        --precompile -o "${BATS_TMPDIR}/std.compat.pcm" \
-        -fmodule-file=std="${BATS_TMPDIR}/std.pcm" \
-        -c /usr/lib/llvm-$VERSION/share/libc++/v1/std.compat.cppm
-    assert_success "Compilation of std.compat module failed"
-
-    # Build the test application
-    run clang++-$VERSION -std=c++20 \
-        -nostdinc++ \
-        -isystem /usr/lib/llvm-$VERSION/include/c++/v1/ \
-        -L /usr/lib/llvm-$VERSION/lib \
-        -fmodule-file=std="${BATS_TMPDIR}/std.pcm" \
-        -fmodule-file=std.compat="${BATS_TMPDIR}/std.compat.pcm" \
-        "${BATS_TMPDIR}/std.pcm" \
-        "${BATS_TMPDIR}/std.compat.pcm" \
-        -lc++ \
-        "${BATS_TMPDIR}/foo.cpp" -o "${BATS_TMPDIR}/a.out"
-    assert_success "Compilation of test application failed"
-
-    run "${BATS_TMPDIR}/a.out"
-    assert_success "Execution of test application failed"
-    assert_output -p "Hello modular world"
-    assert_output -p "Hello compat modular world"
-}
-
-
-
 @test "Check for LLVM IR bitcode in libclangIndex.a" {
     rm -f *.o
     # Define the path to libclangIndex.a
@@ -1865,6 +1824,44 @@ EOF
     # Check the object file architecture
     run file "${BATS_TMPDIR}/atomic_test.o"
     assert_output -p "aarch64" "Expected 'aarch64' in the object file's architecture output"
+}
+
+@test "Test Thin LTO functionality" {
+    echo "int foo(void) { return 0; }" > "${BATS_TMPDIR}/thinlto_1.c"
+    echo "int foo(void); int main() { return foo(); }" > "${BATS_TMPDIR}/thinlto_2.c"
+
+    run clang-$VERSION -flto=thin -O2 "${BATS_TMPDIR}/thinlto_1.c" "${BATS_TMPDIR}/thinlto_2.c" -o "${BATS_TMPDIR}/thinlto_test"
+    assert_success
+
+    run "${BATS_TMPDIR}/thinlto_test"
+    assert_success
+}
+
+@test "Test compilation and execution with LTO and Gold linker" {
+    cat > "${BATS_TMPDIR}/foo.c" <<EOF
+#include <stdio.h>
+int main() {
+    if (1==1) {
+        printf("true");
+    } else {
+        printf("false");
+        return 42;
+    }
+    return 0;
+}
+EOF
+
+    # Test 1: Compile with LTO and execute
+    run clang-$VERSION -flto "${BATS_TMPDIR}/foo.c" -opaque-pointers -o "${BATS_TMPDIR}/foo_lto"
+    assert_success "Compilation with LTO failed"
+    run "${BATS_TMPDIR}/foo_lto"
+    assert_success "Execution of LTO binary failed"
+
+    # Test 2: Compile with Gold linker and execute
+    run clang-$VERSION -fuse-ld=gold "${BATS_TMPDIR}/foo.c" -o "${BATS_TMPDIR}/foo_gold"
+    assert_success "Compilation with Gold linker failed"
+    run "${BATS_TMPDIR}/foo_gold"
+    assert_success "Execution of binary linked with Gold linker failed"
 }
 
 @test "Test LTO file generation and Gold linker compatibility (Bug 919020)" {
