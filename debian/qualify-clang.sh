@@ -687,7 +687,7 @@ quit
 
 # ===================== cmake
 
-@test "Test CMake integration" {
+@test "Test CMake integration (Bug 900440)" {
     mkdir -p "${BATS_TMPDIR}/cmake_test"
 
     cat > "${BATS_TMPDIR}/cmake_test/CMakeLists.txt" <<EOF
