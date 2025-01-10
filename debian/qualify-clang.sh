@@ -161,13 +161,14 @@ EOF
 @test "Check clang-tidy detection" {
     echo 'namespace mozilla { namespace dom { void foo(); }}' > foo.cpp
     run clang-tidy-$VERSION -checks='modernize-concat-nested-namespaces' foo.cpp -extra-arg=-std=c++17
-    [[ "$output" == *"nested namespaces can"* ]]
+    assert_output -p "nested namespaces can"
 }
 
 @test "Check clang-tidy autofix" {
     echo 'namespace mozilla { namespace dom { void foo(); } }' > foo.cpp
     clang-tidy-$VERSION -checks='modernize-concat-nested-namespaces' foo.cpp -extra-arg=-std=c++17 -fix
-    grep -q "namespace mozilla::dom" foo.cpp
+    run grep -q "namespace mozilla::dom" foo.cpp
+    assert_success
 }
 
 @test "Check clangd output" {
