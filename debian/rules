@@ -453,17 +453,26 @@ else
   STAGE_ALL_CMAKE_EXTRA += -DLIBCXXABI_USE_LLVM_UNWINDER=ON
 endif
 
-# Enable openmp/offload (or not)
+# Enable openmp (or not)
 OMP_ARCHS = amd64 arm64 armhf loong64 ppc64 ppc64el hurd-amd64
 OPENMP_ENABLE=yes
 ifeq (,$(filter $(DEB_HOST_ARCH), $(OMP_ARCHS)))
   OPENMP_ENABLE=no
 else
-  RUNTIMES += ;openmp;offload
+  RUNTIMES += ;openmp
   STAGE_ALL_CMAKE_EXTRA += -DLIBOMP_LIBFLAGS="-lm"
-ifeq ($(LIBUNWIND_ENABLE),yes)
-  STAGE_ALL_CMAKE_EXTRA += -DOPENMP_USE_LLVM_UNWINDER=ON
+  ifeq ($(LIBUNWIND_ENABLE),yes)
+    STAGE_ALL_CMAKE_EXTRA += -DOPENMP_USE_LLVM_UNWINDER=ON
+  endif
 endif
+
+# Enable offloading (or not)
+OFFLOAD_ARCHS = amd64 arm64 loong64 ppc64 ppc64el hurd-amd64
+OFFLOAD_ENABLE=yes
+ifeq (,$(filter $(DEB_HOST_ARCH), $(OFFLOAD_ARCHS)))
+  OFFLOAD_ENABLE=no
+else
+  RUNTIMES += ;offload
 endif
 
 # Do not install objects
@@ -741,6 +750,7 @@ stamps/preconfigure:
 			-e "s|@LLDB_ARCHS@|$(LLDB_ARCHS)|g" \
 			-e "s|@OCAML_ARCHS@|$(OCAML_ARCHS)|g" \
 			-e "s|@OMP_ARCHS@|$(OMP_ARCHS)|g" \
+			-e "s|@OFFLOAD_ARCHS@|$(OFFLOAD_ARCHS)|g" \
 			-e "s|@FLANG_ARCHS@|$(FLANG_ARCHS)|g" \
 			-e "s|@LIBC_ARCHS@|$(LIBC_ARCHS)|g" \
 			-e "s|@BRANCH_NAME@|$(BRANCH_NAME)|g" \

@@ -666,7 +666,7 @@ Description: LLVM OpenMP runtime - Documentation
 
 Package: liboffload-20-dev
 Section: libdevel
-Architecture: amd64 arm64 armhf loong64 ppc64 ppc64el hurd-amd64
+Architecture: amd64 arm64 loong64 ppc64 ppc64el hurd-amd64
 Depends: liboffload-20 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Provides: liboffload-x.y-dev
 Conflicts: liboffload-x.y-dev
@@ -682,7 +682,7 @@ Description: Offload Library - Development Package
 
 Package: liboffload-20
 Multi-Arch: same
-Architecture: amd64 arm64 armhf loong64 ppc64 ppc64el hurd-amd64
+Architecture: amd64 arm64 loong64 ppc64 ppc64el hurd-amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Provides: ${t64:Provides}, liboffload-x.y
 Conflicts: liboffload-x.y

@@ -666,7 +666,7 @@ Description: LLVM OpenMP runtime - Documentation
 
 Package: liboffload-@LLVM_VERSION@-dev
 Section: libdevel
-Architecture: @OMP_ARCHS@
+Architecture: @OFFLOAD_ARCHS@
 Depends: liboffload-@LLVM_VERSION@ (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Provides: liboffload-x.y-dev
 Conflicts: liboffload-x.y-dev
@@ -682,7 +682,7 @@ Description: Offload Library - Development Package
 
 Package: liboffload-@LLVM_VERSION@
 Multi-Arch: same
-Architecture: @OMP_ARCHS@
+Architecture: @OFFLOAD_ARCHS@
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Provides: ${t64:Provides}, liboffload-x.y
 Conflicts: liboffload-x.y
