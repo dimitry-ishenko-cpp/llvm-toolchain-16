@@ -1,3 +1,10 @@
+llvm-toolchain-18 (1:18.1.8-14) unstable; urgency=medium
+
+  * Rewrite qualify-clang.sh with bats
+    Might fail on some archs
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 12 Jan 2025 18:57:50 +0100
+
 llvm-toolchain-18 (1:18.1.8-13) unstable; urgency=medium
 
   [ John Paul Adrian Glaubitz ]
