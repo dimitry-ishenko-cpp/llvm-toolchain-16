@@ -2,6 +2,9 @@ llvm-toolchain-18 (1:18.1.8-14) unstable; urgency=medium
 
   * Rewrite qualify-clang.sh with bats
     Might fail on some archs
+  * Cherry-pick https://github.com/llvm/llvm-project/pull/122463
+    https://github.com/llvm/llvm-project/issues/110374
+    to be allow Firefox to build on armhf
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 12 Jan 2025 18:57:50 +0100
 
