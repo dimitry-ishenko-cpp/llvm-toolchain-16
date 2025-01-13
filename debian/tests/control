@@ -1,4 +1,4 @@
-Test-Command: bash -v ./debian/qualify-clang.sh
+Test-Command: bats ./debian/qualify-clang.sh
 Depends: @, cmake, make, g++, file, dpkg-dev, bats, bats-assert
 # Comment the dbgsym package because of bug #917528
 # dbgsym packages not being available in testing
