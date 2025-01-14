@@ -465,7 +465,7 @@ EOF
         done
     done
 
-    rm -rf "${temp_dir}" 
+    rm -rf "${temp_dir}"
 }
 
 @test "Test LLVM symbolizer integration with AddressSanitizer" {
@@ -622,12 +622,17 @@ EOF
     # run test -s "${BATS_TMPDIR}/polly_test.opt.yaml"
 
     run clang-$VERSION -S -O2 -fsave-optimization-record -emit-llvm "${BATS_TMPDIR}/polly_test.c" -o "${BATS_TMPDIR}/polly_test.s"
+    assert_success
     run test -s "${BATS_TMPDIR}/polly_test.opt.yaml"
+    assert_success
     run opt-$VERSION -S -polly-canonicalize  "${BATS_TMPDIR}/polly_test.s" >  "${BATS_TMPDIR}/polly_test.ll"
+    assert_success
     run opt-$VERSION -basic-aa -polly-ast "${BATS_TMPDIR}/polly_test.ll" -polly-process-unprofitable
-    run /usr/lib/llvm-$VERSION/share/opt-viewer/opt-viewer.py -source-dir .  ${BATS_TMPDIR}/polly_test.opt.yaml -o ./output > /dev/null
+    assert_success
+    run /usr/lib/llvm-$VERSION/share/opt-viewer/opt-viewer.py -source-dir .  ${BATS_TMPDIR}/polly_test.opt.yaml -o ${BATS_TMPDIR}/output > /dev/null
+    assert_success
 
-    run grep -q "inlined into" output/_tmp_polly_test.c.html
+    run grep -q "inlined into" ${BATS_TMPDIR}/output/_tmp_polly_test.c.html
     assert_success
 
 }
@@ -1042,12 +1047,13 @@ EOF
     echo -n A > "${BATS_TMPDIR}/CORPUS/A"
 
     # Run the fuzzer binary with initial inputs
-    run "${BATS_TMPDIR}/a.out" "${BATS_TMPDIR}/CORPUS/*" &> "${BATS_TMPDIR}/fuzzer.log"
-    run cat "${BATS_TMPDIR}/fuzzer.log"
-#    assert_output -p "running 1 inputs"
+    run "${BATS_TMPDIR}/a.out" "${BATS_TMPDIR}/CORPUS/*"
+    # fails on purpose
+    assert_failure
+    assert_output -p "running 1 inputs"
 
     # Merge profiling data
-    run llvm-profdata-$VERSION merge -sparse "${BATS_TMPDIR}"/*.profraw -o "${BATS_TMPDIR}/default.profdata"
+    run llvm-profdata-$VERSION merge -sparse *.profraw -o "${BATS_TMPDIR}/default.profdata"
     assert_success "Failed to merge profiling data"
 
     # Generate coverage report for the function `FuzzMe`
@@ -1056,14 +1062,15 @@ EOF
         -name=FuzzMe
     assert_success "llvm-cov failed to generate a coverage report"
     assert_output -p 'DataSize >= 3'
-    assert_success "Coverage report did not include expected code for 'DataSize >= 3'"
 
     # Add another input to the corpus and rerun
     echo -n FUZA > "${BATS_TMPDIR}/CORPUS/FUZA"
-    run "${BATS_TMPDIR}/a.out" "${BATS_TMPDIR}/CORPUS/*" &> /dev/null
+    run "${BATS_TMPDIR}/a.out" "${BATS_TMPDIR}/CORPUS/*"
+    assert_failure
+    assert_output -p "running 1 inputs"
 
     # Merge profiling data again
-    run llvm-profdata-$VERSION merge -sparse "${BATS_TMPDIR}"/*.profraw -o "${BATS_TMPDIR}/default.profdata"
+    run llvm-profdata-$VERSION merge -sparse *.profraw -o "${BATS_TMPDIR}/default.profdata"
     assert_success "Failed to merge profiling data after adding new inputs"
 
     # Generate coverage report again
@@ -1072,8 +1079,6 @@ EOF
         -name=FuzzMe &> "${BATS_TMPDIR}/coverage.log"
     assert_success "llvm-cov failed to generate a coverage report after new inputs"
     assert_output -p "Data[3] == 'Z';"
-
-    assert_success "Coverage report did not include expected code for 'Data[3] == Z;'"
 
     # Cleanup
     rm -rf "${BATS_TMPDIR}/CORPUS" "${BATS_TMPDIR}/fuzz_me.cc" "${BATS_TMPDIR}/StandaloneFuzzTargetMain.c"
