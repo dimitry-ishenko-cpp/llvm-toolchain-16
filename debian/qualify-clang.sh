@@ -629,12 +629,13 @@ EOF
     assert_success
     run opt-$VERSION -basic-aa -polly-ast "${BATS_TMPDIR}/polly_test.ll" -polly-process-unprofitable
     assert_success
-    run /usr/lib/llvm-$VERSION/share/opt-viewer/opt-viewer.py -source-dir .  ${BATS_TMPDIR}/polly_test.opt.yaml -o ${BATS_TMPDIR}/output > /dev/null
+    # help with the path
+    cp "${BATS_TMPDIR}/polly_test.c" .
+    run /usr/lib/llvm-$VERSION/share/opt-viewer/opt-viewer.py -source-dir ${BATS_TMPDIR}/ ${BATS_TMPDIR}/polly_test.opt.yaml -o ${BATS_TMPDIR}/output > /dev/null
     assert_success
 
-    run grep -q "inlined into" ${BATS_TMPDIR}/output/_tmp_polly_test.c.html
+    run grep -q "inlined into" ${BATS_TMPDIR}/output/*polly_test.c.html
     assert_success
-
 }
 
 @test "Test libpolly package presence" {
