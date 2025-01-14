@@ -114,6 +114,8 @@ debian/libllvm20
 debian/libllvmlibc-20-dev
 debian/libmlir-20-dev
 debian/libmlir-20
+debian/liboffload-20
+debian/liboffload-20-dev
 debian/libomp-20-dev
 debian/libomp-20-doc
 debian/libomp5-20
