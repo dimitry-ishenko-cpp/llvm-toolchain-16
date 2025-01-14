@@ -1081,7 +1081,7 @@ EOF
     assert_output -p "Data[3] == 'Z';"
 
     # Cleanup
-    rm -rf "${BATS_TMPDIR}/CORPUS" "${BATS_TMPDIR}/fuzz_me.cc" "${BATS_TMPDIR}/StandaloneFuzzTargetMain.c"
+    rm -rf "${BATS_TMPDIR}/CORPUS" "${BATS_TMPDIR}/fuzz_me.cc" "${BATS_TMPDIR}/StandaloneFuzzTargetMain.c" *.profraw
 }
 
 @test "Test BuildID in binaries for different linkers (Bug 916975)" {
