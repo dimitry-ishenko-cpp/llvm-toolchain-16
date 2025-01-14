@@ -2042,6 +2042,6 @@ EOF
 }
 
 teardown() {
-    # Clean up
-    rm -f foo.c foo.cpp foo.f90 foo.log foo clangd.json *.o
+    rm -f clangd.json *.o foo* crash-* *profraw hello* a.out polly_test.c
+    rm -rf scan-build output
 }
