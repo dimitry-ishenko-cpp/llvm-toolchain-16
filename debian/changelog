@@ -1,3 +1,9 @@
+llvm-toolchain-17 (1:17.0.6-21) UNRELEASED; urgency=medium
+
+  * d/t/control: Remove explicit dependency on libstdc++-N-dev.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 15 Jan 2025 15:12:12 +0100
+
 llvm-toolchain-17 (1:17.0.6-20) unstable; urgency=medium
 
   * Fix lldb build failure with Python 3.13.
