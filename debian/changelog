@@ -3,6 +3,7 @@ llvm-toolchain-snapshot (1:20~++20250107094038+ea14bdb0356c-1~exp2) UNRELEASED; 
   * d/rules: Distinguish between openmp and offload architectures.
   * Update libclang1 symbols file.
   * Update libomp symbols file, using symvers.
+  * d/t/control: Remove explicit dependency on libstdc++-N-dev.
 
  -- Matthias Klose <doko@debian.org>  Sat, 11 Jan 2025 17:55:25 +0100
 
