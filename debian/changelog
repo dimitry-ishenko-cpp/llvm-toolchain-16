@@ -1,8 +1,12 @@
-llvm-toolchain-18 (1:18.1.8-15) UNRELEASED; urgency=medium
+llvm-toolchain-18 (1:18.1.8-15) unstable; urgency=medium
 
+  [ Matthias Klose ]
   * d/t/control: Remove explicit dependency on libstdc++-N-dev.
 
- -- Matthias Klose <doko@debian.org>  Wed, 15 Jan 2025 15:11:09 +0100
+  [ Sylvestre Ledru ]
+  * Skip some autopkgtests on non intel cpu
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 16 Jan 2025 14:16:06 +0100
 
 llvm-toolchain-18 (1:18.1.8-14) unstable; urgency=medium
 

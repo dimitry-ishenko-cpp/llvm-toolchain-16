@@ -929,6 +929,10 @@ skip_if_arch() {
     assert_success
 }
 @test "Test libFuzzer compilation and execution across architectures" {
+    if [[ "$DEB_HOST_ARCH" != "amd64" && "$DEB_HOST_ARCH" != "i386" ]]; then
+        skip "Test not applicable on architectures other than amd64 or i386"
+    fi
+
     # Create a fuzzer test source file
     cat > "${BATS_TMPDIR}/test_fuzzer.cc" <<EOF
 #include <stdint.h>
@@ -954,15 +958,14 @@ EOF
         skip "Fuzzer compilation failed due to missing files or incorrect libraries"
     fi
 
-    if [[ "$DEB_HOST_ARCH" == "amd64" || "$DEB_HOST_ARCH" == "i386" ]]; then
-        run "${BATS_TMPDIR}/a.out"
-        assert_output -e "(Test unit written|PreferSmall)"
-    else
-        skip "Test not applicable on architectures other than amd64 or i386"
-    fi
+    run "${BATS_TMPDIR}/a.out"
+    assert_output -e "(Test unit written|PreferSmall)"
 }
 
 @test "Test libFuzzer functionality" {
+    if [[ "$DEB_HOST_ARCH" != "amd64" && "$DEB_HOST_ARCH" != "i386" ]]; then
+        skip "Test not applicable on architectures other than amd64 or i386"
+    fi
     echo '#include <stdint.h>
     #include <stddef.h>
     extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
