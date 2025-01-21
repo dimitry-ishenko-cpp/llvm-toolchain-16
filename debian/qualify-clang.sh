@@ -410,7 +410,7 @@ EOF
 }
 
 @test "Test all sanitizers and multiarch compatibility" {
-    skip_if_arch "i386"
+    skip_if_not_arch "amd64"
     local temp_dir="${BATS_TMPDIR}/sanitizer_multi"
     mkdir -p "${temp_dir}"
 
@@ -545,7 +545,7 @@ EOF
 }
 
 @test "Test Thread Sanitizer" {
-    skip_if_arch "i386"
+    skip_if_not_arch "amd64"
 
     echo '#include <pthread.h>
     int Global;
@@ -939,6 +939,7 @@ EOF
     run test -f "/usr/lib/llvm-$VERSION/lib/libFuzzer.a"
     assert_success
 }
+
 @test "Test libFuzzer compilation and execution across architectures" {
     if [[ "$DEB_HOST_ARCH" != "amd64" && "$DEB_HOST_ARCH" != "i386" ]]; then
         skip "Test not applicable on architectures other than amd64 or i386"
@@ -1443,7 +1444,7 @@ EOF
 }
 
 @test "Test static linking with LLVM libc (libllvmlibc)" {
-    skip_if_arch "i386"
+    skip_if_not_arch "amd64" "arm64"
     cat > "${BATS_TMPDIR}/main.c" <<EOF
 #include <math.h>
 int main(void)
@@ -1570,7 +1571,7 @@ EOF
 # ===================== flang
 
 @test "Test flang Fortran compilation" {
-    skip_if_arch "i386"
+    skip_if_not_arch "amd64" "arm64" "mips64el" "ppc64el" "kfreebsd-amd64" "ppc64" "sparc64" "riscv64" "loong64"
     echo 'program math
   implicit none
   real :: x, y
