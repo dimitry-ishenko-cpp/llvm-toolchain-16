@@ -21,9 +21,12 @@ skip_if_arch() {
 }
 
 skip_if_not_arch() {
-    if [ "$DEB_HOST_ARCH" != "$1" ]; then
-        skip "Test only supported on $1 architecture"
-    fi
+    for arch in "$@"; do
+        if [ "$DEB_HOST_ARCH" = "$arch" ]; then
+            return 0  # Found a matching architecture, don't skip
+        fi
+    done
+    skip "Test only supported on: $*"
 }
 
 @test "Print LLVM installation information" {
