@@ -128,7 +128,7 @@ llvm-toolchain-18 (1:18.1.8-5) unstable; urgency=medium
   * temporary disable spirv to unbreak the build
 
   [ John Paul Adrian Glaubitz ]
-  * Make regexp to grep for LLVM_DEFAULT_TARGET_TRIPLE less ambigious
+  * Make regexp to grep for LLVM_DEFAULT_TARGET_TRIPLE less ambiguous
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 24 Jul 2024 11:54:39 +0200
 
@@ -408,7 +408,7 @@ llvm-toolchain-18 (1:18.1.0~rc2-1) unstable; urgency=medium
 
 llvm-toolchain-18 (1:18.1.0~rc1-3) unstable; urgency=medium
 
-  * Fix previus upload, time64 is effective only in one specific place of
+  * Fix previous upload, time64 is effective only in one specific place of
     rules file
   * Fix some test using still clang-17
   * Switch testing to 18 line
@@ -445,12 +445,12 @@ llvm-toolchain-18 (1:18.1.0-rc1-1~exp1) experimental; urgency=medium
 llvm-toolchain-18 (1:18.1.0~++20240126095841+0991d3c7b53d-1~exp1) experimental; urgency=medium
 
   * Branching of 18
-    note that it is normal that the versionning starts from 18.1
+    note that it is normal that the versioning starts from 18.1
     See https://discourse.llvm.org/t/rfc-name-the-first-release-from-a-branch-n-1-0-instead-of-n-0-0/75384
   * refresh libomp5 symbol list
   * For the usage of -DLIBCXXABI_USE_LLVM_UNWINDER=OFF when we don't build unwind
     https://github.com/llvm/llvm-project/issues/77846
-  * remove the unconditionnaly defined -DLIBUNWIND_USE_COMPILER_RT=ON
+  * remove the unconditionally defined -DLIBUNWIND_USE_COMPILER_RT=ON
   * Also pass -DLIBCXXABI_USE_LLVM_UNWINDER:BOOL=OFF to libcxx-wasm32-wasi builds
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Fri, 26 Jan 2024 09:44:56 +0100
@@ -964,7 +964,7 @@ llvm-toolchain-16 (1:16.0.6-16) unstable; urgency=medium
 
   [ Gianfranco Costamagna ]
   * Make libclang-common-16-dev arch:any (Closes: #1041455)
-    It was arch:all because all the code isn't arch dependant
+    It was arch:all because all the code isn't arch dependent
     However, it causes issues for cross build.
     So, back to any and libclang-common-@LLVM_VERSION@-dev (= ${binary:Version})
     instead of source
@@ -7221,7 +7221,7 @@ llvm-toolchain-3.4 (1:3.4~+rc3-1) unstable; urgency=low
 
 llvm-toolchain-3.4 (1:3.4~+rc2-3) unstable; urgency=low
 
-  * Fix the bad declaration on the lldb desactivation
+  * Fix the bad declaration on the lldb deactivation
   * Also disable lldb under powerpc
   * Hopefully, fix lldb under Kfreebsd-* (thanks to Ed Maste if it works)
 
