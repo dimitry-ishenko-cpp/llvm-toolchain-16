@@ -14,6 +14,12 @@ setup() {
     LIST="libomp5-${VERSION}_${DETAILED_VERSION}_amd64.deb libomp-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb lldb-${VERSION}_${DETAILED_VERSION}_amd64.deb python3-lldb-${VERSION}_${DETAILED_VERSION}_amd64.deb python3-clang-${VERSION}_${DETAILED_VERSION}_amd64.deb libllvm${VERSION}_${DETAILED_VERSION}_amd64.deb llvm-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb liblldb-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb  libclang1-${VERSION}_${DETAILED_VERSION}_amd64.deb  libclang-common-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb  llvm-${VERSION}_${DETAILED_VERSION}_amd64.deb  liblldb-${VERSION}_${DETAILED_VERSION}_amd64.deb  llvm-${VERSION}-runtime_${DETAILED_VERSION}_amd64.deb lld-${VERSION}_${DETAILED_VERSION}_amd64.deb libfuzzer-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libclang-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libc++-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libc++abi-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libc++1-${VERSION}_${DETAILED_VERSION}_amd64.deb libc++abi1-${VERSION}_${DETAILED_VERSION}_amd64.deb clang-${VERSION}_${DETAILED_VERSION}_amd64.deb llvm-${VERSION}-tools_${DETAILED_VERSION}_amd64.deb clang-tools-${VERSION}_${DETAILED_VERSION}_amd64.deb clangd-${VERSION}_${DETAILED_VERSION}_amd64.deb libclang-cpp${VERSION}_${DETAILED_VERSION}_amd64.deb clang-tidy-${VERSION}_${DETAILED_VERSION}_amd64.deb libclang-cpp${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libclc-${VERSION}_${DETAILED_VERSION}_all.deb libclc-${VERSION}-dev_${DETAILED_VERSION}_all.deb llvm-${VERSION}-linker-tools_${DETAILED_VERSION}_amd64.deb libunwind-${VERSION}_${DETAILED_VERSION}_amd64.deb libunwind-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libmlir-${VERSION}_${DETAILED_VERSION}_amd64.deb libmlir-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libclang-rt-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libclang-rt-${VERSION}-dev-wasm32_${DETAILED_VERSION}_all.deb libclang-rt-${VERSION}-dev-wasm64_${DETAILED_VERSION}_all.deb libc++abi-${VERSION}-dev-wasm32_${DETAILED_VERSION}_all.deb libc++-${VERSION}-dev-wasm32_${DETAILED_VERSION}_all.deb libpolly-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb  bolt-${VERSION}_${DETAILED_VERSION}_amd64.deb libbolt-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb flang-${VERSION}_${DETAILED_VERSION}_amd64.deb libflang-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libllvmlibc-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb"
 }
 
+skip_if_arch() {
+    if [ "$DEB_HOST_ARCH" = "$1" ]; then
+        skip "Test not supported on $1 architecture"
+    fi
+}
+
 @test "Print LLVM installation information" {
     echo
     echo "==============================================="
@@ -833,12 +839,6 @@ EOF
 
     run "${BATS_TMPDIR}/libcxx_test"
     assert_success
-}
-
-skip_if_arch() {
-    if [ "$DEB_HOST_ARCH" = "$1" ]; then
-        skip "Test not supported on $1 architecture"
-    fi
 }
 
 # ===================== wasm
