@@ -20,6 +20,12 @@ skip_if_arch() {
     fi
 }
 
+skip_if_not_arch() {
+    if [ "$DEB_HOST_ARCH" != "$1" ]; then
+        skip "Test only supported on $1 architecture"
+    fi
+}
+
 @test "Print LLVM installation information" {
     echo
     echo "==============================================="
