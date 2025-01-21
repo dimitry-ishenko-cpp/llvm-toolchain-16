@@ -393,7 +393,9 @@ EOF
     assert_output -p "Init done"
 
 }
+
 @test "Test all sanitizers and multiarch compatibility" {
+    skip_if_arch "i386"
     local temp_dir="${BATS_TMPDIR}/sanitizer_multi"
     mkdir -p "${temp_dir}"
 
@@ -1432,7 +1434,7 @@ EOF
 }
 
 @test "Test static linking with LLVM libc (libllvmlibc)" {
-
+    skip_if_arch "i386"
     cat > "${BATS_TMPDIR}/main.c" <<EOF
 #include <math.h>
 int main(void)
@@ -1559,6 +1561,7 @@ EOF
 # ===================== flang
 
 @test "Test flang Fortran compilation" {
+    skip_if_arch "i386"
     echo 'program math
   implicit none
   real :: x, y
