@@ -1,12 +1,12 @@
-Index: llvm-toolchain-snapshot_19~++20240220124703+f122268c0441/clang/tools/scan-view/bin/scan-view
+Index: llvm-toolchain-snapshot_19~++21240221124703+f122268c0441/clang/tools/scan-view/bin/scan-view
 ===================================================================
---- llvm-toolchain-snapshot_19~++20240220124703+f122268c0441.orig/clang/tools/scan-view/bin/scan-view
-+++ llvm-toolchain-snapshot_19~++20240220124703+f122268c0441/clang/tools/scan-view/bin/scan-view
+--- llvm-toolchain-snapshot_19~++21240221124703+f122268c0441.orig/clang/tools/scan-view/bin/scan-view
++++ llvm-toolchain-snapshot_19~++21240221124703+f122268c0441/clang/tools/scan-view/bin/scan-view
 @@ -27,6 +27,7 @@ kDefaultPort = 8181
  kMaxPortsToTry = 100
  
  ###
-+BASE_DIR = '/usr/share/clang/scan-view-20'
++BASE_DIR = '/usr/share/clang/scan-view-21'
  
  
  def url_is_up(url):

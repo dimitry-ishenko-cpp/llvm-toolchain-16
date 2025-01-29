@@ -1,10 +1,10 @@
 #!/bin/sh
-ORIG_VERSION=19
-TARGET_VERSION=20
-ORIG_VERSION_2=19_0
-TARGET_VERSION_2=20_0
-ORIG_VERSION_3=190
-TARGET_VERSION_3=200
+ORIG_VERSION=20
+TARGET_VERSION=21
+ORIG_VERSION_2=20_0
+TARGET_VERSION_2=21_0
+ORIG_VERSION_3=200
+TARGET_VERSION_3=210
 
 LIST=`ls debian/control debian/orig-tar.sh debian/rules debian/patches/clang-analyzer-force-version.diff debian/patches/clang-format-version.diff debian/patches/python-clangpath.diff debian/patches/scan-build-clang-path.diff debian/patches/lldb-libname.diff debian/patches/fix-scan-view-path.diff debian/patches/lldb/lldb-addversion-suffix-to-llvm-server-exec.patch debian/patches/clang-tidy-run-bin.diff debian/patches/fix-scan-view-path.diff debian/README debian/patches/clang-analyzer-force-version.diff debian/patches/clang-tidy-run-bin.diff debian/tests/control debian/tests/integration-test-suite-test debian/unpack.sh debian/tests/cmake-test debian/patches/scan-build-py-fix-default-bin.diff`
 for F in $LIST; do

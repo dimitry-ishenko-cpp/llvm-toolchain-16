@@ -2,16 +2,16 @@
  clang/bindings/python/clang/cindex.py |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Index: llvm-toolchain-snapshot_20~++20240220124703+f122268c0441/clang/bindings/python/clang/cindex.py
+Index: llvm-toolchain-snapshot_21~++21240221124703+f122268c0441/clang/bindings/python/clang/cindex.py
 ===================================================================
---- llvm-toolchain-snapshot_20~++20240220124703+f122268c0441.orig/clang/bindings/python/clang/cindex.py
-+++ llvm-toolchain-snapshot_20~++20240220124703+f122268c0441/clang/bindings/python/clang/cindex.py
+--- llvm-toolchain-snapshot_21~++21240221124703+f122268c0441.orig/clang/bindings/python/clang/cindex.py
++++ llvm-toolchain-snapshot_21~++21240221124703+f122268c0441/clang/bindings/python/clang/cindex.py
 @@ -3980,7 +3980,7 @@ class Config:
          elif name == "Windows":
              file = "libclang.dll"
          else:
 -            file = "libclang.so"
-+            file = "libclang-20.so"
++            file = "libclang-21.so"
  
          if Config.library_path:
              file = Config.library_path + "/" + file
