@@ -1,11 +1,15 @@
-llvm-toolchain-snapshot (1:20~++20250107094038+ea14bdb0356c-1~exp2) UNRELEASED; urgency=medium
+llvm-toolchain-snapshot (1:21~++20250107094038+ea14bdb0356c-1~exp2) UNRELEASED; urgency=medium
 
+  [ Matthias Klose ]
   * d/rules: Distinguish between openmp and offload architectures.
   * Update libclang1 symbols file.
   * Update libomp symbols file, using symvers.
   * d/t/control: Remove explicit dependency on libstdc++-N-dev.
 
- -- Matthias Klose <doko@debian.org>  Sat, 11 Jan 2025 17:55:25 +0100
+  [ Sylvestre Ledru ]
+  * Prepare version 21
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 29 Jan 2025 23:26:44 +0100
 
 llvm-toolchain-snapshot (1:20~++20250107094038+ea14bdb0356c-1~exp1) experimental; urgency=medium
 

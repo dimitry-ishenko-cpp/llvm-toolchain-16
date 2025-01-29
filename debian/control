@@ -347,8 +347,6 @@ Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
 Multi-Arch: same
-Breaks: llvm-20-dev (<< 1:20~++20240830999999+99)
-Replaces: llvm-20-dev (<< 1:20~++20240830999999+99)
 Description: Modular compiler and toolchain technologies, runtime library
  LLVM is a collection of libraries and tools that make it easy to build
  compilers, optimizers, just-in-time code generators, and many other
@@ -422,8 +420,6 @@ Depends: ${shlibs:Depends}, libffi-dev, ${misc:Depends},
  llvm-21 (= ${binary:Version}), libllvm21 (= ${binary:Version}), libncurses-dev,
  llvm-21-tools (= ${binary:Version}), libclang-cpp21 (= ${binary:Version}),
  libxml2-dev, libz3-dev [!sh4],
-Breaks: libllvm20 (<< 1:20~++20240920999999+99)
-Replaces: libllvm20 (<< 1:20~++20240920999999+99)
 Description: Modular compiler and toolchain technologies, libraries and headers
  LLVM is a collection of libraries and tools that make it easy to build
  compilers, optimizers, just-in-time code generators, and many other
@@ -670,8 +666,6 @@ Architecture: amd64 arm64 loong64 ppc64 ppc64el hurd-amd64
 Depends: liboffload-21 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Provides: liboffload-x.y-dev
 Conflicts: liboffload-x.y-dev
-Replaces: liboffload-x.y-dev, libomp-20-dev (<< 1:20241205084449+66a0a081338d)
-Breaks: libomp-20-dev (<< 1:20241205084449+66a0a081338d)
 Description: Offload Library - Development Package
  The offload library facilitates efficient task distribution by offloading
  specific computational tasks from the CPU to alternative hardware accelerators
