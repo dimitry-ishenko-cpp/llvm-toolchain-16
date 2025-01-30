@@ -1,10 +1,10 @@
-Index: llvm-toolchain-snapshot_19~++20240220124703+f122268c0441/clang/tools/libclang/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250130011753+355d0b186f17/clang/tools/libclang/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_19~++20240220124703+f122268c0441.orig/clang/tools/libclang/CMakeLists.txt
-+++ llvm-toolchain-snapshot_19~++20240220124703+f122268c0441/clang/tools/libclang/CMakeLists.txt
-@@ -208,7 +208,7 @@ if(ENABLE_SHARED)
-                  OBJECT_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/libclang.map)
- 
+--- llvm-toolchain-snapshot_21~++20250130011753+355d0b186f17.orig/clang/tools/libclang/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250130011753+355d0b186f17/clang/tools/libclang/CMakeLists.txt
+@@ -204,7 +204,7 @@ if(ENABLE_SHARED)
+     endif()
+     # Ensure that libclang.so gets rebuilt when the linker script changes.
      set_target_properties(libclang PROPERTIES
 -                          VERSION ${LLVM_VERSION_MAJOR}.${LLVM_VERSION_MINOR}.${LLVM_VERSION_PATCH}${LLVM_VERSION_SUFFIX}
 +                          VERSION ${LLVM_VERSION_MAJOR}
