@@ -1,4 +1,4 @@
-llvm-toolchain-20 (1:20.1.0~rc1-1~exp1) experimental; urgency=medium
+llvm-toolchain-20 (1:20.1.0~+rc1-1~exp1) experimental; urgency=medium
 
   * First tag of 20.1.0
   * libLLVMOffload.so.20.0 => libLLVMOffload.so.20.1 to follow upstream change
