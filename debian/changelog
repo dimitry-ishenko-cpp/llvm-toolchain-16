@@ -2,6 +2,7 @@ llvm-toolchain-20 (1:20.1.0~+rc1-1~exp1) experimental; urgency=medium
 
   * First tag of 20.1.0
   * libLLVMOffload.so.20.0 => libLLVMOffload.so.20.1 to follow upstream change
+  * Use lld as a linker instead of gold
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Mon, 03 Feb 2025 09:00:03 +0100
 
