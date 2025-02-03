@@ -380,12 +380,9 @@ ifeq ($(LLVM_SPIRV_INSTALLED),yes)
 	LIBCLC_LLVM_SPIRV = -DLLVM_SPIRV=$(LLVM_SPIRV)
 endif
 
-BINUTILS_GOLD_ARCHS := amd64 arm64 armhf i386 ppc64 ppc64el x32 s390x hurd-i386 hurd-amd64
-ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' binutils) ge 2.23.1-1~exp3 ; echo $$?),0)
-ifneq (,$(filter $(DEB_HOST_ARCH),$(BINUTILS_GOLD_ARCHS)))
-	STAGE_ALL_CMAKE_EXTRA += -DLLVM_USE_LINKER=gold
-	STAGE_ALL_CMAKE_EXTRA += -DLLVM_BINUTILS_INCDIR=/usr/include/
-endif
+USE_LLD_ARCHS := amd64 arm64 armel armhf i386 mipsel mips64el ppc64el s390x sparc m68k ppc64 sparc64 x32 riscv64 loong64
+ifneq (,$(filter $(DEB_HOST_ARCH),$(USE_LLD_ARCHS)))
+	STAGE_ALL_CMAKE_EXTRA += -DLLVM_USE_LINKER=lld
 endif
 
 ifneq (,$(filter bolt-$(LLVM_VERSION), $(packages)))
@@ -591,8 +588,8 @@ ifeq (,$(filter-out $(LLVM_ENABLE_ZSTD_DISABLE_DISTRO), $(DISTRO)))
 endif
 
 LTO_ENABLE=no
-# Only enable it for archs supporting gold
-ifneq (,$(filter $(DEB_HOST_ARCH),$(BINUTILS_GOLD_ARCHS)))
+# Only enable it for archs supporting lld
+ifneq (,$(filter $(DEB_HOST_ARCH),$(USE_LLD_ARCHS)))
 # LTO requires a bunch of memory. Don't do it everywhere
 LTO_DISABLE_ARCHS := i386 armhf s390x ppc64 x32
 ifeq (,$(filter-out $(LTO_DISABLE_ARCHS), $(DEB_HOST_ARCH)))
@@ -611,8 +608,8 @@ endif
 
 # https://bugs.launchpad.net/bugs/2016471
 ifeq (,$(filter-out $(LTO_DISABLE_ARCHS), $(DEB_HOST_ARCH)))
-LD_GOLD_SUPPORTS_NO_SYMBOLIC := $(shell ld.gold --help | grep -q -w '-Bno-symbolic' && echo "yes" || echo "no")
-ifeq ($(LD_GOLD_SUPPORTS_NO_SYMBOLIC),yes)
+LLD_SUPPORTS_NO_SYMBOLIC := $(shell ld.lld --help | grep -q -w '-Bno-symbolic' && echo "yes" || echo "no")
+ifeq ($(LLD_SUPPORTS_NO_SYMBOLIC),yes)
     STAGE_2_CMAKE_EXTRA += -DLIBOMP_LDFLAGS=-Wl,-Bno-symbolic
 endif
 endif

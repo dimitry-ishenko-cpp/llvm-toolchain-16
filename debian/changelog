@@ -8,6 +8,7 @@ llvm-toolchain-snapshot (1:21~++20250107094038+ea14bdb0356c-1~exp2) UNRELEASED; 
 
   [ Sylvestre Ledru ]
   * Prepare version 21
+  * Use lld as a linker instead of gold
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 29 Jan 2025 23:26:44 +0100
 
