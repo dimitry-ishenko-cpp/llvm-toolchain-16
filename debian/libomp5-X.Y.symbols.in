@@ -143,6 +143,7 @@ libomp.so.5 #PACKAGE# #MINVER#
  GOMP_teams@VERSION 0.20140926
  GOMP_teams_reg@VERSION 1:12
  GOMP_workshare_task_reduction_unregister@VERSION 1:13
+ VERSION@VERSION 0.20130412
  ___kmp_allocate@VERSION 0.20130412
  ___kmp_free@VERSION 0.20130412
  __kmp_acquire_drdpa_lock@VERSION 0.20130715
