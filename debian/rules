@@ -1421,7 +1421,7 @@ override_dh_installman:
 
 override_dh_strip:
 	: # running out of diskspace on the buildds
-	find $(TARGET_BUILD) -name '*.o' -o -name '*.a' -type f | xargs -r rm -f
+	find $(TARGET_BUILD) \( -name '*.o' -o -name '*.a' \) -type f | xargs -r rm -f
 ifeq (0, $(strip $(shell dpkg --compare-versions $(DH_VERSION) ge 9.20160114; echo $$?)))
 	: # If we don't have the right version of debhelper, don't run the option
 	dh_strip -p libclang$(SONAME_EXT)-$(LLVM_VERSION) --dbgsym-migration='libclang$(SONAME_EXT)-$(LLVM_VERSION)-dbg'
