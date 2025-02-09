@@ -930,7 +930,7 @@ libomp.so.5 #PACKAGE# #MINVER#
  ompc_set_schedule@VERSION 0.20130412
  ompt_libomp_connect@VERSION 1:17
  (arch=!mips !mipsel !ppc64 !ppc64el !mips64 !mips64el !armel !armhf)ompt_start_tool@VERSION 6.0
-libomptarget.so.20.1 #PACKAGE# #MINVER#
+libomptarget.so.@LLVM_VERSION@.@LLVM_VERSION_MINOR@ #PACKAGE# #MINVER#
  __kmpc_push_target_tripcount@VERS1.0 1:20
  __kmpc_push_target_tripcount_mapper@VERS1.0 1:20
  __llvmPopCallConfiguration@VERS1.0 1:20
