@@ -10,7 +10,7 @@ Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/lld/ELF/Driver.c
 +  if (ctx.arg.packageMetadata.empty()) {
 +    const char *env_package_metadata = getenv("ELF_PACKAGE_METADATA");
 +    if (env_package_metadata && strcmp(env_package_metadata, "") != 0) {
-+      ctx.arg.packageMetadata = StringRef(env_package_metadata);
++      parsePackageMetadata(ctx, *opt::Arg::create(OPT_package_metadata, "ELF_PACKAGE_METADATA", env_package_metadata));
 +    }
 +  }
    ctx.arg.pie = args.hasFlag(OPT_pie, OPT_no_pie, false);
