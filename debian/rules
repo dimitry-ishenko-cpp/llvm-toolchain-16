@@ -380,9 +380,23 @@ ifeq ($(LLVM_SPIRV_INSTALLED),yes)
 	LIBCLC_LLVM_SPIRV = -DLLVM_SPIRV=$(LLVM_SPIRV)
 endif
 
+USE_LLD=false
 USE_LLD_ARCHS := amd64 arm64 armel armhf i386 mipsel mips64el ppc64el s390x sparc m68k ppc64 sparc64 x32 riscv64 loong64
 ifneq (,$(filter $(DEB_HOST_ARCH),$(USE_LLD_ARCHS)))
-	STAGE_ALL_CMAKE_EXTRA += -DLLVM_USE_LINKER=lld
+    ifeq ($(shell dpkg-query -W -f='${Status}\n' lld >/dev/null 2>&1 ; echo $$?),0)
+# we have lld on the system
+        STAGE_ALL_CMAKE_EXTRA += -DLLVM_USE_LINKER=lld
+        USE_LLD=true
+    endif
+endif
+
+BINUTILS_GOLD_ARCHS := amd64 arm64 armhf i386 ppc64 ppc64el x32 s390x hurd-i386 hurd-amd64
+ifneq (,$(filter $(DEB_HOST_ARCH),$(BINUTILS_GOLD_ARCHS)))
+    ifeq ($(USE_LLD),false)
+        # Only when we don't have lld
+        STAGE_ALL_CMAKE_EXTRA += -DLLVM_USE_LINKER=gold
+        STAGE_ALL_CMAKE_EXTRA += -DLLVM_BINUTILS_INCDIR=/usr/include/
+    endif
 endif
 
 ifneq (,$(filter bolt-$(LLVM_VERSION), $(packages)))
