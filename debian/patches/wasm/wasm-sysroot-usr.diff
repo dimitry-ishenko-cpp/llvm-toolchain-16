@@ -1,8 +1,8 @@
-Index: llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/clang/lib/Driver/ToolChains/WebAssembly.cpp
+Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/lib/Driver/ToolChains/WebAssembly.cpp
 ===================================================================
---- llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b.orig/clang/lib/Driver/ToolChains/WebAssembly.cpp
-+++ llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/clang/lib/Driver/ToolChains/WebAssembly.cpp
-@@ -238,7 +238,7 @@ WebAssembly::WebAssembly(const Driver &D
+--- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/clang/lib/Driver/ToolChains/WebAssembly.cpp
++++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/lib/Driver/ToolChains/WebAssembly.cpp
+@@ -240,7 +240,7 @@ WebAssembly::WebAssembly(const Driver &D
  
    getProgramPaths().push_back(getDriver().Dir);
  
@@ -11,7 +11,7 @@ Index: llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/clang/lib/Driver
    if (getTriple().getOS() == llvm::Triple::UnknownOS) {
      // Theoretically an "unknown" OS should mean no standard libraries, however
      // it could also mean that a custom set of libraries is in use, so just add
-@@ -504,6 +504,7 @@ void WebAssembly::AddClangSystemIncludeA
+@@ -483,6 +483,7 @@ void WebAssembly::AddClangSystemIncludeA
      return;
  
    const Driver &D = getDriver();
@@ -19,7 +19,7 @@ Index: llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/clang/lib/Driver
  
    if (!DriverArgs.hasArg(options::OPT_nobuiltininc)) {
      SmallString<128> P(D.ResourceDir);
-@@ -527,12 +528,20 @@ void WebAssembly::AddClangSystemIncludeA
+@@ -506,12 +507,20 @@ void WebAssembly::AddClangSystemIncludeA
      return;
    }
  
@@ -43,7 +43,7 @@ Index: llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/clang/lib/Driver
  }
  
  void WebAssembly::AddClangCXXStdlibIncludeArgs(const ArgList &DriverArgs,
-@@ -583,6 +592,17 @@ Tool *WebAssembly::buildLinker() const {
+@@ -562,6 +571,17 @@ Tool *WebAssembly::buildLinker() const {
    return new tools::wasm::Linker(*this);
  }
  
@@ -61,7 +61,7 @@ Index: llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/clang/lib/Driver
  void WebAssembly::addLibCxxIncludePaths(
      const llvm::opt::ArgList &DriverArgs,
      llvm::opt::ArgStringList &CC1Args) const {
-@@ -593,18 +613,22 @@ void WebAssembly::addLibCxxIncludePaths(
+@@ -572,18 +592,22 @@ void WebAssembly::addLibCxxIncludePaths(
        getMultiarchTriple(D, getTriple(), SysRoot);
    bool IsKnownOs = (getTriple().getOS() != llvm::Triple::UnknownOS);
  
@@ -91,7 +91,7 @@ Index: llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/clang/lib/Driver
  }
  
  void WebAssembly::addLibStdCXXIncludePaths(
-@@ -651,8 +675,11 @@ void WebAssembly::addLibStdCXXIncludePat
+@@ -630,8 +654,11 @@ void WebAssembly::addLibStdCXXIncludePat
      addSystemInclude(DriverArgs, CC1Args, TargetDir);
    }
  
@@ -107,10 +107,10 @@ Index: llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/clang/lib/Driver
 +    addSystemInclude(DriverArgs, CC1Args, LibPath + "/c++/" + Version + "/backward");
 +  }
  }
-Index: llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/clang/lib/Driver/ToolChains/WebAssembly.h
+Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/lib/Driver/ToolChains/WebAssembly.h
 ===================================================================
---- llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b.orig/clang/lib/Driver/ToolChains/WebAssembly.h
-+++ llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/clang/lib/Driver/ToolChains/WebAssembly.h
+--- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/clang/lib/Driver/ToolChains/WebAssembly.h
++++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/lib/Driver/ToolChains/WebAssembly.h
 @@ -84,6 +84,8 @@ private:
                               llvm::opt::ArgStringList &CC1Args) const;
    void addLibStdCXXIncludePaths(const llvm::opt::ArgList &DriverArgs,
