@@ -1,11 +1,11 @@
-Index: llvm-toolchain-snapshot_20~++20241115093807+a1a1a4ced9d4/lld/ELF/Driver.cpp
+Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/lld/ELF/Driver.cpp
 ===================================================================
---- llvm-toolchain-snapshot_20~++20241115093807+a1a1a4ced9d4.orig/lld/ELF/Driver.cpp
-+++ llvm-toolchain-snapshot_20~++20241115093807+a1a1a4ced9d4/lld/ELF/Driver.cpp
-@@ -1436,6 +1436,13 @@ static void readConfigs(Ctx &ctx, opt::I
-   ctx.arg.orphanHandling = getOrphanHandling(ctx, args);
+--- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/lld/ELF/Driver.cpp
++++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/lld/ELF/Driver.cpp
+@@ -1447,6 +1447,13 @@ static void readConfigs(Ctx &ctx, opt::I
    ctx.arg.outputFile = args.getLastArgValue(OPT_o);
-   ctx.arg.packageMetadata = args.getLastArgValue(OPT_package_metadata);
+   if (auto *arg = args.getLastArg(OPT_package_metadata))
+     parsePackageMetadata(ctx, *arg);
 +  // No package-metadata option, fall-back to env ELF_PACKAGE_METADATA
 +  if (ctx.arg.packageMetadata.empty()) {
 +    const char *env_package_metadata = getenv("ELF_PACKAGE_METADATA");
