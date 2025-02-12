@@ -52,7 +52,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
  llvm-21-linker-tools (= ${binary:Version}),
  libclang1-21 (= ${binary:Version}), libc6-dev, binutils
 Provides: c-compiler, objc-compiler, c++-compiler, objc++-compiler
-Recommends: llvm-21-dev, python3
+Recommends: llvm-21-dev, python3, clang-tools-21
 # libomp-21-dev
 Suggests: clang-21-doc, wasi-libc
 Description: C, C++ and Objective-C compiler

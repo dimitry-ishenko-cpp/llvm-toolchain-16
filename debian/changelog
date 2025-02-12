@@ -9,6 +9,8 @@ llvm-toolchain-snapshot (1:21~++20250107094038+ea14bdb0356c-1~exp2) UNRELEASED; 
   [ Sylvestre Ledru ]
   * Prepare version 21
   * Use lld as a linker instead of gold
+  * clang-21 recommends clang-tools-21
+    https://github.com/llvm/llvm-project/issues/117333
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 29 Jan 2025 23:26:44 +0100
 
