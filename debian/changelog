@@ -2,6 +2,7 @@ llvm-toolchain-18 (1:18.1.8-17) unstable; urgency=medium
 
   [ Matthias Klose ]
   * d/control, d/t/control: Add binutils-gold as explicit build dependency.
+    Will fix arm64 test failures
 
   [ Sylvestre Ledru ]
   * Enable sse2 back on i386 for rustc
