@@ -52,7 +52,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
  llvm-@LLVM_VERSION@-linker-tools (= ${binary:Version}),
  libclang1-@LLVM_VERSION@ (= ${binary:Version}), libc6-dev, binutils
 Provides: c-compiler, objc-compiler, c++-compiler, objc++-compiler
-Recommends: llvm-@LLVM_VERSION@-dev, python3
+Recommends: llvm-@LLVM_VERSION@-dev, python3, clang-tools-@LLVM_VERSION@
 # libomp-@LLVM_VERSION@-dev
 Suggests: clang-@LLVM_VERSION@-doc, wasi-libc
 Description: C, C++ and Objective-C compiler

@@ -52,7 +52,7 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, ${dep:devlibs},
  llvm-20-linker-tools (= ${binary:Version}),
  libclang1-20 (= ${binary:Version}), libc6-dev, binutils
 Provides: c-compiler, objc-compiler, c++-compiler, objc++-compiler
-Recommends: llvm-20-dev, python3
+Recommends: llvm-20-dev, python3, clang-tools-20
 # libomp-20-dev
 Suggests: clang-20-doc, wasi-libc
 Description: C, C++ and Objective-C compiler

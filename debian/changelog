@@ -5,6 +5,8 @@ llvm-toolchain-20 (1:20.1.0~++20250211030628+984a779b8155-1~exp1) UNRELEASED; ur
 
   [ Sylvestre Ledru ]
   * experimental New snapshot release
+  * clang-20 recommends clang-tools-20
+    https://github.com/llvm/llvm-project/issues/117333
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 11 Feb 2025 15:06:40 +0100
 
