@@ -78,7 +78,6 @@ mips/syscall-mips64el-def.diff
 
 26-set-correct-float-abi.diff
 clang-baseline-fix-i386.patch
-disable-sse2-old-x86.diff
 clang-arm-default-vfp3-on-armv7a.patch
 
 # For the bootstrap

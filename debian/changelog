@@ -3,6 +3,10 @@ llvm-toolchain-18 (1:18.1.8-17) unstable; urgency=medium
   [ Matthias Klose ]
   * d/control, d/t/control: Add binutils-gold as explicit build dependency.
 
+  [ Sylvestre Ledru ]
+  * Enable sse2 back on i386 for rustc
+    https://lists.debian.org/debian-devel/2025/01/msg00034.html
+
  -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 12 Feb 2025 14:26:20 +0100
 
 llvm-toolchain-18 (1:18.1.8-16) unstable; urgency=medium
