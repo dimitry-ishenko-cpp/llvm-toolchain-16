@@ -1,8 +1,9 @@
-llvm-toolchain-18 (1:18.1.8-17) UNRELEASED; urgency=medium
+llvm-toolchain-18 (1:18.1.8-17) unstable; urgency=medium
 
+  [ Matthias Klose ]
   * d/control, d/t/control: Add binutils-gold as explicit build dependency.
 
- -- Matthias Klose <doko@ubuntu.com>  Thu, 06 Feb 2025 11:38:08 +0100
+ -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 12 Feb 2025 14:26:20 +0100
 
 llvm-toolchain-18 (1:18.1.8-16) unstable; urgency=medium
 

@@ -7,7 +7,7 @@ Restrictions: allow-stderr
 Architecture: amd64 arm64 i386
 
 Tests: integration-test-suite-test
-Depends: @, cmake, make, g++
+Depends: @, cmake, make, g++, binutils-gold
 Restrictions: allow-stderr
 Architecture: amd64 arm64
 
