@@ -77,7 +77,6 @@ mips/mips-D101773-reloc.patch
 mips/syscall-mips64el-def.diff
 
 26-set-correct-float-abi.diff
-clang-baseline-fix-i386.patch
 clang-arm-default-vfp3-on-armv7a.patch
 
 # For the bootstrap
