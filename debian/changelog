@@ -9,6 +9,7 @@ llvm-toolchain-18 (1:18.1.8-17) unstable; urgency=medium
     https://lists.debian.org/debian-devel/2025/01/msg00034.html
     (remove the two patches that we are applying for disable sse2)
     It is now the same as upstream
+    (Closes: #1095867)
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 12 Feb 2025 14:26:20 +0100
 
