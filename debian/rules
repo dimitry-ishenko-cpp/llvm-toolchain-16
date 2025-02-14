@@ -773,23 +773,19 @@ stamps/preconfigure:
 			-e "s|@LLVM_VERSION@|$(LLVM_VERSION)|g" \
 			-e $(BD_ALT_HELLO_SUBST) \
 			$$f > $$f2; \
+		if grep -q -m 1 '^#! */.*bin/' $$f; then \
+			if ! [ -x $$f ]; then \
+				echo "error: $$f: perm r, but using dh-exec"; \
+				exit 1; \
+			fi; \
+		else \
+			if [ -x $$f ]; then \
+				echo "error: $$f: perm x, but no dh-exec"; \
+				exit 1; \
+			fi; \
+		fi; \
 		[ -x $$f ] && chmod +x $$f2; \
 	done
-
-	# Make install file executable for dh-exec
-	chmod +x \
-		debian/clang-tools-$(LLVM_VERSION).install \
-		debian/libclang-$(LLVM_VERSION)-dev.install \
-		debian/libclang-common-$(LLVM_VERSION)-dev.install \
-		debian/libclang-rt-$(LLVM_VERSION)-dev.install \
-		debian/libpolly-$(LLVM_VERSION)-dev.install \
-		debian/libomp-$(LLVM_VERSION)-dev.install \
-		debian/libomp5-$(LLVM_VERSION).install \
-		debian/llvm-$(LLVM_VERSION)-dev.install \
-		debian/llvm-$(LLVM_VERSION)-linker-tools.install \
-		debian/llvm-$(LLVM_VERSION)-linker-tools.links \
-		debian/libbolt-$(LLVM_VERSION)-dev.install \
-		debian/liboffload-$(LLVM_VERSION)-dev.install
 
 	# workaround the breaks/replaces/conflicts introduced with the libc++ move
 	# we update the version to make it work with apt.llvm.org
