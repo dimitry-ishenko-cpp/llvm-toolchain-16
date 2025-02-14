@@ -1,8 +1,32 @@
-Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/lld/ELF/Driver.cpp
-===================================================================
---- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/lld/ELF/Driver.cpp
-+++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/lld/ELF/Driver.cpp
-@@ -1447,6 +1447,13 @@ static void readConfigs(Ctx &ctx, opt::I
+--- a/lld/ELF/Driver.cpp
++++ b/lld/ELF/Driver.cpp
+@@ -842,6 +842,25 @@ static void parsePackageMetadata(Ctx &ct
+   ctx.arg.packageMetadata = std::move(decoded);
+ }
+ 
++static void parseEnvPackageMetadata(Ctx &ctx, StringRef s) {
++  unsigned c0, c1;
++  SmallVector<uint8_t, 0> decoded;
++  for (size_t i = 0, e = s.size(); i != e; ++i) {
++    if (s[i] != '%') {
++      decoded.push_back(s[i]);
++    } else if (i + 2 < e && (c1 = hexDigitValue(s[i + 1])) != -1u &&
++               (c0 = hexDigitValue(s[i + 2])) != -1u) {
++      decoded.push_back(uint8_t(c1 * 16 + c0));
++      i += 2;
++    } else {
++      ErrAlways(ctx) << "ELF_PACKAGE_METADATA" << ": invalid % escape at byte " << i
++                     << "; supports only %[0-9a-fA-F][0-9a-fA-F]";
++      return;
++    }
++  }
++  ctx.arg.packageMetadata = std::move(decoded);
++}
++
+ static StripPolicy getStrip(Ctx &ctx, opt::InputArgList &args) {
+   if (args.hasArg(OPT_relocatable))
+     return StripPolicy::None;
+@@ -1405,6 +1424,13 @@ static void readConfigs(Ctx &ctx, opt::I
    ctx.arg.outputFile = args.getLastArgValue(OPT_o);
    if (auto *arg = args.getLastArg(OPT_package_metadata))
      parsePackageMetadata(ctx, *arg);
@@ -10,7 +34,7 @@ Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/lld/ELF/Driver.c
 +  if (ctx.arg.packageMetadata.empty()) {
 +    const char *env_package_metadata = getenv("ELF_PACKAGE_METADATA");
 +    if (env_package_metadata && strcmp(env_package_metadata, "") != 0) {
-+      parsePackageMetadata(ctx, *opt::Arg::create(OPT_package_metadata, "ELF_PACKAGE_METADATA", env_package_metadata));
++      parseEnvPackageMetadata(ctx, StringRef(env_package_metadata));
 +    }
 +  }
    ctx.arg.pie = args.hasFlag(OPT_pie, OPT_no_pie, false);
