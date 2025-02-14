@@ -5,6 +5,7 @@ llvm-toolchain-snapshot (1:21~++20250107094038+ea14bdb0356c-1~exp2) UNRELEASED; 
   * Update libclang1 symbols file.
   * Update libomp symbols file, using symvers.
   * d/t/control: Remove explicit dependency on libstdc++-N-dev.
+  * d/rules: Simplify permission settings for generated debhelper files.
 
   [ Sylvestre Ledru ]
   * Prepare version 21
