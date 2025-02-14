@@ -380,9 +380,23 @@ ifeq ($(LLVM_SPIRV_INSTALLED),yes)
 	LIBCLC_LLVM_SPIRV = -DLLVM_SPIRV=$(LLVM_SPIRV)
 endif
 
-USE_LLD_ARCHS := amd64 arm64 armel armhf i386 mipsel mips64el ppc64el s390x sparc m68k ppc64 sparc64 x32 riscv64 loong64
-ifneq (,$(filter $(DEB_HOST_ARCH),$(USE_LLD_ARCHS)))
-	STAGE_ALL_CMAKE_EXTRA += -DLLVM_USE_LINKER=lld
+USE_LLD=false
+LLD_ARCHS := amd64 arm64 armel armhf i386 mipsel mips64el ppc64el s390x sparc m68k ppc64 sparc64 x32 riscv64 loong64
+ifneq (,$(filter $(DEB_HOST_ARCH),$(LLD_ARCHS)))
+    ifeq ($(shell dpkg-query -W -f='${Status}\n' lld >/dev/null 2>&1 ; echo $$?),0)
+# we have lld on the system
+        STAGE_ALL_CMAKE_EXTRA += -DLLVM_USE_LINKER=lld
+        USE_LLD=true
+    endif
+endif
+
+BINUTILS_GOLD_ARCHS := amd64 arm64 armhf i386 ppc64 ppc64el x32 s390x hurd-i386 hurd-amd64
+ifneq (,$(filter $(DEB_HOST_ARCH),$(BINUTILS_GOLD_ARCHS)))
+    ifeq ($(USE_LLD),false)
+        # Only when we don't have lld
+        STAGE_ALL_CMAKE_EXTRA += -DLLVM_USE_LINKER=gold
+        STAGE_ALL_CMAKE_EXTRA += -DLLVM_BINUTILS_INCDIR=/usr/include/
+    endif
 endif
 
 ifneq (,$(filter bolt-$(LLVM_VERSION), $(packages)))
@@ -589,7 +603,7 @@ endif
 
 LTO_ENABLE=no
 # Only enable it for archs supporting lld
-ifneq (,$(filter $(DEB_HOST_ARCH),$(USE_LLD_ARCHS)))
+ifeq ($(USE_LLD),yes)
 # LTO requires a bunch of memory. Don't do it everywhere
 LTO_DISABLE_ARCHS := i386 armhf s390x ppc64 x32
 ifeq (,$(filter-out $(LTO_DISABLE_ARCHS), $(DEB_HOST_ARCH)))
@@ -750,6 +764,8 @@ stamps/preconfigure:
 			-e "s|@OFFLOAD_ARCHS@|$(OFFLOAD_ARCHS)|g" \
 			-e "s|@FLANG_ARCHS@|$(FLANG_ARCHS)|g" \
 			-e "s|@LIBC_ARCHS@|$(LIBC_ARCHS)|g" \
+			-e "s|@BINUTILS_GOLD_ARCHS@|$(BINUTILS_GOLD_ARCHS)|g" \
+			-e "s|@LLD_ARCHS@|$(LLD_ARCHS)|g" \
 			-e "s|@BRANCH_NAME@|$(BRANCH_NAME)|g" \
 			-e "s|@OCAML_STDLIB_DIR@|$(OCAML_STDLIB_DIR)|g" \
 			-e "s|@LLVM_EPOCH@|$(LLVM_EPOCH)|g" \
