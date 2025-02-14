@@ -13,8 +13,6 @@ libomp.so.5 #PACKAGE# #MINVER#
  (symver)OMP_4.0 0.20131209
  (symver)OMP_4.5 1:7
  (symver)OMP_5.0 1:13
-# do not make the VERSION symbol a symver!
- VERSION@VERSION 0.20130412
  GOMP_alloc@VERSION 1:14
  GOMP_atomic_end@VERSION 0.20130412
  GOMP_atomic_start@VERSION 0.20130412
@@ -143,6 +141,7 @@ libomp.so.5 #PACKAGE# #MINVER#
  GOMP_teams@VERSION 0.20140926
  GOMP_teams_reg@VERSION 1:12
  GOMP_workshare_task_reduction_unregister@VERSION 1:13
+# do not make the VERSION symbol a symver!
  (optional)VERSION@VERSION 0.20130412
  ___kmp_allocate@VERSION 0.20130412
  ___kmp_free@VERSION 0.20130412
