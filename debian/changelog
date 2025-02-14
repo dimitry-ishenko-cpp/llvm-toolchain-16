@@ -6,6 +6,7 @@ llvm-toolchain-snapshot (1:21~++20250107094038+ea14bdb0356c-1~exp2) UNRELEASED; 
   * Update libomp symbols file, using symvers.
   * d/t/control: Remove explicit dependency on libstdc++-N-dev.
   * d/rules: Simplify permission settings for generated debhelper files.
+  * d/rules: There's no more CMakeOutput.log anymore.
 
   [ Sylvestre Ledru ]
   * Prepare version 21
@@ -13,7 +14,7 @@ llvm-toolchain-snapshot (1:21~++20250107094038+ea14bdb0356c-1~exp2) UNRELEASED; 
   * clang-21 recommends clang-tools-21
     https://github.com/llvm/llvm-project/issues/117333
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 29 Jan 2025 23:26:44 +0100
+ -- Sylvestre Ledru <sylvestre@debian.org>  Fri, 14 Feb 2025 14:02:05 +0100
 
 llvm-toolchain-snapshot (1:20~++20250107094038+ea14bdb0356c-1~exp1) experimental; urgency=medium
 
