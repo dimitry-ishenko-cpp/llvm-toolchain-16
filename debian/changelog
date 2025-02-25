@@ -4,6 +4,7 @@ llvm-toolchain-20 (1:20.1.0~+rc2-1~exp2) experimental; urgency=medium
   * clang-20 recommends clang-tools-20
     https://github.com/llvm/llvm-project/issues/117333
   * remove old libomp-20-dev breaks/replaces
+  * Cherry-pick upstream fix for issue 126358
 
   [ Matthias Klose ]
   * d/llvm-X.Y-linker-tools.links.in: Remove, no gold anymore. LP: #2098355.
