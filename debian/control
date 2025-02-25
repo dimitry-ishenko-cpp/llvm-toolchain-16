@@ -670,8 +670,7 @@ Architecture: amd64 arm64 loong64 ppc64 ppc64el hurd-amd64
 Depends: liboffload-20 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Provides: liboffload-x.y-dev
 Conflicts: liboffload-x.y-dev
-Replaces: liboffload-x.y-dev, libomp-20-dev (<< 1:20241205084449+66a0a081338d)
-Breaks: libomp-20-dev (<< 1:20241205084449+66a0a081338d)
+Replaces: liboffload-x.y-dev
 Description: Offload Library - Development Package
  The offload library facilitates efficient task distribution by offloading
  specific computational tasks from the CPU to alternative hardware accelerators

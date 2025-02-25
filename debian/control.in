@@ -670,8 +670,7 @@ Architecture: @OFFLOAD_ARCHS@
 Depends: liboffload-@LLVM_VERSION@ (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Provides: liboffload-x.y-dev
 Conflicts: liboffload-x.y-dev
-Replaces: liboffload-x.y-dev, libomp-@LLVM_VERSION@-dev (<< 1:20241205084449+66a0a081338d)
-Breaks: libomp-@LLVM_VERSION@-dev (<< 1:20241205084449+66a0a081338d)
+Replaces: liboffload-x.y-dev
 Description: Offload Library - Development Package
  The offload library facilitates efficient task distribution by offloading
  specific computational tasks from the CPU to alternative hardware accelerators
