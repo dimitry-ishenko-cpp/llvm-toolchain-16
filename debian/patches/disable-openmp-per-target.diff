@@ -1,7 +1,7 @@
-Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/openmp/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/openmp/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/openmp/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/openmp/CMakeLists.txt
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/openmp/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/openmp/CMakeLists.txt
 @@ -51,13 +51,13 @@ else()
    set(OPENMP_ENABLE_WERROR ${LLVM_ENABLE_WERROR})
  

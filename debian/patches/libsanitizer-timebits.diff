@@ -1,9 +1,9 @@
 # DP: Add another #undef for _TIME_BITS
 
-Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/compiler-rt/lib/sanitizer_common/sanitizer_procmaps_solaris.cpp
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/compiler-rt/lib/sanitizer_common/sanitizer_procmaps_solaris.cpp
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/compiler-rt/lib/sanitizer_common/sanitizer_procmaps_solaris.cpp
-+++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/compiler-rt/lib/sanitizer_common/sanitizer_procmaps_solaris.cpp
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/compiler-rt/lib/sanitizer_common/sanitizer_procmaps_solaris.cpp
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/compiler-rt/lib/sanitizer_common/sanitizer_procmaps_solaris.cpp
 @@ -11,6 +11,7 @@
  
  // Before Solaris 11.4, <procfs.h> doesn't work in a largefile environment.

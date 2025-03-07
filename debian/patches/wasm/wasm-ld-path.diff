@@ -1,7 +1,7 @@
-Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/lib/Driver/ToolChains/WebAssembly.cpp
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/clang/lib/Driver/ToolChains/WebAssembly.cpp
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/clang/lib/Driver/ToolChains/WebAssembly.cpp
-+++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/lib/Driver/ToolChains/WebAssembly.cpp
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/clang/lib/Driver/ToolChains/WebAssembly.cpp
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/clang/lib/Driver/ToolChains/WebAssembly.cpp
 @@ -21,6 +21,11 @@
  #include "llvm/Support/Path.h"
  #include "llvm/Support/VirtualFileSystem.h"
@@ -14,7 +14,7 @@ Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/lib/Driver
  using namespace clang::driver;
  using namespace clang::driver::tools;
  using namespace clang::driver::toolchains;
-@@ -259,7 +264,7 @@ WebAssembly::WebAssembly(const Driver &D
+@@ -272,7 +277,7 @@ WebAssembly::WebAssembly(const Driver &D
  const char *WebAssembly::getDefaultLinker() const {
    if (TargetBuildsComponents(getTriple()))
      return "wasm-component-ld";

@@ -1,10 +1,10 @@
 set rpath for prepare_builtins build utility to find correct stage2
 libs at runtime when executed as part of a build
-Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/libclc/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/libclc/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/libclc/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/libclc/CMakeLists.txt
-@@ -188,6 +188,9 @@ endif()
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/libclc/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/libclc/CMakeLists.txt
+@@ -189,6 +189,9 @@ endif()
  target_compile_definitions( prepare_builtins PRIVATE ${LLVM_VERSION_DEFINE} )
  # These were not properly reported in early LLVM and we don't need them
  target_compile_options( prepare_builtins PRIVATE -fno-rtti -fno-exceptions )

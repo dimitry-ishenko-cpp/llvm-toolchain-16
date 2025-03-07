@@ -1,7 +1,7 @@
-Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/cmake/modules/AddGRPC.cmake
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/clang/cmake/modules/AddGRPC.cmake
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/clang/cmake/modules/AddGRPC.cmake
-+++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/cmake/modules/AddGRPC.cmake
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/clang/cmake/modules/AddGRPC.cmake
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/clang/cmake/modules/AddGRPC.cmake
 @@ -4,8 +4,13 @@ function(generate_clang_protos_library L
    # Take the first two args and forward the remaining to generate_proto_sources.
    cmake_parse_arguments(PARSE_ARGV 2 PROTO "" "" "")
@@ -17,10 +17,10 @@ Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/cmake/modu
 +    LINK_LIBS PUBLIC  ${LINKED_GRPC_LIBRARIES})
 +
  endfunction()
-Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/cmake/Modules/FindGRPC.cmake
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/cmake/Modules/FindGRPC.cmake
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/cmake/Modules/FindGRPC.cmake
-+++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/cmake/Modules/FindGRPC.cmake
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/cmake/Modules/FindGRPC.cmake
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/cmake/Modules/FindGRPC.cmake
 @@ -82,11 +82,28 @@ else()
      endif()
    endif()

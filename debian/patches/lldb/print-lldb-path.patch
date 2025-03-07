@@ -1,10 +1,10 @@
 Author: Gianfranco Costamagna <locutusofborg@debian.org>
 Last-Update: 2023-01-19
 
-Index: llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/lldb/bindings/python/get-python-config.py
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/lldb/bindings/python/get-python-config.py
 ===================================================================
---- llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b.orig/lldb/bindings/python/get-python-config.py
-+++ llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/lldb/bindings/python/get-python-config.py
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/lldb/bindings/python/get-python-config.py
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/lldb/bindings/python/get-python-config.py
 @@ -16,6 +16,7 @@ def relpath_nodots(path, base):
  
  
@@ -34,11 +34,11 @@ Index: llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/lldb/bindings/py
          except ValueError:
              # Try to fall back to something reasonable if sysconfig's platlib
              # is outside of sys.prefix
-Index: llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/lldb/source/Plugins/ScriptInterpreter/Python/ScriptInterpreterPython.cpp
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/lldb/source/Plugins/ScriptInterpreter/Python/ScriptInterpreterPython.cpp
 ===================================================================
---- llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b.orig/lldb/source/Plugins/ScriptInterpreter/Python/ScriptInterpreterPython.cpp
-+++ llvm-toolchain-snapshot_20~++20240920082629+ea578804c81b/lldb/source/Plugins/ScriptInterpreter/Python/ScriptInterpreterPython.cpp
-@@ -257,6 +257,7 @@ void ScriptInterpreterPython::ComputePyt
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/lldb/source/Plugins/ScriptInterpreter/Python/ScriptInterpreterPython.cpp
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/lldb/source/Plugins/ScriptInterpreter/Python/ScriptInterpreterPython.cpp
+@@ -242,6 +242,7 @@ void ScriptInterpreterPython::ComputePyt
    // the real python interpreter uses.  (e.g. lib for most, lib64 on RHEL
    // x86_64, or bin on Windows).
    llvm::sys::path::remove_filename(path);

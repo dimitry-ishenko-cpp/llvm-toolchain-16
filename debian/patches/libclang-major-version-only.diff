@@ -1,7 +1,7 @@
-Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/tools/libclang/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/clang/tools/libclang/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/clang/tools/libclang/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/tools/libclang/CMakeLists.txt
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/clang/tools/libclang/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/clang/tools/libclang/CMakeLists.txt
 @@ -204,7 +204,7 @@ if(ENABLE_SHARED)
      endif()
      # Ensure that libclang.so gets rebuilt when the linker script changes.

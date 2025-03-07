@@ -1,7 +1,7 @@
-Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/lldb/source/Plugins/Process/elf-core/ThreadElfCore.h
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/lldb/source/Plugins/Process/elf-core/ThreadElfCore.h
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/lldb/source/Plugins/Process/elf-core/ThreadElfCore.h
-+++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/lldb/source/Plugins/Process/elf-core/ThreadElfCore.h
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/lldb/source/Plugins/Process/elf-core/ThreadElfCore.h
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/lldb/source/Plugins/Process/elf-core/ThreadElfCore.h
 @@ -118,8 +118,8 @@ struct ELFLinuxSigInfo {
    static size_t GetSize(const lldb_private::ArchSpec &arch);
  };

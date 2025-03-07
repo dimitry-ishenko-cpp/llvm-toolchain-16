@@ -1,8 +1,8 @@
-Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/lib/Driver/ToolChains/WebAssembly.cpp
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/clang/lib/Driver/ToolChains/WebAssembly.cpp
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/clang/lib/Driver/ToolChains/WebAssembly.cpp
-+++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/lib/Driver/ToolChains/WebAssembly.cpp
-@@ -450,6 +450,18 @@ ToolChain::RuntimeLibType WebAssembly::G
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/clang/lib/Driver/ToolChains/WebAssembly.cpp
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/clang/lib/Driver/ToolChains/WebAssembly.cpp
+@@ -462,6 +462,18 @@ ToolChain::RuntimeLibType WebAssembly::G
    return ToolChain::RLT_CompilerRT;
  }
  
@@ -21,10 +21,10 @@ Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/lib/Driver
  ToolChain::CXXStdlibType
  WebAssembly::GetCXXStdlibType(const ArgList &Args) const {
    if (Arg *A = Args.getLastArg(options::OPT_stdlib_EQ)) {
-Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/lib/Driver/ToolChains/WebAssembly.h
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/clang/lib/Driver/ToolChains/WebAssembly.h
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/clang/lib/Driver/ToolChains/WebAssembly.h
-+++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/clang/lib/Driver/ToolChains/WebAssembly.h
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/clang/lib/Driver/ToolChains/WebAssembly.h
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/clang/lib/Driver/ToolChains/WebAssembly.h
 @@ -56,6 +56,7 @@ private:
                          llvm::opt::ArgStringList &CC1Args,
                          Action::OffloadKind DeviceOffloadKind) const override;

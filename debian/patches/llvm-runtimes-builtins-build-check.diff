@@ -1,9 +1,9 @@
 add a check and only set up and build compiler-rt builtins if they have
 not been disabled
-Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/llvm/runtimes/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/llvm/runtimes/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/llvm/runtimes/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/llvm/runtimes/CMakeLists.txt
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/llvm/runtimes/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/llvm/runtimes/CMakeLists.txt
 @@ -149,10 +149,15 @@ endfunction()
  # is required because the other runtimes need the builtin libraries present
  # before the just-built compiler can pass the configuration tests.

@@ -1,9 +1,9 @@
 add option to disable compiler-rt scudo standalone allocator as it is
 not always supported by all arch profiles such as arm5vt of ARM32 arch
-Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/compiler-rt/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/compiler-rt/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/compiler-rt/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/compiler-rt/CMakeLists.txt
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/compiler-rt/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/compiler-rt/CMakeLists.txt
 @@ -309,6 +309,12 @@ option(COMPILER_RT_USE_ATOMIC_LIBRARY "U
  
  include(config-ix)

@@ -1,7 +1,7 @@
-Index: llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/offload/include/Shared/APITypes.h
+Index: llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/offload/include/Shared/APITypes.h
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f.orig/offload/include/Shared/APITypes.h
-+++ llvm-toolchain-snapshot_21~++20250211013808+e258bca9505f/offload/include/Shared/APITypes.h
+--- llvm-toolchain-snapshot_21~++20250307093406+951353de62c3.orig/offload/include/Shared/APITypes.h
++++ llvm-toolchain-snapshot_21~++20250307093406+951353de62c3/offload/include/Shared/APITypes.h
 @@ -107,10 +107,10 @@ struct KernelArgsTy {
  };
  static_assert(sizeof(KernelArgsTy().Flags) == sizeof(uint64_t),
