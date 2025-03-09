@@ -1,3 +1,9 @@
+llvm-toolchain-20 (1:20.1.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 06 Mar 2025 14:40:09 +0100
+
 llvm-toolchain-20 (1:20.1.0~+rc3-1~exp1) experimental; urgency=medium
 
   * New snapshot release
