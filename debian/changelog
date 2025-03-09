@@ -1,4 +1,4 @@
-llvm-toolchain-snapshot (1:21~++20250107094038+ea14bdb0356c-1~exp2) UNRELEASED; urgency=medium
+llvm-toolchain-snapshot (1:21~++20250309030854+029e10289a02-1~exp1) UNRELEASED; urgency=medium
 
   [ Matthias Klose ]
   * d/rules: Distinguish between openmp and offload architectures.
@@ -10,6 +10,7 @@ llvm-toolchain-snapshot (1:21~++20250107094038+ea14bdb0356c-1~exp2) UNRELEASED; 
 
   [ Sylvestre Ledru ]
   * Prepare version 21
+  * Merge recent changes from 19 and 20
   * Use lld as a linker instead of gold
   * clang-21 recommends clang-tools-21
     https://github.com/llvm/llvm-project/issues/117333
