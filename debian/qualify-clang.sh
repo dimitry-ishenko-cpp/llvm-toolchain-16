@@ -1,123 +1,185 @@
-#!/bin/bash
-# Stop at the first error
-set -e
-if ! test -d debian/; then
-    echo "$0: Could not find the debian/ directory"
-    exit 1
-fi
-VERSION=$(dpkg-parsechangelog | sed -rne "s,^Version: 1:([0-9]+).*,\1,p")
-DETAILED_VERSION=$(dpkg-parsechangelog |  sed -rne "s,^Version: 1:([0-9.]+)(~|-)(.*),\1\2\3,p")
-DEB_HOST_ARCH=$(dpkg-architecture -qDEB_HOST_ARCH)
+#!/usr/bin/env bats
 
-LIST="libomp5-${VERSION}_${DETAILED_VERSION}_amd64.deb libomp-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb lldb-${VERSION}_${DETAILED_VERSION}_amd64.deb python3-lldb-${VERSION}_${DETAILED_VERSION}_amd64.deb python3-clang-${VERSION}_${DETAILED_VERSION}_amd64.deb libllvm${VERSION}_${DETAILED_VERSION}_amd64.deb llvm-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb liblldb-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb  libclang1-${VERSION}_${DETAILED_VERSION}_amd64.deb  libclang-common-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb  llvm-${VERSION}_${DETAILED_VERSION}_amd64.deb  liblldb-${VERSION}_${DETAILED_VERSION}_amd64.deb  llvm-${VERSION}-runtime_${DETAILED_VERSION}_amd64.deb lld-${VERSION}_${DETAILED_VERSION}_amd64.deb libfuzzer-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libclang-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libc++-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libc++abi-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libc++1-${VERSION}_${DETAILED_VERSION}_amd64.deb libc++abi1-${VERSION}_${DETAILED_VERSION}_amd64.deb clang-${VERSION}_${DETAILED_VERSION}_amd64.deb llvm-${VERSION}-tools_${DETAILED_VERSION}_amd64.deb clang-tools-${VERSION}_${DETAILED_VERSION}_amd64.deb clangd-${VERSION}_${DETAILED_VERSION}_amd64.deb libclang-cpp${VERSION}_${DETAILED_VERSION}_amd64.deb clang-tidy-${VERSION}_${DETAILED_VERSION}_amd64.deb libclang-cpp${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libclc-${VERSION}_${DETAILED_VERSION}_all.deb libclc-${VERSION}-dev_${DETAILED_VERSION}_all.deb llvm-${VERSION}-linker-tools_${DETAILED_VERSION}_amd64.deb libunwind-${VERSION}_${DETAILED_VERSION}_amd64.deb libunwind-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libmlir-${VERSION}_${DETAILED_VERSION}_amd64.deb libmlir-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libclang-rt-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libclang-rt-${VERSION}-dev-wasm32_${DETAILED_VERSION}_all.deb libclang-rt-${VERSION}-dev-wasm64_${DETAILED_VERSION}_all.deb libc++abi-${VERSION}-dev-wasm32_${DETAILED_VERSION}_all.deb libc++-${VERSION}-dev-wasm32_${DETAILED_VERSION}_all.deb libpolly-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb  bolt-${VERSION}_${DETAILED_VERSION}_amd64.deb libbolt-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb flang-${VERSION}_${DETAILED_VERSION}_amd64.deb libflang-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libllvmlibc-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb "
+setup() {
 
-echo "To install everything:"
-echo "sudo apt --purge remove 'libomp5-*' 'libc++*dev' 'libc++*' 'python3-lldb-*' 'libunwind-*' 'libclc-*' 'libclc-*dev' 'libmlir-*'"
-echo "sudo dpkg -i $LIST"
-L=""
-for f in $LIST; do
-    L="$L $(echo $f|cut -d_ -f1)"
-done
-echo "or"
-echo "apt-get install $L"
+    load '/usr/lib/bats/bats-support/load' # this is required by bats-assert!
+    load '/usr/lib/bats/bats-assert/load'
 
-if test ! -f /usr/bin/llvm-config-$VERSION; then
-    echo "Install llvm-$VERSION & llvm-$VERSION-dev"
-    exit 1
-fi
-if test ! -f /usr/lib/llvm-$VERSION/lib/libLLVM-$VERSION.so; then
-    echo "Install llvm-$VERSION-dev"
-    exit 1
-fi
+    # Common setup
+    VERSION=$(dpkg-parsechangelog | sed -rne "s,^Version: 1:([0-9]+).*,\1,p")
+    DETAILED_VERSION=$(dpkg-parsechangelog | sed -rne "s,^Version: 1:([0-9.]+)(~|-)(.*),\1\2\3,p")
+    DEB_HOST_ARCH=$(dpkg-architecture -qDEB_HOST_ARCH)
 
-echo "Testing llvm-$VERSION and llvm-$VERSION-dev ..."
-llvm-config-$VERSION --link-shared --libs &> /dev/null
-
-if llvm-config-$VERSION --cxxflags | grep " \-W"; then
-    echo "llvm-config should not export -W warnings"
-    exit 1
-fi
-
-# Test https://bugs.llvm.org/show_bug.cgi?id=40059
-nm /usr/lib/llvm-$VERSION/lib/libLLVMBitWriter.a &> foo.log
-if grep "File format not recognized" foo.log; then
-    echo "nm libLLVMBitWriter.a contains 'File format not recognized'"
-    exit 1
-fi
-
-# Test #995684
-if test ! -f /usr/share/man/man1/llc-$VERSION.1.gz; then
-    echo "llvm manpage are missing (using llc as an example)"
-    exit 1
-fi
-
-if test ! -f /usr/bin/scan-build-$VERSION; then
-    echo "Install clang-tools-$VERSION"
-    exit 1
-fi
-echo "Testing clang-tools-$VERSION ..."
-
-echo '
-void test() {
-  int x;
-  x = 1; // warn
+    # Define the package list
+    LIST="libomp5-${VERSION}_${DETAILED_VERSION}_amd64.deb libomp-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb lldb-${VERSION}_${DETAILED_VERSION}_amd64.deb python3-lldb-${VERSION}_${DETAILED_VERSION}_amd64.deb python3-clang-${VERSION}_${DETAILED_VERSION}_amd64.deb libllvm${VERSION}_${DETAILED_VERSION}_amd64.deb llvm-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb liblldb-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb  libclang1-${VERSION}_${DETAILED_VERSION}_amd64.deb  libclang-common-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb  llvm-${VERSION}_${DETAILED_VERSION}_amd64.deb  liblldb-${VERSION}_${DETAILED_VERSION}_amd64.deb  llvm-${VERSION}-runtime_${DETAILED_VERSION}_amd64.deb lld-${VERSION}_${DETAILED_VERSION}_amd64.deb libfuzzer-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libclang-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libc++-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libc++abi-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libc++1-${VERSION}_${DETAILED_VERSION}_amd64.deb libc++abi1-${VERSION}_${DETAILED_VERSION}_amd64.deb clang-${VERSION}_${DETAILED_VERSION}_amd64.deb llvm-${VERSION}-tools_${DETAILED_VERSION}_amd64.deb clang-tools-${VERSION}_${DETAILED_VERSION}_amd64.deb clangd-${VERSION}_${DETAILED_VERSION}_amd64.deb libclang-cpp${VERSION}_${DETAILED_VERSION}_amd64.deb clang-tidy-${VERSION}_${DETAILED_VERSION}_amd64.deb libclang-cpp${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libclc-${VERSION}_${DETAILED_VERSION}_all.deb libclc-${VERSION}-dev_${DETAILED_VERSION}_all.deb llvm-${VERSION}-linker-tools_${DETAILED_VERSION}_amd64.deb libunwind-${VERSION}_${DETAILED_VERSION}_amd64.deb libunwind-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libmlir-${VERSION}_${DETAILED_VERSION}_amd64.deb libmlir-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libclang-rt-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libclang-rt-${VERSION}-dev-wasm32_${DETAILED_VERSION}_all.deb libclang-rt-${VERSION}-dev-wasm64_${DETAILED_VERSION}_all.deb libc++abi-${VERSION}-dev-wasm32_${DETAILED_VERSION}_all.deb libc++-${VERSION}-dev-wasm32_${DETAILED_VERSION}_all.deb libpolly-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb  bolt-${VERSION}_${DETAILED_VERSION}_amd64.deb libbolt-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb flang-${VERSION}_${DETAILED_VERSION}_amd64.deb libflang-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb libllvmlibc-${VERSION}-dev_${DETAILED_VERSION}_amd64.deb"
 }
-'> foo.c
 
-# Ignore if gcc isn't available
-scan-build-$VERSION -o scan-build gcc -c foo.c &> /dev/null || true
-scan-build-$VERSION -o scan-build clang-$VERSION -c foo.c &> /dev/null
-scan-build-$VERSION --exclude non-existing/ --exclude /tmp/ -v clang-$VERSION -c foo.c &> /dev/null
-scan-build-$VERSION --exclude $(realpath $(pwd)) -v clang-$VERSION -c foo.c &> foo.log
-if ! grep -q -E "scan-build: 0 bugs found." foo.log; then
-    echo "scan-build --exclude didn't ignore the defect"
-    exit 42
-fi
-rm -rf scan-build
+@test "Print LLVM installation information" {
+    echo
+    echo "==============================================="
+    echo "LLVM Version ${VERSION} Installation Instructions"
+    echo "==============================================="
+    echo
+    echo "Detailed version: ${DETAILED_VERSION}"
+    echo
 
-if test ! -f /usr/bin/clang-tidy-$VERSION; then
-    echo "Install clang-tidy-$VERSION"
-    exit 1
-fi
+    echo "Step 1: Remove potentially conflicting packages"
+    echo "---------------------------------------------"
+    echo "Run the following command to remove existing packages:"
+    echo "sudo apt --purge remove 'libomp5-*' 'libc++*dev' 'libc++*' 'python3-lldb-*' 'libunwind-*' 'libclc-*' 'libclc-*dev' 'libmlir-*'"
+    echo
 
-echo 'namespace mozilla {
-namespace dom {
-void foo();
+    echo "Step 2: Install new packages"
+    echo "-------------------------"
+    echo "You have two options for installation:"
+    echo
+
+    echo "Option 1: Using dpkg (if you have the .deb files)"
+    echo "----------------------------------------"
+    echo "sudo dpkg -i $LIST"
+    echo
+
+    echo "Option 2: Using apt (recommended)"
+    echo "----------------------------"
+    L=""
+    for f in $LIST; do
+        L="$L $(echo $f|cut -d_ -f1)"
+    done
+    echo "sudo apt-get install $L"
+    echo
+    run clang-$VERSION --version
+    assert_output -p 'clang version'
 }
+
+@test "Check debian/ directory existence" {
+    [ -d "debian/" ]
 }
-' > foo.cpp
-clang-tidy-$VERSION -checks='modernize-concat-nested-namespaces' foo.cpp -extra-arg=-std=c++17 &> foo.log
-if ! grep -q "nested namespaces can " foo.log; then
-    echo "Clang-tidy didn't detect the issue"
-    cat foo.log
-    exit 1
-fi
+
+@test "Check for llvm-config binary" {
+    [ -f "/usr/bin/llvm-config-$VERSION" ]
+}
+
+@test "Ensure libLLVM.so.VERSION.1 exists in libllvm$VERSION" {
+    NBLINES=$(dpkg -L libllvm$VERSION | grep -c "libLLVM.so.$VERSION.1")
+    [ "$NBLINES" -gt 0 ]
+}
+
+@test "llvm-config does not export -W warnings" {
+    run llvm-config-$VERSION --cxxflags
+    refute_output -p " -W"
+}
+
+@test "nm recognizes libLLVMBitWriter.a format" {
+    # Test https://bugs.llvm.org/show_bug.cgi?id=40059
+    run nm /usr/lib/llvm-$VERSION/lib/libLLVMBitWriter.a
+    refute_output -p 'File format not recognized'
+}
+
+@test "Verify llvm manpages" {
+    [ -f "/usr/share/man/man1/llc-$VERSION.1.gz" ]
+}
 
 
-rm -rf cmaketest && mkdir cmaketest
-cat > cmaketest/CMakeLists.txt <<EOF
-cmake_minimum_required(VERSION 3.7)
-project(SanityCheck)
-add_library(MyLibrary foo.cpp)
+# ===================== clang
+
+@test "Test clang dumpversion" {
+    run clang-$VERSION -dumpversion
+    assert_success
+    refute_output "4.2.1"
+}
+
+@test "Test compilation of standard library headers with Clang" {
+    # Test 1: Compile with <string.h>
+    cat > "${BATS_TMPDIR}/string_test.c" <<EOF
+#include <string.h>
+int main() {
+    (void) strcat;
+    return 0;
+}
 EOF
-mkdir cmaketest/standard
-cp foo.cpp cmaketest/
-cd cmaketest/standard
-# run with cmake
-CXX=clang-$VERSION cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .. > /dev/null
+    run clang-$VERSION -c "${BATS_TMPDIR}/string_test.c"
+    assert_success "Compilation with <string.h> failed"
 
-clang-tidy-$VERSION -checks='modernize-concat-nested-namespaces' ../foo.cpp -extra-arg=-std=c++17 -fix &> foo.log
-if ! grep -q "namespace mozilla::dom" ../foo.cpp; then
-    echo "clang-tidy autofix didn't work"
-    cat foo.log
-    exit 1
-fi
-cd - &> /dev/null
-rm -rf cmaketest
+    # Test 2: Compile with <errno.h>
+    cat > "${BATS_TMPDIR}/errno_test.c" <<EOF
+#include <errno.h>
+int main() {}
+EOF
+    run clang-$VERSION "${BATS_TMPDIR}/errno_test.c"
+    assert_success "Compilation with <errno.h> failed"
 
-echo "Testing clangd-$VERSION ..."
+    # Test 3: Compile with <chrono>
+    cat > "${BATS_TMPDIR}/chrono_test.cpp" <<EOF
+#include <chrono>
+int main() {}
+EOF
+    run clang++-$VERSION -std=c++11 "${BATS_TMPDIR}/chrono_test.cpp"
+    assert_success "Compilation with <chrono> and C++11 standard failed"
+}
 
-echo '{
+
+# ===================== scan-build
+
+@test "Check scan-build functionality with GCC" {
+
+    echo '
+         void test() {
+         int x;
+         x = 1; // warn
+         }
+    '> ${BATS_TMPDIR}/scan_build_test.c
+
+    # Run scan-build with GCC
+    run scan-build-$VERSION -o "${BATS_TMPDIR}/scan_build_output" gcc -c "${BATS_TMPDIR}/scan_build_test.c"
+    assert_success
+    assert_output -p "1 bug found"
+
+    # Clean up
+    rm -rf "${BATS_TMPDIR}/scan_build_output"
+}
+
+@test "Check scan-build functionality with Clang" {
+
+    echo '
+         void test() {
+         int x;
+         x = 1; // warn
+         }
+    '> ${BATS_TMPDIR}/scan_build_test.c
+
+    run scan-build-$VERSION -o scan-build clang-$VERSION -c ${BATS_TMPDIR}/scan_build_test.c
+    assert_output -p "1 bug found"
+}
+
+@test "scan-build --exclude functionality" {
+
+    echo '
+         void test() {
+         int x;
+         x = 1; // warn
+         }
+    '> ${BATS_TMPDIR}/scan_build_test.c
+
+    run scan-build-$VERSION --exclude ${BATS_TMPDIR} -v clang-$VERSION -c ${BATS_TMPDIR}/scan_build_test.c
+    assert_success
+	assert_output -p 'scan-build: 0 bugs found.'
+}
+
+@test "Check clang-tidy detection" {
+    echo 'namespace mozilla { namespace dom { void foo(); }}' > foo.cpp
+    run clang-tidy-$VERSION -checks='modernize-concat-nested-namespaces' foo.cpp -extra-arg=-std=c++17
+    assert_output -p "nested namespaces can"
+}
+
+@test "Check clang-tidy autofix" {
+    echo 'namespace mozilla { namespace dom { void foo(); } }' > foo.cpp
+    clang-tidy-$VERSION -checks='modernize-concat-nested-namespaces' foo.cpp -extra-arg=-std=c++17 -fix
+    run grep -q "namespace mozilla::dom" foo.cpp
+    assert_success
+}
+
+@test "Check clangd output" {
+    echo '{
   "jsonrpc": "2.0",
   "id": 0,
   "method": "initialize",
@@ -173,521 +235,759 @@ echo '{
     "jsonrpc": "2.0",
     "method": "exit"
 }
-' > a.json
+    ' > clangd.json
 
-clangd-$VERSION -lit-test -pch-storage=memory < a.json &> foo.log
-if ! grep -q '"insertText": "func_with_args(${1:int a}, ${2:int b})",' foo.log; then
-    echo "clangd didn't export what we were expecting"
-    cat foo.log
-    exit 1
-fi
+    run clangd-$VERSION -lit-test -pch-storage=memory < clangd.json
+    assert_success
+    assert_output -p 'func_with_args(${1:int a}, ${2:int b})'
+}
 
-echo 'namespace mozilla {
-namespace dom {
-void foo();
+@test "Test LLI and LLVM runtime functionality" {
+    local temp_dir="${BATS_TMPDIR}/lli_test"
+    mkdir -p "${temp_dir}"
 
-int fonction_avec_args(int a, float b);
+    cat > "${temp_dir}/foo.c" <<EOF
+#include <stdio.h>
 int main() {
-fonction_avec_args
+    printf("lli foo");
+    return 0;
+}
+EOF
+
+    # Generate LLVM IR
+    run clang-$VERSION -S -emit-llvm "${temp_dir}/foo.c" -o "${temp_dir}/foo.ll"
+    assert_success "Failed to generate LLVM IR"
+
+    # Compile LLVM IR to assembly
+    run llc-$VERSION "${temp_dir}/foo.ll" -o "${temp_dir}/foo.s"
+    assert_success "Failed to compile LLVM IR to assembly"
+
+    # Execute the LLVM IR using lli
+    run lli-$VERSION "${temp_dir}/foo.ll"
+    assert_output -p "lli foo" "LLI did not produce the expected output"
+
+    # Optimize the LLVM IR
+    run opt-$VERSION -S -O3 "${temp_dir}/foo.ll" -o "${temp_dir}/opt.ll"
+    assert_success "Failed to optimize LLVM IR"
+
+    # Execute the optimized LLVM IR
+    run lli-$VERSION "${temp_dir}/opt.ll"
+    assert_output -p "lli foo" "LLI did not produce the expected output after optimization"
+
+    # Generate LLVM bitcode
+    run clang-$VERSION -O3 -emit-llvm "${temp_dir}/foo.c" -c -o "${temp_dir}/foo.bc"
+    assert_success "Failed to generate LLVM bitcode"
+
+    # Make the bitcode executable
+    chmod +x "${temp_dir}/foo.bc"
+
+    # Check if binfmt is enabled for LLVM bitcode
+    if grep -q "enabled" /proc/sys/fs/binfmt_misc/llvm-${VERSION}-runtime.binfmt; then
+        # Execute the bitcode
+        run "${temp_dir}/foo.bc"
+        assert_output -p "lli foo" "Execution of LLVM bitcode failed"
+    else
+        skip "binfmt_misc for LLVM bitcode is not enabled"
+    fi
+
+    rm -rf "${temp_dir}"
 }
 
-}
-}
-' > foo.cpp
-content=$(sed ':a;N;$!ba;s/\n/\\n/g' foo.cpp)
-echo '{
-  "jsonrpc": "2.0",
-  "id": 0,
-  "method": "initialize",
-  "params": {
-    "capabilities": {
-      "textDocument": {
-        "completion": {
-          "completionItem": {
-            "snippetSupport": true
-          }
-        }
-      }
-    },
-    "trace": "off"
-  }
-}
----
-{
-    "jsonrpc": "2.0",
-    "method": "textDocument/didOpen",
-    "params": {
-        "textDocument": {
-            "uri": "file:///'$(pwd)'/cmaketest/foo.cpp",
-            "languageId": "cpp",
-            "version": 1,
-            "text": "'$content'"
-        }
-    }
-}
----
-{
-    "jsonrpc": "2.0",
-    "id": 1,
-    "method": "textDocument/completion",
-    "params": {
-        "textDocument": {
-             "uri": "file:///'$(pwd)'/cmaketest/foo.cpp"
-        },
-        "position": {
-             "line": 6,
-             "character": 18
-         }
-    }
-}
----
-{
-    "jsonrpc": "2.0",
-    "id": 4,
-    "method": "shutdown"
-}
----
-{
-    "jsonrpc": "2.0",
-    "method": "exit"
-}
-' > a.json
+@test "Verify lld linker output (Bug 40659)" {
+    echo "int foo(void) {	return 0; }"> "${BATS_TMPDIR}/foo.c"
+    echo "int foo(void); int main() {foo();	return 0;}"> "${BATS_TMPDIR}/main.c"
 
-rm -rf cmaketest && mkdir cmaketest
-cat > cmaketest/CMakeLists.txt <<EOF
+    run clang-$VERSION -fuse-ld=lld -O2  "${BATS_TMPDIR}/foo.c" "${BATS_TMPDIR}/main.c" -o foo
+    run ./foo
+    assert_success
+
+    run clang-$VERSION -fuse-ld=lld-$VERSION -O2 "${BATS_TMPDIR}/foo.c" "${BATS_TMPDIR}/main.c" -o foo
+    assert_success
+    run ./foo
+    assert_success
+}
+
+
+
+@test "Test LLVM coverage tools" {
+    echo '#include <stdio.h>
+		int main() { printf("Coverage test"); return 0; }' > foo.c
+    run clang-$VERSION --coverage foo.c -o foo
+    assert_success
+    run ./foo
+	assert_success
+    run test -f foo-foo.gcno
+	assert_success
+}
+
+
+@test "Test clang c++ standard library functionality" {
+    echo '#include <vector>
+    #include <string>
+    #include <iostream>
+    using namespace std;
+    int main() {
+        vector<string> tab;
+        tab.push_back("Hello");
+        return 0;
+    }' > "${BATS_TMPDIR}/test.cpp"
+
+    run clang++-$VERSION "${BATS_TMPDIR}/test.cpp" -o "${BATS_TMPDIR}/test"
+    assert_success
+
+    run "${BATS_TMPDIR}/test"
+    assert_success
+}
+
+@test "Test OpenMP support" {
+    echo '#include "omp.h"
+    #include <stdio.h>
+    int main(void) {
+        #pragma omp parallel
+        printf("thread %d\n", omp_get_thread_num());
+        return 0;
+    }' > "${BATS_TMPDIR}/omp_test.c"
+
+    run clang-$VERSION "${BATS_TMPDIR}/omp_test.c" -fopenmp -o "${BATS_TMPDIR}/omp_test"
+    assert_success
+
+    run "${BATS_TMPDIR}/omp_test"
+    assert_success
+}
+
+@test "Test address sanitizer" {
+    echo '#include <stdlib.h>
+    int main() {
+        char *x = (char*)malloc(10 * sizeof(char*));
+        free(x);
+        return x[5];
+    }' > "${BATS_TMPDIR}/asan_test.c"
+
+    run clang-$VERSION -o "${BATS_TMPDIR}/asan_test" -fsanitize=address -O1 -fno-omit-frame-pointer -g "${BATS_TMPDIR}/asan_test.c"
+    assert_success
+
+    run "${BATS_TMPDIR}/asan_test"
+    assert_failure
+    assert_output -p "heap-use-after-free"
+}
+
+@test "Test Address Sanitizer verbose mode" {
+    echo 'int main(int argc, char **argv) {
+        int *array = new int[100];
+        delete [] array;
+        return array[argc];  // BOOM
+    }' > "${BATS_TMPDIR}/asan_test.cpp"
+
+    # Compile the program with AddressSanitizer enabled
+    run clang++-$VERSION -O1 -g -fsanitize=address -fno-omit-frame-pointer "${BATS_TMPDIR}/asan_test.cpp" -o "${BATS_TMPDIR}/asan_test"
+    assert_success "ASan compilation failed"
+
+    # Run the program with ASan verbose mode enabled
+    ASAN_OPTIONS=verbosity=1 ${BATS_TMPDIR}/asan_test &> foo.log || true
+    run cat foo.log
+    assert_output -p "Init done"
+
+}
+@test "Test all sanitizers and multiarch compatibility" {
+    local temp_dir="${BATS_TMPDIR}/sanitizer_multi"
+    mkdir -p "${temp_dir}"
+
+    # Generate the C test file
+    cat > "${temp_dir}/test.c" <<EOF
+#include <stdlib.h>
+#include <stdio.h>
+int main ()
+{
+#if __has_feature(address_sanitizer)
+  puts("address_sanitizer");
+#endif
+#if __has_feature(thread_sanitizer)
+  puts("thread_sanitizer");
+#endif
+#if __has_feature(memory_sanitizer)
+  puts("memory_sanitizer");
+#endif
+#if __has_feature(undefined_sanitizer)
+  puts("undefined_sanitizer");
+#endif
+#if __has_feature(dataflow_sanitizer)
+  puts("dataflow_sanitizer");
+#endif
+#if __has_feature(efficiency_sanitizer)
+  puts("efficiency_sanitizer");
+#endif
+  printf("Ok\n");
+  return EXIT_SUCCESS;
+}
+EOF
+
+    # Check for compiler-rt library
+    run clang-$VERSION --target=x86_64-unknown-linux-gnu --rtlib=compiler-rt --print-libgcc-file-name
+    assert_success "Failed to locate compiler-rt runtime library"
+
+    # Multiarch compatibility testing
+    # only for AMD64 for now
+    # many sanitizers only work on AMD64
+    # x32 programs need to be enabled in the kernel bootparams for debian
+    # (https://wiki.debian.org/X32Port)
+    #
+    # SYSTEM should iterate multiple targets (eg. x86_64-unknown-none-gnu for embedded)
+    # MARCH should iterate the library architectures via flags
+    # LIB should iterate the different libraries
+    echo "if it fails, please run"
+    echo "apt-get install libc6-dev:i386 libgcc-5-dev:i386 libc6-dev-x32 libx32gcc-5-dev libx32gcc-9-dev"
+    local architectures=("-m64") # "-m32" "-mx32")
+    local sanitizers=("--rtlib=compiler-rt" "-fsanitize=address" "-fsanitize=thread" "-fsanitize=memory" "-fsanitize=undefined" "-fsanitize=dataflow")
+
+    for arch in "${architectures[@]}"; do
+        for sanitizer in "${sanitizers[@]}"; do
+            # Skip unsupported combinations
+            if [[ "$arch" == "-m32" || "$arch" == "-mx32" ]]; then
+                if [[ "$sanitizer" == "-fsanitize=thread" || "$sanitizer" == "-fsanitize=memory" || "$sanitizer" == "-fsanitize=dataflow" ]]; then
+                    continue
+                fi
+            fi
+
+            echo "Testing sanitizer: $sanitizer with architecture: $arch"
+            rm -f "${temp_dir}/test"
+            run clang-$VERSION $arch $sanitizer -o "${temp_dir}/test" "${temp_dir}/test.c"
+            assert_success "Compilation failed for sanitizer: $sanitizer with architecture: $arch"
+
+            if [ -f "${temp_dir}/test" ]; then
+                run "${temp_dir}/test"
+                assert_success "Execution failed for sanitizer: $sanitizer with architecture: $arch"
+            fi
+        done
+    done
+
+    rm -rf "${temp_dir}"
+}
+
+@test "Test LLVM symbolizer integration with AddressSanitizer" {
+    echo 'int main(int argc, char **argv) {
+        int *array = new int[100];
+        delete [] array;
+        return array[argc];  // BOOM
+    }' > "${BATS_TMPDIR}/symbolizer_test.cpp"
+
+    # Compile the program with AddressSanitizer enabled
+    run clang++-$VERSION -O1 -g -fsanitize=address -fno-omit-frame-pointer "${BATS_TMPDIR}/symbolizer_test.cpp" -o "${BATS_TMPDIR}/symbolizer_test"
+    assert_success "ASan compilation failed"
+
+    # Run the program with external symbolizer path and verbose mode enabled
+    ASAN_OPTIONS=verbosity=2:external_symbolizer_path=/usr/lib/llvm-$VERSION/bin/llvm-symbolizer \
+       run "${BATS_TMPDIR}/symbolizer_test"
+    assert_failure
+
+    assert_output -p 'new[](unsigned'
+
+    assert_output -p "symbolizer_test.cpp:4"
+
+    # Run again without verbose mode and check symbolization
+    run "${BATS_TMPDIR}/symbolizer_test"
+    assert_output -p "new[](unsigned"
+    assert_output -p "symbolizer_test.cpp:4"
+}
+
+
+@test "Test libc++ with AddressSanitizer" {
+    echo '#include <stdexcept>
+    int main() {
+        std::logic_error("");
+    }' > "${BATS_TMPDIR}/sanitizer_test.cpp"
+
+    # Compile with libc++ and AddressSanitizer
+    run clang++-$VERSION -stdlib=libc++ -fsanitize=address "${BATS_TMPDIR}/sanitizer_test.cpp" -o "${BATS_TMPDIR}/sanitizer_test"
+    assert_success "Compilation with libc++ and AddressSanitizer failed"
+
+    # Run the compiled binary
+    run "${BATS_TMPDIR}/sanitizer_test"
+    assert_success "Running the binary failed with AddressSanitizer enabled"
+}
+
+@test "Test AddressSanitizer with C standard library (Bug 876973)" {
+
+    cat > "${BATS_TMPDIR}/asan_c_test.c" <<EOF
+#include <stdio.h>
+int main(int argc, char **argv) {
+    printf("Hello world!\\n");
+    return 0;
+}
+EOF
+
+    run clang-$VERSION -fsanitize=address "${BATS_TMPDIR}/asan_c_test.c" -o "${BATS_TMPDIR}/asan_c_test" -lc
+    assert_success "ASan compilation with -lc failed"
+
+    run "${BATS_TMPDIR}/asan_c_test" &> /dev/null
+    assert_success "Execution failed or AddressSanitizer detected an issue with -lc"
+}
+
+@test "Test Thread Sanitizer" {
+    skip_if_arch "i386"
+
+    echo '#include <pthread.h>
+    int Global;
+    void *Thread1(void *x) {
+        Global++;
+        return NULL;
+    }
+    void *Thread2(void *x) {
+        Global--;
+        return NULL;
+    }
+    int main() {
+        pthread_t t[2];
+        pthread_create(&t[0], NULL, Thread1, NULL);
+        pthread_create(&t[1], NULL, Thread2, NULL);
+        pthread_join(t[0], NULL);
+        pthread_join(t[1], NULL);
+    }' > "${BATS_TMPDIR}/tsan_test.c"
+
+    run clang-$VERSION -o "${BATS_TMPDIR}/tsan_test" -fsanitize=thread -g -O1 "${BATS_TMPDIR}/tsan_test.c"
+    assert_success
+
+    run "${BATS_TMPDIR}/tsan_test"
+    assert_failure
+    assert_output -p "data race"
+}
+
+@test "Test AddressSanitizer and Undefined Behavior Sanitizer with complex C++ code" {
+    # Create the C++ source file
+    cat > "${BATS_TMPDIR}/asan_ubsan_test.cpp" <<EOF
+class a {
+public:
+  ~a();
+};
+template <typename, typename> using b = a;
+struct f {
+  template <typename d> using e = b<a, d>;
+};
+struct g {
+  typedef f::e<int> c;
+};
+class h {
+  struct : g::c { int i; };
+};
+struct m {
+  h i;
+};
+template <typename> void __attribute__((noreturn)) j();
+void k() {
+  m l;
+  j<int>();
+}
+EOF
+
+    # Compile the C++ code with AddressSanitizer and Undefined Behavior Sanitizer enabled
+    run clang++-$VERSION -std=c++14 -O3 -fsanitize=address -fsanitize=undefined -c "${BATS_TMPDIR}/asan_ubsan_test.cpp" -fno-crash-diagnostics
+    assert_success "Compilation with AddressSanitizer and Undefined Behavior Sanitizer failed"
+}
+
+
+# ===================== polly
+
+@test "Test Polly optimizations" {
+    echo '#define N 512
+    float A[N][N], B[N][N], C[N][N];
+    void init_arrays() {
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++) {
+                A[i][j] = 1.0;
+                B[i][j] = 2.0;
+            }
+    }
+    int main() {
+        init_arrays();
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                for (int k = 0; k < N; k++)
+                    C[i][j] += A[i][k] * B[k][j];
+        return 0;
+    }' > "${BATS_TMPDIR}/polly_test.c"
+
+    # Compile with Polly optimizations enabled
+    run clang-$VERSION -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine "${BATS_TMPDIR}/polly_test.c" -o "${BATS_TMPDIR}/polly_test"
+    assert_success "Polly optimization failed"
+
+    # Verify the optimization record
+    run clang-$VERSION -S -fsave-optimization-record -emit-llvm "${BATS_TMPDIR}/polly_test.c" -o "${BATS_TMPDIR}/polly_test.s"
+    assert_success "Failed to generate Polly optimization record"
+
+    # broken https://bugs.llvm.org/show_bug.cgi?id=51642
+    # run test -s "${BATS_TMPDIR}/polly_test.opt.yaml"
+
+    run clang-$VERSION -S -O2 -fsave-optimization-record -emit-llvm "${BATS_TMPDIR}/polly_test.c" -o "${BATS_TMPDIR}/polly_test.s"
+    assert_success
+    run test -s "${BATS_TMPDIR}/polly_test.opt.yaml"
+    assert_success
+    run opt-$VERSION -S -polly-canonicalize  "${BATS_TMPDIR}/polly_test.s" >  "${BATS_TMPDIR}/polly_test.ll"
+    assert_success
+    run opt-$VERSION -basic-aa -polly-ast "${BATS_TMPDIR}/polly_test.ll" -polly-process-unprofitable
+    assert_success
+    # help with the path
+    cp "${BATS_TMPDIR}/polly_test.c" .
+    run /usr/lib/llvm-$VERSION/share/opt-viewer/opt-viewer.py -source-dir ${BATS_TMPDIR}/ ${BATS_TMPDIR}/polly_test.opt.yaml -o ${BATS_TMPDIR}/output > /dev/null
+    assert_success
+
+    run grep -q "inlined into" ${BATS_TMPDIR}/output/*polly_test.c.html
+    assert_success
+}
+
+@test "Test libpolly package presence" {
+    run test -f "/usr/lib/llvm-$VERSION/include/polly/LinkAllPasses.h"
+    assert_success
+}
+
+# ===================== lldb
+
+@test "Test LLDB debugger functionality" {
+    echo '#include <stdio.h>
+    int main() {
+        printf("LLDB test\n");
+        return 0;
+    }' > "${BATS_TMPDIR}/lldb_test.c"
+
+    run clang-$VERSION -g -o "${BATS_TMPDIR}/lldb_test" "${BATS_TMPDIR}/lldb_test.c"
+    assert_success
+
+    echo "b main
+    run
+    bt
+    quit" > "${BATS_TMPDIR}/lldb_commands.txt"
+
+    run lldb-$VERSION -s "${BATS_TMPDIR}/lldb_commands.txt" "${BATS_TMPDIR}/lldb_test"
+    assert_success
+}
+
+
+@test "Test LLDB debugging with libc++" {
+    # Create the C++ source file
+    cat > "${BATS_TMPDIR}/foo.cpp" <<EOF
+#include <vector>
+int main (void) {
+    std::vector<int> a;
+    a.push_back(0);
+}
+EOF
+
+    # Compile the program with debugging symbols
+    run clang++-$VERSION -g -o "${BATS_TMPDIR}/foo32" "${BATS_TMPDIR}/foo.cpp"
+    assert_success "Compilation with debugging symbols failed"
+
+    # Create the LLDB command script
+    echo "b main
+r
+n
+p a
+quit
+" > "${BATS_TMPDIR}/lldb_commands.txt"
+
+    run lldb-$VERSION -s "${BATS_TMPDIR}/lldb_commands.txt" "${BATS_TMPDIR}/foo32"
+    assert_output -p "stop reason = step over"
+}
+
+# ===================== cmake
+
+@test "Test CMake integration (Bug 900440)" {
+    mkdir -p "${BATS_TMPDIR}/cmake_test"
+
+    cat > "${BATS_TMPDIR}/cmake_test/CMakeLists.txt" <<EOF
+		cmake_minimum_required(VERSION 3.7)
+		project(testllvm)
+
+		find_package(LLVM CONFIG REQUIRED)
+		find_package(Clang CONFIG REQUIRED)
+
+		if(NOT LLVM_VERSION STREQUAL Clang_VERSION)
+		    #message(FATAL_ERROR "LLVM ${LLVM_VERSION} not matching to Clang ${Clang_VERSION}")
+		endif()
+EOF
+
+    cd "${BATS_TMPDIR}/cmake_test"
+    run cmake .
+    assert_success
+}
+
+@test "Test if lit-cpuid in LLVMExports CMake files" {
+    # Define the path to LLVMExports CMake files
+    local cmake_files="/usr/lib/llvm-${VERSION}/lib/cmake/llvm/LLVMExports*.cmake"
+
+    # Ensure at least one CMake file exists
+    run ls ${cmake_files}
+    assert_success "No LLVMExports CMake files found"
+
+    # Check for lit-cpuid in the files
+    run grep -q "lit-cpuid" ${cmake_files}
+    assert_failure "Found 'lit-cpuid' in LLVMExports CMake files. This introduces a dependency between llvm-${VERSION} and lldb."
+}
+
+@test "Test CMake integration with LLVM and Clang" {
+    local cmake_test_dir="${BATS_TMPDIR}/cmaketest"
+    mkdir -p "${cmake_test_dir}"
+
+    cat > "${cmake_test_dir}/CMakeLists.txt" <<EOF
 cmake_minimum_required(VERSION 3.7)
 project(SanityCheck)
-add_library(MyLibrary foo.cpp)
+find_package(LLVM $VERSION.1 REQUIRED CONFIG)
+message(STATUS "LLVM_CMAKE_DIR: \${LLVM_CMAKE_DIR}")
+if(NOT EXISTS "\${LLVM_TOOLS_BINARY_DIR}/clang")
+message(FATAL_ERROR "Invalid LLVM_TOOLS_BINARY_DIR: \${LLVM_TOOLS_BINARY_DIR}")
+endif()
+find_package(Clang REQUIRED CONFIG)
+find_file(H clang/AST/ASTConsumer.h PATHS \${CLANG_INCLUDE_DIRS} NO_DEFAULT_PATH)
+message(STATUS "CLANG_INCLUDE_DIRS: \${CLANG_INCLUDE_DIRS}")
+if(NOT H)
+message(FATAL_ERROR "Invalid Clang header path: \${CLANG_INCLUDE_DIRS}")
+endif()
 EOF
-mkdir cmaketest/standard
-cp foo.cpp cmaketest/
-cp a.json cmaketest/standard
-cd cmaketest/standard
 
-# run with cmake
+    mkdir -p "${cmake_test_dir}/standard"
+    mkdir -p "${cmake_test_dir}/explicit"
 
-CXX=clang-$VERSION cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .. > /dev/null
-# TODO this test is useless as it doesn't leverage foo.cpp or the compiledb
-clangd-$VERSION -lit-test -pch-storage=memory < a.json &> foo.log
-if ! grep -q '"insertText": "fonction_avec_args(${1:int a}, ${2:float b})",' foo.log; then
-    echo "clangd didn't export what we were expecting"
-    cat foo.log
-    exit 1
-fi
-cd - &> /dev/null
-rm -rf cmaketest
+    # Test: CMake find LLVM and Clang in the default path
+    pushd "${cmake_test_dir}/standard" > /dev/null
+    run cmake ..
+    assert_success "CMake integration test for default path failed"
+    popd > /dev/null
 
+    # Test: CMake find LLVM and Clang in the explicit prefix path
+    pushd "${cmake_test_dir}/explicit" > /dev/null
+    run cmake -DCMAKE_PREFIX_PATH="/usr/lib/llvm-${VERSION}" ..
+    assert_success "CMake integration test for explicit path failed"
+    popd > /dev/null
 
-echo "Testing clang-$VERSION ..."
-
-rm -f foo.log
-echo 'int main() {return 0;}' > foo.c
-clang-$VERSION foo.c
-
-echo '#include <stdio.h>
-int main() {
-printf("lli foo");
-return 0;
-}' > foo.c
-clang-$VERSION -S -emit-llvm foo.c
-llc-$VERSION foo.ll
-if ! lli-$VERSION foo.ll|grep -q "lli foo"; then
-    echo "Not lli correct output"
-    lli-$VERSION foo.ll
-    exit 1
-fi
-opt-$VERSION -S -O3 foo.ll -o opt.ll
-if ! lli-$VERSION opt.ll|grep -q "lli foo"; then
-    echo "Not lli correct output after opt"
-    lli-$VERSION opt.ll
-    exit 1
-fi
-
-clang-$VERSION -O3 -emit-llvm foo.c -c -o foo.bc
-chmod +x foo.bc
-# only run if the binfmt is installed correctly
-if grep -q "enabled" /proc/sys/fs/binfmt_misc/llvm-${VERSION}-runtime.binfmt; then
-    if ! ./foo.bc|grep -q "lli foo"; then
-        echo "executing ./foo.bc failed"
-        ./foo.bc || true
-        #exit 1
-    fi
-
-    clang-$VERSION -O3 -emit-llvm foo.c -c -o foo.bc
-    chmod +x foo.bc
-    if ! ./foo.bc|grep -q "lli foo"; then
-        echo "executing ./foo.bc failed"
-        ./foo.bc || true
-        #exit 1
-    fi
-fi # binfmt test
-
-if ! llvm-dis-$VERSION < foo.bc|grep -q "lli foo"; then
-    echo "llvm assembly code failed"
-    llvm-dis-$VERSION < foo.bc
-    exit 1
-fi
-
-# test if this is built with CURL
-llvm-debuginfod-find-$VERSION --executable=1 5d016364c1cb69dd &> foo.log || true
-if grep -q "No working HTTP" foo.log; then
-    echo "llvm-debuginfod-find isn't built with curl support"
-    exit 1
-fi
-
-echo '#include <stddef.h>' > foo.c
-clang-$VERSION -c foo.c
-
-# https://bugs.launchpad.net/bugs/1810860
-clang-$VERSION -dumpversion &> foo.log
-if grep -q 4.2.1 foo.log; then
-    echo "dumpversion still returns 4.2.1"
-    echo "it should return the clang version"
-    cat foo.log
-    exit 1
-fi
-
-# bug 903709
-echo '#include <stdatomic.h>
-void increment(atomic_size_t *arg) {
-    atomic_fetch_add(arg, 1);
-} ' > foo.c
-
-clang-$VERSION -v -c foo.c &> /dev/null
-
-echo "#include <fenv.h>" > foo.cc
-NBLINES=$(clang++-$VERSION -P -E foo.cc|grep .|wc -l)
-if test $NBLINES -lt 60; then
-    echo "Error: more than 60 non-empty lines should be returned"
-    echo "output:"
-    clang++-$VERSION -P -E foo.cc
-    exit 42
-fi
-
-if [ $DEB_HOST_ARCH == "amd64" -o $DEB_HOST_ARCH == "i386" ]; then
-    # Fails on arm64 with
-    # /usr/lib/llvm-10/lib/clang/10.0.0/include/mmintrin.h:33:5: error: use of undeclared identifier '__builtin_ia32_emms'; did you mean '__builtin_isless'?
-    echo '#include <emmintrin.h>' > foo.cc
-    clang++-$VERSION -c foo.cc
-fi
-
-# Bug 913213
-echo '#include <limits.h>' | clang-$VERSION -E - > /dev/null
-
-# Bug launchpad #1488254
-echo '
-#include <string>
-std::string hello = "Hello, world!\n";
-' > foo.cc
-
-echo '
-#include <string>
-#include <iostream>
-extern std::string hello;
-int main() {
-    std::cout << hello;
-    return 0;
-} ' > bar.cc
-
-g++ -c foo.cc && g++ foo.o bar.cc && ./a.out  > /dev/null || true
-clang++-$VERSION -c foo.cc && clang++-$VERSION foo.o bar.cc && ./a.out  > /dev/null
-g++ -c foo.cc && clang++-$VERSION foo.o bar.cc && ./a.out  > /dev/null || true
-clang++-$VERSION -c foo.cc -fPIC && g++ foo.o bar.cc && ./a.out > /dev/null || true
-
-## test z3
-echo '
-void clang_analyzer_eval(int);
-void testBitwiseRules(unsigned int a, int b) {
-  clang_analyzer_eval((1 & a) <= 1); // expected-warning{{TRUE}}
-  // with -analyzer-constraints=z3, it can tell that it is FALSE
-  // without the option, it is unknown
-  clang_analyzer_eval((b | -2) >= 0); // expected-warning{{FALSE}}
+    rm -rf "${cmake_test_dir}"
 }
-' > foo.c
 
-clang-$VERSION -cc1  -analyze -analyzer-constraints=range -analyzer-checker=core,debug.ExprInspection -analyzer-constraints=z3 foo.c &> foo.log || true
-if ! grep -q "error: analyzer constraint manager 'z3' is only available if LLVM was built with -DLLVM_ENABLE_Z3_SOLVER=ON" foo.log; then
-    # Should work
-    clang-$VERSION -cc1  -analyze -analyzer-constraints=range -analyzer-checker=core,debug.ExprInspection -verify -analyzer-config eagerly-assume=false -analyzer-constraints=z3 foo.c
-    clang-$VERSION -cc1  -analyze -analyzer-constraints=range -analyzer-checker=core,debug.ExprInspection -analyzer-constraints=z3 foo.c &> foo.log
-    if ! grep -q "2 warnings generated." foo.log; then
-        echo "Should find 2 warnings"
-        exit 1
+@test "Test CMake lib detection with LLVM and Clang" {
+    # # https://reviews.llvm.org/D107799#3027607
+    if ! dpkg -l | grep -q zlib1g-dev; then
+        skip "zlib1g-dev is not installed"
     fi
-else
-    echo "z3 support not available"
-fi
 
-# Should fail
-clang-$VERSION -cc1  -analyze -analyzer-constraints=range -analyzer-checker=core,debug.ExprInspection -verify -analyzer-config eagerly-assume=false foo.c &> foo.log || true
-if grep -q "File a.c Line 7: UNKNOWN" foo.log; then
-    echo "Should fail without -analyzer-constraints=z3"
-    exit 1
-fi
+    local cmake_test_dir="${BATS_TMPDIR}/cmaketest"
+    mkdir -p "${cmake_test_dir}"
 
-clang-$VERSION -cc1  -analyze -analyzer-constraints=range -analyzer-checker=core,debug.ExprInspection foo.c &> foo.log
-if ! grep -q "warnings generated." foo.log; then
-    echo "Should find at least 2 warnings"
-    exit 1
-fi
+    cat > "${cmake_test_dir}/CMakeLists.txt" <<EOF
+cmake_minimum_required(VERSION 3.0)
+project(test)
+find_package(ZLIB)
+EOF
 
-# bug 827866
-echo 'bool testAndSet(void *atomic) {
-    return __atomic_test_and_set(atomic, __ATOMIC_SEQ_CST);
-}'> foo.cpp
-clang++-$VERSION -c -target aarch64-linux-gnu foo.cpp
-if ! file foo.o 2>&1 | grep -i -q "aarch64"; then
-    echo "Could not find the string 'aarch64' in the output of file. Output:"
-    file foo.o
-    exit 42
-fi
+    mkdir -p "${cmake_test_dir}/foo"
+    pushd "${cmake_test_dir}/foo" > /dev/null
 
-clang-$VERSION --target=arm-linux-gnueabihf -dM -E -xc - < /dev/null &> foo.log
-if ! grep -q "#define __ARM_ARCH 7" foo.log; then
-    # bug 930008
-    echo "The target arch for arm should be v7"
-    cat foo.log
-    exit 42
-fi
+    # Run CMake and capture the output
+    run cmake -DCMAKE_C_COMPILER=clang-$VERSION -DCMAKE_CXX_COMPILER=clang++-$VERSION ..
+    assert_success "CMake failed to run with ZLIB detection"
 
-echo '
-#include <string.h>
-int
-main ()
-{
-  (void) strcat;
-  return 0;
-}' > foo.c
-clang-$VERSION -c foo.c
+    # Ensure ZLIB is detected successfully
+    refute_output -p "Could NOT find ZLIB" "CMake could not find ZLIB even though zlib1g-dev is installed"
 
-echo '#include <errno.h>
-int main() {} ' > foo.c
-clang-$VERSION foo.c
+    popd > /dev/null
+    rm -rf "${cmake_test_dir}"
+}
+@test "Test CMake Clang detection (Bug 994827)" {
+    local cmake_test_dir="${BATS_TMPDIR}/cmaketest"
+    mkdir -p "${cmake_test_dir}"
 
-echo '#include <chrono>
-int main() { }' > foo.cpp
-clang++-$VERSION -std=c++11 foo.cpp
+    cat > "${cmake_test_dir}/CMakeLists.txt" <<EOF
+cmake_minimum_required(VERSION 3.18)
+project(testllvm)
 
-echo "Testing linking clang-cpp ..."
+find_package(Clang REQUIRED CONFIG HINTS "/usr/lib/llvm-${VERSION}/lib/cmake/clang/")
+EOF
 
-clang-$VERSION -lclang-cpp$VERSION -v foo.cpp -o o &> /dev/null || true
-if ! ldd o 2>&1|grep -q  libclang-cpp; then
-	echo "Didn't link against libclang-cpp$VERSION"
-	exit 42
-fi
-./o > /dev/null
+    mkdir -p "${cmake_test_dir}/foo"
+    pushd "${cmake_test_dir}/foo" > /dev/null
 
-check_symlink() {
-    P="/usr/lib/llvm-$VERSION/lib/$1"
-    if test ! -e $P; then
-        echo "invalid symlink $P"
-        ls -al $P
-        exit 1
+    # Run CMake and check for success
+    run cmake ..
+    assert_success "CMake failed to detect Clang with the specified HINTS path"
+
+    popd > /dev/null
+    rm -rf "${cmake_test_dir}"
+}
+
+# ===================== libc++
+
+@test "Test libc++ and libc++abi integration" {
+    echo '#include <vector>
+    #include <string>
+    #include <iostream>
+    int main() {
+        std::vector<std::string> v;
+        v.push_back("test");
+        return 0;
+    }' > "${BATS_TMPDIR}/libcxx_test.cpp"
+
+    run clang++-$VERSION -stdlib=libc++ -lc++abi "${BATS_TMPDIR}/libcxx_test.cpp" -o "${BATS_TMPDIR}/libcxx_test"
+    assert_success
+
+    run "${BATS_TMPDIR}/libcxx_test"
+    assert_success
+}
+
+skip_if_arch() {
+    if [ "$DEB_HOST_ARCH" = "$1" ]; then
+        skip "Test not supported on $1 architecture"
     fi
 }
 
-# check_symlink "libclang-cpp.so.$VERSION" why is that one needed?
-check_symlink "libclang-$VERSION.so"
-check_symlink "libclang.so"
+# ===================== wasm
 
-if [ $DEB_HOST_ARCH != "i386" ]; then
-    echo "Testing python clang ..."
-    python3 -c 'from ctypes import *; import clang.cindex; config = clang.cindex.Config(); verfunc = config.lib.clang_getClangVersion; verfunc.restype = c_char_p ; print(verfunc())'
-fi
+@test "Test WASM support for C program with wasi-libc" {
+    if ! dpkg -l | grep -q wasi-libc; then
+        skip "wasi-libc not installed"
+    fi
 
-echo "Testing code coverage ..."
+    # Test C program compilation for WASM
+    echo '#include <stdio.h>
+    int main(int argc, char *argv[]) {
+        printf("%s\n", "Hello World!");
+    }' > "${BATS_TMPDIR}/wasm_printf_test.c"
 
-echo '#include <stdio.h>
-int main() {
-if (1==1) {
-	printf("true");
-}else{
-	printf("false");
-	return 42;
+    # Compile with clang targeting wasm32-wasi
+    run clang-$VERSION -target wasm32-wasi -o "${BATS_TMPDIR}/wasm_printf" "${BATS_TMPDIR}/wasm_printf_test.c"
+    assert_success "Failed to compile printf.c for wasm32-wasi"
+
+    # Check the output binary is a WebAssembly file
+    run file "${BATS_TMPDIR}/wasm_printf"
+    assert_output -p "WebAssembly"
+
+    # Clean up
+    rm -f "${BATS_TMPDIR}/wasm_printf_test.c" "${BATS_TMPDIR}/wasm_printf"
 }
-return 0;}' > foo.c
-clang-$VERSION --coverage foo.c -o foo
-./foo > /dev/null
-if test ! -f foo.gcno; then
-    echo "Coverage failed";
-fi
 
-echo "#include <iterator>" > foo.cpp
-clang++-$VERSION -c foo.cpp
+@test "Test WASM support for C++ program with wasi-libc" {
+    if ! dpkg -l | grep -q wasi-libc; then
+        skip "wasi-libc not installed"
+    fi
 
-echo "Testing linking ..."
-if test ! -f /usr/lib/llvm-$VERSION/bin/../lib/LLVMgold.so; then
-    echo "Install llvm-$VERSION-dev"
-    exit 1
-fi
+    # Test C++ program compilation for WASM
+    echo '#include <iostream>
+    int main() {
+        std::cout << "Hello World!" << std::endl;
+    }' > "${BATS_TMPDIR}/wasm_cout_test.cpp"
 
-echo '#include <stdio.h>
-int main() {
-if (1==1) {
-  printf("true");
-}else{
-  printf("false");
-  return 42;
+    # Compile with clang++ targeting wasm32-wasi
+    run clang++-$VERSION --target=wasm32-wasi -o "${BATS_TMPDIR}/wasm_cout" "${BATS_TMPDIR}/wasm_cout_test.cpp"
+    assert_success "Failed to compile cout.cpp for wasm32-wasi"
+
+    # Check the output binary is a WebAssembly file
+    run file "${BATS_TMPDIR}/wasm_cout"
+    assert_output -p "WebAssembly"
+
+    # Clean up
+    rm -f "${BATS_TMPDIR}/wasm_cout_test.cpp" "${BATS_TMPDIR}/wasm_cout"
 }
-return 0;}' > foo.c
-rm foo bar.cc
 
-clang-$VERSION -flto foo.c -opaque-pointers -o foo
-./foo > /dev/null
+# ===================== sanitizers
 
-clang-$VERSION -fuse-ld=gold foo.c -o foo
-./foo > /dev/null
+@test "Test Memory sanitizer" {
+    skip_if_arch "i386"
 
-# test thinlto
-echo "int foo(void) {	return 0; }"> foo.c
-echo "int foo(void); int main() {foo();	return 0;}">main.c
-clang-$VERSION -flto=thin -O2 foo.c main.c -o foo
-./foo > /dev/null
-clang-$VERSION -flto=thin -O2 foo.c main.c -c
+    echo '#include <stdlib.h>
+    int main() {
+        int *a = (int*)malloc(sizeof(int));
+        int b = *a;  // Use uninitialized value
+        free(a);
+        return b;
+    }' > "${BATS_TMPDIR}/msan_test.c"
 
-# understand LTO files
-# see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=919020
-clang-$VERSION foo.c -flto -c
-file foo.o|grep -q "LLVM IR bitcode"
-if ! llvm-nm-$VERSION foo.o|grep -q "T foo"; then
-    echo "gold linker isn't understood"
-    exit 1
-fi
+    run clang-$VERSION -fsanitize=memory -o "${BATS_TMPDIR}/msan_test" "${BATS_TMPDIR}/msan_test.c"
+    assert_success
+}
 
-echo "Testing lld-$VERSION ..."
+@test "Test undefined behavior sanitizer" {
+    echo '#include <stdio.h>
+    int main(int argc, char **argv) {
+        int k = 0x7fffffff;
+        k += argc;  // potential overflow
+        return 0;
+    }' > "${BATS_TMPDIR}/ubsan_test.c"
 
-if test ! -f /usr/bin/lld-$VERSION; then
-    echo "Install lld-$VERSION"
-    exit 1
-fi
-clang-$VERSION -fuse-ld=lld -O2 foo.c main.c -o foo
-./foo > /dev/null
+    run clang-$VERSION -fsanitize=undefined -o "${BATS_TMPDIR}/ubsan_test" "${BATS_TMPDIR}/ubsan_test.c"
+    assert_success
+}
 
-if ls -al1 /usr/bin/ld.lld|grep -q ld.lld-$VERSION; then
-# https://bugs.llvm.org/show_bug.cgi?id=40659
-# -fuse-ld=lld will call lld
-# Mismatch of version can fail the check
-# so, only run it when /usr/bin/lld == $VERSION
-    clang-$VERSION -fuse-ld=lld -flto -O2 foo.c main.c -o foo
-    ./foo > /dev/null
-fi
+@test "Test compiler-rt library presence" {
+    run clang-$VERSION --target=x86_64-unknown-linux-gnu --rtlib=compiler-rt --print-libgcc-file-name
+    assert_success
+    assert_output -p 'libclang_rt'
+}
 
-clang-$VERSION -fuse-ld=lld-$VERSION -O2 foo.c main.c -o foo
-./foo > /dev/null
+# ===================== libfuzzer
 
-# Bug 916975
-file foo &> foo.log
-if ! grep -q "BuildID" foo.log; then
-    echo "BuildID isn't part of the generated binary (lld generation)"
-    exit 1
-fi
-# Bug 916975
-clang-$VERSION -O2 foo.c main.c -o foo2
-file foo2 &> foo2.log
-if ! grep -q "BuildID" foo2.log; then
-    echo "BuildID isn't part of the generated binary (ld generation)"
-    exit 1
-fi
+@test "Test libFuzzer presence" {
+    run test -f "/usr/lib/llvm-$VERSION/lib/libFuzzer.a"
+    assert_success
+}
+@test "Test libFuzzer compilation and execution across architectures" {
+    if [[ "$DEB_HOST_ARCH" != "amd64" && "$DEB_HOST_ARCH" != "i386" ]]; then
+        skip "Test not applicable on architectures other than amd64 or i386"
+    fi
 
-strip foo2
-file foo2 &> foo2.log
-if ! grep -q "BuildID" foo2.log; then
-    echo "BuildID isn't part of the generated binary (stripped)"
-    exit 1
-fi
-rm foo2 foo2.log
-
-if test ! -f /usr/lib/llvm-$VERSION/bin/llvm-symbolizer; then
-    echo "Install llvm-$VERSION"
-    exit 1
-fi
-
-echo "vzeroupper" | llvm-exegesis-$VERSION -mode=uops -snippets-file=- &> foo.log || true
-if grep -q -E "(built without libpfm|cannot initialize libpfm)" foo.log; then
-    echo "could not run llvm-exegesis correctly"
-    cat foo.log|head
-    exit 42
-fi
-
-if test ! -f /usr/lib/llvm-$VERSION/lib/libFuzzer.a; then
-    echo "Install libfuzzer-$VERSION-dev";
-    exit -1;
-fi
-
-echo "Testing libfuzzer-$VERSION-dev ..."
-
-cat << EOF > test_fuzzer.cc
+    # Create a fuzzer test source file
+    cat > "${BATS_TMPDIR}/test_fuzzer.cc" <<EOF
 #include <stdint.h>
 #include <stddef.h>
-extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
-  if (size > 0 && data[0] == 'H')
-    if (size > 1 && data[1] == 'I')
-       if (size > 2 && data[2] == '!')
-       __builtin_trap();
-  return 0;
-}
 
+extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
+    if (size > 0 && data[0] == 'H') {
+        if (size > 1 && data[1] == 'I') {
+            if (size > 2 && data[2] == '!') {
+                __builtin_trap();
+            }
+        }
+    }
+    return 0;
+}
 EOF
 
-clang++-$VERSION -fsanitize=address -fsanitize-coverage=edge,trace-pc test_fuzzer.cc /usr/lib/llvm-$VERSION/lib/libFuzzer.a
-if ! ./a.out 2>&1 | grep -q -E "(Test unit written|PreferSmall)"; then
-    echo "fuzzer failed"
-    exit 42
-fi
+    # Compile the test with libFuzzer
+    run clang-$VERSION -fsanitize=fuzzer "${BATS_TMPDIR}/test_fuzzer.cc" -o "${BATS_TMPDIR}/a.out" &> "${BATS_TMPDIR}/foo.log"
 
-clang++-$VERSION -fsanitize=address,fuzzer test_fuzzer.cc
-if ! ./a.out 2>&1 | grep -q "libFuzzer: deadly signal"; then
-    echo "fuzzer failed"
-fi
+    # Check for missing file errors in the log
+    if grep -q "No such file or directory" "${BATS_TMPDIR}/foo.log"; then
+        skip "Fuzzer compilation failed due to missing files or incorrect libraries"
+    fi
 
-echo 'int main(int argc, char **argv) {
-  int *array = new int[100];
-  delete [] array;
-  return array[argc];  // BOOM
-}' > foo.cpp
-clang++-$VERSION -O1 -g -fsanitize=address -fno-omit-frame-pointer foo.cpp
-ASAN_OPTIONS=verbosity=1 ./a.out &> foo.log || true
-if ! grep -q "Init done" foo.log; then
-    echo "asan verbose mode failed"
-    cat foo.log
-    exit 42
-fi
+    run "${BATS_TMPDIR}/a.out"
+    assert_output -e "(Test unit written|PreferSmall)"
+}
 
-# See also https://bugs.llvm.org/show_bug.cgi?id=39514 why
-# /usr/bin/llvm-symbolizer-7 doesn't work
-ASAN_OPTIONS=verbosity=2:external_symbolizer_path=/usr/lib/llvm-$VERSION/bin/llvm-symbolizer ./a.out &> foo.log || true
-if ! grep -q "Using llvm-symbolizer" foo.log; then
-    echo "could not find llvm-symbolizer path"
-    cat foo.log
-    exit 42
-fi
-if ! grep -q "new\[\](unsigned" foo.log; then
-    echo "could not symbolize correctly"
-    cat foo.log
-    exit 42
-fi
+@test "Test libFuzzer functionality" {
+    if [[ "$DEB_HOST_ARCH" != "amd64" && "$DEB_HOST_ARCH" != "i386" ]]; then
+        skip "Test not applicable on architectures other than amd64 or i386"
+    fi
+    echo '#include <stdint.h>
+    #include <stddef.h>
+    extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
+        if (size > 0 && data[0] == '\''H'\'')
+            if (size > 1 && data[1] == '\''I'\'')
+                if (size > 2 && data[2] == '\''!'\'')
+                    __builtin_trap();
+        return 0;
+    }' > "${BATS_TMPDIR}/fuzzer_test.cc"
 
-if ! grep -q "foo.cpp:3:3" foo.log; then
-    echo "could not symbolize correctly"
-    cat foo.log
-    exit 42
-fi
-./a.out &> foo.log || true
-if ! grep -q "new\[\](unsigned" foo.log; then
-    echo "could not symbolize correctly"
-    cat foo.log
-    exit 42
-fi
+    # Compile with libFuzzer explicitly linked
+    run clang++-$VERSION -fsanitize=address,fuzzer "${BATS_TMPDIR}/fuzzer_test.cc" -o "${BATS_TMPDIR}/fuzzer_test"
+    assert_success "Fuzzer compilation failed"
 
-if ! grep -q "foo.cpp:3:3" foo.log; then
-    echo "could not symbolize correctly"
-    cat foo.log
-    exit 42
-fi
+    run "${BATS_TMPDIR}/fuzzer_test"
+    assert_failure
+    assert_output -p "libFuzzer: deadly signal"
 
-# Example from https://github.com/google/fuzzing/blob/master/tutorial/libFuzzerTutorial.md
-# coverage fuzzing
-cat << EOF > StandaloneFuzzTargetMain.c
+    run clang++-$VERSION -fsanitize=address -fsanitize-coverage=edge,trace-pc "${BATS_TMPDIR}/fuzzer_test.cc" /usr/lib/llvm-$VERSION/lib/libFuzzer.a -o "${BATS_TMPDIR}/fuzzer_test_explicit"
+    assert_success "Fuzzer compilation with explicit linking failed"
+    run "${BATS_TMPDIR}/fuzzer_test_explicit"
+    assert_output -e "(Test unit written|PreferSmall)"
+}
+
+@test "Test coverage Fuzzing with llvm-profdata and llvm-cov" {
+    # Create the main fuzzing driver
+    cat > "${BATS_TMPDIR}/StandaloneFuzzTargetMain.c" <<EOF
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -716,7 +1016,8 @@ int main(int argc, char **argv) {
 }
 EOF
 
-cat << EOF > fuzz_me.cc
+    # Create the fuzzing target
+    cat > "${BATS_TMPDIR}/fuzz_me.cc" <<EOF
 #include <stdint.h>
 #include <stddef.h>
 
@@ -733,253 +1034,202 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
   return 0;
 }
 EOF
-clang-$VERSION -fprofile-instr-generate -fcoverage-mapping fuzz_me.cc StandaloneFuzzTargetMain.c
 
-rm -rf CORPUS
-mkdir -p CORPUS
-echo -n A > CORPUS/A
-./a.out CORPUS/* &> /dev/null
-if ! ./a.out CORPUS/* 2>&1 | grep -q "running 1 inputs"; then
-    echo "Coverage fuzzing failed"
-    exit 1
-fi
-llvm-profdata-$VERSION merge -sparse *.profraw -o default.profdata
-llvm-cov-$VERSION show a.out -instr-profile=default.profdata -name=FuzzMe &> foo.log
-if ! grep -q "return DataSize >= 3" foo.log; then
-    echo "llvm-cov didn't show the expected output in fuzzing"
-    exit 1
-fi
-echo -n FUZA > CORPUS/FUZA && ./a.out CORPUS/* &> /dev/null
-llvm-profdata-$VERSION merge -sparse *.profraw -o default.profdata
-llvm-cov-$VERSION show a.out -instr-profile=default.profdata -name=FuzzMe &> foo.log
-if ! grep -q "Data\[3\] == 'Z';" foo.log; then
-    echo "llvm-cov didn't show the expected output in fuzzing"
-    exit 1
-fi
-rm -rf CORPUS fuzz_me.cc StandaloneFuzzTargetMain.c
+    # Compile the fuzzing target and driver with profiling and coverage mapping
+    run clang-$VERSION -fprofile-instr-generate -fcoverage-mapping \
+        "${BATS_TMPDIR}/fuzz_me.cc" "${BATS_TMPDIR}/StandaloneFuzzTargetMain.c" \
+        -o "${BATS_TMPDIR}/a.out"
+    assert_success "Fuzzer compilation failed"
 
-echo "Testing sanitizers ..."
+    # Set up the corpus directory and create initial inputs
+    mkdir -p "${BATS_TMPDIR}/CORPUS"
+    echo -n A > "${BATS_TMPDIR}/CORPUS/A"
 
-echo '#include <stdlib.h>
-int main() {
-  char *x = (char*)malloc(10 * sizeof(char*));
-  free(x);
-  return x[5];
-}
-' > foo.c
-clang-$VERSION -o foo -fsanitize=address -O1 -fno-omit-frame-pointer -g  foo.c
-if ! ./foo 2>&1 | grep -q heap-use-after-free ; then
-    echo "sanitize=address is failing"
-    exit 42
-fi
+    # Run the fuzzer binary with initial inputs
+    run "${BATS_TMPDIR}/a.out" "${BATS_TMPDIR}/CORPUS/*"
+    # fails on purpose
+    assert_failure
+    assert_output -p "running 1 inputs"
 
-# Bug #876973
-echo '
-#include <stdio.h>
-int main(int argc, char **argv)
-{
-   printf("Hello world!\n");
-   return 0;
-}' > foo.c
+    # Merge profiling data
+    run llvm-profdata-$VERSION merge -sparse *.profraw -o "${BATS_TMPDIR}/default.profdata"
+    assert_success "Failed to merge profiling data"
 
-# segfaults on 32bit with "-lc" library (also 6.0 does segfault)
-clang-$VERSION -fsanitize=address foo.c -o foo -lc
-./foo &> /dev/null || true
+    # Generate coverage report for the function `FuzzMe`
+    run llvm-cov-$VERSION show "${BATS_TMPDIR}/a.out" \
+        -instr-profile="${BATS_TMPDIR}/default.profdata" \
+        -name=FuzzMe
+    assert_success "llvm-cov failed to generate a coverage report"
+    assert_output -p 'DataSize >= 3'
 
-echo '
-#include <pthread.h>
-#include <stdio.h>
+    # Add another input to the corpus and rerun
+    echo -n FUZA > "${BATS_TMPDIR}/CORPUS/FUZA"
+    run "${BATS_TMPDIR}/a.out" "${BATS_TMPDIR}/CORPUS/*"
+    assert_failure
+    assert_output -p "running 1 inputs"
 
-int Global;
+    # Merge profiling data again
+    run llvm-profdata-$VERSION merge -sparse *.profraw -o "${BATS_TMPDIR}/default.profdata"
+    assert_success "Failed to merge profiling data after adding new inputs"
 
-void *Thread1(void *x) {
-  Global++;
-  return NULL;
+    # Generate coverage report again
+    run llvm-cov-$VERSION show "${BATS_TMPDIR}/a.out" \
+        -instr-profile="${BATS_TMPDIR}/default.profdata" \
+        -name=FuzzMe &> "${BATS_TMPDIR}/coverage.log"
+    assert_success "llvm-cov failed to generate a coverage report after new inputs"
+    assert_output -p "Data[3] == 'Z';"
+
+    # Cleanup
+    rm -rf "${BATS_TMPDIR}/CORPUS" "${BATS_TMPDIR}/fuzz_me.cc" "${BATS_TMPDIR}/StandaloneFuzzTargetMain.c" *.profraw
 }
 
-void *Thread2(void *x) {
-  Global--;
-  return NULL;
+@test "Test BuildID in binaries for different linkers (Bug 916975)" {
+
+    echo "int foo(void) {	return 0; }"> "${BATS_TMPDIR}/foo.c"
+    echo "int foo(void); int main() {foo();	return 0;}"> "${BATS_TMPDIR}/main.c"
+
+    # Case 1: Compile and link with LLD
+    run clang-$VERSION -fuse-ld=lld -O2 "${BATS_TMPDIR}/foo.c" "${BATS_TMPDIR}/main.c" -o "${BATS_TMPDIR}/foo_lld"
+    assert_success "Compilation and linking with LLD failed"
+
+    # Check for BuildID in the LLD-linked binary
+    run file "${BATS_TMPDIR}/foo_lld"
+    assert_output -p "BuildID" "BuildID missing from binary generated with LLD"
+
+    # Case 2: Compile and link with the specific LLD version
+    run clang-$VERSION -fuse-ld=lld-$VERSION -O2 "${BATS_TMPDIR}/foo.c" "${BATS_TMPDIR}/main.c" -o "${BATS_TMPDIR}/foo_lld_version"
+    assert_success "Compilation and linking with LLD-$VERSION failed"
+
+    # Check for BuildID in the LLD-$VERSION-linked binary
+    run file "${BATS_TMPDIR}/foo_lld_version"
+    assert_output -p "BuildID" "BuildID missing from binary generated with LLD-$VERSION"
+
+    # Case 3: Compile and link with default LD, then strip the binary
+    run clang-$VERSION -O2 "${BATS_TMPDIR}/foo.c" "${BATS_TMPDIR}/main.c" -o "${BATS_TMPDIR}/foo_ld"
+    assert_success "Compilation and linking with default LD failed"
+
+    # Check for BuildID in the LD-linked binary
+    run file "${BATS_TMPDIR}/foo_ld"
+    assert_output -p "BuildID" "BuildID missing from binary generated with default LD"
+
+    # Strip the binary and recheck for BuildID
+    run strip "${BATS_TMPDIR}/foo_ld"
+    assert_success "Stripping binary failed"
+
+    run file "${BATS_TMPDIR}/foo_ld"
+    assert_output -p "BuildID" "BuildID missing from stripped binary"
+
+    # Cleanup
+    rm -f "${BATS_TMPDIR}/foo.c" "${BATS_TMPDIR}/main.c" "${BATS_TMPDIR}/foo_lld" "${BATS_TMPDIR}/foo_lld_version" "${BATS_TMPDIR}/foo_ld"
 }
 
-int main() {
-  pthread_t t[2];
-  pthread_create(&t[0], NULL, Thread1, NULL);
-  pthread_create(&t[1], NULL, Thread2, NULL);
-  pthread_join(t[0], NULL);
-  pthread_join(t[1], NULL);
-} ' > foo.c
+@test "Test optimization record generation" {
+    echo '#define N 1536
+    float A[N][N];
+    void test() {
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < N; j++)
+                A[i][j] = 0;
+    }' > "${BATS_TMPDIR}/opt_test.c"
 
-# fails on i386 with: clang: error: unsupported option '-fsanitize=thread' for target 'i686-pc-linux-gnu'
-if [ $DEB_HOST_ARCH != "i386" ]; then
-    clang-$VERSION -o foo -fsanitize=thread -g -O1 foo.c
-    if ! strings ./foo 2>&1 | grep -q "tsan"; then
-        echo "binary doesn't contain tsan code"
-        strings foo
-        exit 42
-    fi
-    if ! ./foo 2>&1 | grep -q "data race"; then
-        echo "sanitize=address is failing"
-        exit 42
-    fi
-fi
+    run clang-$VERSION -S -O2 -fsave-optimization-record -emit-llvm "${BATS_TMPDIR}/opt_test.c" -o "${BATS_TMPDIR}/opt_test.s"
+    assert_success
 
-echo '
-class a {
-public:
-  ~a();
-};
-template <typename, typename> using b = a;
-struct f {
-  template <typename d> using e = b<a, d>;
-};
-struct g {
-  typedef f::e<int> c;
-};
-class h {
-  struct : g::c { int i; };
-};
-struct m {
-  h i;
-};
-template <typename> void __attribute__((noreturn)) j();
-void k() {
-  m l;
-  j<int>();
-}' > foo.cpp
-clang++-$VERSION -std=c++14 -O3 -fsanitize=address -fsanitize=undefined -c foo.cpp -fno-crash-diagnostics
+    run test -s "${BATS_TMPDIR}/opt_test.opt.yaml"
+    assert_success
+}
 
+@test "Test LLVM tools - llvm-dis" {
+    echo 'int main() { return 42; }' > "${BATS_TMPDIR}/llvm_tools_test.c"
 
-# fails on 32 bit, seems a real BUG in the package, using 64bit static libs?
-LANG=C clang-$VERSION -fsanitize=fuzzer test_fuzzer.cc &> foo.log || true
-if ! grep "No such file or directory" foo.log; then
-    # This isn't failing on 64, so, look at the results
-    if ! ./a.out 2>&1 | grep -q -E "(Test unit written|PreferSmall)"; then
-        echo "fuzzer. Output:"
-        ./a.out || true
-        if [ $DEB_HOST_ARCH == "amd64" -o $DEB_HOST_ARCH == "i386" ]; then
-            # Don't fail on arm64 and ppc64el
-            exit 42
+    run clang-$VERSION -O3 -emit-llvm "${BATS_TMPDIR}/llvm_tools_test.c" -c -o "${BATS_TMPDIR}/llvm_tools_test.bc"
+    assert_success
+
+    run llvm-dis-$VERSION < "${BATS_TMPDIR}/llvm_tools_test.bc"
+    assert_success
+    assert_output -p "42"
+}
+
+@test "Test LLVM debuginfod-find" {
+    run llvm-debuginfod-find-$VERSION --executable=1 5d016364c1cb69dd
+
+    # Check that it's not built without curl support
+    refute_output -p "No working HTTP"
+}
+
+@test "Test libclang library versions" {
+    run test ! -f "/usr/lib/llvm-$VERSION/lib/libclang.so.1"
+    assert_success "/usr/lib/llvm-$VERSION/lib/libclang.so.1 found. - Break the build as it breaks the coinstalability"
+}
+
+@test "Test clang-cpp linking" {
+    echo '#include <vector>
+    int main() { return 0; }' > "${BATS_TMPDIR}/cpp_link_test.cpp"
+
+    run clang-$VERSION -lclang-cpp$VERSION "${BATS_TMPDIR}/cpp_link_test.cpp" -o "${BATS_TMPDIR}/cpp_link_test"
+    assert_success
+
+    run ldd "${BATS_TMPDIR}/cpp_link_test"
+    assert_output -p "libclang-cpp"
+    run "${BATS_TMPDIR}/cpp_link_test"
+    assert_success
+}
+
+@test "Verify symbolic links for LLVM libraries" {
+    check_symlink() {
+        local symlink_path="/usr/lib/llvm-${VERSION}/lib/$1"
+
+        # Check if the symlink exists
+        if [ ! -e "$symlink_path" ]; then
+            echo "Invalid symlink: $symlink_path"
+            ls -al "$symlink_path" 2>/dev/null || true
+            fail "Symbolic link validation failed for $1"
         fi
-    fi
-fi
+    }
 
-echo 'int main() {
-	int a=0;
-	return a;
-}
-' > foo.c
-clang-$VERSION -g -o bar foo.c
-
-# ABI issue between gcc & clang with clang 7
-# https://bugs.llvm.org/show_bug.cgi?id=39427
-# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=913271
-if test $VERSION -eq 7; then
-echo '
-#include <llvm/ADT/ArrayRef.h>
-#include <llvm/ADT/Optional.h>
-namespace llvm { class Constant{}; class Type; class Value; }
-extern llvm::Constant* bar (llvm::Type*, llvm::Constant*, llvm::ArrayRef<llvm::Value*>, bool, llvm::Optional<unsigned> o, llvm::Type*);
-#ifdef PART2
-llvm::Constant* bar (llvm::Type*, llvm::Constant*, llvm::ArrayRef<llvm::Value*>, bool, llvm::Optional<unsigned> o, llvm::Type*)
-{
-   return o.hasValue()?static_cast<llvm::Constant*>(nullptr)+1:nullptr;
-}
-#endif
-#ifndef PART2
-static llvm::Constant* doConstantRef(llvm::Type* type, llvm::Constant* var, llvm::ArrayRef<llvm::Value*> steps)
-{
-   llvm::Optional<unsigned> inRangeIndex;
-   return bar(type, var, steps, false, inRangeIndex, nullptr);
-}
-bool foo()
-{
-   llvm::Constant* var = nullptr;
-   llvm::Value* zero = nullptr;
-   llvm::Value* indexes[2] = {zero, zero};
-   llvm::ArrayRef<llvm::Value*> steps(indexes, 2);
-   auto result = doConstantRef(nullptr, var, steps);
-   return result;
-}
-int main()
-{
-   return foo();
-}
-#endif
-' > foo.cpp
-FLAGS="-I/usr/lib/llvm-$VERSION/include -fPIC -fvisibility-inlines-hidden -Werror=date-time -std=c++11 -Wall -Wextra -Wno-unused-parameter -Wwrite-strings -Wcast-qual -Wno-missing-field-initializers -pedantic -Wno-long-long -Wdelete-non-virtual-dtor -Wno-comment -ffunction-sections -fdata-sections -fno-common -Woverloaded-virtual -fno-strict-aliasing -fPIC -fvisibility-inlines-hidden -Werror=date-time -std=c++11 -Wall -Wextra -Wno-unused-parameter -Wwrite-strings -Wcast-qual -Wmissing-field-initializers -pedantic -Wno-long-long -Wnon-virtual-dtor -Wdelete-non-virtual-dtor -ffunction-sections -fdata-sections -O2 -DNDEBUG  -fno-exceptions -D_GNU_SOURCE -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D__STDC_LIMIT_MACROS"
-
-clang++-$VERSION -c -o part1.o foo.cpp $FLAGS
-if test -f /usr/bin/g++; then
-    g++ -c -o part2.o -DPART2 foo.cpp $FLAGS
-    clang++-$VERSION -o foo part1.o part2.o $FLAGS
-    ./foo
-fi
-rm part1.o part2.o
-fi
-
-# OpenMP
-if dpkg -l libomp-$VERSION-dev >/dev/null 2>&1; then
-    echo "testing libomp"
-cat <<EOF > foo.c
-//test.c
-#include "omp.h"
-#include <stdio.h>
-
-int main(void) {
-  #pragma omp parallel
-  printf("thread %d\n", omp_get_thread_num());
-}
-EOF
-clang-$VERSION foo.c -fopenmp -o o
-./o > /dev/null
-else
-    echo "OpenMP check skipped, no libomp-$VERSION-dev available."
-fi
-
-# liboffload
-if dpkg -l liboffload-$VERSION-dev >/dev/null 2>&1; then
-    echo "testing liboffload"
-cat <<EOF > foo.cpp
-#include <complex>
-
-using complex = std::complex<double>;
-
-void zaxpy(complex *X, complex *Y, complex D, std::size_t N) {
-#pragma omp target teams distribute parallel for
-  for (std::size_t i = 0; i < N; ++i)
-    Y[i] = D * X[i] + Y[i];
+    # Check required symlinks
+    check_symlink "libclang-cpp.so"
+    check_symlink "libclang-${VERSION}.so"
+    check_symlink "libclang.so"
 }
 
-int main() {
-  const std::size_t N = 1024;
-  complex X[N], Y[N], D;
-#pragma omp target data map(to:X[0 : N]) map(tofrom:Y[0 : N])
-  zaxpy(X, Y, D, N);
+@test "Test Python Clang bindings" {
+    skip_if_arch "i386"
+    echo "
+from ctypes import *
+libclang='/usr/lib/llvm-$VERSION/lib/libclang-$VERSION.so.1'
+lib = CDLL(libclang)
+fun = lib.clang_getAddressSpace
+print(fun)
+    " > foo.py
+
+    run python3 foo.py
+    assert_output -p "_FuncPtr"
 }
-EOF
-clang++-$VERSION -fopenmp -fopenmp-targets=nvptx64 -O3 foo.cpp -c
-llvm-readelf-$VERSION -WS foo.o
-# TODO pipe
-clang++-$VERSION -fopenmp -fopenmp-targets=nvptx64 foo.o -o o
-./o > /dev/null
-else
-    echo "liboffload check skipped, no liboffload-$VERSION-dev available."
-fi
 
-if test ! -f /usr/lib/llvm-$VERSION/include/c++/v1/vector; then
-    echo "Install libc++-$VERSION-dev";
-    exit -1;
-fi
+# ===================== libc++
 
-if test ! -f /usr/lib/llvm-$VERSION/lib/libc++abi.so; then
-    echo "Install libc++abi-$VERSION-dev";
-    exit -1;
-fi
+@test "Test libc++ linking" {
+    echo '#include <vector>
+    	int main() { std::vector<int> v; v.push_back(1); return 0; }' > foo.cpp
+    run clang++-$VERSION -stdlib=libc++ foo.cpp -o foo
+    assert_success
+    run ./foo
+	assert_success
+}
 
+@test "Test libc++abi linking" {
+    echo '#include <vector>
+    	int main() { std::vector<int> v; v.push_back(1); return 0; }' > foo.cpp
+    run clang++-$VERSION -stdlib=libc++ -lc++abi foo.cpp -o foo
+    assert_success
+    run ./foo
+    assert_success
+}
 
-# libc++
-echo '
+@test "Test libc++ compilation and linking" {
+    # Create the C++ source file
+    cat > "${BATS_TMPDIR}/libcxx_test.cpp" <<EOF
 #include <vector>
 #include <string>
 #include <iostream>
@@ -995,95 +1245,90 @@ int main(void) {
         cout << *it << " ";
     }
     return 0;
-}' > foo.cpp
-clang++-$VERSION -stdlib=libc++ foo.cpp -o o
-if ! ldd o 2>&1|grep -q  libc++.so.1; then
-    echo "not linked against libc++.so.1"
-    exit -1
-fi
-if ! ldd o 2>&1|grep -q  libc++abi.so.1; then
-    echo "not linked against libc++abi.so.1"
-    exit -1
-fi
-
-./o > /dev/null
-clang++-$VERSION -std=c++11 -stdlib=libc++ foo.cpp -o o
-./o > /dev/null
-clang++-$VERSION -std=c++14 -stdlib=libc++ foo.cpp -lc++experimental -o o
-./o > /dev/null
-
-# Bug 46321
-cat > test.cpp << EOF
-#include <iostream>
-int main() {
-  std::cout << "Hello World!" << std::endl;
 }
 EOF
-clang++-$VERSION -stdlib=libc++ -unwindlib=libunwind -rtlib=compiler-rt -static-libstdc++ -static-libgcc test.cpp  -lpthread -ldl -o test
-./test > /dev/null
 
-clang++-$VERSION -stdlib=libc++ -static-libstdc++ -fuse-ld=lld -l:libc++abi.a test.cpp -o test
-./test > /dev/null
+    # Compile and link with libc++
+    run clang++-$VERSION -stdlib=libc++ "${BATS_TMPDIR}/libcxx_test.cpp" -o "${BATS_TMPDIR}/o"
+    assert_success "Compilation with libc++ failed"
 
-clang++-$VERSION -stdlib=libc++ -nostdlib++ test.cpp -l:libc++.a -l:libc++abi.a -pthread -o test
-./test > /dev/null
+    # Check if the binary is linked against libc++.so.1
+    run ldd "${BATS_TMPDIR}/o"
+    assert_output -p "libc++.so.1" "Binary is not linked against libc++.so.1"
 
-# bug https://bugs.llvm.org/show_bug.cgi?id=43604
+    # Check if the binary is linked against libc++abi.so.1
+    run ldd "${BATS_TMPDIR}/o"
+    assert_output -p "libc++abi.so.1" "Binary is not linked against libc++abi.so.1"
 
-cat > test.cpp << EOF
-#include <iostream>
-__attribute__((visibility("default")))
-extern "C" void plugin() {
-        std::cout << "Hello World from a plugin!" << std::endl;
+    # Run the compiled binary
+    run "${BATS_TMPDIR}/o" > /dev/null
+    assert_success "Execution of binary with libc++ failed"
+
+    # Compile with libc++ and C++11 standard
+    run clang++-$VERSION -std=c++11 -stdlib=libc++ "${BATS_TMPDIR}/libcxx_test.cpp" -o "${BATS_TMPDIR}/o_cpp11"
+    assert_success "Compilation with libc++ and C++11 failed"
+
+    # Run the C++11 binary
+    run "${BATS_TMPDIR}/o_cpp11" > /dev/null
+    assert_success "Execution of C++11 binary with libc++ failed"
+
+    # Compile with libc++, C++14 standard, and experimental features
+    run clang++-$VERSION -std=c++14 -stdlib=libc++ "${BATS_TMPDIR}/libcxx_test.cpp" -lc++experimental -o "${BATS_TMPDIR}/o_cpp14"
+    assert_success "Compilation with libc++, C++14, and experimental features failed"
+
+    # Run the C++14 experimental binary
+    run "${BATS_TMPDIR}/o_cpp14" > /dev/null
+    assert_success "Execution of C++14 binary with libc++ and experimental features failed"
 }
-EOF
-clang++-$VERSION -shared -o plugin.so -fvisibility=hidden foo.cpp -static-libstdc++ || true
-clang++-$VERSION -shared -o plugin.so -fvisibility=hidden foo.cpp -stdlib=libc++ -static-libstdc++ ||true
-rm -f plugin.so
 
-# Bug 889832
-echo '#include <iostream>
-int main() {}'  | clang++-$VERSION -std=c++1z  -x c++ -stdlib=libc++ -
+@test "Test libc++ filesystem support" {
+    echo '#include <filesystem>
+    #include <type_traits>
+    using namespace std::filesystem;
+    int main() {
+        static_assert(std::is_same<
+                path,
+                std::filesystem::path
+            >::value, "");
+        return 0;
+    }' > "${BATS_TMPDIR}/filesystem_test.cpp"
 
-if test ! -f /usr/lib/llvm-$VERSION/include/cxxabi.h; then
-    echo "Install libc++abi-$VERSION-dev";
-    exit -1;
-fi
+    run clang++-$VERSION -std=c++17 -stdlib=libc++ "${BATS_TMPDIR}/filesystem_test.cpp" -o "${BATS_TMPDIR}/filesystem_test"
+    assert_success
+}
 
-# Force the usage of libc++abi
-clang++-$VERSION -stdlib=libc++ -lc++abi foo.cpp -o o
-./o > /dev/null
-if ! ldd o 2>&1|grep -q  libc++abi.so.1; then
-    echo "not linked against libc++abi.so.1"
-    exit -1
-fi
+@test "Test libc++ and libc++abi compatibility" {
+    # Create the C++ source file
+    echo '#include <chrono>
+int main() { }' > "${BATS_TMPDIR}/foo.cpp"
 
-# Use the libc++abi and uses the libstc++ headers
-clang++-$VERSION -lc++abi foo.cpp -o o
-./o > /dev/null
-if ! ldd o 2>&1|grep -q libstdc++.so.; then
-    echo "not linked against libstdc++"
-    exit -1
-fi
+    # Part 1: Compile and link with libc++ and libc++abi
+    run clang++-$VERSION -stdlib=libc++ -lc++abi "${BATS_TMPDIR}/foo.cpp" -o "${BATS_TMPDIR}/o_libcxxabi"
+    assert_success "Compilation with libc++ and libc++abi failed"
 
-# fs from C++17
-echo '
-#include <filesystem>
-#include <type_traits>
-using namespace std::filesystem;
-int main() {
-  static_assert(std::is_same<
-          path,
-          std::filesystem::path
-      >::value, "");
-}' > foo.cpp
-clang++-$VERSION -std=c++17 -stdlib=libc++ foo.cpp -o o
-./o > /dev/null
-clang++-$VERSION -std=c++17 -stdlib=libc++ foo.cpp -lc++experimental -o o
-./o > /dev/null
+    # Execute the binary
+    run "${BATS_TMPDIR}/o_libcxxabi" > /dev/null
+    assert_success "Execution of binary linked with libc++ and libc++abi failed"
 
-# Bug LP#1586215
-echo '
+    # Check if the binary is linked against libc++abi.so.1
+    run ldd "${BATS_TMPDIR}/o_libcxxabi"
+    assert_output -p "libc++abi.so.1" "Binary is not linked against libc++abi.so.1"
+
+    # Part 2: Compile with libc++abi and use libstdc++ headers
+    run clang++-$VERSION -lc++abi "${BATS_TMPDIR}/foo.cpp" -o "${BATS_TMPDIR}/o_libstdc++"
+    assert_success "Compilation with libc++abi and libstdc++ headers failed"
+
+    # Execute the binary
+    run "${BATS_TMPDIR}/o_libstdc++" > /dev/null
+    assert_success "Execution of binary linked with libc++abi and libstdc++ headers failed"
+
+    # Check if the binary is linked against libstdc++
+    run ldd "${BATS_TMPDIR}/o_libstdc++"
+    assert_output -p "libstdc++.so." "Binary is not linked against libstdc++"
+}
+
+@test "Test C++ exception handling with libc++ (Bug 1586215)" {
+    cat > "${BATS_TMPDIR}/foo.cpp" <<EOF
 #include <string>
 #include <iostream>
 
@@ -1100,12 +1345,90 @@ int main()
     }
 
     return 0;
-}' > foo.cpp
-clang++-$VERSION -stdlib=libc++ -Wall -Werror foo.cpp -o foo
-./foo
+}
+EOF
 
-# Bug https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=914201
-echo '
+    run clang++-$VERSION -stdlib=libc++ -Wall -Werror "${BATS_TMPDIR}/foo.cpp" -o "${BATS_TMPDIR}/foo"
+    assert_success "Compilation with libc++ failed"
+
+    run "${BATS_TMPDIR}/foo"
+    assert_success "Execution of binary failed"
+}
+@test "Test inline C++ compilation with libc++ (Bug 889832)" {
+    echo '#include <iostream>
+int main() {}' > foo.cpp
+    run clang++-$VERSION -std=c++1z -x c++ -stdlib=libc++ foo.cpp
+    assert_success "Inline C++ compilation with libc++ failed"
+}
+
+@test "Test inline C++ compilation and libc++ modules (Bug 889832)" {
+
+    echo '#include <iostream>
+int main() {}' > foo.cpp
+    run clang++-$VERSION -std=c++1z -x c++ -stdlib=libc++ foo.cpp
+    assert_success "Inline C++ compilation with libc++ failed"
+
+
+    cat > "${BATS_TMPDIR}/foo.cpp" <<EOF
+import std;
+import std.compat;
+
+int main() {
+  std::cout << "Hello modular world\\n";
+  ::printf("Hello compat modular world\\n");
+}
+EOF
+
+    # Build the std module
+    run clang++-$VERSION -std=c++20 \
+        -nostdinc++ \
+        -isystem /usr/lib/llvm-$VERSION/include/c++/v1/ \
+        -Wno-reserved-module-identifier -Wno-reserved-user-defined-literal \
+        --precompile -o "${BATS_TMPDIR}/std.pcm" \
+        -c /usr/lib/llvm-$VERSION/share/libc++/v1/std.cppm
+    assert_success "Compilation of std module failed"
+
+    # Build the std.compat module
+    run clang++-$VERSION -std=c++20 \
+        -nostdinc++ \
+        -isystem /usr/lib/llvm-$VERSION/include/c++/v1/ \
+        -Wno-reserved-module-identifier -Wno-reserved-user-defined-literal \
+        --precompile -o "${BATS_TMPDIR}/std.compat.pcm" \
+        -fmodule-file=std="${BATS_TMPDIR}/std.pcm" \
+        -c /usr/lib/llvm-$VERSION/share/libc++/v1/std.compat.cppm
+    assert_success "Compilation of std.compat module failed"
+
+    # Build the test application
+    run clang++-$VERSION -std=c++20 \
+        -nostdinc++ \
+        -isystem /usr/lib/llvm-$VERSION/include/c++/v1/ \
+        -L /usr/lib/llvm-$VERSION/lib \
+        -fmodule-file=std="${BATS_TMPDIR}/std.pcm" \
+        -fmodule-file=std.compat="${BATS_TMPDIR}/std.compat.pcm" \
+        "${BATS_TMPDIR}/std.pcm" \
+        "${BATS_TMPDIR}/std.compat.pcm" \
+        -lc++ \
+        "${BATS_TMPDIR}/foo.cpp" -o "${BATS_TMPDIR}/a.out"
+    assert_success "Compilation of test application failed"
+
+    run "${BATS_TMPDIR}/a.out"
+    assert_success "Execution of test application failed"
+    assert_output -p "Hello modular world"
+    assert_output -p "Hello compat modular world"
+}
+
+@test "Test libclc package presence" {
+    if ! test -f "/usr/lib/clc/amdgcn--amdhsa.bc"; then
+        skip "libclc-$VERSION not installed"
+    fi
+
+    run test -f "/usr/lib/clc/polaris10-amdgcn-mesa-mesa3d.bc"
+    assert_success
+}
+
+@test "Test static linking with LLVM libc (libllvmlibc)" {
+
+    cat > "${BATS_TMPDIR}/main.c" <<EOF
 #include <math.h>
 int main(void)
 {
@@ -1113,111 +1436,474 @@ int main(void)
     if (isnan(f))
       return 1;
     return 0;
-}' > foo.c
-clang-$VERSION -Wconversion -Werror foo.c &> /dev/null || true
+}
+EOF
 
-if test -f /usr/bin/g++; then
-g++ -nostdinc++ -I/usr/lib/llvm-$VERSION/bin/../include/c++/v1/ -L/usr/lib/llvm-$VERSION/lib/ \
-    foo.cpp -nodefaultlibs -std=c++17 -lc++ -lc++abi -lm -lc -lgcc_s -lgcc|| true
-./o > /dev/null
-fi
+    # Compile the C program statically with libllvmlibc
+    run clang-$VERSION -static -nostdlib -nolibc -L/usr/lib/llvm-$VERSION/lib/ -lllvmlibc \
+        "${BATS_TMPDIR}/main.c" -o "${BATS_TMPDIR}/foo"
+    assert_success "Compilation with libllvmlibc failed"
+
+    # Verify no linkage to regular libc
+    run ldd "${BATS_TMPDIR}/foo"
+    refute_output -p "libc." "Binary is linked against regular libc"
+
+    # Run the binary (segfault expected)
+    run "${BATS_TMPDIR}/foo"
+    assert_failure "Execution of binary failed (segfault expected)"
+}
 
 
-if dpkg -l|grep -q flang-$VERSION; then
-    echo "Testing flang-$VERSION (Fortran) ..."
+
+@test "Test HIP language support" {
+    if ! dpkg -l | grep -q hipcc; then
+        skip "hipcc not installed"
+    fi
+
+    echo '#include <hip/hip_runtime_api.h>
+    int main() { return 0; }' > "${BATS_TMPDIR}/hip_test.hip"
+
+    run clang++-$VERSION --rocm-path=/usr -x hip -lamdhip64 "${BATS_TMPDIR}/hip_test.hip"
+    assert_success
+}
+
+@test "Test binary format check with lld" {
+    echo 'bool testAndSet(void *atomic) {
+        return __atomic_test_and_set(atomic, __ATOMIC_SEQ_CST);
+    }' > "${BATS_TMPDIR}/format_test.cpp"
+
+    run clang++-$VERSION -c -target aarch64-linux-gnu "${BATS_TMPDIR}/format_test.cpp"
+    assert_success
+
+    run file "format_test.o"
+    assert_output -p "aarch64"
+}
+
+@test "Test errno header inclusion" {
+    echo '#include <errno.h>
+    int main() { return 0; }' > "${BATS_TMPDIR}/errno_test.c"
+
+    run clang-$VERSION "${BATS_TMPDIR}/errno_test.c"
+    assert_success
+}
+
+@test "Test ARM target features (Bug 930008)" {
+    run clang-$VERSION --target=arm-linux-gnueabihf -dM -E -xc - < /dev/null
+    assert_success
+    assert_output -p "#define __ARM_ARCH 7"
+}
+
+@test "Test Cross TU optimization" {
+    echo 'int sum(int a, int b);' > "${BATS_TMPDIR}/crosstu_1.h"
+    echo '#include "crosstu_1.h"
+    int sum(int a, int b) { return a + b; }' > "${BATS_TMPDIR}/crosstu_1.cpp"
+    echo '#include "crosstu_1.h"
+    int main() { return sum(1, 2); }' > "${BATS_TMPDIR}/crosstu_2.cpp"
+
+    run clang++-$VERSION -c "${BATS_TMPDIR}/crosstu_1.cpp"
+    assert_success
+    run clang++-$VERSION -c "${BATS_TMPDIR}/crosstu_2.cpp"
+    assert_success
+}
+
+@test "Test header generation" {
+    echo "#include <fenv.h>" > "${BATS_TMPDIR}/header_test.cc"
+    run clang++-$VERSION -P -E "${BATS_TMPDIR}/header_test.cc"
+    assert_success
+
+    # Check if output has more than 60 non-empty lines
+    run bash -c "clang++-$VERSION -P -E ${BATS_TMPDIR}/header_test.cc | grep . | wc -l"
+    assert [ "$output" -gt 60 ]
+}
+
+@test "Test atomic operations compilation (Bug 903709)" {
+    # Bug 903709: Ensure atomic operations compile correctly
+
+    cat > "${BATS_TMPDIR}/atomic_test.c" <<EOF
+#include <stdatomic.h>
+void increment(atomic_size_t *arg) {
+    atomic_fetch_add(arg, 1);
+}
+EOF
+
+    run clang-$VERSION -v -c "${BATS_TMPDIR}/atomic_test.c"
+    assert_success "Compilation of atomic operations (stdatomic.h) failed"
+}
+
+@test "Test profile generation and use" {
+    echo 'int X = 0;
+    int main() {
+        for (int i = 0; i < 100; i++)
+            X += i;
+        return 0;
+    }' > "${BATS_TMPDIR}/profile_test.cc"
+
+    run clang++-$VERSION -O2 -fprofile-instr-generate "${BATS_TMPDIR}/profile_test.cc" -o "${BATS_TMPDIR}/profile_test"
+    assert_success
+
+    LLVM_PROFILE_FILE="${BATS_TMPDIR}/profile_test-%p.profraw" run "${BATS_TMPDIR}/profile_test"
+    assert_success
+
+    run llvm-profdata-$VERSION merge -output="${BATS_TMPDIR}/profile_test.profdata" "${BATS_TMPDIR}/profile_test-"*.profraw
+    assert_success
+
+    run clang++-$VERSION -O2 -fprofile-instr-use="${BATS_TMPDIR}/profile_test.profdata" "${BATS_TMPDIR}/profile_test.cc" -o "${BATS_TMPDIR}/profile_test_final"
+    assert_success
+}
+
+# ===================== flang
+
+@test "Test flang Fortran compilation" {
     echo 'program math
   implicit none
   real :: x, y
   x = 3.14
   y = 2.71
   print *, "x + y = ", x + y
-end program math
-' > foo.f90
-    flang-$VERSION foo.f90 -o foo && ./foo &> foo.log
-    if ! grep -q "x + y =" foo.log 2>&1; then
-        echo "flang: Could not find the expected output"
-        exit -1
+end program math' > foo.f90
+    run flang-new-$VERSION foo.f90 -o foo
+    assert_success
+    run ./foo
+    assert_success
+    assert_output -p  "x + y ="
+}
+
+@test "Test flang shared library functionality" {
+    if ! dpkg -l | grep -q "flang-$VERSION"; then
+        skip "flang-$VERSION not installed"
     fi
 
+    echo 'module hello_world
+        contains
+            subroutine say_hello()
+                print *, "Hello, World!"
+            end subroutine say_hello
+    end module hello_world' > "${BATS_TMPDIR}/flang_lib.f90"
 
-    # testing with a shared libraries
-    echo '
-module hello_world
-  contains
-    subroutine say_hello()
-      print *, "Hello, World!"
-    end subroutine say_hello
-end module hello_world
-' > lib.f90
-    flang-$VERSION -c lib.f90  -fpie
-    flang-$VERSION -shared  -fpie -o libflib.so lib.o
+    run flang-new-$VERSION -c "${BATS_TMPDIR}/flang_lib.f90" -fpie
+    assert_success
 
-    echo '
-program main
-   use hello_world
-   call say_hello()
-end program main' > foo.f90
-    flang-$VERSION foo.f90 -L. -lflib -o foo
-    LD_LIBRARY_PATH=. ./foo &> foo.log
-    if ! grep -q "Hello, World!" foo.log 2>&1; then
-        echo "flang: lib didn't work"
-        exit -1
+    run flang-new-$VERSION -shared -fpie -o "${BATS_TMPDIR}/libflib.so" "flang_lib.o"
+    assert_success
+
+    echo 'program main
+        use hello_world
+        call say_hello()
+    end program main' > "${BATS_TMPDIR}/flang_main.f90"
+
+    run flang-new-$VERSION "${BATS_TMPDIR}/flang_main.f90" -L"${BATS_TMPDIR}" -lflib -o "${BATS_TMPDIR}/flang_test"
+    assert_success
+
+    LD_LIBRARY_PATH="${BATS_TMPDIR}" run "${BATS_TMPDIR}/flang_test"
+    assert_output -p "Hello, World!"
+}
+
+@test "Verify llvm-symbolizer functionality in verbose mode" {
+    # Define the path to llvm-symbolizer
+    local symbolizer_path="/usr/lib/llvm-${VERSION}/bin/llvm-symbolizer"
+
+    # Ensure llvm-symbolizer exists
+    run test -f "${symbolizer_path}"
+    assert_success "llvm-symbolizer is missing"
+
+    # Create a simple test program
+    echo '#include <stdlib.h>
+    int main() {
+        char *x = (char*)malloc(10 * sizeof(char*));
+        free(x);
+        return x[5];  // Invalid memory access
+    }' > "${BATS_TMPDIR}/asan_test.c"
+
+    # Compile with AddressSanitizer and enable verbose mode
+    run clang-$VERSION -o "${BATS_TMPDIR}/asan_test" -fsanitize=address -fno-omit-frame-pointer -g "${BATS_TMPDIR}/asan_test.c"
+    assert_success
+
+    # Run the test program with verbose symbolizer options
+    ASAN_OPTIONS=verbosity=2:external_symbolizer_path="${symbolizer_path}" run "${BATS_TMPDIR}/asan_test"
+    assert_failure
+    assert_output -p "Using llvm-symbolizer"
+}
+
+@test "Test SIMD intrinsics compilation (AMD64/i386)" {
+    # Skip test if not on AMD64 or i386 architectures
+    if [[ "$DEB_HOST_ARCH" != "amd64" && "$DEB_HOST_ARCH" != "i386" ]]; then
+        skip "Test skipped for non-x86 architectures"
     fi
-    rm -f foo.log foo.f90 foo libflib.so
-else
-    echo "Skipping esting flang-$VERSION (Fortran) ..."
-    echo "doesn't exist on this arch"
-fi
 
-# libc
-if dpkg -l libllvmlibc-$VERSION-dev >/dev/null 2>&1; then
-    echo "Testing llvmlibc-$VERSION-dev ..."
-    echo '
-#include <math.h>
-int main(void)
-{
-    double f = 2.0;
-    if (isnan(f))
-      return 1;
+    # Create a C++ source file with SIMD intrinsics
+    echo '#include <emmintrin.h>' > "${BATS_TMPDIR}/simd_test.cc"
+
+    # Compile the source file
+    run clang++-$VERSION -c "${BATS_TMPDIR}/simd_test.cc"
+    assert_success "Compilation of SIMD intrinsics (<emmintrin.h>) failed on x86"
+}
+
+@test "Test preprocessing of limits header (Bug 913213)" {
+    echo '#include <limits.h>' > "${BATS_TMPDIR}/limits_test.cc"
+
+    # Compile the source file
+    run clang++-$VERSION -E -c "${BATS_TMPDIR}/limits_test.cc"
+    assert_output -p "limits.h"
+    assert_success "Preprocessing of <limits.h> failed"
+}
+
+@test "Test cross-compiler compatibility for C++ objects (Bug 1488254)" {
+    cat > "${BATS_TMPDIR}/foo.cc" <<EOF
+#include <string>
+std::string hello = "Hello, world!\\n";
+EOF
+
+    cat > "${BATS_TMPDIR}/bar.cc" <<EOF
+#include <string>
+#include <iostream>
+extern std::string hello;
+int main() {
+    std::cout << hello;
     return 0;
-}' > main.c
-    clang-$VERSION -static -nostdlib -nolibc -L/usr/lib/llvm-$VERSION/lib/ -lllvmlibc main.c -o foo
-    if ! ldd foo 2>&1|grep -qv libc.; then
-	echo "linked against regular libc"
-	exit -1
+}
+EOF
+
+    # Test 1: Compile and link using GCC
+    run g++ -c "${BATS_TMPDIR}/foo.cc" -o "${BATS_TMPDIR}/foo.o"
+    assert_success "Compilation with GCC failed for foo.cc"
+    run g++ "${BATS_TMPDIR}/foo.o" "${BATS_TMPDIR}/bar.cc" -o "${BATS_TMPDIR}/a.out"
+    assert_success "Linking with GCC failed"
+    run "${BATS_TMPDIR}/a.out"
+    assert_success "Execution failed for binary compiled and linked with GCC"
+
+    # Test 2: Compile and link using Clang++
+    run clang++-$VERSION -c "${BATS_TMPDIR}/foo.cc" -o "${BATS_TMPDIR}/foo.o"
+    assert_success "Compilation with Clang++ failed for foo.cc"
+    run clang++-$VERSION "${BATS_TMPDIR}/foo.o" "${BATS_TMPDIR}/bar.cc" -o "${BATS_TMPDIR}/a.out"
+    assert_success "Linking with Clang++ failed"
+    run "${BATS_TMPDIR}/a.out"
+    assert_success "Execution failed for binary compiled and linked with Clang++"
+
+    # Test 3: Compile with GCC, link with Clang++
+    run g++ -c "${BATS_TMPDIR}/foo.cc" -o "${BATS_TMPDIR}/foo.o"
+    assert_success "Compilation with GCC failed for foo.cc"
+    run clang++-$VERSION "${BATS_TMPDIR}/foo.o" "${BATS_TMPDIR}/bar.cc" -o "${BATS_TMPDIR}/a.out"
+    assert_success "Linking with Clang++ failed for GCC-compiled object"
+    run "${BATS_TMPDIR}/a.out"
+    assert_success "Execution failed for GCC-compiled, Clang++-linked binary"
+
+    # Test 4: Compile with Clang++ -fPIC, link with GCC
+    run clang++-$VERSION -c "${BATS_TMPDIR}/foo.cc" -fPIC -o "${BATS_TMPDIR}/foo.o"
+    assert_success "Compilation with Clang++ -fPIC failed for foo.cc"
+    run g++ "${BATS_TMPDIR}/foo.o" "${BATS_TMPDIR}/bar.cc" -o "${BATS_TMPDIR}/a.out"
+    assert_success "Linking with GCC failed for Clang++-compiled object"
+    run "${BATS_TMPDIR}/a.out"
+    assert_success "Execution failed for Clang++-compiled, GCC-linked binary"
+}
+
+@test "Test static linking and unwind library (Bug 46321)" {
+    cat > "${BATS_TMPDIR}/test.cpp" <<EOF
+#include <iostream>
+int main() {
+  std::cout << "Hello World!" << std::endl;
+}
+EOF
+
+    # Compile and link with libc++, libunwind, and static libstdc++
+    run clang++-$VERSION -stdlib=libc++ -unwindlib=libunwind -rtlib=compiler-rt \
+        -static-libstdc++ -static-libgcc "${BATS_TMPDIR}/test.cpp" -lpthread -ldl -o "${BATS_TMPDIR}/test_static"
+    assert_success "Compilation with static linking and unwind library failed"
+
+    # Execute the binary
+    run "${BATS_TMPDIR}/test_static" > /dev/null
+    assert_success "Execution of static-linked binary failed"
+
+    # Compile with libc++, static libstdc++, and LLD
+    run clang++-$VERSION -stdlib=libc++ -static-libstdc++ -fuse-ld=lld -l:libc++abi.a \
+        "${BATS_TMPDIR}/test.cpp" -o "${BATS_TMPDIR}/test_lld"
+    assert_success "Compilation with LLD failed"
+
+    # Execute the binary
+    run "${BATS_TMPDIR}/test_lld" > /dev/null
+    assert_success "Execution of LLD-linked binary failed"
+
+    # Compile with libc++ and nostdlib++
+    run clang++-$VERSION -stdlib=libc++ -nostdlib++ "${BATS_TMPDIR}/test.cpp" \
+        -l:libc++.a -l:libc++abi.a -pthread -o "${BATS_TMPDIR}/test_nostdlib"
+    assert_success "Compilation with nostdlib++ failed"
+
+    # Execute the binary
+    run "${BATS_TMPDIR}/test_nostdlib" > /dev/null
+    assert_success "Execution of nostdlib++ binary failed"
+}
+
+@test "Test shared plugin compilation (Bug 43604)" {
+
+    cat > "${BATS_TMPDIR}/plugin_test.cpp" <<EOF
+#include <iostream>
+__attribute__((visibility("default")))
+extern "C" void plugin() {
+    std::cout << "Hello World from a plugin!" << std::endl;
+}
+EOF
+
+    # Compile the shared library with hidden visibility and static libstdc++
+    run clang++-$VERSION -shared -o "${BATS_TMPDIR}/plugin.so" -fvisibility=hidden \
+        "${BATS_TMPDIR}/plugin_test.cpp" -static-libstdc++ || true
+    assert_success "Compilation of shared plugin with static libstdc++ failed"
+
+    # Compile the shared library with hidden visibility and libc++
+    run clang++-$VERSION -shared -o "${BATS_TMPDIR}/plugin.so" -fvisibility=hidden \
+        "${BATS_TMPDIR}/plugin_test.cpp" -stdlib=libc++ -static-libstdc++ || true
+    assert_success "Compilation of shared plugin with libc++ failed"
+
+    # Cleanup
+    rm -f "${BATS_TMPDIR}/plugin.so"
+}
+
+@test "Test if LLVM IR bitcode in libclangIndex.a" {
+    rm -f *.o
+    # Define the path to libclangIndex.a
+    local archive_path="/usr/lib/llvm-${VERSION}/lib/libclangIndex.a"
+
+    # Ensure the archive exists
+    run test -f "${archive_path}"
+    assert_success "libclangIndex.a is missing"
+
+    # Extract the archive contents
+    run /usr/bin/ar x "${archive_path}" --output "${BATS_TMPDIR}"
+    assert_success "Failed to extract libclangIndex.a"
+
+    # Check the extracted object files
+    run file "${BATS_TMPDIR}"/*.o
+    refute_output -p "LLVM IR bitcode" "Found LLVM IR bitcode in libclangIndex.a"
+}
+
+@test "Test Z3 solver integration for static analysis" {
+    # Create the C source file
+    cat > "${BATS_TMPDIR}/z3_test.c" <<EOF
+void clang_analyzer_eval(int);
+void testBitwiseRules(unsigned int a, int b) {
+  clang_analyzer_eval((1 & a) <= 1); // expected-warning{{TRUE}}
+  // with -analyzer-constraints=z3, it can tell that it is FALSE
+  // without the option, it is unknown
+  clang_analyzer_eval((b | -2) >= 0); // expected-warning{{FALSE}}
+}
+EOF
+
+    # Step 1: Check if LLVM was built with Z3 support
+    run clang-$VERSION -cc1 -analyze -analyzer-constraints=range -analyzer-checker=core,debug.ExprInspection -analyzer-constraints=z3 "${BATS_TMPDIR}/z3_test.c" &> "${BATS_TMPDIR}/z3_test.log" || true
+    if grep -q "error: analyzer constraint manager 'z3' is only available if LLVM was built with -DLLVM_ENABLE_Z3_SOLVER=ON" "${BATS_TMPDIR}/z3_test.log"; then
+        skip "Z3 solver not available in this LLVM build"
     fi
 
-    # segfault for now
-    ./foo || true
-else
-    echo "libllvmlibc check skipped, no libllvmlibc-$VERSION-dev available."
-fi
+    # Step 2: Run static analysis with Z3 constraints
+    run clang-$VERSION -cc1 -analyze -analyzer-constraints=range -analyzer-checker=core,debug.ExprInspection -verify -analyzer-config eagerly-assume=false -analyzer-constraints=z3 "${BATS_TMPDIR}/z3_test.c"
+    assert_success "Static analysis with Z3 constraints failed"
 
-# libclc
-echo "Testing libclc-$VERSION-dev ..."
+    # Step 3: Verify warnings generated
+    run clang-$VERSION -cc1 -analyze -analyzer-constraints=range -analyzer-checker=core,debug.ExprInspection -analyzer-constraints=z3 "${BATS_TMPDIR}/z3_test.c" &> "${BATS_TMPDIR}/z3_test.log"
+    assert_success "Static analysis with Z3 constraints failed on verification"
+    cat "${BATS_TMPDIR}/z3_test.log"
+    assert_output -p "2 warnings generated."
 
-if test ! -f /usr/lib/clc/amdgcn--amdhsa.bc; then
-    echo "Install libclc-$VERSION";
-    exit -1;
-fi
+    # Step 4: Run static analysis without Z3 constraints
+    run clang-$VERSION -cc1 -analyze -analyzer-constraints=range -analyzer-checker=core,debug.ExprInspection -verify -analyzer-config eagerly-assume=false "${BATS_TMPDIR}/z3_test.c" &> "${BATS_TMPDIR}/z3_test.log" || true
+    refute_output -p "File a.c Line 7: UNKNOWN" "Static analysis should fail without Z3 constraints"
 
-if test ! -f /usr/lib/clc/polaris10-amdgcn-mesa-mesa3d.bc; then
-    # Make sure that #993904 and #995069 don't come back
-    echo "/usr/lib/clc/polaris10-amdgcn-mesa-mesa3d.bc doesn't exist"
-    exit 1
-fi
+    # Step 5: Verify general static analysis warnings
+    run clang-$VERSION -cc1 -analyze -analyzer-constraints=range -analyzer-checker=core,debug.ExprInspection "${BATS_TMPDIR}/z3_test.c" &> "${BATS_TMPDIR}/z3_test.log"
+    assert_success "Static analysis failed"
+    cat "${BATS_TMPDIR}/z3_test.log"
+    assert_output -p "warnings generated."
 
-BINDIR=$(llvm-config-$VERSION --bindir)
-/usr/lib/llvm-$VERSION/share/libclc/check_external_calls.sh /usr/lib/clc/amdgcn--amdhsa.bc $BINDIR > /dev/null
+}
 
-# libunwind
-echo "Testing libunwind-$VERSION-dev ..."
+@test "Test atomic test-and-set compilation for AArch64 (Bug 827866)" {
 
-if test ! -f /usr/include/libunwind/unwind.h; then
-    echo "Install libunwind-$VERSION-dev";
-    exit -1;
-fi
-echo '
+    cat > "${BATS_TMPDIR}/atomic_test.cpp" <<EOF
+bool testAndSet(void *atomic) {
+    return __atomic_test_and_set(atomic, __ATOMIC_SEQ_CST);
+}
+EOF
+
+    run clang++-$VERSION -c -target aarch64-linux-gnu "${BATS_TMPDIR}/atomic_test.cpp" -o "${BATS_TMPDIR}/atomic_test.o"
+    assert_success "Compilation for AArch64 target failed"
+
+    # Check the object file architecture
+    run file "${BATS_TMPDIR}/atomic_test.o"
+    assert_output -p "aarch64" "Expected 'aarch64' in the object file's architecture output"
+}
+
+@test "Test Thin LTO functionality" {
+    echo "int foo(void) { return 0; }" > "${BATS_TMPDIR}/thinlto_1.c"
+    echo "int foo(void); int main() { return foo(); }" > "${BATS_TMPDIR}/thinlto_2.c"
+
+    run clang-$VERSION -flto=thin -O2 "${BATS_TMPDIR}/thinlto_1.c" "${BATS_TMPDIR}/thinlto_2.c" -o "${BATS_TMPDIR}/thinlto_test"
+    assert_success
+
+    run "${BATS_TMPDIR}/thinlto_test"
+    assert_success
+}
+
+@test "Test compilation and execution with LTO and Gold linker" {
+    cat > "${BATS_TMPDIR}/foo.c" <<EOF
+#include <stdio.h>
+int main() {
+    if (1==1) {
+        printf("true");
+    } else {
+        printf("false");
+        return 42;
+    }
+    return 0;
+}
+EOF
+
+    # Test 1: Compile with LTO and execute
+    run clang-$VERSION -flto "${BATS_TMPDIR}/foo.c" -opaque-pointers -o "${BATS_TMPDIR}/foo_lto"
+    assert_success "Compilation with LTO failed"
+    run "${BATS_TMPDIR}/foo_lto"
+    assert_success "Execution of LTO binary failed"
+
+    # Test 2: Compile with Gold linker and execute
+    run clang-$VERSION -fuse-ld=gold "${BATS_TMPDIR}/foo.c" -o "${BATS_TMPDIR}/foo_gold"
+    assert_success "Compilation with Gold linker failed"
+    run "${BATS_TMPDIR}/foo_gold"
+    assert_success "Execution of binary linked with Gold linker failed"
+}
+
+@test "Test LTO file generation and Gold linker compatibility (Bug 919020)" {
+
+    echo "int foo(void) { return 0; }" > "${BATS_TMPDIR}/foo.c"
+
+    # Compile the source file with LTO
+    run clang-$VERSION -flto -c "${BATS_TMPDIR}/foo.c" -o "${BATS_TMPDIR}/foo.o"
+    assert_success "Compilation with LTO failed"
+
+    # Check if the output is LLVM IR bitcode
+    run file "${BATS_TMPDIR}/foo.o"
+    assert_output -p "LLVM IR bitcode" "Expected LLVM IR bitcode but found otherwise"
+
+    # Check if the symbol `foo` is present in the LTO object
+    run llvm-nm-$VERSION "${BATS_TMPDIR}/foo.o"
+    assert_output -p "T foo" "Symbol 'foo' not found in LTO object file, indicating Gold linker issue"
+}
+
+@test "Test LLVM Exegesis execution validation" {
+    # Run llvm-exegesis with vzeroupper snippet
+    echo "vzeroupper" | llvm-exegesis-$VERSION -mode=uops -snippets-file=- &> "${BATS_TMPDIR}/exegesis.log" || true
+
+    # Check for issues related to libpfm initialization
+    if grep -q -E "(built without libpfm|cannot initialize libpfm)" "${BATS_TMPDIR}/exegesis.log"; then
+        echo "llvm-exegesis could not run correctly"
+        head -n 10 "${BATS_TMPDIR}/exegesis.log"
+        fail "llvm-exegesis execution failed due to libpfm issues"
+    fi
+
+    # Ensure llvm-exegesis produced output successfully
+    run test -s "${BATS_TMPDIR}/exegesis.log"
+    assert_success "llvm-exegesis did not produce valid output"
+}
+
+@test "Test backtrace functionality with libunwind" {
+    # Create the C++ source file for backtrace tests
+    cat > "${BATS_TMPDIR}/backtrace_test.cpp" <<EOF
 #include <libunwind.h>
 #include <stdlib.h>
 
@@ -1267,7 +1953,6 @@ void test_no_info() {
   if (ret != UNW_ESUCCESS)
     abort();
 
-  // Set the IP to an address clearly outside any function.
   unw_set_reg(&cursor, UNW_REG_IP, (unw_word_t)0);
 
   ret = unw_get_proc_info(&cursor, &info);
@@ -1281,13 +1966,28 @@ int main(int, char**) {
   test3(1, 2, 3);
   test_no_info();
   return 0;
-}'> foo.cpp
-clang++-$VERSION foo.cpp -lunwind -ldl -I /usr/include/libunwind
-./a.out
-clang++-$VERSION foo.cpp -unwindlib=libunwind -rtlib=compiler-rt -I/usr/include/libunwind
-./a.out
+}
+EOF
 
-echo '
+    # Compile the program with libunwind
+    run clang++-$VERSION "${BATS_TMPDIR}/backtrace_test.cpp" -lunwind -ldl -I/usr/include/libunwind -o "${BATS_TMPDIR}/backtrace_test"
+    assert_success "Compilation with libunwind failed"
+
+    # Run the compiled program
+    run "${BATS_TMPDIR}/backtrace_test"
+    assert_success "Execution of backtrace test failed"
+
+    # Compile with libunwind and compiler-rt
+    run clang++-$VERSION "${BATS_TMPDIR}/backtrace_test.cpp" -unwindlib=libunwind -rtlib=compiler-rt -I/usr/include/libunwind -ldl -o "${BATS_TMPDIR}/backtrace_test_rt"
+    assert_success "Compilation with libunwind and compiler-rt failed"
+
+    # Run the compiled program with compiler-rt
+    run "${BATS_TMPDIR}/backtrace_test_rt"
+    assert_success "Execution of backtrace test with compiler-rt failed"
+}
+@test "Test signal handling with libunwind" {
+    # Create the C++ source file for signal handling
+    cat > "${BATS_TMPDIR}/signal_test.cpp" <<EOF
 #include <assert.h>
 #include <dlfcn.h>
 #include <signal.h>
@@ -1302,8 +2002,6 @@ _Unwind_Reason_Code frame_handler(struct _Unwind_Context* ctx, void* arg) {
   (void)arg;
   Dl_info info = { 0, 0, 0, 0 };
 
-  // Unwind util the main is reached, above frames depend on the platform and
-  // architecture.
   if (dladdr(reinterpret_cast<void *>(_Unwind_GetIP(ctx)), &info) &&
       info.dli_sname && !strcmp("main", info.dli_sname)) {
     _Exit(0);
@@ -1322,441 +2020,26 @@ int main(int, char**) {
   kill(getpid(), SIGUSR1);
   return -2;
 }
-'> foo.cpp
-clang++-$VERSION foo.cpp /usr/lib/llvm-$VERSION/lib/libunwind.a -I/usr/include/libunwind/ -lpthread -ldl
-./a.out||true
-clang++-$VERSION foo.cpp -unwindlib=libunwind -rtlib=compiler-rt -I/usr/include/libunwind -ldl
-./a.out||true
+EOF
 
-if test ! -f /usr/lib/llvm-$VERSION/include/polly/LinkAllPasses.h; then
-    echo "Install libpolly-$VERSION-dev for polly";
-    exit -1;
-fi
+    # Compile the program with libunwind statically
+    run clang++-$VERSION "${BATS_TMPDIR}/signal_test.cpp" /usr/lib/llvm-$VERSION/lib/libunwind.a -I/usr/include/libunwind/ -lpthread -ldl -o "${BATS_TMPDIR}/signal_test_static"
+    assert_success "Compilation of signal handler with static libunwind failed"
 
-echo "Testing polly (libpolly-$VERSION-dev) ..."
+    # Run the statically linked program (should exit gracefully)
+    run "${BATS_TMPDIR}/signal_test_static"
+    assert_failure "Execution of signal handler with static libunwind failed"
 
-# Polly
-echo "
-#define N 1536
-float A[N][N];
-float B[N][N];
-float C[N][N];
+    # Compile with libunwind dynamically
+    run clang++-$VERSION "${BATS_TMPDIR}/signal_test.cpp" -unwindlib=libunwind -rtlib=compiler-rt -I/usr/include/libunwind -ldl -o "${BATS_TMPDIR}/signal_test_dynamic"
+    assert_success "Compilation of signal handler with dynamic libunwind failed"
 
-void init_array()
-{
-    int i, j;
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++) {
-            A[i][j] = (1+(i*j)%1024)/2.0;
-            B[i][j] = (1+(i*j)%1024)/2.0;
-        }
-    }
+    # Run the dynamically linked program (should exit gracefully)
+    run "${BATS_TMPDIR}/signal_test_dynamic"
+    assert_failure "Execution of signal handler with dynamic libunwind failed"
 }
 
-int main()
-{
-    int i, j, k;
-    double t_start, t_end;
-    init_array();
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++) {
-            C[i][j] = 0;
-            for (k = 0; k < N; k++)
-                C[i][j] = C[i][j] + A[i][k] * B[k][j];
-        }
-    }
-    return 0;
+teardown() {
+    rm -f clangd.json *.o foo* crash-* *profraw hello* a.out polly_test.c
+    rm -rf scan-build output
 }
-" > foo.c
-clang-$VERSION -O3 -mllvm -polly -mllvm -polly-parallel -lgomp  foo.c
-clang-$VERSION -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine foo.c
-clang-$VERSION -S -fsave-optimization-record -emit-llvm foo.c -o matmul.s
-# broken https://bugs.llvm.org/show_bug.cgi?id=51642
-test -s matmul.opt.yaml||true
-
-clang-$VERSION -S -O2 -fsave-optimization-record -emit-llvm foo.c -o matmul.s
-if ! test -s matmul.opt.yaml; then
-    echo "-fsave-optimization-record generated an empty file"
-    exit 1
-fi
-
-
-opt-$VERSION -S -polly-canonicalize matmul.s > matmul.preopt.ll > /dev/null
-opt-$VERSION -basic-aa -polly-ast matmul.preopt.ll -polly-process-unprofitable > /dev/null
-if test ! -f /usr/lib/llvm-$VERSION/share/opt-viewer/opt-viewer.py; then
-    echo "Install llvm-$VERSION-tools"
-    exit 42
-fi
-/usr/lib/llvm-$VERSION/share/opt-viewer/opt-viewer.py -source-dir .  matmul.opt.yaml -o ./output > /dev/null
-
-if ! grep -q "inlined into" output/foo.c.html 2>&1; then
-    echo "Could not find the output from polly"
-    exit -1
-fi
-
-echo "
-int foo(int x, int y) __attribute__((always_inline));
-int foo(int x, int y) { return x + y; }
-int bar(int j) { return foo(j, j - 2); }
-int sum = 0;
-
-int main(int argc, const char *argv[]) {
-  for (int i = 0; i < 30; i++)
-    bar(argc);
-  return sum;
-}
-
-" > foo.cc
-clang-$VERSION -O2 -Rpass=inline foo.cc -c &> foo.log
-if ! grep -q -E "(inlined into|cost=always)" foo.log; then
-    echo "-Rpass fails"
-    cat foo.log
-    exit 1
-fi
-echo "
-int X = 0;
-
-int main() {
-  int i;
-  for (i = 0; i < 100; i++)
-    X += i;
-  return 0;
-}"> foo.cc
-clang++-$VERSION -O2 -fprofile-instr-generate foo.cc -o foo
-LLVM_PROFILE_FILE="foo-%p.profraw" ./foo
-llvm-profdata-$VERSION merge -output=foo.profdata foo-*.profraw
-clang++-$VERSION -O2 -fprofile-instr-use=foo.profdata foo.cc -o foo
-
-# https://bugs.llvm.org/show_bug.cgi?id=44870
-cat <<EOF > foo.cpp
-#include <clang/CodeGen/BackendUtil.h>
-#include <llvm/Support/VirtualFileSystem.h>
-
-using namespace clang;
-
-int main() {
-  DiagnosticsEngine* diags;
-  HeaderSearchOptions* hsOpts;
-  CodeGenOptions* cgOpts;
-  TargetOptions* tOpts;
-  LangOptions* lOpts;
-  llvm::StringRef* tDesc;
-  llvm::Module* m;
-  BackendAction* action;
-  std::unique_ptr<raw_pwrite_stream> AsmOutStream;
-  IntrusiveRefCntPtr<llvm::vfs::FileSystem> VFS;
-
-  EmitBackendOutput(*diags, *hsOpts, *cgOpts, *tOpts, *lOpts, *tDesc, m, *action, VFS, std::move(AsmOutStream));
-}
-EOF
-clang++-$VERSION foo.cpp -o test -lclangCodeGen -lclangDriver -lclangFrontend -lclangFrontendTool -lclangCodeGen -lclangRewriteFrontend -lclangARCMigrate -lclangStaticAnalyzerFrontend -lclangStaticAnalyzerCheckers -lclangStaticAnalyzerCore -lclangCrossTU -lclangIndex -lclangFrontend -lclangDriver -lclangParse -lclangSerialization -lclangSema -lclangAnalysis -lclangEdit -lclangFormat -lclangToolingInclusions -lclangToolingCore -lclangRewrite -lclangASTMatchers -lclangAST -lclangLex -lclangAPINotes -lclangSupport -lclangBasic -ldl  /usr/lib/llvm-$VERSION/lib/libLLVM-$VERSION.so -lclangCodeGen -lclangDriver -lclangFrontend -lclangFrontendTool -lclangRewriteFrontend -lclangARCMigrate -lclangStaticAnalyzerFrontend -lclangStaticAnalyzerCheckers -lclangStaticAnalyzerCore -lclangCrossTU -lclangIndex -lclangParse -lclangSerialization -lclangSema -lclangAnalysis -lclangEdit -lclangFormat -lclangToolingInclusions -lclangToolingCore -lclangRewrite -lclangASTMatchers -lclangAST -lclangLex -ldl  -I /usr/lib/llvm-$VERSION/include/ -L/usr/lib/llvm-$VERSION/lib/ -lPolly -lPollyISL
-
-if test ! -f /usr/bin/lldb-$VERSION; then
-    echo "Install lldb-$VERSION";
-    exit -1;
-fi
-
-echo "b main
-run
-bt
-quit" > lldb-cmd.txt
-
-echo "Testing lldb-$VERSION ..."
-# bug 913946
-lldb-$VERSION -s lldb-cmd.txt bar &> foo.log
-
-if dpkg -l|grep -q clang-$VERSION-dbgsym; then
-    # Testing if clang dbg symbol are here
-    lldb-$VERSION -s lldb-cmd.txt clang-$VERSION &> foo.log
-    if ! grep "main at driver.cpp" foo.log; then
-        echo "Could not find the debug info"
-        echo "Or the main() of clang isn't in driver.cpp anymore"
-        cat foo.log
-        exit -1
-    fi
-else
-    echo "clang-$VERSION-dbgsym isn't installed"
-fi
-
-echo "Testing wasm support ..."
-
-if dpkg -l|grep -q wasi-libc; then
-    cat <<EOF > printf.c
-    #include <stdio.h>
-    int main(int argc, char *argv[]) {
-      printf("%s\n", "Hello World!");
-    }
-EOF
-    # wasi-libc supports only wasm32 right now
-    clang-$VERSION -target wasm32-wasi -o printf printf.c
-    file printf &> foo.log
-    if ! grep -q "WebAssembly" foo.log; then
-        echo "the generated file isn't a WebAssembly file?"
-        exit 1
-    fi
-    rm -f printf.c printf
-
-    cat <<EOF > cout.cpp
-    #include <iostream>
-    int main() {
-      std::cout << "Hello World!" << std::endl;
-    }
-EOF
-    # libcxx requires wasi-libc, which only exists for wasm32 right now
-    clang++-$VERSION --target=wasm32-wasi -o cout cout.cpp
-    file cout &> foo.log
-    if ! grep -q "WebAssembly" foo.log; then
-        echo "the generated file isn't a WebAssembly file?"
-        exit 1
-    fi
-    rm -f cout.cpp cout
-else
-    echo "wasi-libc not installed"
-fi
-
-echo '
-#include <vector>
-int main (void)
-{  std::vector<int> a;
-  a.push_back (0);
-}
-' > foo.cpp
-clang++-$VERSION -g -o foo foo.cpp
-echo 'target create "./foo"
-b main
-r
-n
-p a
-quit' > lldb-cmd.txt
-lldb-$VERSION -s lldb-cmd.txt ./foo &> foo.log
-if ! grep -q "stop reason = step over" foo.log; then
-    echo "Could not find the lldb expected output"
-    cat foo.log
-    # do not fail on i386, never worked here
-    if [ $DEB_HOST_ARCH != "i386" ]; then
-        exit 42
-    fi
-fi
-
-if test ! -f /usr/lib/llvm-$VERSION/lib/libclangToolingInclusions.a; then
-    echo "Install libclang-$VERSION-dev";
-    exit -1;
-fi
-
-# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=943623
-rm *.o
-/usr/bin/ar x /usr/lib/llvm-$VERSION/lib/libclangIndex.a &> /dev/null
-file *.o a> foo.log
-rm *.o
-if grep "LLVM IR bitcode" foo.log; then
-    echo "found LLVM IR bitcode in the libclangIndex.a file"
-    echo "Should be elf"
-    exit -2
-fi
-echo "
-from ctypes import *
-libclang='/usr/lib/llvm-$VERSION/lib/libclang-$VERSION.so.1'
-lib = CDLL(libclang)
-fun = lib.clang_getAddressSpace
-print(fun)
-" > foo.py
-python3 foo.py|grep _FuncPtr
-rm foo.py
-
-echo "Testing cmake build ..."
-
-if grep -q lit-cpuid /usr/lib/llvm-$VERSION/lib/cmake/llvm/LLVMExports*.cmake; then
-    echo "LLVMExports*.cmake should not have lit-cpuid"
-    echo "it introduces a dependency between llvm-9 => lldb"
-    exit -1
-fi
-
-rm -rf cmaketest && mkdir cmaketest
-cat > cmaketest/CMakeLists.txt <<EOF
-cmake_minimum_required(VERSION 3.7)
-project(SanityCheck)
-find_package(LLVM $VERSION.1 REQUIRED CONFIG)
-message(STATUS "LLVM_CMAKE_DIR: \${LLVM_CMAKE_DIR}")
-if(NOT EXISTS "\${LLVM_TOOLS_BINARY_DIR}/clang")
-message(FATAL_ERROR "Invalid LLVM_TOOLS_BINARY_DIR: \${LLVM_TOOLS_BINARY_DIR}")
-endif()
-# TODO add version to ClangConfig.cmake and use $VERSION below
-find_package(Clang REQUIRED CONFIG)
-find_file(H clang/AST/ASTConsumer.h PATHS \${CLANG_INCLUDE_DIRS} NO_DEFAULT_PATH)
-message(STATUS "CLANG_INCLUDE_DIRS: \${CLANG_INCLUDE_DIRS}")
-if(NOT H)
-message(FATAL_ERROR "Invalid Clang header path: \${CLANG_INCLUDE_DIRS}")
-endif()
-EOF
-mkdir cmaketest/standard cmaketest/explicit
-# "Test: CMake find LLVM and Clang in default path"
-(cd cmaketest/standard && CC=clang-$VERSION CXX=clang++-$VERSION cmake .. > /dev/null)
-# "Test: CMake find LLVM and Clang in explicit prefix path"
-(cd cmaketest/explicit && CC=clang-$VERSION CXX=clang++-$VERSION CMAKE_PREFIX_PATH=/usr/lib/llvm-$VERSION cmake .. > /dev/null)
-rm -rf cmaketest
-
-# Test case for bug #900440
-rm -rf cmaketest && mkdir cmaketest
-cat > cmaketest/CMakeLists.txt <<EOF
-cmake_minimum_required(VERSION 3.7)
-project(testllvm)
-
-find_package(LLVM CONFIG REQUIRED)
-find_package(Clang CONFIG REQUIRED)
-
-if(NOT LLVM_VERSION STREQUAL Clang_VERSION)
-    #message(FATAL_ERROR "LLVM ${LLVM_VERSION} not matching to Clang ${Clang_VERSION}")
-endif()
-EOF
-mkdir cmaketest/foo/
-(cd cmaketest/foo && cmake .. > /dev/null)
-rm -rf cmaketest
-
-# Make sure the triple change doesn't break the world
-# https://reviews.llvm.org/D107799#3027607
-if dpkg -l|grep -q zlib1g-dev; then
-    rm -rf cmaketest && mkdir cmaketest
-    cat > cmaketest/CMakeLists.txt <<EOF
-cmake_minimum_required(VERSION 3.0)
-project(test)
-find_package(ZLIB)
-EOF
-    mkdir cmaketest/foo/
-    cd cmaketest/foo &&  CC=clang-$VERSION CXX=clang++-$VERSION cmake .. &> foo.log
-    if grep "Could NOT find ZLIB" foo.log; then
-        echo "clang hasn't been able to find zlib dev even if it is on the system"
-        echo "https://reviews.llvm.org/D107799#3027607"
-        cat foo.log
-        exit 1
-    fi
-    cd -
-    rm -rf cmaketest
-fi
-
-# Test case for bug #994827
-rm -rf cmaketest && mkdir cmaketest
-cat > cmaketest/CMakeLists.txt <<EOF
-cmake_minimum_required(VERSION 3.18)
-project(testllvm)
-
-find_package(Clang REQUIRED CONFIG HINTS "/usr/lib/llvm-$LLVM_VERSION/lib/cmake/clang/")
-EOF
-mkdir cmaketest/foo/
-(cd cmaketest/foo && cmake .. > /dev/null)
-rm -rf cmaketest
-
-
-CLANG=clang-$VERSION
-#command -v "$CLANG" 1>/dev/null 2>/dev/null || { printf "Usage:\n%s CLANGEXE [ARGS]\n" "$0" 1>&2; exit 1; }
-#shift
-
-TEMPDIR=$(mktemp -d); trap "rm -rf \"$TEMPDIR\"" 0
-
-echo "Testing all other sanitizers ..."
-
-echo "int main() { return 1; }" > foo.c
-# fails to run on i386 with the following error:
-#clang: error: unsupported option '-fsanitize=efficiency-working-set' for target 'i686-pc-linux-gnu'
-# seems like esan was removed from clang: https://github.com/llvm/llvm-project/commit/885b790f89b6068ec4caad8eaa51aa8098327059
-#clang-$VERSION -fsanitize=efficiency-working-set -o foo foo.c || true
-#./foo &> /dev/null || true
-
-cat > "$TEMPDIR/test.c" <<EOF
-#include <stdlib.h>
-#include <stdio.h>
-int main ()
-{
-#if __has_feature(address_sanitizer)
-  puts("address_sanitizer");
-#endif
-#if __has_feature(thread_sanitizer)
-  puts("thread_sanitizer");
-#endif
-#if __has_feature(memory_sanitizer)
-  puts("memory_sanitizer");
-#endif
-#if __has_feature(undefined_sanitizer)
-  puts("undefined_sanitizer");
-#endif
-#if __has_feature(dataflow_sanitizer)
-  puts("dataflow_sanitizer");
-#endif
-#if __has_feature(efficiency_sanitizer)
-  puts("efficiency_sanitizer");
-#endif
-  printf("Ok\n");
-  return EXIT_SUCCESS;
-}
-EOF
-
-F=$(clang-$VERSION --target=x86_64-unknown-linux-gnu --rtlib=compiler-rt --print-libgcc-file-name)
-if test ! $F; then
-	echo "Cannot find $F"
-    echo "TODO check if the exit1 can be put back"
-#	exit 1
-else
-    echo "$F is one of the compiler-rt file"
-fi
-
-# only for AMD64 for now
-# many sanitizers only work on AMD64
-# x32 programs need to be enabled in the kernel bootparams for debian
-# (https://wiki.debian.org/X32Port)
-#
-# SYSTEM should iterate multiple targets (eg. x86_64-unknown-none-gnu for embedded)
-# MARCH should iterate the library architectures via flags
-# LIB should iterate the different libraries
-echo "if it fails, please run"
-echo "apt-get install libc6-dev:i386 libgcc-5-dev:i386 libc6-dev-x32 libx32gcc-5-dev libx32gcc-9-dev"
-for SYSTEM in ""; do
-    # add "-m32 -march=i686" -m32 -mx32 to test multiarch with i386
-    for MARCH in -m64; do
-        for LIB in --rtlib=compiler-rt -fsanitize=address -fsanitize=thread -fsanitize=memory -fsanitize=undefined -fsanitize=dataflow; do # -fsanitize=efficiency-working-set; do
-            if test "$MARCH" == "-m32" -o "$MARCH" == "-mx32"; then
-                if test $LIB == "-fsanitize=thread" -o $LIB == "-fsanitize=memory" -o $LIB == "-fsanitize=dataflow" -o $LIB == "-fsanitize=address" -o $LIB == "-fsanitize=undefined"; then
-                    echo "Skip $MARCH / $LIB";
-                    continue
-                fi
-            fi
-            if test "$MARCH" == "-m32 -march=i686"; then
-                if test $LIB == "-fsanitize=memory" -o $LIB == "-fsanitize=thread" -o $LIB == "-fsanitize=dataflow"; then
-                     echo "Skip $MARCH / $LIB";
-                     continue
-                fi
-            fi
-            XARGS="$SYSTEM $MARCH $LIB"
-            printf "\nTest: clang %s\n" "$XARGS"
-            rm -f "$TEMPDIR/test"
-            "$CLANG" $XARGS -o "$TEMPDIR/test" "$@" "$TEMPDIR/test.c" || true
-            [ ! -e "$TEMPDIR/test" ] || { "$TEMPDIR/test" || printf 'Error\n'; }
-        done
-    done
-done
-
-echo "If the following fails, try setting an environment variable such as:"
-echo "OBJC_INCLUDE_PATH=/usr/lib/gcc/x86_64-linux-gnu/8/include"
-echo "libobjc-9-dev should be also installed"
-echo "#include <objc/objc.h>" > foo.m
-#clang-$VERSION -c foo.m
-
-if test ! -f /usr/lib/llvm-$VERSION/lib/libclangBasic.a; then
-    echo "Install libclang-$VERSION-dev"
-    exit 1
-fi
-
-# check that the hip language is functioning
-echo "Testing HIP language ..."
-if dpkg -l|grep -q hipcc; then
-  cat > foo.hip <<EOF
-#include <hip/hip_runtime_api.h>
-int main() { return 0; }
-EOF
-  clang++-$VERSION --rocm-path=/usr -x hip -lamdhip64 foo.hip
-  rm -f foo.hip hip
-fi
-
-#clean up
-rm -f a.out bar crash-* foo foo.* lldb-cmd.txt main.* test_fuzzer.cc foo.* o
-rm -rf output matmul.* *profraw opt.ll a.json default.profdata test test.cpp
-
-echo "Completed"

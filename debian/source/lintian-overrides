@@ -13,16 +13,17 @@ source: source-is-missing lldb/lit/Modules/ELF/Inputs/PT_LOAD-overlap-section.el
 source: source-contains-prebuilt-windows-binary lldb/unittests/SymbolFile/DWARF/Inputs/test-dwarf.exe
 source: source-contains-prebuilt-windows-binary lldb/unittests/SymbolFile/PDB/Inputs/test-pdb-types.exe
 source: source-contains-prebuilt-windows-binary lldb/unittests/SymbolFile/PDB/Inputs/test-pdb.exe
-source: source-is-missing lldb/lit/Modules/ELF/Inputs/netbsd-amd64.core
-source: source-is-missing llgo/third_party/gofrontend/libgo/go/debug/dwarf/testdata/*.elf*
-source: source-is-missing llgo/third_party/gofrontend/libgo/go/debug/elf/testdata/gcc-*-exec
-source: source-is-missing llgo/third_party/gofrontend/libgo/go/debug/elf/testdata/*.obj
-source: source-is-missing llvm/test/*
-source: source-is-missing llvm/unittests/*
-source: source-is-missing lldb/test/*
-source: source-is-missing lld/test/*
-source: source-is-missing clang/test/Driver/Inputs/dummy-elf.o
-source: source-is-missing clang/test/CodeGen/Inputs/memprof.exe
+source: source-is-missing [lldb/lit/Modules/ELF/Inputs/netbsd-amd64.core]
+source: source-is-missing [llgo/third_party/gofrontend/libgo/go/debug/dwarf/testdata/*.elf*]
+source: source-is-missing [llgo/third_party/gofrontend/libgo/go/debug/elf/testdata/gcc-*-exec]
+source: source-is-missing [llgo/third_party/gofrontend/libgo/go/debug/elf/testdata/*.obj]
+source: source-is-missing [llvm/test/*]
+source: source-is-missing [llvm/unittests/*]
+source: source-is-missing [lldb/test/*]
+source: source-is-missing [lld/test/*]
+source: source-is-missing [clang/test/Driver/Inputs/dummy-elf.o]
+source: source-is-missing [*exe]
+source: source-is-missing [*dll]
 
 # By design
 source: invalid-arch-string-in-source-relation riscv64*

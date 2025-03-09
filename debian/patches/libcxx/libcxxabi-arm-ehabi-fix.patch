@@ -7,11 +7,11 @@ sure their ABI stays in sync.
 
 No known upstream bug about this.
 
-Index: llvm-toolchain-snapshot_19~++20240220124703+f122268c0441/libcxxabi/src/cxa_exception.cpp
+Index: llvm-toolchain-19_19.1.2~++20241011093632+6c1fd539e43e/libcxxabi/src/cxa_exception.cpp
 ===================================================================
---- llvm-toolchain-snapshot_19~++20240220124703+f122268c0441.orig/libcxxabi/src/cxa_exception.cpp
-+++ llvm-toolchain-snapshot_19~++20240220124703+f122268c0441/libcxxabi/src/cxa_exception.cpp
-@@ -286,15 +286,16 @@ __cxa_throw(void *thrown_object, std::ty
+--- llvm-toolchain-19_19.1.2~++20241011093632+6c1fd539e43e.orig/libcxxabi/src/cxa_exception.cpp
++++ llvm-toolchain-19_19.1.2~++20241011093632+6c1fd539e43e/libcxxabi/src/cxa_exception.cpp
+@@ -291,15 +291,16 @@ __cxa_throw(void *thrown_object, std::ty
  
  #ifdef __USING_SJLJ_EXCEPTIONS__
      _Unwind_SjLj_RaiseException(&exception_header->unwindHeader);
@@ -30,7 +30,7 @@ Index: llvm-toolchain-snapshot_19~++20240220124703+f122268c0441/libcxxabi/src/cx
  // 2.5.3 Exception Handlers
  /*
  The adjusted pointer is computed by the personality routine during phase 1
-@@ -578,7 +579,11 @@ void __cxa_end_catch() {
+@@ -583,7 +584,11 @@ void __cxa_end_catch() {
              //    to touch a foreign exception in any way, that is undefined
              //     behavior.  They likely can't since the only way to catch
              //     a foreign exception is with catch (...)!
@@ -42,7 +42,7 @@ Index: llvm-toolchain-snapshot_19~++20240220124703+f122268c0441/libcxxabi/src/cx
              globals->caughtExceptions = 0;
          }
      }
-@@ -635,8 +640,10 @@ void __cxa_rethrow() {
+@@ -645,8 +650,10 @@ void __cxa_rethrow() {
      }
  #ifdef __USING_SJLJ_EXCEPTIONS__
      _Unwind_SjLj_RaiseException(&exception_header->unwindHeader);
@@ -54,7 +54,7 @@ Index: llvm-toolchain-snapshot_19~++20240220124703+f122268c0441/libcxxabi/src/cx
  #endif
  
      //  If we get here, some kind of unwinding error has occurred.
-@@ -760,8 +767,10 @@ __cxa_rethrow_primary_exception(void* th
+@@ -770,8 +777,10 @@ __cxa_rethrow_primary_exception(void* th
          dep_exception_header->unwindHeader.exception_cleanup = dependent_exception_cleanup;
  #ifdef __USING_SJLJ_EXCEPTIONS__
          _Unwind_SjLj_RaiseException(&dep_exception_header->unwindHeader);
@@ -66,10 +66,10 @@ Index: llvm-toolchain-snapshot_19~++20240220124703+f122268c0441/libcxxabi/src/cx
  #endif
          // Some sort of unwinding error.  Note that terminate is a handler.
          __cxa_begin_catch(&dep_exception_header->unwindHeader);
-Index: llvm-toolchain-snapshot_19~++20240220124703+f122268c0441/libcxxabi/src/cxa_exception.h
+Index: llvm-toolchain-19_19.1.2~++20241011093632+6c1fd539e43e/libcxxabi/src/cxa_exception.h
 ===================================================================
---- llvm-toolchain-snapshot_19~++20240220124703+f122268c0441.orig/libcxxabi/src/cxa_exception.h
-+++ llvm-toolchain-snapshot_19~++20240220124703+f122268c0441/libcxxabi/src/cxa_exception.h
+--- llvm-toolchain-19_19.1.2~++20241011093632+6c1fd539e43e.orig/libcxxabi/src/cxa_exception.h
++++ llvm-toolchain-19_19.1.2~++20241011093632+6c1fd539e43e/libcxxabi/src/cxa_exception.h
 @@ -27,6 +27,45 @@ _LIBCXXABI_HIDDEN uint64_t __getExceptio
  _LIBCXXABI_HIDDEN void     __setExceptionClass  (      _Unwind_Exception*, uint64_t);
  _LIBCXXABI_HIDDEN bool     __isOurExceptionClass(const _Unwind_Exception*);

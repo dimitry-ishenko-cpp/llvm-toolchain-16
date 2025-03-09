@@ -2,10 +2,10 @@
  lldb/source/API/CMakeLists.txt |   14 +++++++-------
  1 file changed, 7 insertions(+), 7 deletions(-)
 
-Index: llvm-toolchain-snapshot_19~++20240528111735+bbca20f0b1ab/lldb/source/API/CMakeLists.txt
+Index: llvm-toolchain-19_19.1.2~++20241011093632+6c1fd539e43e/lldb/source/API/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_19~++20240528111735+bbca20f0b1ab.orig/lldb/source/API/CMakeLists.txt
-+++ llvm-toolchain-snapshot_19~++20240528111735+bbca20f0b1ab/lldb/source/API/CMakeLists.txt
+--- llvm-toolchain-19_19.1.2~++20241011093632+6c1fd539e43e.orig/lldb/source/API/CMakeLists.txt
++++ llvm-toolchain-19_19.1.2~++20241011093632+6c1fd539e43e/lldb/source/API/CMakeLists.txt
 @@ -40,7 +40,12 @@ add_custom_target(lldb-sbapi-dwarf-enums
    DEPENDS ${sb_languages_file})
  set_target_properties(lldb-sbapi-dwarf-enums PROPERTIES FOLDER "LLDB/Tablegenning")
@@ -20,7 +20,7 @@ Index: llvm-toolchain-snapshot_19~++20240528111735+bbca20f0b1ab/lldb/source/API/
    SBAddress.cpp
    SBAddressRange.cpp
    SBAddressRangeList.cpp
-@@ -194,7 +199,7 @@ endif()
+@@ -195,7 +200,7 @@ endif()
  
  set_target_properties(liblldb
    PROPERTIES
@@ -29,7 +29,7 @@ Index: llvm-toolchain-snapshot_19~++20240528111735+bbca20f0b1ab/lldb/source/API/
  )
  
  target_compile_definitions(liblldb PRIVATE LLDB_IN_LIBLLDB)
-@@ -258,12 +263,12 @@ elseif (LLDB_EXPORT_ALL_SYMBOLS)
+@@ -259,12 +264,12 @@ elseif (LLDB_EXPORT_ALL_SYMBOLS)
    add_llvm_symbol_exports(liblldb ${exported_symbol_file})
  endif()
  
