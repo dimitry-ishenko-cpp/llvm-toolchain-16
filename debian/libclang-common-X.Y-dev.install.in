@@ -1,3 +1,5 @@
+#!/usr/bin/dh-exec
+
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/*.h
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/module.modulemap
 [!armel !armhf !powerpc !x32 !hurd-any] usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/xray/
