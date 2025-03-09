@@ -27,16 +27,14 @@ LLVM_VERSION_NEXT := $(shell echo $(LLVM_VERSION_FULL) | awk -F. '{ OFS="."; $$N
 # dpkg-buildflags support
 # disable fixfilepath in favor of the llvm-project supplied flavor, disable lto
 # remove +time64,+lfs once the time64_t transition starts
-ifeq ($(DEB_HOST_ARCH),i386)
+ifeq ($(DEB_HOST_ARCH_CPU),i386)
   RUNTIMES = compiler-rt;libcxx;libcxxabi
   export DEB_BUILD_MAINT_OPTIONS = reproducible=-fixfilepath,-fixdebugpath optimize=-lto
 else
+  RUNTIMES = compiler-rt;libcxx;libcxxabi
   ifeq ($(DEB_HOST_ARCH_BITS),32)
-    RUNTIMES = libcxx;libcxxabi
     export DEB_BUILD_MAINT_OPTIONS = reproducible=-fixfilepath,-fixdebugpath optimize=-lto abi=+time64,+lfs
-    skip_packages = -Nlibclang-rt-$(LLVM_VERSION)-dev
   else
-    RUNTIMES = compiler-rt;libcxx;libcxxabi
     ifeq ($(DEB_HOST_ARCH),mips64el)
         export DEB_BUILD_MAINT_OPTIONS = reproducible=-fixfilepath,-fixdebugpath optimize=-lto hardening=-stackprotector,-stackprotectorstrong
     else
@@ -75,6 +73,15 @@ ifeq ($(BD_ALT_HELLO),yes)
   BD_ALT_HELLO_SUBST = 's/@hb@//;s/@he@//'
 else
   BD_ALT_HELLO_SUBST = 's/@hb@.*@he@//'
+endif
+
+# set this macro to anything else than "yes" to avoid generating alternative
+# build dependencies on hello in the control file.
+BD_ALT_HELLO = yes
+ifeq ($(BD_ALT_HELLO),yes)
+  BD_ALT_HELLO_SUBST = 's/@BEGIN_OPTIONAL_HELLO@//g;s/@END_OPTIONAL_HELLO@//g'
+else
+  BD_ALT_HELLO_SUBST = 's/@BEGIN_OPTIONAL_HELLO@.*@END_OPTIONAL_HELLO@//'
 endif
 
 # this contains all packages to be built. Note that for at least the clean target,
@@ -190,7 +197,6 @@ STAGE_2_LIB_DIR := $(BASE_PATH)/$(TARGET_BUILD_STAGE2)/lib
 
 # toggleable defaults
 COMPILER_RT_USE_BUILTINS_LIBRARY := ON
-LIBCXX_EXCEPTIONS := ON
 LIBCXX_USE_COMPILER_RT := ON
 
 # We want to set the clang extra version ONLY in stage 2
@@ -313,7 +319,6 @@ endif
 
 ifneq (,$(filter $(DEB_HOST_ARCH),s390x))
   STAGE_ALL_CMAKE_EXTRA += -DLLVM_HOST_TRIPLE=s390x-linux-gnu
-  LIBCXX_EXCEPTIONS := OFF
 # disable compiler-rt builtins (not supported for s390x)
   STAGE_ALL_CMAKE_EXTRA += -DCOMPILER_RT_BUILD_BUILTINS=OFF
   COMPILER_RT_USE_BUILTINS_LIBRARY := OFF
@@ -934,10 +939,10 @@ endif
 	-DCOMPILER_RT_USE_LIBCXX=OFF \
 	-DCOMPILER_RT_USE_BUILTINS_LIBRARY=$(COMPILER_RT_USE_BUILTINS_LIBRARY) \
 	-DLIBUNWIND_INSTALL_LIBRARY=OFF \
-	-DLIBCXXABI_ENABLE_EXCEPTIONS=$(LIBCXX_EXCEPTIONS) \
+	-DLIBCXXABI_ENABLE_EXCEPTIONS=ON \
 	-DLIBCXXABI_USE_COMPILER_RT=$(LIBCXX_USE_COMPILER_RT) \
 	-DLIBCXXABI_INSTALL_LIBRARY=OFF \
-	-DLIBCXX_ENABLE_EXCEPTIONS=$(LIBCXX_EXCEPTIONS) \
+	-DLIBCXX_ENABLE_EXCEPTIONS=ON \
 	-DLIBCXX_USE_COMPILER_RT=$(LIBCXX_USE_COMPILER_RT) \
 	-DLIBCXX_ENABLE_STATIC_ABI_LIBRARY=ON \
 	-DLIBCXX_STATICALLY_LINK_ABI_IN_STATIC_LIBRARY=ON \
