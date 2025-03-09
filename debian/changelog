@@ -14,6 +14,10 @@ llvm-toolchain-snapshot (1:21~++20250309030854+029e10289a02-1~exp1) UNRELEASED; 
   * Use lld as a linker instead of gold
   * clang-21 recommends clang-tools-21
     https://github.com/llvm/llvm-project/issues/117333
+  * Do not install libclc header anymore.
+    See a2b05761724e5243056988d9d6bf1a5a94715b74
+    "The libclc headers are an implementation detail and are not
+    intended to be used by others as OpenCL headers"
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 15 Feb 2025 23:18:33 +0100
 
