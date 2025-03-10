@@ -1,4 +1,4 @@
-llvm-toolchain-snapshot (1:21~++20250309030854+029e10289a02-1~exp1) UNRELEASED; urgency=medium
+llvm-toolchain-snapshot (1:21~++20250310120031+8d38906d08f0-1~exp1) experimental; urgency=medium
 
   [ Matthias Klose ]
   * d/rules: Distinguish between openmp and offload architectures.
@@ -19,7 +19,7 @@ llvm-toolchain-snapshot (1:21~++20250309030854+029e10289a02-1~exp1) UNRELEASED; 
     "The libclc headers are an implementation detail and are not
     intended to be used by others as OpenCL headers"
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 15 Feb 2025 23:18:33 +0100
+ -- Sylvestre Ledru <sylvestre@debian.org>  Mon, 10 Mar 2025 12:00:53 +0100
 
 llvm-toolchain-20 (1:20.1.0-1~exp2) experimental; urgency=medium
 
