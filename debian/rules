@@ -70,15 +70,6 @@ endif
 # build dependencies on hello in the control file.
 BD_ALT_HELLO = yes
 ifeq ($(BD_ALT_HELLO),yes)
-  BD_ALT_HELLO_SUBST = 's/@hb@//;s/@he@//'
-else
-  BD_ALT_HELLO_SUBST = 's/@hb@.*@he@//'
-endif
-
-# set this macro to anything else than "yes" to avoid generating alternative
-# build dependencies on hello in the control file.
-BD_ALT_HELLO = yes
-ifeq ($(BD_ALT_HELLO),yes)
   BD_ALT_HELLO_SUBST = 's/@BEGIN_OPTIONAL_HELLO@//g;s/@END_OPTIONAL_HELLO@//g'
 else
   BD_ALT_HELLO_SUBST = 's/@BEGIN_OPTIONAL_HELLO@.*@END_OPTIONAL_HELLO@//'
