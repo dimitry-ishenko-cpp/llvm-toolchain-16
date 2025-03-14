@@ -2,8 +2,8 @@
 
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/*.h
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/module.modulemap
-[!armel !armhf !powerpc !x32 !hurd-any] usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/xray/
-[!armel !armhf !powerpc !x32 !hurd-any] usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/profile/
+[!powerpc !x32 !hurd-any] usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/xray/
+[!powerpc !x32 !hurd-any] usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/profile/
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/ppc_wrappers/
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/openmp_wrappers/
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/cuda_wrappers/

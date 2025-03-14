@@ -1,3 +1,10 @@
+llvm-toolchain-20 (1:20.1.0-1~exp3) UNRELEASED; urgency=medium
+
+  * d/libclang-common-X.Y-dev.install.in: Install xray and profile headers
+    on ARM32 again.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 14 Mar 2025 04:32:21 +0100
+
 llvm-toolchain-20 (1:20.1.0-1~exp2) experimental; urgency=medium
 
   * Merge changes from the 19 branch
