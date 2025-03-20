@@ -30,6 +30,7 @@ usr/lib/llvm-@LLVM_VERSION@/bin/llvm-lto2
 usr/lib/llvm-@LLVM_VERSION@/bin/llvm-mc
 usr/lib/llvm-@LLVM_VERSION@/bin/llvm-mca
 usr/lib/llvm-@LLVM_VERSION@/bin/llvm-ml
+usr/lib/llvm-@LLVM_VERSION@/bin/llvm-ml64
 usr/lib/llvm-@LLVM_VERSION@/bin/llvm-modextract
 usr/lib/llvm-@LLVM_VERSION@/bin/llvm-mt
 usr/lib/llvm-@LLVM_VERSION@/bin/llvm-nm
@@ -121,6 +122,7 @@ usr/bin/llvm-lto2-@LLVM_VERSION@
 usr/bin/llvm-mc-@LLVM_VERSION@
 usr/bin/llvm-mca-@LLVM_VERSION@
 usr/bin/llvm-ml-@LLVM_VERSION@
+usr/bin/llvm-ml64-@LLVM_VERSION@
 usr/bin/llvm-modextract-@LLVM_VERSION@
 usr/bin/llvm-mt-@LLVM_VERSION@
 usr/bin/llvm-nm-@LLVM_VERSION@

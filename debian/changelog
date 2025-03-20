@@ -20,6 +20,8 @@ llvm-toolchain-snapshot (1:21~++20250314105231+fbf0276b6a7a-1~exp1) experimental
     intended to be used by others as OpenCL headers"
   * remove libc rpc files following upstream change
     8437b7f5584765ad4f7885500647657714930fbb
+  * Add llvm-ml64 as part of the llvm-X.Y
+    3c657ceef9ced068b0c7bc2f1d5fb74250720f6c
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 15 Mar 2025 13:49:50 +0100
 
