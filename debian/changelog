@@ -1,11 +1,21 @@
-llvm-toolchain-20 (1:20.1.0-1~exp3) UNRELEASED; urgency=medium
+llvm-toolchain-20 (1:20.1.1-1~exp2) experimental; urgency=medium
 
+  [ Matthias Klose ]
+  * d/libclang1-X.Y.symbols.in: Require LLVM_20 symbols from the release.
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 19 Mar 2025 22:02:06 +0100
+
+llvm-toolchain-20 (1:20.1.1-1~exp1) experimental; urgency=medium
+
+  [ Matthias Klose ]
   * d/libclang-common-X.Y-dev.install.in: Install xray and profile headers
     on ARM32 again.
   * d/rules: Remove chunk, left-over from merging 19.
-  * d/libclang1-X.Y.symbols.in: Require LLVM_20 symbols from the release.
 
- -- Matthias Klose <doko@ubuntu.com>  Fri, 14 Mar 2025 04:32:21 +0100
+  [ Sylvestre Ledru ]
+  * New upstream release
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 19 Mar 2025 22:02:06 +0100
 
 llvm-toolchain-20 (1:20.1.0-1~exp2) experimental; urgency=medium
 
