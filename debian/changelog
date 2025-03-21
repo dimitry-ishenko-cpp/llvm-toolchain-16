@@ -1,4 +1,4 @@
-llvm-toolchain-snapshot (1:21~++20250314105231+fbf0276b6a7a-1~exp1) experimental; urgency=medium
+llvm-toolchain-snapshot (1:21~++20250321095647+7606f6773cb5-1~exp1) experimental; urgency=medium
 
   [ Matthias Klose ]
   * d/rules: Distinguish between openmp and offload architectures.
@@ -23,7 +23,7 @@ llvm-toolchain-snapshot (1:21~++20250314105231+fbf0276b6a7a-1~exp1) experimental
   * Add llvm-ml64 as part of the llvm-X.Y
     3c657ceef9ced068b0c7bc2f1d5fb74250720f6c
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 15 Mar 2025 13:49:50 +0100
+ -- Sylvestre Ledru <sylvestre@debian.org>  Fri, 21 Mar 2025 22:14:50 +0100
 
 llvm-toolchain-20 (1:20.1.0-1~exp2) experimental; urgency=medium
 
