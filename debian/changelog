@@ -22,6 +22,8 @@ llvm-toolchain-snapshot (1:21~++20250321095647+7606f6773cb5-1~exp1) experimental
     8437b7f5584765ad4f7885500647657714930fbb
   * Add llvm-ml64 as part of the llvm-X.Y
     3c657ceef9ced068b0c7bc2f1d5fb74250720f6c
+  * Add llvm-gpu-loader as part of the llvm-X.Y
+    221b0117fd21d45098ead779a040a4b939a5c84f
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Fri, 21 Mar 2025 22:14:50 +0100
 
