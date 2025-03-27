@@ -1,7 +1,7 @@
-Index: llvm-toolchain-snapshot_20~++20240910012653+44556e64f21c/compiler-rt/lib/sanitizer_common/sanitizer_symbolizer_posix_libcdep.cpp
+Index: llvm-toolchain-snapshot_21~++20250327012524+17d056953881/compiler-rt/lib/sanitizer_common/sanitizer_symbolizer_posix_libcdep.cpp
 ===================================================================
---- llvm-toolchain-snapshot_20~++20240910012653+44556e64f21c.orig/compiler-rt/lib/sanitizer_common/sanitizer_symbolizer_posix_libcdep.cpp
-+++ llvm-toolchain-snapshot_20~++20240910012653+44556e64f21c/compiler-rt/lib/sanitizer_common/sanitizer_symbolizer_posix_libcdep.cpp
+--- llvm-toolchain-snapshot_21~++20250327012524+17d056953881.orig/compiler-rt/lib/sanitizer_common/sanitizer_symbolizer_posix_libcdep.cpp
++++ llvm-toolchain-snapshot_21~++20250327012524+17d056953881/compiler-rt/lib/sanitizer_common/sanitizer_symbolizer_posix_libcdep.cpp
 @@ -34,6 +34,11 @@
  #  include "sanitizer_symbolizer_libbacktrace.h"
  #  include "sanitizer_symbolizer_mac.h"
@@ -14,20 +14,20 @@ Index: llvm-toolchain-snapshot_20~++20240910012653+44556e64f21c/compiler-rt/lib/
  // C++ demangling function, as required by Itanium C++ ABI. This is weak,
  // because we do not require a C++ ABI library to be linked to a program
  // using sanitizers; if it's not present, we'll just use the mangled name.
-@@ -450,7 +455,7 @@ static SymbolizerTool *ChooseExternalSym
-     return new(*allocator) AtosSymbolizer(found_path, allocator);
+@@ -461,7 +466,7 @@ static SymbolizerTool *ChooseExternalSym
+     return new (*allocator) AtosSymbolizer(found_path, allocator);
    }
- #endif  // SANITIZER_APPLE
+ #    endif  // SANITIZER_APPLE
 -  if (const char *found_path = FindPathToBinary("llvm-symbolizer")) {
 +  if (const char *found_path = "/usr/bin/llvm-symbolizer-" TOSTR(LLVM_VERSION_MAJOR)) {
      VReport(2, "Using llvm-symbolizer found at: %s\n", found_path);
-     return new(*allocator) LLVMSymbolizer(found_path, allocator);
+     return new (*allocator) LLVMSymbolizer(found_path, allocator);
    }
-Index: llvm-toolchain-snapshot_20~++20240910012653+44556e64f21c/compiler-rt/lib/sanitizer_common/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250327012524+17d056953881/compiler-rt/lib/sanitizer_common/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_20~++20240910012653+44556e64f21c.orig/compiler-rt/lib/sanitizer_common/CMakeLists.txt
-+++ llvm-toolchain-snapshot_20~++20240910012653+44556e64f21c/compiler-rt/lib/sanitizer_common/CMakeLists.txt
-@@ -220,6 +220,7 @@ if(MSVC)
+--- llvm-toolchain-snapshot_21~++20250327012524+17d056953881.orig/compiler-rt/lib/sanitizer_common/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250327012524+17d056953881/compiler-rt/lib/sanitizer_common/CMakeLists.txt
+@@ -221,6 +221,7 @@ if(MSVC)
  endif()
  
  include_directories(..)
