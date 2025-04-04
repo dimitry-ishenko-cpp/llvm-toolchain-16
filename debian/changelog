@@ -29,6 +29,23 @@ llvm-toolchain-20 (1:20.1.3-1~exp1) experimental; urgency=medium
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 16 Apr 2025 09:11:01 +0200
 
+llvm-toolchain-20 (1:20.1.2-1~exp1) experimental; urgency=medium
+
+  [ Matthias Klose ]
+  * d/libclang1-X.Y.symbols.in: Require LLVM_20 symbols from the release.
+  * d/libclang-rt-X.Y-dev.install.in: Don't install liborc_rt* on powerpc.
+  * d/clang-tools-X.Y.install.in: Install hwasan_symbolize on x32.
+  * d//libclang-common-X.Y-dev.install.in: Install xray and profile headers
+    on x32.
+  * d/libomp-X.Y-dev.install.in: Install libomptarget* on loong64.
+  * Don't use the lld linker on mips* for the build, ftbfs.
+  * d/watch*: Enable the integration-test-suite component.
+
+  [ Sylvestre Ledru ]
+  * New upstream release
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Fri, 04 Apr 2025 19:42:38 +0200
+
 llvm-toolchain-20 (1:20.1.1-1~exp1) experimental; urgency=medium
 
   [ Matthias Klose ]
