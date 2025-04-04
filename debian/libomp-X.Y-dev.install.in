@@ -7,9 +7,9 @@
 [!armhf !mips64el] /usr/lib/llvm-@LLVM_VERSION@/lib/libarcher_static.a
 [!armhf !mips64el] /usr/lib/llvm-@LLVM_VERSION@/lib/libarcher.so
 
-[amd64 hurd-amd64 ppc64el arm64 ppc64] /usr/lib/llvm-@LLVM_VERSION@/lib/libomptarget.devicertl.a
+[amd64 hurd-amd64 ppc64el arm64 loong64 ppc64] /usr/lib/llvm-@LLVM_VERSION@/lib/libomptarget.devicertl.a
 
-[amd64 hurd-amd64 ppc64el arm64 ppc64] /usr/lib/llvm-@LLVM_VERSION@/lib/libomptarget-*.bc
+[amd64 hurd-amd64 ppc64el arm64 loong64 ppc64] /usr/lib/llvm-@LLVM_VERSION@/lib/libomptarget-*.bc
 
 usr/lib/llvm-@LLVM_VERSION@/lib/cmake/openmp/*.cmake
 
