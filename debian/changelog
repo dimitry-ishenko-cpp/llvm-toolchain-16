@@ -8,6 +8,7 @@ llvm-toolchain-20 (1:20.1.1-1~exp2) UNRELEASED; urgency=medium
     on x32.
   * d/libomp-X.Y-dev.install.in: Install libomptarget* on loong64.
   * Don't use the lld linker on mips* for the build, ftbfs.
+  * d/watch*: Enable the integration-test-suite component.
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 19 Mar 2025 22:02:06 +0100
 
