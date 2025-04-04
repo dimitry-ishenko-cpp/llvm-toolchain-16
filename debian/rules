@@ -377,7 +377,7 @@ ifeq ($(LLVM_SPIRV_INSTALLED),yes)
 endif
 
 USE_LLD=false
-LLD_ARCHS := amd64 arm64 armel armhf i386 mipsel mips64el ppc64el s390x sparc m68k riscv64 loong64
+LLD_ARCHS := amd64 arm64 armel armhf i386 ppc64el s390x sparc m68k riscv64 loong64
 ifneq (,$(filter $(DEB_HOST_ARCH),$(LLD_ARCHS)))
     ifeq ($(shell dpkg-query -W -f='${Status}\n' lld >/dev/null 2>&1 ; echo $$?),0)
 # we have lld on the system
