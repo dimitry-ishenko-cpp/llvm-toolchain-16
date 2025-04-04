@@ -1,3 +1,9 @@
+llvm-toolchain-snapshot (1:21~++20250327012524+17d056953881-1~exp1) UNRELEASED; urgency=medium
+
+  * Remove llvm-gpu-loader like upstream
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 27 Mar 2025 13:25:48 +0100
+
 llvm-toolchain-snapshot (1:21~++20250322080030+20b5728b7b1c-1~exp1) experimental; urgency=medium
 
   [ Matthias Klose ]
