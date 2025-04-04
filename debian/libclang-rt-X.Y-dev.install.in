@@ -7,4 +7,4 @@ usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/README.txt
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/fuzzer/
 usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/include/orc/c_api.h
 # See compiler-rt/cmake/Modules/AllSupportedArchDefs.cmake / ALL_ORC_SUPPORTED_ARCH
-[amd64 arm64 armhf armel i386 loong64 powerpc ppc64 ppc64el x32] usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/lib/linux/liborc_rt*
+[amd64 arm64 armhf armel i386 loong64 ppc64 ppc64el x32] usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@*/lib/linux/liborc_rt*
