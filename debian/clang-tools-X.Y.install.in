@@ -62,7 +62,7 @@ usr/lib/llvm-@LLVM_VERSION@/libexec/intercept-cc
 
 
 # See compiler-rt/cmake/Modules/AllSupportedArchDefs.cmake / HWASAN_SUPPORTED_ARCH
-[amd64 arm64 riscv64 i386] usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@/bin/hwasan_symbolize
+[amd64 arm64 riscv64 i386 x32] usr/lib/llvm-@LLVM_VERSION@/lib/clang/@LLVM_VERSION@/bin/hwasan_symbolize
 
 clang/tools/scan-build-@LLVM_VERSION@      usr/share/clang/
 clang/tools/scan-view-@LLVM_VERSION@       usr/share/clang/
