@@ -1,3 +1,9 @@
+llvm-toolchain-18 (1:18.1.8-18) unstable; urgency=medium
+
+  * Remove "Provides: libunwind-dev" (Closes: #1100481)
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Sat, 05 Apr 2025 22:24:44 +0200
+
 llvm-toolchain-18 (1:18.1.8-17) unstable; urgency=medium
 
   [ Matthias Klose ]
