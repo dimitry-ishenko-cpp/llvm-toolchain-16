@@ -37,6 +37,7 @@ usr/lib/llvm-@LLVM_VERSION@/bin/nvptx-arch
 usr/lib/llvm-@LLVM_VERSION@/bin/clang-installapi
 usr/lib/llvm-@LLVM_VERSION@/bin/clang-nvlink-wrapper
 usr/lib/llvm-@LLVM_VERSION@/bin/clang-sycl-linker
+usr/lib/llvm-@LLVM_VERSION@/bin/offload-arch 
 
 usr/lib/llvm-@LLVM_VERSION@/bin/analyze-build
 usr/lib/llvm-@LLVM_VERSION@/bin/intercept-build
@@ -106,3 +107,5 @@ usr/bin/nvptx-arch-@LLVM_VERSION@
 usr/bin/clang-installapi-@LLVM_VERSION@
 usr/bin/clang-nvlink-wrapper-@LLVM_VERSION@
 usr/bin/clang-sycl-linker-@LLVM_VERSION@
+usr/bin/offload-arch-@LLVM_VERSION@
+
