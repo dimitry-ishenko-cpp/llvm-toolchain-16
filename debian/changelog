@@ -1,6 +1,7 @@
 llvm-toolchain-snapshot (1:21~++20250322080030+20b5728b7b1c-1~exp2) UNRELEASED; urgency=medium
 
   * Ship offload-arch as part of clang-tools-X-Y
+    79cb6f05da37520949c006e26c5cef1826090d9d
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 10 Apr 2025 18:08:25 -0400
 
