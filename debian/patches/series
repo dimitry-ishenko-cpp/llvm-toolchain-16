@@ -71,7 +71,6 @@ libcxx/libcxx-armhf-ftbfs.diff
 # Change default optims
 mips/mips-fpxx-enable.diff
 mips/mips-force-nomadd4.patch
-mips/mips-D101773-reloc.patch
 mips/syscall-mips64el-def.diff
 
 26-set-correct-float-abi.diff
