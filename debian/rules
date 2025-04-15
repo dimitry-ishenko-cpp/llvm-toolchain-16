@@ -418,7 +418,11 @@ ifneq (,$(filter libllvmlibc-$(LLVM_VERSION)-dev, $(packages)))
         # Enable libc only for architectures listed in LIBC_ARCHS
         ifneq (,$(filter $(DEB_HOST_ARCH), $(LIBC_ARCHS)))
             RUNTIMES += ;libc
-            STAGE_ALL_CMAKE_EXTRA += -DLLVM_LIBC_GPU_BUILD=ON
+            # also disable llvm-gpu-loader
+            # for causing https://github.com/llvm/llvm-project/issues/132890
+            # and because libc isn't built on all platform but, as it is in the llvm package
+            # we expect it
+            STAGE_ALL_CMAKE_EXTRA += -DLLVM_LIBC_GPU_BUILD=ON -DLLVM_TOOL_LLVM_GPU_LOADER_BUILD=OFF
         else
             LLVM_LIBC_ENABLE=no
         endif
