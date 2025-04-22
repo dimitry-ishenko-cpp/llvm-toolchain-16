@@ -1,6 +1,8 @@
 llvm-toolchain-snapshot (1:21~++20250327012524+17d056953881-1~exp1) UNRELEASED; urgency=medium
 
   * Remove llvm-gpu-loader like upstream
+  * Remove libomptarget.devicertl.a as it seems it has been removed here
+    https://github.com/llvm/llvm-project/pull/136359
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 27 Mar 2025 13:25:48 +0100
 
