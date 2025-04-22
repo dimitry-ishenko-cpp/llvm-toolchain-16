@@ -5,6 +5,9 @@ llvm-toolchain-snapshot (1:21~++20250327012524+17d056953881-1~exp1) UNRELEASED; 
     https://github.com/llvm/llvm-project/pull/136359
   * Remove 0001-tools-clang-cmake-resolve-symlinks-in-ClangConfig.cmake.patch
     to see if it fixes: https://github.com/llvm/llvm-project/issues/132556
+  * Also ship usr/lib/llvm-21/lib/amdgcn-amd-amdhsa/libompdevice.a
+    usr/lib/llvm-21/lib/nvptx64-nvidia-cuda/libompdevice.a in
+    libomp-21-dev
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 27 Mar 2025 13:25:48 +0100
 
