@@ -1,7 +1,7 @@
-Index: llvm-toolchain-snapshot_11~++20200326111000+4673699a470/llvm/test/Object/macho-invalid.test
+Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/llvm/test/Object/macho-invalid.test
 ===================================================================
---- llvm-toolchain-snapshot_11~++20200326111000+4673699a470.orig/llvm/test/Object/macho-invalid.test
-+++ llvm-toolchain-snapshot_11~++20200326111000+4673699a470/llvm/test/Object/macho-invalid.test
+--- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/llvm/test/Object/macho-invalid.test
++++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/llvm/test/Object/macho-invalid.test
 @@ -284,9 +284,6 @@ INVALID-DYLIB-WRONG-FILETYPE: macho-inva
  RUN: not llvm-objdump --macho --private-headers %p/Inputs/macho-invalid-dylib-no-id  2>&1 | FileCheck --check-prefix=INVALID-DYLIB-NO-ID %s
  INVALID-DYLIB-NO-ID: macho-invalid-dylib-no-id': truncated or malformed object (no LC_ID_DYLIB load command in dynamic library filetype)

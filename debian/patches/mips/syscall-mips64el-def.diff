@@ -1,7 +1,7 @@
-Index: llvm-toolchain-15-15.0.0~+rc3/compiler-rt/lib/builtins/clear_cache.c
+Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/compiler-rt/lib/builtins/clear_cache.c
 ===================================================================
---- llvm-toolchain-15-15.0.0~+rc3.orig/compiler-rt/lib/builtins/clear_cache.c
-+++ llvm-toolchain-15-15.0.0~+rc3/compiler-rt/lib/builtins/clear_cache.c
+--- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/compiler-rt/lib/builtins/clear_cache.c
++++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/compiler-rt/lib/builtins/clear_cache.c
 @@ -6,6 +6,11 @@
  //
  //===----------------------------------------------------------------------===//

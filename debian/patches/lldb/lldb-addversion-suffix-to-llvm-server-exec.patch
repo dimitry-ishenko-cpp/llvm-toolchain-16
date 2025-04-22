@@ -12,10 +12,10 @@ which could then break something else.
 
 This probably should have upstream bug but I couldn't find any existing report.
 
-Index: llvm-toolchain-snapshot_21~++20250413105239+1004fae222ef/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
+Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250413105239+1004fae222ef.orig/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
-+++ llvm-toolchain-snapshot_21~++20250413105239+1004fae222ef/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
+--- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
++++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
 @@ -28,6 +28,7 @@
  #include "llvm/ADT/StringRef.h"
  #include "llvm/Config/llvm-config.h" // for LLVM_ENABLE_ZLIB
@@ -32,4 +32,4 @@ Index: llvm-toolchain-snapshot_21~++20250413105239+1004fae222ef/lldb/source/Plug
 +# define DEBUGSERVER_BASENAME    "lldb-server-" LLVM_VERSION_STRING
  #endif
  
- #if defined(HAVE_LIBCOMPRESSION)
+ #if HAVE_LIBCOMPRESSION

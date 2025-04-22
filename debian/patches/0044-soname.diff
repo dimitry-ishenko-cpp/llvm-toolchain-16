@@ -3,11 +3,11 @@
  tools/llvm-shlib/CMakeLists.txt     |    1 +
  2 files changed, 2 insertions(+), 1 deletion(-)
 
-Index: llvm-toolchain-snapshot_19~++20240319094628+703920d4138d/clang/tools/libclang/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/tools/libclang/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_19~++20240319094628+703920d4138d.orig/clang/tools/libclang/CMakeLists.txt
-+++ llvm-toolchain-snapshot_19~++20240319094628+703920d4138d/clang/tools/libclang/CMakeLists.txt
-@@ -135,7 +135,7 @@ if (UNIX AND ${CMAKE_SYSTEM_NAME} MATCHE
+--- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/clang/tools/libclang/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/tools/libclang/CMakeLists.txt
+@@ -130,7 +130,7 @@ if (UNIX AND ${CMAKE_SYSTEM_NAME} MATCHE
      remove_definitions("-D_XOPEN_SOURCE=700")
  endif()
  
@@ -16,10 +16,10 @@ Index: llvm-toolchain-snapshot_19~++20240319094628+703920d4138d/clang/tools/libc
    OUTPUT_NAME ${output_name}
    ${SOURCES}
  
-Index: llvm-toolchain-snapshot_19~++20240319094628+703920d4138d/llvm/tools/llvm-shlib/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/llvm/tools/llvm-shlib/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_19~++20240319094628+703920d4138d.orig/llvm/tools/llvm-shlib/CMakeLists.txt
-+++ llvm-toolchain-snapshot_19~++20240319094628+703920d4138d/llvm/tools/llvm-shlib/CMakeLists.txt
+--- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/llvm/tools/llvm-shlib/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/llvm/tools/llvm-shlib/CMakeLists.txt
 @@ -41,6 +41,8 @@ if(LLVM_BUILD_LLVM_DYLIB)
      llvm_install_library_symlink(LLVM-${LLVM_VERSION_MAJOR}${LLVM_VERSION_SUFFIX} $<TARGET_FILE_NAME:LLVM> SHARED FULL_DEST COMPONENT LLVM)
    endif()

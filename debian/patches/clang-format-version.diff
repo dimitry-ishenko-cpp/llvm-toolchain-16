@@ -4,10 +4,10 @@
  clang/tools/clang-format/clang-format.py      |    2 +-
  3 files changed, 3 insertions(+), 3 deletions(-)
 
-Index: llvm-toolchain-snapshot_19~++21240221124703+f122268c0441/clang/tools/clang-format/clang-format-diff.py
+Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/tools/clang-format/clang-format-diff.py
 ===================================================================
---- llvm-toolchain-snapshot_19~++21240221124703+f122268c0441.orig/clang/tools/clang-format/clang-format-diff.py
-+++ llvm-toolchain-snapshot_19~++21240221124703+f122268c0441/clang/tools/clang-format/clang-format-diff.py
+--- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/clang/tools/clang-format/clang-format-diff.py
++++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/tools/clang-format/clang-format-diff.py
 @@ -93,7 +93,7 @@ def main():
      )
      parser.add_argument(
@@ -17,11 +17,11 @@ Index: llvm-toolchain-snapshot_19~++21240221124703+f122268c0441/clang/tools/clan
          help="location of binary to use for clang-format",
      )
      args = parser.parse_args()
-Index: llvm-toolchain-snapshot_19~++21240221124703+f122268c0441/clang/tools/clang-format/clang-format.el
+Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/tools/clang-format/clang-format.el
 ===================================================================
---- llvm-toolchain-snapshot_19~++21240221124703+f122268c0441.orig/clang/tools/clang-format/clang-format.el
-+++ llvm-toolchain-snapshot_19~++21240221124703+f122268c0441/clang/tools/clang-format/clang-format.el
-@@ -38,7 +38,7 @@
+--- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/clang/tools/clang-format/clang-format.el
++++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/tools/clang-format/clang-format.el
+@@ -39,7 +39,7 @@
    :group 'tools)
  
  (defcustom clang-format-executable
@@ -30,10 +30,10 @@ Index: llvm-toolchain-snapshot_19~++21240221124703+f122268c0441/clang/tools/clan
        "clang-format")
    "Location of the clang-format executable.
  
-Index: llvm-toolchain-snapshot_19~++21240221124703+f122268c0441/clang/tools/clang-format/clang-format.py
+Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/tools/clang-format/clang-format.py
 ===================================================================
---- llvm-toolchain-snapshot_19~++21240221124703+f122268c0441.orig/clang/tools/clang-format/clang-format.py
-+++ llvm-toolchain-snapshot_19~++21240221124703+f122268c0441/clang/tools/clang-format/clang-format.py
+--- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/clang/tools/clang-format/clang-format.py
++++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/tools/clang-format/clang-format.py
 @@ -49,7 +49,7 @@ import vim
  
  # set g:clang_format_path to the path to clang-format if it is not on the path

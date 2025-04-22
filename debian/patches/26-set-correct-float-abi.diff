@@ -18,11 +18,11 @@ Forwarded: <no|not-needed|url proving that it has been forwarded>
 Reviewed-By: <name and email of someone who approved the patch>
 Last-Update: <YYYY-MM-DD>
 
-Index: llvm-toolchain-snapshot_20~++20250123092341+091741a880c2/clang/lib/Driver/ToolChains/Arch/ARM.cpp
+Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/lib/Driver/ToolChains/Arch/ARM.cpp
 ===================================================================
---- llvm-toolchain-snapshot_20~++20250123092341+091741a880c2.orig/clang/lib/Driver/ToolChains/Arch/ARM.cpp
-+++ llvm-toolchain-snapshot_20~++20250123092341+091741a880c2/clang/lib/Driver/ToolChains/Arch/ARM.cpp
-@@ -449,7 +449,7 @@ arm::FloatABI arm::getDefaultFloatABI(co
+--- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/clang/lib/Driver/ToolChains/Arch/ARM.cpp
++++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/lib/Driver/ToolChains/Arch/ARM.cpp
+@@ -468,7 +468,7 @@ arm::FloatABI arm::getDefaultFloatABI(co
      case llvm::Triple::MuslEABI:
      case llvm::Triple::EABI:
        // EABI is always AAPCS, and if it was not marked 'hard', it's softfp

@@ -12,10 +12,10 @@ Partially addresses PR37128
  cmake/modules/CMakeLists.txt | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-Index: llvm-toolchain-snapshot_21~++20250318052838+6542cf197320/cmake/Modules/FindPrefixFromConfig.cmake
+Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/cmake/Modules/FindPrefixFromConfig.cmake
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250318052838+6542cf197320.orig/cmake/Modules/FindPrefixFromConfig.cmake
-+++ llvm-toolchain-snapshot_21~++20250318052838+6542cf197320/cmake/Modules/FindPrefixFromConfig.cmake
+--- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/cmake/Modules/FindPrefixFromConfig.cmake
++++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/cmake/Modules/FindPrefixFromConfig.cmake
 @@ -42,7 +42,8 @@ function(find_prefix_from_config out_var
        "get_filename_component(${prefix_var} \"\${CMAKE_CURRENT_LIST_FILE}\" REALPATH)")
      # Construct the proper number of get_filename_component(... PATH)

@@ -8,10 +8,10 @@
  test/Feature/load_module.ll               |    1 +
  4 files changed, 5 insertions(+), 1 deletion(-)
 
-Index: llvm-toolchain-snapshot_16~++20221213075229+4f9d069b3b53/llvm/test/BugPoint/metadata.ll
+Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/llvm/test/BugPoint/metadata.ll
 ===================================================================
---- llvm-toolchain-snapshot_16~++20221213075229+4f9d069b3b53.orig/llvm/test/BugPoint/metadata.ll
-+++ llvm-toolchain-snapshot_16~++20221213075229+4f9d069b3b53/llvm/test/BugPoint/metadata.ll
+--- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/llvm/test/BugPoint/metadata.ll
++++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/llvm/test/BugPoint/metadata.ll
 @@ -18,6 +18,8 @@
  ; NOTYPE: !DICompileUnit
  ; NOTYPE-NOT: !DIBasicType
