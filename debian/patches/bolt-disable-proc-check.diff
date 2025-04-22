@@ -1,9 +1,9 @@
 bolt: Disable the check for /proc/self/map_files. Might not be available on build machines
 
-Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/bolt/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/bolt/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/bolt/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/bolt/CMakeLists.txt
+--- llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef.orig/bolt/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/bolt/CMakeLists.txt
 @@ -90,16 +90,6 @@ if ((CMAKE_SYSTEM_PROCESSOR STREQUAL "x8
    set(BOLT_ENABLE_RUNTIME_default ON)
  endif()

@@ -1,7 +1,7 @@
-Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/docs/CommandGuide/clang.rst
+Index: llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/clang/docs/CommandGuide/clang.rst
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/clang/docs/CommandGuide/clang.rst
-+++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/docs/CommandGuide/clang.rst
+--- llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef.orig/clang/docs/CommandGuide/clang.rst
++++ llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/clang/docs/CommandGuide/clang.rst
 @@ -355,24 +355,10 @@ Clang fully supports cross compilation a
  Depending on how your version of Clang is configured, it may have support for a
  number of cross compilers, or may only support a native target.

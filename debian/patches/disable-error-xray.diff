@@ -1,7 +1,7 @@
-Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/compiler-rt/lib/xray/xray_tsc.h
+Index: llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/compiler-rt/lib/xray/xray_tsc.h
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/compiler-rt/lib/xray/xray_tsc.h
-+++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/compiler-rt/lib/xray/xray_tsc.h
+--- llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef.orig/compiler-rt/lib/xray/xray_tsc.h
++++ llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/compiler-rt/lib/xray/xray_tsc.h
 @@ -112,8 +112,6 @@ inline uint64_t getTSCFrequency() XRAY_N
  
  } // namespace __xray

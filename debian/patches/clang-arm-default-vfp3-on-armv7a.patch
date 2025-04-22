@@ -1,7 +1,7 @@
-Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/llvm/include/llvm/TargetParser/ARMTargetParser.def
+Index: llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/llvm/include/llvm/TargetParser/ARMTargetParser.def
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/llvm/include/llvm/TargetParser/ARMTargetParser.def
-+++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/llvm/include/llvm/TargetParser/ARMTargetParser.def
+--- llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef.orig/llvm/include/llvm/TargetParser/ARMTargetParser.def
++++ llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/llvm/include/llvm/TargetParser/ARMTargetParser.def
 @@ -92,8 +92,8 @@ ARM_ARCH("armv6kz", ARMV6KZ, "6KZ", "+v6
           FK_VFPV2, (ARM::AEK_SEC | ARM::AEK_DSP))
  ARM_ARCH("armv6-m", ARMV6M, "6-M", "+v6m", ARMBuildAttrs::CPUArch::v6_M,
@@ -13,10 +13,10 @@ Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/llvm/include/llv
  ARM_ARCH("armv7ve", ARMV7VE, "7VE", "+v7ve", ARMBuildAttrs::CPUArch::v7,
           FK_NEON,
           (ARM::AEK_SEC | ARM::AEK_MP | ARM::AEK_VIRT | ARM::AEK_HWDIVARM |
-Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/llvm/lib/Target/ARM/ARMArchitectures.td
+Index: llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/llvm/lib/Target/ARM/ARMArchitectures.td
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/llvm/lib/Target/ARM/ARMArchitectures.td
-+++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/llvm/lib/Target/ARM/ARMArchitectures.td
+--- llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef.orig/llvm/lib/Target/ARM/ARMArchitectures.td
++++ llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/llvm/lib/Target/ARM/ARMArchitectures.td
 @@ -42,7 +42,8 @@ def ARMv6sm   : Architecture<"armv6s-m",
                                                         FeatureStrictAlign]>;
  

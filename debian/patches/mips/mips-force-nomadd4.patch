@@ -6,10 +6,10 @@ support both, we have to disabled those instructions.
 For that, the patch below basically corresponds to the --with-madd4=no
 used on the GCC side.
 
-Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/lib/Basic/Targets/Mips.h
+Index: llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/clang/lib/Basic/Targets/Mips.h
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/clang/lib/Basic/Targets/Mips.h
-+++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/lib/Basic/Targets/Mips.h
+--- llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef.orig/clang/lib/Basic/Targets/Mips.h
++++ llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/clang/lib/Basic/Targets/Mips.h
 @@ -350,7 +350,9 @@ public:
          HasMSA = true;
        else if (Feature == "+nomadd4")
