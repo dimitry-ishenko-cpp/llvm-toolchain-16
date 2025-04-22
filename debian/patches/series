@@ -14,7 +14,6 @@ fix-clang-path-and-build.diff
 0048-Set-html_static_path-_static-everywhere.patch
 symbolizer-path.diff
 clang-tidy-run-bin.diff
-0001-tools-clang-cmake-resolve-symlinks-in-ClangConfig.cmake.patch
 debug-jit-path.diff
 
 # commented because of bug 903709
