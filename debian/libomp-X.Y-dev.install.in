@@ -10,6 +10,8 @@
 [amd64 hurd-amd64 ppc64el arm64 ppc64] usr/lib/llvm-@LLVM_VERSION@/lib/amdgcn-amd-amdhsa/libompdevice.a
 [amd64 hurd-amd64 ppc64el arm64 ppc64] usr/lib/llvm-@LLVM_VERSION@/lib/nvptx64-nvidia-cuda/libompdevice.a
 
+[amd64 hurd-amd64 ppc64el arm64 ppc64] /usr/lib/llvm-@LLVM_VERSION@/lib/libomptarget-*.bc
+
 usr/lib/llvm-@LLVM_VERSION@/lib/cmake/openmp/*.cmake
 
 [!armhf !hurd-amd64] usr/lib/llvm-@LLVM_VERSION@/share/gdb/python/ompd/
