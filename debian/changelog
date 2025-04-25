@@ -10,6 +10,7 @@ llvm-toolchain-snapshot (1:21~++20250327012524+17d056953881-1~exp1) UNRELEASED; 
     libomp-21-dev
   * Lower flang python dep for Debian buster for apt.llvm.org
     lower-flang-py-dep.diff
+  * Adjust the path to libomptarget*bc
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 27 Mar 2025 13:25:48 +0100
 
