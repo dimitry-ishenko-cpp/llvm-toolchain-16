@@ -194,7 +194,6 @@ Description: Clang library - Common development package
 
 Package: libclang-rt-@LLVM_VERSION@-dev
 Architecture: any
-Multi-Arch: same
 Section: libdevel
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Compiler-rt - development package
@@ -228,7 +227,6 @@ Description: Compiler-rt - wasm64 builtins
 
 Package: libpolly-@LLVM_VERSION@-dev
 Architecture: any
-Multi-Arch: same
 Section: libdevel
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: High-level loop and data-locality optimizer
@@ -346,7 +344,6 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
-Multi-Arch: same
 Breaks: llvm-@LLVM_VERSION@-dev (<< 1:20~++20240830999999+99)
 Replaces: llvm-@LLVM_VERSION@-dev (<< 1:20~++20240830999999+99)
 Description: Modular compiler and toolchain technologies, runtime library
@@ -636,7 +633,6 @@ Description: LLVM OpenMP runtime - dev package
  while it is executing.
 
 Package: libomp5-@LLVM_VERSION@
-Multi-Arch: same
 Architecture: @OMP_ARCHS@
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Provides: ${t64:Provides}, libomp-x.y
@@ -696,7 +692,6 @@ Description: Offload Library
 Package: libc++1-@LLVM_VERSION@
 Section: libs
 Architecture: any
-Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: clang
@@ -719,7 +714,6 @@ Description: LLVM C++ Standard library
 Package: libc++-@LLVM_VERSION@-dev
 Section: libdevel
 Architecture: any
-Multi-Arch: same
 Depends: libc++1-@LLVM_VERSION@ (= ${binary:Version}), ${misc:Depends},
  libc++abi-@LLVM_VERSION@-dev (= ${binary:Version}),
  libunwind-@LLVM_VERSION@-dev [amd64 arm64 armhf i386 loong64 ppc64el ppc64 riscv64]
@@ -767,7 +761,6 @@ Description: LLVM C++ Standard library (WASI)
 Package: libc++abi1-@LLVM_VERSION@
 Section: libs
 Architecture: any
-Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Provides: ${t64:Provides}, libc++abi-x.y
@@ -785,7 +778,6 @@ Description: LLVM low level support for a standard C++ library
 Package: libc++abi-@LLVM_VERSION@-dev
 Section: libdevel
 Architecture: any
-Multi-Arch: same
 Depends: libc++abi1-@LLVM_VERSION@ (= ${binary:Version}), ${misc:Depends}
 Breaks: libc++abi-dev (<= 44)
 Provides: libc++abi-x.y-dev
@@ -861,7 +853,6 @@ Description: OpenCL C language implementation - development files
 Package: libunwind-@LLVM_VERSION@
 Section: libs
 Architecture: amd64 arm64 armhf i386 loong64 ppc64el ppc64 riscv64
-Multi-Arch: same
 Depends: ${shlibs:Depends},
  ${misc:Depends}
 Provides: ${t64:Provides}, libunwind-x.y
@@ -878,7 +869,6 @@ Description: production-quality unwinder
 Package: libunwind-@LLVM_VERSION@-dev
 Section: libdevel
 Architecture: amd64 arm64 armhf i386 loong64 ppc64el ppc64 riscv64
-Multi-Arch: same
 Depends:
  ${misc:Depends},
  libunwind-@LLVM_VERSION@ (= ${binary:Version})
@@ -909,7 +899,6 @@ Description: Multi-Level Intermediate Representation tools
 Package: libmlir-@LLVM_VERSION@
 Section: libs
 Architecture: any
-Multi-Arch: same
 Depends: ${shlibs:Depends},
  ${misc:Depends}
 Provides: ${t64:Provides}, libmlir-x.y
@@ -925,7 +914,6 @@ Description: Multi-Level Intermediate Representation library
 Package: libmlir-@LLVM_VERSION@-dev
 Section: libdevel
 Architecture: any
-Multi-Arch: same
 Depends:
  ${misc:Depends},
  libmlir-@LLVM_VERSION@ (= ${binary:Version})
