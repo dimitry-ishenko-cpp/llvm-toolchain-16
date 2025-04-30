@@ -1,9 +1,9 @@
-Index: llvm-toolchain-snapshot_21~++20250422043558+e87aa0c6ab7b/flang/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250430093517+ae6b4b23ea42/flang/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422043558+e87aa0c6ab7b.orig/flang/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250422043558+e87aa0c6ab7b/flang/CMakeLists.txt
-@@ -26,7 +26,7 @@ set(FLANG_SOURCE_DIR ${CMAKE_CURRENT_SOU
- set(FLANG_RT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../flang-rt")
+--- llvm-toolchain-snapshot_21~++20250430093517+ae6b4b23ea42.orig/flang/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250430093517+ae6b4b23ea42/flang/CMakeLists.txt
+@@ -25,7 +25,7 @@ endif()
+ set(FLANG_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
  
  # Python is needed for symbol extracting tool
 -set(LLVM_MINIMUM_PYTHON_VERSION 3.8)
