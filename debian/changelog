@@ -1,6 +1,8 @@
 llvm-toolchain-20 (1:20.1.3-1~exp2) UNRELEASED; urgency=medium
 
   * Replace the ubuntu-plucky patch with a ubuntu-questing patch.
+  * d/libclang-common-X.Y-dev.install.in: Install xray and profile headers
+    on powerpc.
 
  -- Matthias Klose <doko@debian.org>  Wed, 30 Apr 2025 14:50:24 +0200
 
@@ -10,7 +12,7 @@ llvm-toolchain-20 (1:20.1.3-1~exp1) experimental; urgency=medium
   * d/libclang1-X.Y.symbols.in: Require LLVM_20 symbols from the release.
   * d/libclang-rt-X.Y-dev.install.in: Don't install liborc_rt* on powerpc.
   * d/clang-tools-X.Y.install.in: Install hwasan_symbolize on x32.
-  * d//libclang-common-X.Y-dev.install.in: Install xray and profile headers
+  * d/libclang-common-X.Y-dev.install.in: Install xray and profile headers
     on x32.
   * d/libomp-X.Y-dev.install.in: Install libomptarget* on loong64.
   * Don't use the lld linker on mips* for the build, ftbfs.
