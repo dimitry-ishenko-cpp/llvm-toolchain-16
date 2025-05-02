@@ -1,0 +1,39 @@
+commit 112ffe7c621e8bf145c5c5926e36f3af9e0fd045
+Author: Sylvestre Ledru <sylvestre@debian.org>
+Date:   Tue Apr 22 11:50:58 2025 +0200
+
+    Add support of the next Ubuntu (Ubuntu 25.10 - Questing Quokka)
+
+diff --git a/clang/include/clang/Driver/Distro.h b/clang/include/clang/Driver/Distro.h
+index b4d485dac8a2..9f27c2baaeb4 100644
+--- a/clang/include/clang/Driver/Distro.h
++++ b/clang/include/clang/Driver/Distro.h
+@@ -81,6 +81,7 @@ public:
+     UbuntuNoble,
+     UbuntuOracular,
+     UbuntuPlucky,
++    UbuntuQuesting,
+     UnknownDistro
+   };
+ 
+@@ -132,7 +133,7 @@ public:
+   }
+ 
+   bool IsUbuntu() const {
+-    return DistroVal >= UbuntuHardy && DistroVal <= UbuntuPlucky;
++    return DistroVal >= UbuntuHardy && DistroVal <= UbuntuQuesting;
+   }
+ 
+   bool IsAlpineLinux() const { return DistroVal == AlpineLinux; }
+diff --git a/clang/lib/Driver/Distro.cpp b/clang/lib/Driver/Distro.cpp
+index 3cc79535de8d..82c627819d9f 100644
+--- a/clang/lib/Driver/Distro.cpp
++++ b/clang/lib/Driver/Distro.cpp
+@@ -96,6 +96,7 @@ static Distro::DistroType DetectLsbRelease(llvm::vfs::FileSystem &VFS) {
+                     .Case("noble", Distro::UbuntuNoble)
+                     .Case("oracular", Distro::UbuntuOracular)
+                     .Case("plucky", Distro::UbuntuPlucky)
++                    .Case("questing", Distro::UbuntuQuesting)
+                     .Default(Distro::UnknownDistro);
+   return Version;
+ }
