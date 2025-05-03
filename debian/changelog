@@ -1,4 +1,4 @@
-llvm-toolchain-20 (1:20.1.4-1~exp1) unstable; urgency=medium
+llvm-toolchain-20 (1:20.1.4-1~exp1) experimental; urgency=medium
 
   [ Matthias Klose ]
   * Replace the ubuntu-plucky patch with a ubuntu-questing patch.
