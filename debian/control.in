@@ -344,6 +344,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
+Multi-Arch: same
 Breaks: llvm-@LLVM_VERSION@-dev (<< 1:20~++20240830999999+99)
 Replaces: llvm-@LLVM_VERSION@-dev (<< 1:20~++20240830999999+99)
 Description: Modular compiler and toolchain technologies, runtime library

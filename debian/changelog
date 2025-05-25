@@ -1,3 +1,9 @@
+llvm-toolchain-20 (1:20.1.5-1~exp2) experimental; urgency=medium
+
+  * Bring back Multi-Arch: same for libllvm (Closes: #1106132)
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Sun, 25 May 2025 16:08:54 +0200
+
 llvm-toolchain-20 (1:20.1.5-1~exp1) experimental; urgency=medium
 
   * New upstream release
