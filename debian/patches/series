@@ -27,6 +27,7 @@ do-not-fail-on-unexpected-pass.diff
 lldb/lldb-soname.diff
 #lldb-libname.diff
 openmp-soname.diff
+libcxx-soname.diff
 
 # Disable some tests
 silent-gold-test.diff

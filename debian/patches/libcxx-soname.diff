@@ -1,0 +1,66 @@
+--- a/libcxx/CMakeLists.txt
++++ b/libcxx/CMakeLists.txt
+@@ -196,7 +196,7 @@ endif()
+ set(LIBCXX_ABI_VERSION "${abi_version}" CACHE STRING
+   "ABI version of libc++. Can be either 1 or 2, where 2 is currently the unstable ABI.
+    Defaults to 1 unless LIBCXX_ABI_UNSTABLE is specified, in which case this is 2.")
+-set(LIBCXX_LIBRARY_VERSION "${LIBCXX_ABI_VERSION}.0" CACHE STRING
++set(LIBCXX_LIBRARY_VERSION "${LIBCXX_ABI_VERSION}.0.${LLVM_VERSION_MAJOR}" CACHE STRING
+   "Version of libc++. This will be reflected in the name of the shared library produced.
+    For example, -DLIBCXX_LIBRARY_VERSION=x.y will result in the library being named
+    libc++.x.y.dylib, along with the usual symlinks pointing to that. On Apple platforms,
+--- a/libcxxabi/src/CMakeLists.txt
++++ b/libcxxabi/src/CMakeLists.txt
+@@ -200,7 +200,7 @@ set_target_properties(cxxabi_shared
+     EXCLUDE_FROM_ALL "$<IF:$<BOOL:${LIBCXXABI_ENABLE_SHARED}>,FALSE,TRUE>"
+     LINK_FLAGS "${LIBCXXABI_LINK_FLAGS}"
+     OUTPUT_NAME "${LIBCXXABI_SHARED_OUTPUT_NAME}"
+-    SOVERSION "1"
++    SOVERSION "1.0.${LLVM_VERSION_MAJOR}"
+     VERSION "${LIBCXXABI_LIBRARY_VERSION}"
+ )
+ 
+--- a/libunwind/src/CMakeLists.txt
++++ b/libunwind/src/CMakeLists.txt
+@@ -183,7 +183,7 @@ set_target_properties(unwind_shared
+     LINKER_LANGUAGE C
+     OUTPUT_NAME "${LIBUNWIND_SHARED_OUTPUT_NAME}"
+     VERSION     "${LIBUNWIND_LIBRARY_VERSION}"
+-    SOVERSION   "1"
++    SOVERSION   "1.0.${LLVM_VERSION_MAJOR}"
+ )
+ 
+ if (LIBUNWIND_ENABLE_SHARED)
+--- a/libcxx/src/CMakeLists.txt
++++ b/libcxx/src/CMakeLists.txt
+@@ -185,7 +185,7 @@ set_target_properties(cxx_shared
+     LINK_FLAGS    "${LIBCXX_LINK_FLAGS}"
+     OUTPUT_NAME   "${LIBCXX_SHARED_OUTPUT_NAME}"
+     VERSION       "${LIBCXX_LIBRARY_VERSION}"
+-    SOVERSION     "${LIBCXX_ABI_VERSION}"
++    SOVERSION     "${LIBCXX_ABI_VERSION}.0.${LLVM_VERSION_MAJOR}"
+     DEFINE_SYMBOL ""
+ )
+ cxx_add_common_build_flags(cxx_shared)
+--- a/libunwind/CMakeLists.txt
++++ b/libunwind/CMakeLists.txt
+@@ -66,7 +66,7 @@ cmake_dependent_option(LIBUNWIND_INSTALL
+   "Install the shared libunwind library." ON
+   "LIBUNWIND_ENABLE_SHARED;LIBUNWIND_INSTALL_LIBRARY" OFF)
+ 
+-set(LIBUNWIND_LIBRARY_VERSION "1.0" CACHE STRING
++set(LIBUNWIND_LIBRARY_VERSION "1.0.${LLVM_VERSION_MAJOR}" CACHE STRING
+   "Version of libunwind. This will be reflected in the name of the shared library produced.
+    For example, -DLIBUNWIND_LIBRARY_VERSION=x.y will result in the library being named
+    libunwind.x.y.dylib, along with the usual symlinks pointing to that. On Apple platforms,
+--- a/libcxxabi/CMakeLists.txt
++++ b/libcxxabi/CMakeLists.txt
+@@ -98,7 +98,7 @@ else()
+ endif()
+ 
+ set(LIBCXXABI_LIBCXX_LIBRARY_PATH "" CACHE PATH "The path to libc++ library.")
+-set(LIBCXXABI_LIBRARY_VERSION "1.0" CACHE STRING
++set(LIBCXXABI_LIBRARY_VERSION "1.0.${LLVM_VERSION_MAJOR}" CACHE STRING
+ "Version of libc++abi. This will be reflected in the name of the shared \
+ library produced. For example, -DLIBCXXABI_LIBRARY_VERSION=x.y will \
+ result in the library being named libc++abi.x.y.dylib, along with the \
