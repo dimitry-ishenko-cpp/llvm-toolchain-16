@@ -696,9 +696,7 @@ Architecture: any
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: clang
-Provides: ${t64:Provides}, libc++-x.y
-Conflicts: libc++-x.y
-Replaces: libc++-x.y
+Provides: ${t64:Provides}
 Description: LLVM C++ Standard library
  libc++ is another implementation of the C++ standard library.
  .
@@ -764,9 +762,7 @@ Section: libs
 Architecture: any
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Provides: ${t64:Provides}, libc++abi-x.y
-Conflicts: libc++abi-x.y
-Replaces: libc++abi-x.y
+Provides: ${t64:Provides}
 Description: LLVM low level support for a standard C++ library
  libc++abi is another implementation of low level support for a standard C++
  library.
@@ -856,9 +852,7 @@ Section: libs
 Architecture: amd64 arm64 armhf i386 loong64 ppc64el ppc64 riscv64
 Depends: ${shlibs:Depends},
  ${misc:Depends}
-Provides: ${t64:Provides}, libunwind-x.y
-Conflicts: libunwind-x.y
-Replaces: libunwind-x.y
+Provides: ${t64:Provides}
 Description: production-quality unwinder
  libunwind is a production-quality unwinder, with platform support for DWARF
  unwind info, SjLj, and ARM EHABI.

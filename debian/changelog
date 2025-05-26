@@ -1,3 +1,15 @@
+llvm-toolchain-20 (1:20.1.5-1~exp3) UNRELEASED; urgency=medium
+
+  [ Andres Salomon ]
+  * Add libcxx-soname.diff to modify SONAMES for libc++1-20, libc++abi1-20,
+    and libuwind-20 to include the llvm major version (eg, 1.0.20 instead of
+    1.0).
+  * Remove conflicts/removes/provides from libc++1-20, libc++abi1-20, and
+    libunwind-20 to allow parallel package installation with other major
+    llvm versions (closes: #1089933).
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 27 Mar 2025 13:25:48 +0100
+
 llvm-toolchain-20 (1:20.1.5-1~exp2) experimental; urgency=medium
 
   * Bring back Multi-Arch: same for libllvm (Closes: #1106132)
