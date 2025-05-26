@@ -1,4 +1,4 @@
-llvm-toolchain-20 (1:20.1.5-1~exp3) UNRELEASED; urgency=medium
+llvm-toolchain-20 (1:20.1.5-1~exp3) experimental; urgency=medium
 
   [ Andres Salomon ]
   * Add libcxx-soname.diff to modify SONAMES for libc++1-20, libc++abi1-20,
@@ -8,7 +8,7 @@ llvm-toolchain-20 (1:20.1.5-1~exp3) UNRELEASED; urgency=medium
     libunwind-20 to allow parallel package installation with other major
     llvm versions (closes: #1089933).
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 27 Mar 2025 13:25:48 +0100
+ -- Sylvestre Ledru <sylvestre@debian.org>  Tue, 27 May 2025 00:26:03 +0200
 
 llvm-toolchain-20 (1:20.1.5-1~exp2) experimental; urgency=medium
 
