@@ -1,5 +1,6 @@
 llvm-toolchain-snapshot (1:21~++20250327012524+17d056953881-1~exp1) UNRELEASED; urgency=medium
 
+  [ Sylvestre Ledru ]
   * Remove llvm-gpu-loader like upstream
   * Remove libomptarget.devicertl.a as it seems it has been removed here
     https://github.com/llvm/llvm-project/pull/136359
@@ -15,7 +16,10 @@ llvm-toolchain-snapshot (1:21~++20250327012524+17d056953881-1~exp1) UNRELEASED; 
     https://github.com/llvm/llvm-project/issues/139220
   * Ship more clang-doc
 
- -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 27 Mar 2025 13:25:48 +0100
+  [ Matthias Klose ]
+  * On ppc64el configure --with-long-double-format=ieee for upcoming distros.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 30 May 2025 14:52:33 +0200
 
 llvm-toolchain-snapshot (1:21~++20250322080030+20b5728b7b1c-1~exp2) UNRELEASED; urgency=medium
 

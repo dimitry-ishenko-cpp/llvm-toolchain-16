@@ -300,6 +300,13 @@ ifneq (,$(filter $(DEB_HOST_ARCH),powerpc))
   STAGE_ALL_CMAKE_EXTRA += -DCOMPILER_RT_DEFAULT_TARGET_ONLY=ON
 endif
 
+ifneq (,$(filter $(DEB_HOST_ARCH),ppc64el))
+  STAGE_ALL_CMAKE_EXTRA += -DLLVM_HOST_TRIPLE=powerpc64le-linux-gnu
+  ifeq (,$(filter $(DISTRO), stretch buster bullseye bookworm trixie xenial bionic focal jammy noble oracular plucky))
+    STAGE_ALL_CMAKE_EXTRA += -DPPC_LINUX_DEFAULT_IEEELONGDOUBLE=ON
+  endif
+endif
+
 # debug symbols OOM in Ubuntu Ubuntu and slows down build process.
 ifneq (,$(filter $(DEB_HOST_ARCH),riscv64))
   opt_flags = -O2 -DNDEBUG -g0
