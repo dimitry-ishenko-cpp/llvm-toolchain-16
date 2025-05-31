@@ -12,10 +12,10 @@ which could then break something else.
 
 This probably should have upstream bug but I couldn't find any existing report.
 
-Index: llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
+Index: llvm-toolchain-snapshot_21~++20250422124055+a095ebc58c9f/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef.orig/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
-+++ llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
+--- llvm-toolchain-snapshot_21~++20250422124055+a095ebc58c9f.orig/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
++++ llvm-toolchain-snapshot_21~++20250422124055+a095ebc58c9f/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
 @@ -28,6 +28,7 @@
  #include "llvm/Config/llvm-config.h" // for LLVM_ENABLE_ZLIB
  #include "llvm/Support/Error.h"
