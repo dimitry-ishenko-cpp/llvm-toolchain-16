@@ -1,14 +1,2 @@
 # DP: Add another #undef for _TIME_BITS
 
-Index: llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/compiler-rt/lib/sanitizer_common/sanitizer_procmaps_solaris.cpp
-===================================================================
---- llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef.orig/compiler-rt/lib/sanitizer_common/sanitizer_procmaps_solaris.cpp
-+++ llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/compiler-rt/lib/sanitizer_common/sanitizer_procmaps_solaris.cpp
-@@ -11,6 +11,7 @@
- 
- // Before Solaris 11.4, <procfs.h> doesn't work in a largefile environment.
- #undef _FILE_OFFSET_BITS
-+#undef _TIME_BITS
- 
- // Avoid conflict between `_TIME_BITS` defined vs. `_FILE_OFFSET_BITS`
- // undefined in some Linux configurations.
