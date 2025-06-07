@@ -1,16 +1,16 @@
-Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/lib/Driver/ToolChains/Linux.cpp
+Index: llvm-toolchain-snapshot_21~++20250607105253+432c5f2c608d/clang/lib/Driver/ToolChains/Linux.cpp
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/clang/lib/Driver/ToolChains/Linux.cpp
-+++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/lib/Driver/ToolChains/Linux.cpp
-@@ -13,6 +13,7 @@
+--- llvm-toolchain-snapshot_21~++20250607105253+432c5f2c608d.orig/clang/lib/Driver/ToolChains/Linux.cpp
++++ llvm-toolchain-snapshot_21~++20250607105253+432c5f2c608d/clang/lib/Driver/ToolChains/Linux.cpp
+@@ -12,6 +12,7 @@
+ #include "Arch/Mips.h"
  #include "Arch/PPC.h"
  #include "Arch/RISCV.h"
- #include "CommonArgs.h"
 +#include "clang/Basic/Version.h"
  #include "clang/Config/config.h"
+ #include "clang/Driver/CommonArgs.h"
  #include "clang/Driver/Distro.h"
- #include "clang/Driver/Driver.h"
-@@ -640,8 +641,18 @@ void Linux::AddClangSystemIncludeArgs(co
+@@ -639,8 +640,18 @@ void Linux::AddClangSystemIncludeArgs(co
    SmallString<128> ResourceDirInclude(D.ResourceDir);
    llvm::sys::path::append(ResourceDirInclude, "include");
    if (!DriverArgs.hasArg(options::OPT_nobuiltininc) &&
