@@ -129,7 +129,6 @@ libclang-major-version-only.diff
 D148945-revert.diff
 arm32-defaults.diff
 disable-openmp-per-target.diff
-libsanitizer-timebits.diff
 offload-disable-static-assert.diff
 link-with-package-metadata.diff
 mips-mlir-xgot.diff
