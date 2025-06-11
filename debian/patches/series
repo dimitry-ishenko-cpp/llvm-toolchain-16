@@ -137,4 +137,4 @@ bolt-disable-proc-check.diff
 python3.13-quote.diff
 #cmake-issue-126358.diff
 lower-flang-py-dep.diff
-#revert-issue-139220.diff
+revert-issue-139220.diff
