@@ -84,6 +84,7 @@ usr/lib/llvm-@LLVM_VERSION@/bin/llvm-debuginfo-analyzer
 usr/lib/llvm-@LLVM_VERSION@/bin/llvm-readtapi
 usr/lib/llvm-@LLVM_VERSION@/bin/reduce-chunk-list
 usr/lib/llvm-@LLVM_VERSION@/bin/llvm-cgdata
+usr/lib/llvm-@LLVM_VERSION@/bin/llvm-test-mustache-spec
 
 usr/bin/llvm-PerfectShuffle-@LLVM_VERSION@
 usr/bin/llvm-addr2line-@LLVM_VERSION@
@@ -166,3 +167,4 @@ usr/bin/llvm-debuginfod-@LLVM_VERSION@
 usr/bin/llvm-debuginfo-analyzer-@LLVM_VERSION@
 usr/bin/reduce-chunk-list-@LLVM_VERSION@
 usr/bin/llvm-cgdata-@LLVM_VERSION@
+usr/bin/llvm-test-mustache-spec-@LLVM_VERSION@

@@ -15,6 +15,7 @@ llvm-toolchain-snapshot (1:21~++20250327012524+17d056953881-1~exp1) UNRELEASED; 
   * revert a flang-rt change to fix
     https://github.com/llvm/llvm-project/issues/139220
   * Ship more clang-doc
+  * Also install llvm-test-mustache-spec
 
   [ Matthias Klose ]
   * On ppc64el configure --with-long-double-format=ieee for upcoming distros.
