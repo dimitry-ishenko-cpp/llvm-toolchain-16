@@ -1,6 +1,10 @@
 llvm-toolchain-19 (1:19.1.7-6) UNRELEASED; urgency=medium
 
+  [ Matthias Klose ]
   * On ppc64el configure --with-long-double-format=ieee for upcoming distros.
+
+  [ Jianfeng Liu ]
+  * Add CFLAGS/CXXFLAGS -mcmodel=medium on loong64 (Closes: #1107858)
 
  -- Matthias Klose <doko@debian.org>  Fri, 30 May 2025 14:54:15 +0200
 
