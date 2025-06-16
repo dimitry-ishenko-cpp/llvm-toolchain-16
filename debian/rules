@@ -155,6 +155,14 @@ CFLAGS_EXTRA = -Wno-unused-command-line-argument
 CXXFLAGS_EXTRA = -Wno-unused-command-line-argument
 LDFLAGS_EXTRA = -Wl,--build-id
 
+# This will enable linking statically with large binaries like chromium.
+# For more details, see:
+# https://github.com/loongson/la-abi-specs/blob/release/laelf.adoc#code_models
+ifeq (loong64,$(DEB_HOST_ARCH))
+  CFLAGS_EXTRA += -mcmodel=medium
+  CXXFLAGS_EXTRA += -mcmodel=medium
+endif
+
 # collect all flags for stage 1 toolchain build only
 STAGE_1_CFLAGS = $(CFLAGS) $(CFLAGS_EXTRA) $(CPPFLAGS)
 STAGE_1_CXXFLAGS = $(CXXFLAGS) $(CXXFLAGS_EXTRA) $(CPPFLAGS)
@@ -1031,8 +1039,8 @@ endif
 	touch $@
 
 # Remove some new flags introduced by dpkg 1.22.0;
-STAGE_2_WASM_CFLAGS := $(filter-out -march=% -mfpu=% -fcf-protection% -mbranch-protection%, $(STAGE_2_CFLAGS))
-STAGE_2_WASM_CXXFLAGS := $(filter-out -march=% -mfpu=% -fcf-protection% -mbranch-protection%, $(STAGE_2_CXXFLAGS))
+STAGE_2_WASM_CFLAGS := $(filter-out -march=% -mfpu=% -fcf-protection% -mbranch-protection% -mcmodel=%, $(STAGE_2_CFLAGS))
+STAGE_2_WASM_CXXFLAGS := $(filter-out -march=% -mfpu=% -fcf-protection% -mbranch-protection% -mcmodel=%, $(STAGE_2_CXXFLAGS))
 
 build-wasm/compiler-rt-%: cpu = $(@:build-wasm/compiler-rt-%=%)
 build-wasm/compiler-rt-%:
