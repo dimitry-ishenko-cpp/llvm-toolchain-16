@@ -1,9 +1,9 @@
 
-Index: llvm-toolchain-snapshot_21~++20250624110826+aa3c5d0297e4/llvm/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779/llvm/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250624110826+aa3c5d0297e4.orig/llvm/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250624110826+aa3c5d0297e4/llvm/CMakeLists.txt
-@@ -136,23 +136,6 @@ foreach(proj ${LLVM_ENABLE_PROJECTS})
+--- llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779.orig/llvm/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779/llvm/CMakeLists.txt
+@@ -144,23 +144,6 @@ foreach(proj ${LLVM_ENABLE_PROJECTS})
    endif()
  endforeach()
  
@@ -27,7 +27,7 @@ Index: llvm-toolchain-snapshot_21~++20250624110826+aa3c5d0297e4/llvm/CMakeLists.
  if ("flang" IN_LIST LLVM_ENABLE_PROJECTS)
    if (NOT "mlir" IN_LIST LLVM_ENABLE_PROJECTS)
      message(STATUS "Enabling MLIR as a dependency to flang")
-@@ -211,6 +194,23 @@ if ("libclc" IN_LIST LLVM_ENABLE_PROJECT
+@@ -219,6 +202,23 @@ if ("libclc" IN_LIST LLVM_ENABLE_PROJECT
      "https://libclc.llvm.org/ for building the runtimes.")
  endif()
  

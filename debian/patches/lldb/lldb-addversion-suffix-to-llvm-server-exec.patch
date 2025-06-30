@@ -12,11 +12,11 @@ which could then break something else.
 
 This probably should have upstream bug but I couldn't find any existing report.
 
-Index: llvm-toolchain-snapshot_21~++20250422124055+a095ebc58c9f/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
+Index: llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422124055+a095ebc58c9f.orig/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
-+++ llvm-toolchain-snapshot_21~++20250422124055+a095ebc58c9f/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
-@@ -28,6 +28,7 @@
+--- llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779.orig/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
++++ llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
+@@ -27,6 +27,7 @@
  #include "llvm/Config/llvm-config.h" // for LLVM_ENABLE_ZLIB
  #include "llvm/Support/Error.h"
  #include "llvm/Support/ScopedPrinter.h"
@@ -24,12 +24,16 @@ Index: llvm-toolchain-snapshot_21~++20250422124055+a095ebc58c9f/lldb/source/Plug
  #include <climits>
  #include <cstring>
  #include <sys/stat.h>
-@@ -37,7 +38,7 @@
+Index: llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779/lldb/source/Plugins/Process/gdb-remote/ProcessGDBRemote.cpp
+===================================================================
+--- llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779.orig/lldb/source/Plugins/Process/gdb-remote/ProcessGDBRemote.cpp
++++ llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779/lldb/source/Plugins/Process/gdb-remote/ProcessGDBRemote.cpp
+@@ -98,7 +98,7 @@
  #elif defined(_WIN32)
  #define DEBUGSERVER_BASENAME "lldb-server.exe"
  #else
 -#define DEBUGSERVER_BASENAME "lldb-server"
-+# define DEBUGSERVER_BASENAME    "lldb-server-" LLVM_VERSION_STRING
++#define DEBUGSERVER_BASENAME "lldb-server-" LLVM_VERSION_STRING
  #endif
  
- #if HAVE_LIBCOMPRESSION
+ using namespace lldb;

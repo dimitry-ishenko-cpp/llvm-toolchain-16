@@ -1,8 +1,8 @@
-Index: llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/clang/lib/Basic/FileManager.cpp
+Index: llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779/clang/lib/Basic/FileManager.cpp
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef.orig/clang/lib/Basic/FileManager.cpp
-+++ llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/clang/lib/Basic/FileManager.cpp
-@@ -599,6 +599,12 @@ FileManager::getNoncachedStatValue(Strin
+--- llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779.orig/clang/lib/Basic/FileManager.cpp
++++ llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779/clang/lib/Basic/FileManager.cpp
+@@ -597,6 +597,12 @@ FileManager::getNoncachedStatValue(Strin
    return std::error_code();
  }
  
@@ -15,10 +15,10 @@ Index: llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/clang/lib/Basic/
  void FileManager::GetUniqueIDMapping(
      SmallVectorImpl<OptionalFileEntryRef> &UIDToFiles) const {
    UIDToFiles.clear();
-Index: llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/lldb/include/lldb/lldb-defines.h
+Index: llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779/lldb/include/lldb/lldb-defines.h
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef.orig/lldb/include/lldb/lldb-defines.h
-+++ llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/lldb/include/lldb/lldb-defines.h
+--- llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779.orig/lldb/include/lldb/lldb-defines.h
++++ llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779/lldb/include/lldb/lldb-defines.h
 @@ -15,6 +15,11 @@
  #define INT32_MAX 2147483647
  #endif

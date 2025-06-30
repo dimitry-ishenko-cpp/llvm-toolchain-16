@@ -1,8 +1,8 @@
-Index: llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/mlir/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779/mlir/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef.orig/mlir/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/mlir/CMakeLists.txt
-@@ -104,6 +104,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+--- llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779.orig/mlir/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779/mlir/CMakeLists.txt
+@@ -110,6 +110,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
    endif()
  endif()
  

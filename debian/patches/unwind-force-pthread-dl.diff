@@ -1,8 +1,8 @@
-Index: llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/libunwind/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779/libunwind/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef.orig/libunwind/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/libunwind/CMakeLists.txt
-@@ -320,14 +320,17 @@ if (MSVC)
+--- llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779.orig/libunwind/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250630094904+57f7e14b5779/libunwind/CMakeLists.txt
+@@ -321,14 +321,17 @@ if (MSVC)
    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
  endif()
  
