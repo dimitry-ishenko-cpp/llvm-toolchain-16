@@ -1,16 +1,17 @@
 set rpath for prepare_builtins build utility to find correct stage2
 libs at runtime when executed as part of a build
-Index: llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/libclc/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250715030935+8226fbee4b62/libclc/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef.orig/libclc/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250422120724+c1940cd0deef/libclc/CMakeLists.txt
-@@ -189,6 +189,9 @@ endif()
- target_compile_definitions( prepare_builtins PRIVATE ${LLVM_VERSION_DEFINE} )
- # These were not properly reported in early LLVM and we don't need them
- target_compile_options( prepare_builtins PRIVATE -fno-rtti -fno-exceptions )
+--- llvm-toolchain-snapshot_21~++20250715030935+8226fbee4b62.orig/libclc/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250715030935+8226fbee4b62/libclc/CMakeLists.txt
+@@ -173,6 +173,10 @@ include_directories( ${LLVM_INCLUDE_DIRS
+ # Configure prepare_builtins
+ add_subdirectory( utils )
+ 
 +set_target_properties( prepare_builtins
 +                       PROPERTIES INSTALL_RPATH "${LLVM_LIBDIR}"
 +                       BUILD_WITH_INSTALL_RPATH "ON")
- 
++
  # Setup arch devices
  set( r600--_devices cedar cypress barts cayman )
+ set( amdgcn--_devices tahiti )

@@ -3,10 +3,10 @@
  tools/llvm-shlib/CMakeLists.txt     |    1 +
  2 files changed, 2 insertions(+), 1 deletion(-)
 
-Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/tools/libclang/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250715030935+8226fbee4b62/clang/tools/libclang/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/clang/tools/libclang/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/tools/libclang/CMakeLists.txt
+--- llvm-toolchain-snapshot_21~++20250715030935+8226fbee4b62.orig/clang/tools/libclang/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250715030935+8226fbee4b62/clang/tools/libclang/CMakeLists.txt
 @@ -130,7 +130,7 @@ if (UNIX AND ${CMAKE_SYSTEM_NAME} MATCHE
      remove_definitions("-D_XOPEN_SOURCE=700")
  endif()
@@ -16,12 +16,12 @@ Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/clang/tools/libc
    OUTPUT_NAME ${output_name}
    ${SOURCES}
  
-Index: llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/llvm/tools/llvm-shlib/CMakeLists.txt
+Index: llvm-toolchain-snapshot_21~++20250715030935+8226fbee4b62/llvm/tools/llvm-shlib/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7.orig/llvm/tools/llvm-shlib/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250422102230+f541a3aad8e7/llvm/tools/llvm-shlib/CMakeLists.txt
-@@ -41,6 +41,8 @@ if(LLVM_BUILD_LLVM_DYLIB)
-     llvm_install_library_symlink(LLVM-${LLVM_VERSION_MAJOR}${LLVM_VERSION_SUFFIX} $<TARGET_FILE_NAME:LLVM> SHARED FULL_DEST COMPONENT LLVM)
+--- llvm-toolchain-snapshot_21~++20250715030935+8226fbee4b62.orig/llvm/tools/llvm-shlib/CMakeLists.txt
++++ llvm-toolchain-snapshot_21~++20250715030935+8226fbee4b62/llvm/tools/llvm-shlib/CMakeLists.txt
+@@ -50,6 +50,8 @@ if(LLVM_BUILD_LLVM_DYLIB)
+     target_link_options(LLVM PRIVATE LINKER:--export-all-symbols)
    endif()
  
 +  set_property(TARGET LLVM PROPERTY VERSION "1") # Append .1 to SONAME
