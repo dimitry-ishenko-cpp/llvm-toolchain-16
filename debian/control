@@ -1,4 +1,4 @@
-Source: llvm-toolchain-snapshot
+Source: llvm-toolchain-21
 Section: devel
 Priority: optional
 Rules-Requires-Root: no
@@ -38,8 +38,8 @@ Build-Depends: debhelper (>= 10.0), cmake, ninja-build,
 Build-Conflicts: oprofile
 Standards-Version: 4.7.0
 Homepage: https://www.llvm.org/
-Vcs-Git: https://salsa.debian.org/pkg-llvm-team/llvm-toolchain.git -b snapshot
-Vcs-Browser: https://salsa.debian.org/pkg-llvm-team/llvm-toolchain/tree/snapshot
+Vcs-Git: https://salsa.debian.org/pkg-llvm-team/llvm-toolchain.git -b 21
+Vcs-Browser: https://salsa.debian.org/pkg-llvm-team/llvm-toolchain/tree/21
 
 # ------------- clang -------------
 
