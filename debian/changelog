@@ -1,6 +1,7 @@
 llvm-toolchain-21 (1:21~++20250612091244+3f0cf742ac4e-1~exp2) UNRELEASED; urgency=medium
 
   * Creation of the 21 branch
+  * Try to use llvm-spirv-20
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Thu, 17 Jul 2025 12:29:38 +0900
 
