@@ -1,12 +1,12 @@
 set rpath for prepare_builtins build utility to find correct stage2
 libs at runtime when executed as part of a build
-Index: llvm-toolchain-snapshot_21~++20250715030935+8226fbee4b62/libclc/CMakeLists.txt
+Index: llvm-toolchain-21_21.1.0~++20250728085727+b00e0d2a7e21/libclc/CMakeLists.txt
 ===================================================================
---- llvm-toolchain-snapshot_21~++20250715030935+8226fbee4b62.orig/libclc/CMakeLists.txt
-+++ llvm-toolchain-snapshot_21~++20250715030935+8226fbee4b62/libclc/CMakeLists.txt
-@@ -173,6 +173,10 @@ include_directories( ${LLVM_INCLUDE_DIRS
- # Configure prepare_builtins
- add_subdirectory( utils )
+--- llvm-toolchain-21_21.1.0~++20250728085727+b00e0d2a7e21.orig/libclc/CMakeLists.txt
++++ llvm-toolchain-21_21.1.0~++20250728085727+b00e0d2a7e21/libclc/CMakeLists.txt
+@@ -190,6 +190,10 @@ target_compile_definitions( prepare_buil
+ # These were not properly reported in early LLVM and we don't need them
+ target_compile_options( prepare_builtins PRIVATE -fno-rtti -fno-exceptions )
  
 +set_target_properties( prepare_builtins
 +                       PROPERTIES INSTALL_RPATH "${LLVM_LIBDIR}"
