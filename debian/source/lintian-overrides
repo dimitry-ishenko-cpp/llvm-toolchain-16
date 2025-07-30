@@ -28,5 +28,5 @@ source: source-is-missing [*dll]
 # By design
 source: invalid-arch-string-in-source-relation riscv64*
 
-# we are a compiler
+# we are a compiler, it is a test, it is expected
 source: binary-with-bad-dynamic-table [llvm/test/tools/llvm-xray/X86/Inputs/elf64-objcopied-instrmap.bin]
