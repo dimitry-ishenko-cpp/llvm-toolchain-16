@@ -31,11 +31,11 @@ reset_repo ()
     cd $1
     git clean -qfd
     git checkout .
-    git remote update origin > /dev/null
+    git remote update > /dev/null
     git reset --hard origin/main > /dev/null
     git clean -qfd
     git checkout main > /dev/null
-    git pull origin main
+    git pull
     cd -
 }
 
@@ -113,8 +113,6 @@ fi
 cd $EXPORT_PATH/llvm-project
 if test -z  "$TAG" -a -z "$FINAL_RELEASE"; then
     # Building a branch
-    # Fetch the specific branch from origin to avoid ambiguity
-    git fetch origin $BRANCH:$BRANCH
     git checkout $BRANCH
     git reset --hard origin/$BRANCH
     if test $BRANCH != "main"; then
