@@ -1,3 +1,9 @@
+llvm-toolchain-21 (1:21.1.0-1~exp1) UNRELEASED; urgency=medium
+
+  * experimental New snapshot release
+
+ -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 27 Aug 2025 10:47:13 +0200
+
 llvm-toolchain-21 (1:21.1.0~+rc2-1~exp1) experimental; urgency=medium
 
   * Creation of the 21 branch
