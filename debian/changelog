@@ -1,6 +1,7 @@
-llvm-toolchain-21 (1:21.1.0-1~exp1) UNRELEASED; urgency=medium
+llvm-toolchain-21 (1:21.1.0-1) unstable; urgency=medium
 
-  * experimental New snapshot release
+  * New upstream release
+  * I am not going to upload -20 in unstable to avoid the maintenance burden
 
  -- Sylvestre Ledru <sylvestre@debian.org>  Wed, 27 Aug 2025 10:47:13 +0200
 
