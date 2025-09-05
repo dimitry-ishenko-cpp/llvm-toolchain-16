@@ -2,7 +2,7 @@ llvm-toolchain-19 (1:19.1.7-6) UNRELEASED; urgency=medium
 
   [ Matthias Klose ]
   * On ppc64el configure with -DPPC_LINUX_DEFAULT_IEEELONGDOUBLE=ON for
-    upcoming distros.
+    upcoming distros. Closes: #1113935.
 
   [ Jianfeng Liu ]
   * Add CFLAGS/CXXFLAGS -mcmodel=medium on loong64 (Closes: #1107858)
