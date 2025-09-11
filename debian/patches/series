@@ -140,3 +140,4 @@ mips-mlir-xgot.diff
 ubuntu-plucky.patch
 bolt-disable-proc-check.diff
 python3.13-quote.diff
+gcc-15.diff

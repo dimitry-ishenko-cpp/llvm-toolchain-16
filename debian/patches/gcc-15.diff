@@ -1,0 +1,20 @@
+--- a/mlir/include/mlir/Dialect/Affine/IR/ValueBoundsOpInterfaceImpl.h
++++ b/mlir/include/mlir/Dialect/Affine/IR/ValueBoundsOpInterfaceImpl.h
+@@ -10,6 +10,7 @@
+ #define MLIR_DIALECT_AFFINE_IR_VALUEBOUNDSOPINTERFACEIMPL_H
+ 
+ #include "mlir/Support/LLVM.h"
++#include <cstdint>
+ 
+ namespace mlir {
+ class DialectRegistry;
+--- a/mlir/include/mlir/Target/SPIRV/Deserialization.h
++++ b/mlir/include/mlir/Target/SPIRV/Deserialization.h
+@@ -15,6 +15,7 @@
+ 
+ #include "mlir/IR/OwningOpRef.h"
+ #include "mlir/Support/LLVM.h"
++#include <cstdint>
+ 
+ namespace mlir {
+ class MLIRContext;

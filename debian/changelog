@@ -1,13 +1,14 @@
-llvm-toolchain-19 (1:19.1.7-6) UNRELEASED; urgency=medium
+llvm-toolchain-19 (1:19.1.7-6) unstable; urgency=medium
 
   [ Matthias Klose ]
   * On ppc64el configure with -DPPC_LINUX_DEFAULT_IEEELONGDOUBLE=ON for
     upcoming distros. Closes: #1113935.
+  * Fix ftbfs with GCC 15.
 
   [ Jianfeng Liu ]
   * Add CFLAGS/CXXFLAGS -mcmodel=medium on loong64 (Closes: #1107858)
 
- -- Matthias Klose <doko@debian.org>  Fri, 30 May 2025 14:54:15 +0200
+ -- Matthias Klose <doko@debian.org>  Thu, 11 Sep 2025 17:39:34 +0200
 
 llvm-toolchain-19 (1:19.1.7-5) unstable; urgency=medium
 
