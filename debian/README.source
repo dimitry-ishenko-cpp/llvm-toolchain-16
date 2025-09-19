@@ -1,3 +1,33 @@
+Project structure:
+
+* The llvm-18 branch contains the original LLVM-18 code and tracks the
+  llvm-project/release/18.x branch.
+
+* The cling-llvm-18 branch includes additional patches for cling and tracks the
+  root-project/cling-llvm18 branch.
+
+* The debian-18 branch contains Debian packaging for LLVM-18 and tracks the
+  debian/18 branch.
+
+* The master branch is merged from llvm-18 and debian-18.
+
+* Changes between llvm-18 and cling-llvm-18 and added as patches inside
+  debian/patches/cling.
+
+Update procedure:
+
+1. Fetch from the llvm-project, root-project and debian remotes.
+2. Update the llvm-18, cling-llvm-18 and debian-18 branches.
+3. Switch to the master branch and merge matching tags from llvm-18 and
+   debian-18. Resolve conflicts.
+4. Regenerate patches for cling-llvm-18, eg:
+   `git format-patch llvm-18..cling-llvm-18`, move them into
+   debian/patches/cling, and update debian/patches/series. Resolve conflicts.
+5. As needed, reset the epoch to 2:.
+6. Release.
+
+ -- Dimitry Ishenko <dimitry.ishenko@gmail.com>  Fri, 19 Sep 2025 19:26:50 -0400
+
 All programs and libraries shipped in this package are trying to stay as close
 as possible from upstream.
 
