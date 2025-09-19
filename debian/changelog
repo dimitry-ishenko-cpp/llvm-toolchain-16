@@ -1,3 +1,9 @@
+llvm-toolchain-18 (2:18.1.8-18.1) unstable; urgency=medium
+
+  * Add patches for cling
+
+ -- Dimitry Ishenko <dimitry.ishenko@gmail.com>  Fri, 19 Sep 2025 19:21:50 -0400
+
 llvm-toolchain-18 (2:18.1.8-18) unstable; urgency=medium
 
   * Bump epoch to 2:
