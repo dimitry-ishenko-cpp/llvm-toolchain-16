@@ -1,3 +1,11 @@
+llvm-toolchain-18 (2:18.1.8-18) unstable; urgency=medium
+
+  * Bump epoch to 2:
+  * d/rules: don't hard-code epoch
+  * d/patches: remove bogus patch
+
+ -- Dimitry Ishenko <dimitry.ishenko@gmail.com>  Fri, 19 Sep 2025 18:58:49 -0400
+
 llvm-toolchain-18 (1:18.1.8-18) unstable; urgency=medium
 
   * Remove "Provides: libunwind-dev" (Closes: #1100481)
