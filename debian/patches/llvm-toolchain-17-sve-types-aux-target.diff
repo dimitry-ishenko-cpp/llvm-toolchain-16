@@ -1,0 +1,50 @@
+From: Emanuele Rocca <emanuele.rocca@arm.com>
+Date: Fri, 19 Jul 2024 09:25:38 +0200
+Subject: [PATCH] [Clang] make SVE types known to device targets too (#99446)
+
+For the purpose of preprocessing and declarations in header files,
+ensure clang accepts SVE types for both device and host targets.
+
+Co-authored-by: Sander De Smalen <sander.desmalen@arm.com>
+---
+ clang/lib/AST/ASTContext.cpp       | 3 ++-
+ clang/lib/Sema/Sema.cpp            | 4 +++-
+ clang/test/PCH/aarch64-sve-types.c | 2 ++
+ 3 files changed, 7 insertions(+), 2 deletions(-)
+
+--- a/clang/lib/AST/ASTContext.cpp
++++ b/clang/lib/AST/ASTContext.cpp
+@@ -1353,7 +1353,8 @@
+ #include "clang/Basic/OpenCLExtensionTypes.def"
+   }
+ 
+-  if (Target.hasAArch64SVETypes()) {
++  if (Target.hasAArch64SVETypes() ||
++      (AuxTarget && AuxTarget->hasAArch64SVETypes())) {
+ #define SVE_TYPE(Name, Id, SingletonId) \
+     InitBuiltinType(SingletonId, BuiltinType::Id);
+ #include "clang/Basic/AArch64SVEACLETypes.def"
+--- a/clang/lib/Sema/Sema.cpp
++++ b/clang/lib/Sema/Sema.cpp
+@@ -424,7 +424,9 @@
+ #include "clang/Basic/OpenCLExtensionTypes.def"
+   }
+ 
+-  if (Context.getTargetInfo().hasAArch64SVETypes()) {
++  if (Context.getTargetInfo().hasAArch64SVETypes() ||
++      (Context.getAuxTargetInfo() &&
++       Context.getAuxTargetInfo()->hasAArch64SVETypes())) {
+ #define SVE_TYPE(Name, Id, SingletonId) \
+     addImplicitTypedef(Name, Context.SingletonId);
+ #include "clang/Basic/AArch64SVEACLETypes.def"
+--- a/clang/test/PCH/aarch64-sve-types.c
++++ b/clang/test/PCH/aarch64-sve-types.c
+@@ -1,6 +1,8 @@
+ // RUN: %clang_cc1 -triple aarch64-linux-gnu -emit-pch -o %t %s
+ // RUN: %clang_cc1 -triple aarch64-linux-gnu -include-pch %t \
+ // RUN:   -fsyntax-only -verify %s
++// RUN: %clang_cc1 -triple amdgcn-amd-amdhsa -aux-triple aarch64-linux-gnu \
++// RUN:   -x hip-cpp-output -emit-pch -o %t %s
+ 
+ // expected-no-diagnostics
+ 

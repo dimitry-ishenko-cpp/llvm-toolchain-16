@@ -1,0 +1,22 @@
+Description: Record GCC-style command-line switches by default
+ This makes Clang default behaviour more like GCC where if debug
+ symbol generation is enabled, the command-line switches data
+ will be stored inside the debug symbols.
+Author: Zixing Liu <zixing.liu@canonical.com>
+Forwarded: https://github.com/llvm/llvm-project/issues/94690
+Last-Update: 2024-06-04
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+Index: llvm-toolchain-18-18.1.6/clang/lib/Driver/ToolChains/Clang.cpp
+===================================================================
+--- llvm-toolchain-18-18.1.6.orig/clang/lib/Driver/ToolChains/Clang.cpp
++++ llvm-toolchain-18-18.1.6/clang/lib/Driver/ToolChains/Clang.cpp
+@@ -7390,7 +7390,7 @@ void Clang::ConstructJob(Compilation &C,
+   // By default, -gno-record-gcc-switches is set on and no recording.
+   auto GRecordSwitches =
+       Args.hasFlag(options::OPT_grecord_command_line,
+-                   options::OPT_gno_record_command_line, false);
++                   options::OPT_gno_record_command_line, true);
+   auto FRecordSwitches =
+       Args.hasFlag(options::OPT_frecord_command_line,
+                    options::OPT_fno_record_command_line, false);

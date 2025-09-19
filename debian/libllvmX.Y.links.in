@@ -1,0 +1,8 @@
+# Should be uncommented for @LLVM_VERSION@.1 and other
+# usr/lib/llvm-@LLVM_VERSION@/lib/libLLVM-@LLVM_VERSION@.so.1 /usr/lib/@DEB_HOST_MULTIARCH@/libLLVM-@LLVM_VERSION@.so.1
+
+usr/lib/@DEB_HOST_MULTIARCH@/libLLVM-@LLVM_VERSION@.so.1    /usr/lib/@DEB_HOST_MULTIARCH@/libLLVM-@LLVM_VERSION_FULL@.so.1
+usr/lib/@DEB_HOST_MULTIARCH@/libLLVM-@LLVM_VERSION@.so.1    /usr/lib/@DEB_HOST_MULTIARCH@/libLLVM.so.@LLVM_VERSION@.1
+
+# Should be in llvm-X.Y-dev but as it has been this way for a long time...
+usr/lib/@DEB_HOST_MULTIARCH@/libLLVM-@LLVM_VERSION@.so.1    /usr/lib/@DEB_HOST_MULTIARCH@/libLLVM-@LLVM_VERSION@.so

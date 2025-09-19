@@ -1,0 +1,4 @@
+usr/lib/llvm-@LLVM_VERSION@/lib/libunwind.so.1.0 /usr/lib/@DEB_HOST_MULTIARCH@/libunwind.so.1.0
+# when LLVM_ENABLE_PER_TARGET_RUNTIME_DIR=ON:
+#usr/lib/llvm-@LLVM_VERSION@/lib/@DEB_HOST_MULTIARCH_LLVM@/libunwind.so.1.0 /usr/lib/@DEB_HOST_MULTIARCH@/libunwind.so.1.0
+usr/lib/@DEB_HOST_MULTIARCH@/libunwind.so.1.0  /usr/lib/@DEB_HOST_MULTIARCH@/libunwind.so.1

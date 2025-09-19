@@ -1,0 +1,16 @@
+Index: llvm-toolchain-18-18.1.8/llvm/tools/llvm-shlib/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-18-18.1.8.orig/llvm/tools/llvm-shlib/CMakeLists.txt
++++ llvm-toolchain-18-18.1.8/llvm/tools/llvm-shlib/CMakeLists.txt
+@@ -36,8 +36,10 @@ if(LLVM_BUILD_LLVM_DYLIB)
+   if (WIN32)
+     add_llvm_library(LLVM SHARED DISABLE_LLVM_LINK_LLVM_DYLIB SONAME ${INSTALL_WITH_TOOLCHAIN} ${SOURCES})
+   else()
+-    add_llvm_library(LLVM SHARED DISABLE_LLVM_LINK_LLVM_DYLIB OUTPUT_NAME LLVM ${INSTALL_WITH_TOOLCHAIN} ${SOURCES})
++    message(STATUS "lib name =  LLVM-${LLVM_VERSION_MAJOR}")
++    add_llvm_library(LLVM SHARED DISABLE_LLVM_LINK_LLVM_DYLIB OUTPUT_NAME LLVM-${LLVM_VERSION_MAJOR} ${INSTALL_WITH_TOOLCHAIN} ${SOURCES})
+     # Add symlink for backwards compatibility with old library name
++    message(STATUS "foo = $(LLVM-${LLVM_VERSION_MAJOR}${LLVM_VERSION_SUFFIX}")
+     llvm_install_library_symlink(LLVM-${LLVM_VERSION_MAJOR}${LLVM_VERSION_SUFFIX} $<TARGET_FILE_NAME:LLVM> SHARED FULL_DEST COMPONENT LLVM)
+   endif()
+ 
