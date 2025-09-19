@@ -12,7 +12,7 @@ GXX_VERSIONED_PACKAGE    := $(shell dpkg-query -W -f '$${Depends}' g++ | grep -o
 GXX_VERSIONED_EXECUTABLE := $(shell dpkg -L $(GXX_VERSIONED_PACKAGE) | grep '/usr/bin/g++-[0-9][0-9.]*' | xargs ls -d | tail -n1 )
 GCC_VERSION              := $(subst /usr/bin/g++-,,$(GXX_VERSIONED_EXECUTABLE))
 
-LLVM_EPOCH := 1:
+LLVM_EPOCH := 2:
 LLVM_VERSION   := $(shell dpkg-parsechangelog | sed -rne "s,^Version: $(LLVM_EPOCH)([0-9]+).*,\1,p")
 LLVM_VERSION_FULL := $(shell dpkg-parsechangelog | sed -rne "s,^Version: $(LLVM_EPOCH)([0-9.]+)(~|-)(.*),\1,p")
 LLVM_VERSION_MINOR := $(shell dpkg-parsechangelog | sed -rne "s,^Version: $(LLVM_EPOCH)[0-9]+\.(.*)\..*,\1,p")
